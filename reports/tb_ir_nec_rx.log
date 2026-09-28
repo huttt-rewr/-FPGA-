@@ -1,0 +1,22 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_ir_nec_rx.log -lib msim_work -c tb_ir_nec_rx 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_ir_nec_rx(fast)
+# run -all 
+# [PASS] åÿÿÿ»ÿÿÿ == 0x1A
+#    got_valid=1 got_cmd=1a
+# [PASS] éÿÿÿ¤ÿÿÿ o_repeaÿÿÿ§ÿÿÿ‘
+# [PASS] ÿÿÿ… ->ÿÿÿÿÿÿåÿº command_valid
+# 
+# === tb_ir_nec_rx ALL PASS ===
+# ** Note: $finish    : tb_ir_nec_rx.v(109)
+#    Time: 138871020 ns  Iteration: 0  Instance: /tb_ir_nec_rx
