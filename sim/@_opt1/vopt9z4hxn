@@ -1,0 +1,406 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\xiewe\Documents\Codex\2026-09-28\eg4s20-hdmi-hdmi-eg4s20-fpga-6\work\eg4s20_multimedia\sim
+T_opt
+Vkj]W^3kKQmBZFPIiEUID12
+04 12 4 work tb_ir_nec_rx fast 0
+=1-bcfce7e1723c-6aba342a-b5-11618
+Z1 o-quiet -auto_acc_if_foreign -work msim_work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dC:\Users\xiewe\Documents\Codex\2026-09-28\eg4s20-hdmi-hdmi-eg4s20-fpga-6\work\eg4s20_multimedia\sim
+T_opt1
+V_oT<2eCaEA00@^C]fdhCZ1
+04 15 4 work tb_video_scaler fast 0
+=1-bcfce7e1723c-6aba3432-3a5-137e0
+R1
+n@_opt1
+R2
+T_opt2
+VnkD<nRg;G[6kH=UQ^7c3L0
+04 10 4 work tb_uart_rx fast 0
+=1-bcfce7e1723c-6aba3426-248-6cf0
+R1
+n@_opt2
+R2
+R3
+vaudio_test_source
+IIGlC`CC1zlE__N=3hhR]Q2
+Ve3YFC@IO@_=naj[?^CJaa0
+R3
+Z4 w1790587830
+8../rtl/audio/audio_test_source.v
+F../rtl/audio/audio_test_source.v
+L0 3
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1790587940.184000
+Z7 !s107 tb_cdc.v|tb_upgrade.v|tb_video_scaler.v|tb_ir_nec_rx.v|tb_uart_rx.v|../src/user_source/hdl_source/video_rgb_to_axis_640x480.v|../rtl/optional/ycbcr_to_rgb.v|../rtl/audio/audio_test_source.v|../rtl/video/video_scaler.v|../rtl/video/video_mode_table.v|../rtl/video/video_enhance.v|../rtl/video/frame_swap.v|../rtl/video/edid_base_check.v|../rtl/osd/status_osd.v|../rtl/osd/osd_char_rom.v|../rtl/control/uart_tx.v|../rtl/control/uart_rx.v|../rtl/control/player_control.v|../rtl/control/ir_nec_rx.v|../rtl/common/reset_sync.v|../rtl/common/cdc_snapshot.v|
+Z8 !s90 -work|msim_work|../rtl/common/cdc_snapshot.v|../rtl/common/reset_sync.v|../rtl/control/ir_nec_rx.v|../rtl/control/player_control.v|../rtl/control/uart_rx.v|../rtl/control/uart_tx.v|../rtl/osd/osd_char_rom.v|../rtl/osd/status_osd.v|../rtl/video/edid_base_check.v|../rtl/video/frame_swap.v|../rtl/video/video_enhance.v|../rtl/video/video_mode_table.v|../rtl/video/video_scaler.v|../rtl/audio/audio_test_source.v|../rtl/optional/ycbcr_to_rgb.v|../src/user_source/hdl_source/video_rgb_to_axis_640x480.v|tb_uart_rx.v|tb_ir_nec_rx.v|tb_video_scaler.v|tb_upgrade.v|tb_cdc.v|
+Z9 o-work msim_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 S[6V2L1WQ=a]NM;C1RAKi0
+!i10b 1
+!s85 0
+vcdc_snapshot
+IRWGT0F1]k>adEFWf?FS9R3
+V_Yo14;e_9K<ocG@dZH9Re1
+R3
+R4
+8../rtl/common/cdc_snapshot.v
+F../rtl/common/cdc_snapshot.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 MX1017bGdBKPTX=NCAWcm3
+!i10b 1
+!s85 0
+vedid_base_check
+ICee^<24;WDS1PHPg6Hz[J2
+VJb217Plmh;kNO<VceeSDQ2
+R3
+R4
+8../rtl/video/edid_base_check.v
+F../rtl/video/edid_base_check.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 O365IBnh0JT@CHSW?:2n;1
+!i10b 1
+!s85 0
+vframe_swap
+I2KO0GGQ99<7O0[X;4kVV_1
+Vd2]ff^:VRLg]Ho_GmPh=50
+R3
+R4
+8../rtl/video/frame_swap.v
+F../rtl/video/frame_swap.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 i1_fSmE@ZCIhjV[EcOFm]0
+!i10b 1
+!s85 0
+vir_nec_rx
+IA8KKh_VMIN`fI];5B1Hg@3
+V^m4j3P7z0^34V8fC;Udml3
+R3
+w1790426538
+8../rtl/control/ir_nec_rx.v
+F../rtl/control/ir_nec_rx.v
+L0 16
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 eZlU>Y31@Q5ZjcL;AQ_^G3
+!i10b 1
+!s85 0
+vosd_char_rom
+IKJV?VISXQczd;C8jiEaKA3
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R3
+w1790409879
+8../rtl/osd/osd_char_rom.v
+F../rtl/osd/osd_char_rom.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 mOn3A0PZmbEJlKFUdO2S70
+!i10b 1
+!s85 0
+vplayer_control
+IAmdN`_n8a_kHT]GTEa>Dz3
+V[KTE=XYj[BcG=0nK5B2_20
+R3
+R4
+8../rtl/control/player_control.v
+F../rtl/control/player_control.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 6O5_Dn[>4`H[`:_2N@=UY3
+!i10b 1
+!s85 0
+vreset_sync
+IjIo0OIjSZ0ZIe<g8kZ@ES1
+VW<T=fO6YHXUTgF0a;U3bc2
+R3
+R4
+8../rtl/common/reset_sync.v
+F../rtl/common/reset_sync.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 i@?aWdjSP@ONLHRJbJ06n1
+!i10b 1
+!s85 0
+vstatus_osd
+I0MCLo2N?ze_dRoBK@j7mo3
+VXFH<2HHBo2VmN2oALBBJd2
+R3
+R4
+8../rtl/osd/status_osd.v
+F../rtl/osd/status_osd.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 [T`;]68OO]@ES448?Z>]J1
+!s85 0
+vtb_cdc
+Ih`V>=78U^d]L6AnmK4`eS3
+V_C2_3m>76nbHMJW3^1VS61
+R3
+w1790585376
+8tb_cdc.v
+Ftb_cdc.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 I^4CQ]GcL[TPAoNHVU_Pi1
+!i10b 1
+!s85 0
+vtb_ir_nec_rx
+I4g6f[;l381S@Db<2@1L<D3
+V>zQ1gQ[2zblC6`UBlcOAA0
+R3
+w1790426690
+8tb_ir_nec_rx.v
+Ftb_ir_nec_rx.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 >U`Le[@`]boJK^Rm`IGKP0
+!i10b 1
+!s85 0
+vtb_uart_rx
+I:H@QYf7:;Bc3_I?FLnZ7M2
+V[n[iE0k>;0CKO6`B=PZS82
+R3
+w1790413148
+8tb_uart_rx.v
+Ftb_uart_rx.v
+L0 12
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 2KL<z<=3]28P14gITUnD@1
+!i10b 1
+!s85 0
+vtb_upgrade
+IaiKZ`K:F7ij09UV6LdZ_c1
+VA0]Dm4KoJghfX3We[E2jk0
+R3
+w1790587825
+8tb_upgrade.v
+Ftb_upgrade.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 7`8ILf?lREYY]g6@1A3U<0
+!s85 0
+vtb_video_scaler
+IFN:A;EVQLNY5[n;1JCLiz0
+V1jE<@^ClFkmLKOH9Aa5cg0
+R3
+w1790413159
+8tb_video_scaler.v
+Ftb_video_scaler.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 ILlEbO9458?O;DPQ_D_oR0
+!i10b 1
+!s85 0
+vuart_rx
+IGzl?nMmlNIE0?Lfnz0fT43
+VLhzRX@iWR_F]j>^5fG71k3
+R3
+w1790425725
+8../rtl/control/uart_rx.v
+F../rtl/control/uart_rx.v
+L0 11
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 Db7T@:OA4_8]GjYDL?FP90
+!i10b 1
+!s85 0
+vuart_tx
+I8GQ5A:bAIeP=hE^SLVh_N0
+VCUbLP?`JIVQOaz3JV5Tmg2
+R3
+R4
+8../rtl/control/uart_tx.v
+F../rtl/control/uart_tx.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 F3SzO@naWJ;>[@ShAUUh@1
+!i10b 1
+!s85 0
+vvideo_enhance
+I?Bc<g6PN;UW;U^APMe3612
+VjOzBcX=m=Qcm>LNEN[NVf0
+R3
+R4
+8../rtl/video/video_enhance.v
+F../rtl/video/video_enhance.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 [Z=XgIddz5bZ2L_c:<NzI3
+!i10b 1
+!s85 0
+vvideo_mode_table
+I10DcX7LQF:Nb;Zm`^^VSN1
+V>95bH<W0D1gd^>D=<5C1=0
+R3
+w1790413006
+8../rtl/video/video_mode_table.v
+F../rtl/video/video_mode_table.v
+L0 16
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 Eh:JNCPi3_EIN^nz=FH261
+!i10b 1
+!s85 0
+vvideo_rgb_to_axis_640x480
+IjKL_HXf:;OCUCLC8A5oKG0
+VDDn>5NcGdIbiif:3B^QfW1
+R3
+R4
+8../src/user_source/hdl_source/video_rgb_to_axis_640x480.v
+F../src/user_source/hdl_source/video_rgb_to_axis_640x480.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 0<a6>RZ1[IL4oJ`n?SMik0
+!i10b 1
+!s85 0
+vvideo_scaler
+IH26l6hUbk?@z_Fh7<a_W_2
+VMc7[;l7E7;R@z^_Z4Sh8j3
+R3
+w1790413072
+8../rtl/video/video_scaler.v
+F../rtl/video/video_scaler.v
+L0 25
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 EJ`9WW9F];HH_<1aJ:PJa2
+!i10b 1
+!s85 0
+vycbcr_to_rgb
+Ii[dRjL=H96cT2g2VjKS001
+VOl6I0U2YbC:<T>jIZ4LJA2
+R3
+R4
+8../rtl/optional/ycbcr_to_rgb.v
+F../rtl/optional/ycbcr_to_rgb.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 [B2O2laikoXHcVT3EFOZ12
+!i10b 1
+!s85 0
