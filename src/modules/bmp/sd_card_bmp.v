@@ -47,7 +47,8 @@ module sd_card_bmp #(
     output [3:0]                debug_sd_status,
     input audio_enable,input audio_sample_ready,input audio_sector_room,
     output audio_sample_valid,output [23:0] audio_sample,
-    output audio_error,audio_ready,audio_stream_reset
+    output audio_error,audio_ready,audio_stream_reset,
+    output [3:0] audio_error_code
 );
 
 wire [11:0] source_width,source_height;
@@ -76,6 +77,7 @@ wire [31:0] aud_addr;
 wire [7:0] aud_data;
 assign sd_transfer_error=ENABLE_AUDIO?bmp_transfer_error:raw_transfer_error;
 assign audio_stream_reset=rst || load_abort || transport_reset || !sd_init_done || audio_error;
+assign audio_error=|audio_error_code;
 generate if(ENABLE_AUDIO)begin: wav_enabled
  sd_read_arbiter #(.TIMEOUT_CYCLES(READ_STALL_CYCLES)) arbiter(
   .clk(clk),.rst(rst | load_abort),.sd_ready(sd_init_done),
@@ -92,13 +94,13 @@ generate if(ENABLE_AUDIO)begin: wav_enabled
   .enable(audio_enable),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
   .req(aud_req),.addr(aud_addr),.data(aud_data),.data_valid(aud_valid),
   .sector_end(aud_end),.read_error(aud_read_error),
-  .sample_valid(audio_sample_valid),.sample(audio_sample),.error(audio_error),.ready(audio_ready));
+  .sample_valid(audio_sample_valid),.sample(audio_sample),.error_code(audio_error_code),.ready(audio_ready));
 end else begin: wav_disabled
  assign card_read=sd_sec_read;assign card_addr=sd_sec_read_addr;
  assign sd_sec_read_data=card_data;assign sd_sec_read_data_valid=card_valid;assign sd_sec_read_end=card_end;
  assign bmp_grant=1'b1;assign bmp_transfer_error=raw_transfer_error;
  assign transport_reset=0;assign audio_sample_valid=0;assign audio_sample=0;
- assign audio_error=0;assign audio_ready=0;
+ assign audio_error_code=0;assign audio_ready=0;
 end endgenerate
 assign debug_sd_status={sd_init_done,sd_init_error,sd_transfer_error,status_error};
 wire             read_stall;

@@ -51,6 +51,10 @@ wire [23:0] wav_sample,audio_fifo_data;
 wire audio_fifo_full,audio_fifo_empty,audio_fifo_read,audio_underflow;
 wire [10:0] audio_wr_used,audio_rd_used;
 wire [1:0] audio_stream_video;
+wire [3:0] wav_error_code,audio_error_code_video,audio_last_error;
+wire audio_pcm_valid;
+reg [3:0] frame_audio_error_code;
+reg frame_audio_underflow;
 wire gamma_vs,gamma_de;
 wire [9:0] gamma_x;
 wire [23:0] gamma_rgb;
@@ -139,7 +143,7 @@ always @(posedge video_clk or posedge rst_video)begin
  if(rst_video)begin
   settings_vs_d<=1;frame_brightness<=0;frame_contrast<=4;frame_edit_mode<=0;
   frame_source_width<=0;frame_source_height<=0;
-  frame_ui<=0;frame_audio_status<=0;
+  frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;
  end else begin
   settings_vs_d<=vs;
   if(settings_vs_d && !vs)begin
@@ -147,6 +151,7 @@ always @(posedge video_clk or posedge rst_video)begin
    frame_edit_mode<=status_video[35:34];
    frame_source_width<=status_video[47:36];frame_source_height<=status_video[59:48];
    frame_ui<=status_video[67:60];frame_audio_status<=status_video[69:68];
+   frame_audio_error_code<=audio_last_error;frame_audio_underflow<=audio_underflow;
   end
  end
 end
@@ -325,7 +330,8 @@ sd_card_bmp #(
     .audio_enable(!mute),.audio_sample_ready(!audio_fifo_full),
     .audio_sector_room(audio_wr_used<=11'd764 && !audio_fifo_full),
     .audio_sample_valid(wav_sample_valid),.audio_sample(wav_sample),
-    .audio_error(wav_error),.audio_ready(wav_ready),.audio_stream_reset(audio_queue_reset)
+    .audio_error(wav_error),.audio_ready(wav_ready),.audio_stream_reset(audio_queue_reset),
+    .audio_error_code(wav_error_code)
 );
 
 seg_decoder seg_decoder_m0(
@@ -658,7 +664,7 @@ caption_overlay #(.ADAPTIVE(1)) captions(.mode_800(mode_video),.clk(video_clk),.
  .rgb(transition_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
-status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
+status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
  .enable(video_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
  .volume(video_volume),.mute(video_mute),.busy(video_busy),
  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),
@@ -667,18 +673,26 @@ status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1
  .source_width(frame_source_width),.source_height(frame_source_height),
  .menu_open(frame_ui[0]),.menu_item(frame_ui[3:1]),.gamma_enable(frame_ui[4]),
  .debug_enable(frame_ui[5]),.debug_page(frame_ui[7:6]),
- .audio_ready(frame_audio_status[0]),.audio_error(frame_audio_status[1]));
+ .audio_ready(frame_audio_status[0]),.audio_error(|frame_audio_error_code),
+ .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow));
 // 音频流有效标志单独整体跨域，不等待显示帧锁存；错误同时清空队列。
 cdc_snapshot #(.WIDTH(2)) audio_state_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data({wav_error,wav_ready}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(audio_stream_video));
+// Independent diagnostic bus; the original 70-bit status_source is untouched.
+cdc_snapshot #(.WIDTH(4)) audio_error_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
+ .src_data(wav_error_code),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(audio_error_code_video));
+audio_error_history audio_history(.clk(video_clk),.rst(rst_video),
+ .current_code(audio_error_code_video),.pcm_valid(audio_pcm_valid),.last_code(audio_last_error));
 audio_async_fifo audio_fifo(.wr_clk(sd_card_clk),.rd_clk(video_clk),
- .rst(rst_all | !mode_ready | audio_queue_reset),.wr_en(wav_sample_valid),.wr_data(wav_sample),
+ // audio_queue_reset already includes rst_sd (async assertion from rst_all,
+ // synchronized release). Avoid a redundant boot-domain reset release branch.
+ .rst(!mode_ready | audio_queue_reset),.wr_en(wav_sample_valid),.wr_data(wav_sample),
  .full(audio_fifo_full),.rd_en(audio_fifo_read),.rd_data(audio_fifo_data),.empty(audio_fifo_empty),
  .wr_used(audio_wr_used),.rd_used(audio_rd_used));
 audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.volume(video_volume),
  .mute(video_mute),.mode_800(mode_video),.stream_ok(audio_stream_video[0] && !audio_stream_video[1] && !video_mute),
  .fifo_empty(audio_fifo_empty),.fifo_used(audio_rd_used),.fifo_data(audio_fifo_data),.fifo_rd_en(audio_fifo_read),
- .valid(audio_valid),.left_pcm(audio_left),.right_pcm(audio_right),.underflow(audio_underflow));
+ .valid(audio_valid),.left_pcm(audio_left),.right_pcm(audio_right),.underflow(audio_underflow),.pcm_valid(audio_pcm_valid));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
  .valid(edid_valid_boot),.data(edid_data_boot),.done(mode_done),.good(edid_good),
  .mode_800(mode_800),.fallback(mode_fallback));

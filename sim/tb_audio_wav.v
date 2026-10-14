@@ -48,7 +48,7 @@ module tb_audio_wav;
   rst=1;make(0);u32(40,9);reset_dut;wait(err);check(seen==0,"invalid length");
   rst=1;make(0);mode=1;reset_dut;wait(err);check(seen==0,"short sector never released");
   rst=1;mode=2;reset_dut;wait(err);check(seen==0,"CRC failure never released");
-  init=0;repeat(5)@(negedge clk);check(!err && !ready,"reinit clears failure");
+  init=0;repeat(5)@(negedge clk);check(err && !ready && !req,"reinit preserves failure delay");
   if(errors==0)$display("ALL PASS tb_audio_wav");else $display("FAILED tb_audio_wav %0d",errors);$finish;
  end
  initial begin #5000000;$display("FAILED WAV watchdog");$finish;end

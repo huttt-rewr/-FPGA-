@@ -16,6 +16,7 @@ try {
  $mergeTests += @('tb_audio_wav','tb_audio_fifo','tb_audio_playback','tb_sd_audio_arbiter','tb_audio_menu')
  $mergeTests += @('tb_audio_sd_integration')
  $mergeTests += @('tb_audio_osd')
+ $mergeTests += @('tb_audio_retry','tb_audio_retry_edges','tb_audio_diagnostics')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }

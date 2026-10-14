@@ -4,13 +4,15 @@ module audio_playback #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,
  parameter PREFILL=256)(
  input clk,rst,input [4:0] volume,input mute,input mode_800,input stream_ok,
  input fifo_empty,input [10:0] fifo_used,input [23:0] fifo_data,output fifo_rd_en,
- output reg valid,output reg [23:0] left_pcm,right_pcm,output reg underflow);
+ output reg valid,output reg [23:0] left_pcm,right_pcm,output reg underflow,
+ output reg pcm_valid);
  reg [31:0] acc;
  wire [31:0] clock_hz=(ADAPTIVE && mode_800)?32'd40000000:CLK_HZ;
  wire [32:0] sum={1'b0,acc}+33'd48000;
  wire tick=sum>={1'b0,clock_hz};
  reg primed;
  reg tick_d,tick_dd,read_d,muted_d;
+ reg pcm_d;
  reg [15:0] gain_d;
  reg signed [40:0] product;
  wire signed [40:0] scaled=product>>>16;
@@ -59,7 +61,7 @@ module audio_playback #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,
  always @(posedge clk or posedge rst)begin
   if(rst)begin
    acc<=0;primed<=0;tick_d<=0;tick_dd<=0;read_d<=0;muted_d<=1;gain_d<=0;
-   product<=0;valid<=0;left_pcm<=0;right_pcm<=0;underflow<=0;
+   product<=0;valid<=0;left_pcm<=0;right_pcm<=0;underflow<=0;pcm_d<=0;pcm_valid<=0;
   end else begin
    if(tick)acc<=sum-clock_hz;else acc<=sum[31:0];
    if(!stream_ok)primed<=0;
@@ -69,6 +71,10 @@ module audio_playback #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,
     primed<=0;
    end
    tick_d<=tick;tick_dd<=tick_d;valid<=tick_dd;
+   // Distinguish a real PCM output (including a zero-valued sample) from the
+   // scheduled silence emitted during mute, prefill or underflow.
+   pcm_d<=tick_d && read_d && !muted_d;
+   pcm_valid<=tick_dd && pcm_d;
    read_d<=fifo_rd_en;
    muted_d<=mute || volume==0 || !stream_ok;
    gain_d<=gain(volume);
@@ -82,5 +88,16 @@ module audio_playback #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,
     else begin left_pcm<=scaled[23:0];right_pcm<=scaled[23:0];end
    end
   end
+ end
+endmodule
+
+// Video-domain history persists through retries and FIFO prefill. A scheduled
+// silence is not recovery: clear only when an unmuted PCM sample reaches HDMI.
+module audio_error_history(input clk,rst,input [3:0] current_code,
+ input pcm_valid,output reg [3:0] last_code);
+ always @(posedge clk or posedge rst)begin
+  if(rst)last_code<=0;
+  else if(|current_code)last_code<=current_code;
+  else if(pcm_valid)last_code<=0;
  end
 endmodule

@@ -1,12 +1,12 @@
 // Fixed 40x4 status panel; no uninitialized text RAM.
-module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
+module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0,parameter AUDIO_DIAGNOSTICS=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input auto_play,input [1:0] image_index,input [2:0] image_count,
     input [4:0] volume,input mute,input busy,input error,input edid_ok,
     output [23:0] result,output [9:0] pixel_x,output [9:0] pixel_y,
     input signed [7:0] brightness,input [3:0] contrast,input [1:0] edit_mode,
     input [11:0] source_width,source_height,input mode_800,output out_vs,output out_de,
     input menu_open,input [2:0] menu_item,input gamma_enable,input debug_enable,input [1:0] debug_page,
-    input audio_ready,input audio_error);
+    input audio_ready,input audio_error,input [3:0] audio_error_code,input audio_underflow);
     wire expanded=ADAPTIVE && mode_800;
     wire [9:0] x,y,raw_x,raw_y;
     viewport_coordinates coords(clk,rst,vs,de,expanded,x,y,raw_x,raw_y);
@@ -114,6 +114,14 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
                     34:board_ascii="0"+volume/10;35:board_ascii="0"+volume%10;
                     default:board_ascii=" ";
                 endcase
+                if(AUDIO_DIAGNOSTICS)begin
+                    case(col)
+                        31:board_ascii=audio_error?("0"+audio_error_code):"-";
+                        32:board_ascii=" ";33:board_ascii="V";34:board_ascii=":";
+                        35:board_ascii="0"+volume/10;36:board_ascii="0"+volume%10;
+                        37:board_ascii=" ";38:board_ascii="U";39:board_ascii=audio_underflow?"1":"0";
+                    endcase
+                end
             end
             // No extra overlay pipeline: reuse this existing panel and font.
             if(!menu_open && row==2)begin
