@@ -1,0 +1,39 @@
+standard
+***Report Model: audio_effects_probe Device: EG4S20BG256***
+
+IO Statistics
+#IO                        76   out of    188   40.43%
+  #input                   27
+  #output                  49
+  #inout                    0
+
+LUT Statistics
+#Total_luts                81
+  #lut4                    79
+  #lut5                     2
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     1707   out of  19600    8.71%
+#reg                      361   out of  19600    1.84%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    3   out of     16   18.75%
+#dsp                        6   out of     29   20.69%
+#pad                       76   out of    188   40.43%
+  #ireg                    25
+  #oreg                    49
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++---------------------------------------------------------------------------+
+|Instance |Module              |lut     |ripple  |seq     |bram    |dsp     |
++---------------------------------------------------------------------------+
+|top      |audio_effects_probe |894     |813     |435     |3       |6       |
+|  fx     |audio_effects       |894     |813     |361     |3       |6       |
++---------------------------------------------------------------------------+

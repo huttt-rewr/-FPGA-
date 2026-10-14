@@ -1,0 +1,60 @@
+standard
+***Report Model: audio_effects_probe Device: EG4S20BG256***
+
+IO Statistics
+#IO                        76   out of    188   40.43%
+  #input                   27
+  #output                  49
+  #inout                    0
+
+Utilization Statistics
+#lut                     1707   out of  19600    8.71%
+#reg                      361   out of  19600    1.84%
+#le                      1995
+  #lut only              1634   out of   1995   81.90%
+  #reg only               288   out of   1995   14.44%
+  #lut&reg                 73   out of   1995    3.66%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    3   out of     16   18.75%
+#dsp                        6   out of     29   20.69%
+#pad                       76   out of    188   40.43%
+  #ireg                    25
+  #oreg                    49
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Clock Domain Luts:
+
+------------------------------------------------------------------------------------------------------------
+  Index   |  Name   |  Frequency   |  LUT As Logic   |  LUT As Shifter   |  LUT As Dram   |  BRAM   |  DSP
+------------------------------------------------------------------------------------------------------------
+  #1      |  clk    |  40MHz       |  580            |  0                |  0             |  3      |  6
+------------------------------------------------------------------------------------------------------------
+
+Clock Resource Statistics
+Index     ClockNet     Type               DriverType         Driver          Fanout
+#1        clk_dup_1    Global             io                 clk_syn_2.di    275
+
+Report Hierarchy Area:
++------------------------------------------------------------------------------------+
+|Instance |Module              |le      |lut     |ripple  |seq     |bram    |dsp     |
++------------------------------------------------------------------------------------+
+|top      |audio_effects_probe |1995    |894     |813     |435     |3       |6       |
+|  fx     |audio_effects       |1995    |894     |813     |361     |3       |6       |
++------------------------------------------------------------------------------------+
+
+
+DataNet Average Fanout:
+
+   Index     Fanout     Nets  
+    #1          1       2778  
+    #2          2        50   
+    #3          3        94   
+    #4          4        48   
+    #5        5-10      253   
+    #6        11-50      20   
+    #7       101-500     2    
+  Average     1.82            

@@ -1,6 +1,6 @@
 {
-  "started_utc": "2026-10-14T13:18:01.997828+00:00",
-  "status": "failed",
+  "started_utc": "2026-10-14T15:16:08.666353+00:00",
+  "status": "completed",
   "td": "J:/Anlogic/td.6.2.1/bin/td_commands_prompt.exe",
   "sources": {
     "scripts/adaptive_clocks.tcl": "ce604729330dd42824c095fac9d6612b4390b1a70b711b470d61e8df27ad6c0f",
@@ -29,7 +29,7 @@
     "sim/tb_adaptive_clocks.v": "d8053fbadd00fb94493f0a73eecd800b216548f5d58c40b43a6cb841b9024957",
     "sim/tb_adaptive_raster.v": "bb960ad14b7b0da6ea199e2019c30efb1a46fb41704c6aa2fe04d6344a07b791",
     "sim/tb_audio_diagnostics.v": "34f34d9f75f847fb2498dc7105795bd066fd86e4faefc783e9d9b8d2c74b54e3",
-    "sim/tb_audio_effects.v": "8c0a48ae7b6f2492c2452067afb4428217d29eb683add9051c436740412e7073",
+    "sim/tb_audio_effects.v": "5974747262e4dc7ca6d0add2e75b9d28d3ed5f904f9af06c126b5560f8bebcdd",
     "sim/tb_audio_fifo.v": "6d5af54603bc7265753a67ae6d1ac626a062385e7b9dbbfe3f417ccaddc7d551",
     "sim/tb_audio_menu.v": "ec1bcd0cc6e1e9310639936cbc7aa68ceacab868263e9f5be6b424fb323bdac4",
     "sim/tb_audio_osd.v": "571dc5e78b8a78f02ca3136e30291a9be8ff7b762d8bed7b316bd486afb125a5",
@@ -107,7 +107,7 @@
     "src/ip/sdram/sdr_init_ref.enc.v": "367e7edf2092c153d9fb6d98376c5726a3d1d7373756e8fe7256ad9546c90da5",
     "src/ip/sdram/sdr_wrrd.enc.v": "c7d7fe07d75f66aa88d9f986b3006319c995162434f104f9990664b374cdfdd2",
     "src/modules/audio/audio_async_fifo.v": "bb008651db45967dd64bd2c6b28ca33a9d642dc3f047b2270079fd2d38144e81",
-    "src/modules/audio/audio_effects.v": "f0d1802bb3ca5e7bf1db4413e75fa655fabcf97dc5f2ac3be7c013b6d8b9127c",
+    "src/modules/audio/audio_effects.v": "1f8c3f55e6c6f3f17322ea2d493af4aafc337cc216524dafee3f072b23f6d246",
     "src/modules/audio/audio_playback.v": "11f71273b73309cbd0df2623ccc3ecce1ff828f9c04feb3e7a5df02a2cfb3573",
     "src/modules/audio/audio_test_source.v": "3169fa5e9a9fadad7a17a660cd9535631a6dcf4c9c2329d4b8fab200fe3107d5",
     "src/modules/audio/audio_wav.v": "ae29f30b1a66a92fcd43658984ba8d41328bda4a9b3db1426c2ad3e70b9190d7",
@@ -164,7 +164,7 @@
     "src/td_project/global_def.v": "a24833b6d259bc4bdc205a5543cf3c197626f249c36e0cebba3a4f64d7f7e14c",
     "src/td_project/video_define.v": "77748966850a8f5af0d77f2cdb08006088ba5e1a31b98391fba6cc61c5247da2",
     "src/td_project/video_improve.al": "8eae28b4d417564c921ab051c32f60221177d4bdabcc72a3d9a852972c0845f9",
-    "src/top.v": "148c0c097d37bbadac52d021e4b71b04cadcb76dd452187f5c73502154f56a8d",
+    "src/top.v": "2ea9aca42d5a33d086e1fb4d74bb1dfbe74fda65090b15e09e9533897d07ebc4",
     "video_improve.al": "9d69020963566f356ee53d49c7ec59cb98d67b33d9b8bc4fc38f17e49e559ad8"
   },
   "synthesis_warnings": [
@@ -243,9 +243,25 @@
   ],
   "implementation_warnings": [
     "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
-    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
     "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
   ],
-  "error": "Build inputs changed while TD was running",
-  "finished_utc": "2026-10-14T13:29:35.927156+00:00"
+  "timing_ns": {
+    "SWNS": 0.069,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "board_signoff": false,
+  "hold_margin_0_5ns_met": false,
+  "products": {
+    "gate_area.txt": "c940a07943bd56c372f747dfda05ddd5b3624894371ad6410be9329071b47bf2",
+    "io.txt": "f251fbdf76c2e102aa271a7c31ba1d689b8a03991a3547f312e89ad6f2583de4",
+    "physical_area.txt": "510d49d5c3e8289d541e8229c9b3a6e6442d5133d7c9476086ab85ef28b2ed5f",
+    "rtl_area.txt": "8d28a3e0f85fcbe3e4c1866ab8baab7ba6f973d8aae6964af0a6c76ce99f86c4",
+    "timing_status.txt": "30ffdb172e5f74498f922157cebc0e87876c1fe34d47bc5aa1dc0d1226adc21a",
+    "timing_summary.txt": "ac3454f6a91bbafef4fa40be0fb76c0f7a4863034d6ad1b10fd4cd6fc3498238",
+    "video_improve_gate.db": "7c71487e8f2f7b660c465f84198fbd4140c4b34d392dbbe6c6188b811f95f160",
+    "video_improve_routed.db": "c0a420ecff8921de1e290a9aba340b4f9c53dd16221f3f3f0db314dc101a88d8"
+  },
+  "finished_utc": "2026-10-14T15:22:07.238893+00:00"
 }

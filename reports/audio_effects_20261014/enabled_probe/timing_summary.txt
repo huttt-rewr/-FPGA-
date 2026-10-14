@@ -1,0 +1,1758 @@
+Created by          : Tang Dynasty v6.2.168116
+                    : Copyright (c) 2012-2025 Anlogic Inc.
+Generated           : Wed Oct 14 23:08:18 2026
+
+Top Model           : audio_effects_probe
+Device              : EG4S20BG256
+Speed               : NA
+STA coverage        : 90.39%
+Constraint File     : E:/fpga/reports/audio_effects_20261014/probe.sdc;
+Confidence          : Routed
+Check Corner        : Both (Slow and Fast)
+CRPR Enabled        : Yes
+Report Scheme       : 10 end point(s) per path group, 1 path(s) per end point
+
+
+Check Status
+-------------
+
+Corner   | Max      Min     
+------------------------------------
+Slow     | yes      yes     
+Fast     | yes      yes     
+
+
+Timing Status
+--------------------
+	SWNS: 0.911ns, STNS: 0.000ns
+	HWNS: 0.214ns, HTNS: 0.000ns
+	Period Check WNS: 0.000ns
+
+
+Clock Summary
+--------------------
+
+       Clock-Id:       C-Freq       Fanout   Clock-Name
+--------------------------------------------------------------------------------
+           clk0:       40.000          275   clk
+--------------------------------------------------------------------------------
+
+       Name            Type         Rise(ns)   Fall(ns)          C-Period(ns)     C-Freq(MHz)          R-Period(ns)     R-Freq(MHz)         SWNS(ns)   STNS(ns)         HWNS(ns)   HTNS(ns)         Skew(ns)           Fanout        Max-Level        CC-From    CC-To
+       clk0           local            0.000     12.500                25.000          40.000                24.089          41.513            0.911      0.000            0.214      0.000            0.480              275               15             no       no
+
+Notes
+----------
+C-Period  :  constraint period
+C-Freq    :  constraint freq
+R-Period  :  report min period
+R-Freq    :  report fmax
+CC-From   :  has path(s) from cross-domain clock
+CC-To     :  has path(s) to cross-domain clock
+
+
+*   Clock R-Period data only takes intra-clock timing. SWNS/STNS/HWNS/HTNS take both intra-clock and inter-clock timing.
+*   If there is mismatch between R-Period and SWNS, check inter-clock timing of this clock as capture clock.
+*   SWNS/STNS/HWNS/HTNS of timing exception (SMCP/SMD) only counted in global Timing Status, not counted in Clock Summary.
+
+Intra clock domain timing
+--------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+Path Group     :     clk -> clk
+Type           :     Self
+From Clock     :     clk
+To Clock       :     clk
+Min Period     :     24.089ns
+Fmax           :     41.513MHz
+
+Statistics:
+Max            : SWNS      0.911ns, STNS      0.000ns,         0 Viol Endpoints,       473 Total Endpoints,     31066 Paths Analyzed
+Min            : HWNS      0.214ns, HTNS      0.000ns,         0 Viol Endpoints,       473 Total Endpoints,     31066 Paths Analyzed
+----------------------------------------------------------------------------------------------------
+
+Max Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.911ns
+Begin Point         : fx/filtered_eq$historical_sum_reg[5]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/ramread0_syn_24.dia[6] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 22.448ns (cell 11.812ns (52%), net 10.636ns (48%))
+Clock Skew          : 0.324ns
+Logic Level         : 15 ( ADDER=12  MULT18=1  LUT3=1  EMB32K=1 )
+Max Fanout          : 27
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            2.062          3.952          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.clk
+launch edge                             0.000    r     3.952               
+--------------------------------------------------------------------  ---------------
+clk2q               x017y023z3          0.146    r     4.098          pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.q[1]
+net (fo=1)                              0.476          4.574          net: fx/filtered_eq$historical_sum[5],  E:/fpga/src/modules/audio/audio_effects.v(73)
+                                                                      pin: fx/add33_syn_591.e[0]
+ADDER               x018y024z2          0.781    f     5.355       1  pin: fx/add33_syn_591.fco
+net (fo=1)                              0.000          5.355          net: fx/add33_syn_367,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_592.fci
+ADDER               x018y024z3          0.132    f     5.487          pin: fx/add33_syn_592.fco
+net (fo=1)                              0.000          5.487          net: fx/add33_syn_371,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_593.fci
+ADDER               x018y025z2          0.387    f     5.874       2  pin: fx/add33_syn_593.fx[0]
+net (fo=1)                              0.900          6.774          net: fx/add33_syn_32[8],  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_584.d[1]
+ADDER               x017y027z2          0.715    f     7.489       3  pin: fx/add33_syn_584.fco
+net (fo=1)                              0.000          7.489          net: fx/add33_syn_557,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_585.fci
+ADDER               x017y027z3          0.132    f     7.621          pin: fx/add33_syn_585.fco
+net (fo=1)                              0.000          7.621          net: fx/add33_syn_561,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_586.fci
+ADDER               x017y028z2          0.132    f     7.753          pin: fx/add33_syn_586.fco
+net (fo=1)                              0.000          7.753          net: fx/add33_syn_565,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_587.fci
+ADDER               x017y028z3          0.132    f     7.885          pin: fx/add33_syn_587.fco
+net (fo=1)                              0.000          7.885          net: fx/add33_syn_569,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_588.fci
+ADDER               x017y029z2          0.132    f     8.017          pin: fx/add33_syn_588.fco
+net (fo=1)                              0.000          8.017          net: fx/add33_syn_573,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_589.fci
+ADDER               x017y029z3          0.387    f     8.404       4  pin: fx/add33_syn_589.fx[0]
+net (fo=2)                              1.298          9.702          net: fx/filtered_eq$low[17],  E:/fpga/src/modules/audio/audio_effects.v(96)
+                                                                      pin: fx/sub7_syn_186.b[0]
+ADDER               x015y032z1          0.627    f    10.329       5  pin: fx/sub7_syn_186.fco
+net (fo=1)                              0.000         10.329          net: fx/sub7_syn_124,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_189.fci
+ADDER               x015y033z0          0.073    f    10.402          pin: fx/sub7_syn_189.fco
+net (fo=1)                              0.000         10.402          net: fx/sub7_syn_126,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_192.fci
+ADDER               x015y033z1          0.073    f    10.475          pin: fx/sub7_syn_192.fco
+net (fo=1)                              0.000         10.475          net: fx/sub7_syn_128,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_195.fci
+ADDER               x015y034z0          0.355    f    10.830       6  pin: fx/sub7_syn_195.f[1]
+net (fo=12)                             1.078         11.908          net: fx/filtered_eq$high[24],  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/mult1_syn_89.b[6]
+MULT18              x016y036            3.563    f    15.471       7  pin: fx/mult1_syn_89.p[7]
+net (fo=1)                              0.765         16.236          net: fx/mult1_syn_40,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_275.b[0]
+ADDER               x015y037z0          0.627    f    16.863       8  pin: fx/mult1_syn_275.fco
+net (fo=1)                              0.000         16.863          net: fx/mult1_syn_232,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_278.fci
+ADDER               x015y037z1          0.073    f    16.936          pin: fx/mult1_syn_278.fco
+net (fo=1)                              0.000         16.936          net: fx/mult1_syn_234,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_281.fci
+ADDER               x015y038z0          0.073    f    17.009          pin: fx/mult1_syn_281.fco
+net (fo=1)                              0.000         17.009          net: fx/mult1_syn_236,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_284.fci
+ADDER               x015y038z1          0.073    f    17.082          pin: fx/mult1_syn_284.fco
+net (fo=1)                              0.000         17.082          net: fx/mult1_syn_238,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_287.fci
+ADDER               x015y039z0          0.073    f    17.155          pin: fx/mult1_syn_287.fco
+net (fo=1)                              0.000         17.155          net: fx/mult1_syn_240,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_289.fci
+ADDER               x015y039z1          0.144    f    17.299       9  pin: fx/mult1_syn_289.f[0]
+net (fo=27)                             1.569         18.868          net: fx/mult1_syn_91[17],  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/add36_syn_645.b[1]
+ADDER               x015y035z3          0.770    f    19.638      10  pin: fx/add36_syn_645.fco
+net (fo=1)                              0.000         19.638          net: fx/add36_syn_600,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_646.fci
+ADDER               x015y036z2          0.132    f    19.770          pin: fx/add36_syn_646.fco
+net (fo=1)                              0.000         19.770          net: fx/add36_syn_604,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_647.fci
+ADDER               x015y036z3          0.132    f    19.902          pin: fx/add36_syn_647.fco
+net (fo=1)                              0.000         19.902          net: fx/add36_syn_608,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_648.fci
+ADDER               x015y037z2          0.132    f    20.034          pin: fx/add36_syn_648.fco
+net (fo=1)                              0.000         20.034          net: fx/add36_syn_612,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_649.fci
+ADDER               x015y037z3          0.132    f    20.166          pin: fx/add36_syn_649.fco
+net (fo=1)                              0.000         20.166          net: fx/add36_syn_616,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_650.fci
+ADDER               x015y038z2          0.132    f    20.298          pin: fx/add36_syn_650.fco
+net (fo=1)                              0.000         20.298          net: fx/add36_syn_620,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_651.fci
+ADDER               x015y038z3          0.132    f    20.430          pin: fx/add36_syn_651.fco
+net (fo=1)                              0.000         20.430          net: fx/add36_syn_624,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_652.fci
+ADDER               x015y039z2          0.387    f    20.817      11  pin: fx/add36_syn_652.fx[0]
+net (fo=4)                              0.972         21.789          net: fx/filtered_eq$eq_sum[48],  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/lt0_syn_120.a[1]
+ADDER               x011y035z0          0.627    f    22.416      12  pin: fx/lt0_syn_120.fco
+net (fo=1)                              0.000         22.416          net: fx/lt0_syn_54,  E:/fpga/src/modules/audio/audio_effects.v(51)
+                                                                      pin: fx/lt0_syn_122.fci
+ADDER               x011y035z1          0.144    f    22.560      13  pin: fx/lt0_syn_122.f[0]
+net (fo=23)                             2.083         24.643          net: fx/eq_b_n,  NOFILE(0)
+                                                                      pin: fx/eq_d_reg[21]_syn_4.d[0]
+LUT3                x023y047z2          0.262    r    24.905      14  pin: fx/eq_d_reg[21]_syn_4.f[0]
+net (fo=1)                              1.495         26.400          net: fx/eq[22],  E:/fpga/src/modules/audio/audio_effects.v(64)
+                                                                      pin: fx/ramread0_syn_24.dia[6]
+EMB32K (reg)        x032y063            0.000    f    26.400      15       
+--------------------------------------------------------------------  ---------------
+Arrival                                               26.400               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clka
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -1.217         27.148               
+clock uncertainty                      -0.100         27.048               
+clock pessimism                         0.263         27.311               
+--------------------------------------------------------------------  ---------------
+Required                                              27.311               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.911               
+
+Slack               : 1.772ns
+Begin Point         : fx/filtered_eq$historical_sum_reg[5]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/ramread0_syn_15.dia[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.659ns (cell 11.812ns (54%), net 9.847ns (46%))
+Clock Skew          : 0.252ns
+Logic Level         : 15 ( ADDER=12  MULT18=1  LUT3=1  EMB32K=1 )
+Max Fanout          : 27
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            2.062          3.952          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.clk
+launch edge                             0.000    r     3.952               
+--------------------------------------------------------------------  ---------------
+clk2q               x017y023z3          0.146    r     4.098          pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.q[1]
+net (fo=1)                              0.476          4.574          net: fx/filtered_eq$historical_sum[5],  E:/fpga/src/modules/audio/audio_effects.v(73)
+                                                                      pin: fx/add33_syn_591.e[0]
+ADDER               x018y024z2          0.781    f     5.355       1  pin: fx/add33_syn_591.fco
+net (fo=1)                              0.000          5.355          net: fx/add33_syn_367,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_592.fci
+ADDER               x018y024z3          0.132    f     5.487          pin: fx/add33_syn_592.fco
+net (fo=1)                              0.000          5.487          net: fx/add33_syn_371,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_593.fci
+ADDER               x018y025z2          0.387    f     5.874       2  pin: fx/add33_syn_593.fx[0]
+net (fo=1)                              0.900          6.774          net: fx/add33_syn_32[8],  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_584.d[1]
+ADDER               x017y027z2          0.715    f     7.489       3  pin: fx/add33_syn_584.fco
+net (fo=1)                              0.000          7.489          net: fx/add33_syn_557,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_585.fci
+ADDER               x017y027z3          0.132    f     7.621          pin: fx/add33_syn_585.fco
+net (fo=1)                              0.000          7.621          net: fx/add33_syn_561,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_586.fci
+ADDER               x017y028z2          0.132    f     7.753          pin: fx/add33_syn_586.fco
+net (fo=1)                              0.000          7.753          net: fx/add33_syn_565,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_587.fci
+ADDER               x017y028z3          0.132    f     7.885          pin: fx/add33_syn_587.fco
+net (fo=1)                              0.000          7.885          net: fx/add33_syn_569,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_588.fci
+ADDER               x017y029z2          0.132    f     8.017          pin: fx/add33_syn_588.fco
+net (fo=1)                              0.000          8.017          net: fx/add33_syn_573,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_589.fci
+ADDER               x017y029z3          0.387    f     8.404       4  pin: fx/add33_syn_589.fx[0]
+net (fo=2)                              1.298          9.702          net: fx/filtered_eq$low[17],  E:/fpga/src/modules/audio/audio_effects.v(96)
+                                                                      pin: fx/sub7_syn_186.b[0]
+ADDER               x015y032z1          0.627    f    10.329       5  pin: fx/sub7_syn_186.fco
+net (fo=1)                              0.000         10.329          net: fx/sub7_syn_124,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_189.fci
+ADDER               x015y033z0          0.073    f    10.402          pin: fx/sub7_syn_189.fco
+net (fo=1)                              0.000         10.402          net: fx/sub7_syn_126,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_192.fci
+ADDER               x015y033z1          0.073    f    10.475          pin: fx/sub7_syn_192.fco
+net (fo=1)                              0.000         10.475          net: fx/sub7_syn_128,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_195.fci
+ADDER               x015y034z0          0.355    f    10.830       6  pin: fx/sub7_syn_195.f[1]
+net (fo=12)                             1.078         11.908          net: fx/filtered_eq$high[24],  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/mult1_syn_89.b[6]
+MULT18              x016y036            3.563    f    15.471       7  pin: fx/mult1_syn_89.p[7]
+net (fo=1)                              0.765         16.236          net: fx/mult1_syn_40,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_275.b[0]
+ADDER               x015y037z0          0.627    f    16.863       8  pin: fx/mult1_syn_275.fco
+net (fo=1)                              0.000         16.863          net: fx/mult1_syn_232,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_278.fci
+ADDER               x015y037z1          0.073    f    16.936          pin: fx/mult1_syn_278.fco
+net (fo=1)                              0.000         16.936          net: fx/mult1_syn_234,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_281.fci
+ADDER               x015y038z0          0.073    f    17.009          pin: fx/mult1_syn_281.fco
+net (fo=1)                              0.000         17.009          net: fx/mult1_syn_236,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_284.fci
+ADDER               x015y038z1          0.073    f    17.082          pin: fx/mult1_syn_284.fco
+net (fo=1)                              0.000         17.082          net: fx/mult1_syn_238,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_287.fci
+ADDER               x015y039z0          0.073    f    17.155          pin: fx/mult1_syn_287.fco
+net (fo=1)                              0.000         17.155          net: fx/mult1_syn_240,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_289.fci
+ADDER               x015y039z1          0.144    f    17.299       9  pin: fx/mult1_syn_289.f[0]
+net (fo=27)                             1.569         18.868          net: fx/mult1_syn_91[17],  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/add36_syn_645.b[1]
+ADDER               x015y035z3          0.770    f    19.638      10  pin: fx/add36_syn_645.fco
+net (fo=1)                              0.000         19.638          net: fx/add36_syn_600,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_646.fci
+ADDER               x015y036z2          0.132    f    19.770          pin: fx/add36_syn_646.fco
+net (fo=1)                              0.000         19.770          net: fx/add36_syn_604,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_647.fci
+ADDER               x015y036z3          0.132    f    19.902          pin: fx/add36_syn_647.fco
+net (fo=1)                              0.000         19.902          net: fx/add36_syn_608,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_648.fci
+ADDER               x015y037z2          0.132    f    20.034          pin: fx/add36_syn_648.fco
+net (fo=1)                              0.000         20.034          net: fx/add36_syn_612,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_649.fci
+ADDER               x015y037z3          0.132    f    20.166          pin: fx/add36_syn_649.fco
+net (fo=1)                              0.000         20.166          net: fx/add36_syn_616,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_650.fci
+ADDER               x015y038z2          0.132    f    20.298          pin: fx/add36_syn_650.fco
+net (fo=1)                              0.000         20.298          net: fx/add36_syn_620,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_651.fci
+ADDER               x015y038z3          0.132    f    20.430          pin: fx/add36_syn_651.fco
+net (fo=1)                              0.000         20.430          net: fx/add36_syn_624,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_652.fci
+ADDER               x015y039z2          0.387    f    20.817      11  pin: fx/add36_syn_652.fx[0]
+net (fo=4)                              0.972         21.789          net: fx/filtered_eq$eq_sum[48],  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/lt0_syn_120.a[1]
+ADDER               x011y035z0          0.627    f    22.416      12  pin: fx/lt0_syn_120.fco
+net (fo=1)                              0.000         22.416          net: fx/lt0_syn_54,  E:/fpga/src/modules/audio/audio_effects.v(51)
+                                                                      pin: fx/lt0_syn_122.fci
+ADDER               x011y035z1          0.144    f    22.560      13  pin: fx/lt0_syn_122.f[0]
+net (fo=23)                             1.872         24.432          net: fx/eq_b_n,  NOFILE(0)
+                                                                      pin: fx/eq_d_reg[11]_syn_4.d[0]
+LUT3                x011y012z3          0.262    r    24.694      14  pin: fx/eq_d_reg[11]_syn_4.f[0]
+net (fo=1)                              0.917         25.611          net: fx/eq[8],  E:/fpga/src/modules/audio/audio_effects.v(64)
+                                                                      pin: fx/ramread0_syn_15.dia[0]
+EMB32K (reg)        x008y000            0.000    f    25.611      15       
+--------------------------------------------------------------------  ---------------
+Arrival                                               25.611               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_15.clka
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -1.217         27.148               
+clock uncertainty                      -0.100         27.048               
+clock pessimism                         0.335         27.383               
+--------------------------------------------------------------------  ---------------
+Required                                              27.383               
+--------------------------------------------------------------------  ---------------
+Slack                                                  1.772               
+
+Slack               : 2.346ns
+Begin Point         : fx/filtered_eq$historical_sum_reg[5]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/ramread0_syn_6.dia[4] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.013ns (cell 11.812ns (56%), net 9.201ns (44%))
+Clock Skew          : 0.324ns
+Logic Level         : 15 ( ADDER=12  MULT18=1  LUT3=1  EMB32K=1 )
+Max Fanout          : 27
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            2.062          3.952          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.clk
+launch edge                             0.000    r     3.952               
+--------------------------------------------------------------------  ---------------
+clk2q               x017y023z3          0.146    r     4.098          pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.q[1]
+net (fo=1)                              0.476          4.574          net: fx/filtered_eq$historical_sum[5],  E:/fpga/src/modules/audio/audio_effects.v(73)
+                                                                      pin: fx/add33_syn_591.e[0]
+ADDER               x018y024z2          0.781    f     5.355       1  pin: fx/add33_syn_591.fco
+net (fo=1)                              0.000          5.355          net: fx/add33_syn_367,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_592.fci
+ADDER               x018y024z3          0.132    f     5.487          pin: fx/add33_syn_592.fco
+net (fo=1)                              0.000          5.487          net: fx/add33_syn_371,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_593.fci
+ADDER               x018y025z2          0.387    f     5.874       2  pin: fx/add33_syn_593.fx[0]
+net (fo=1)                              0.900          6.774          net: fx/add33_syn_32[8],  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_584.d[1]
+ADDER               x017y027z2          0.715    f     7.489       3  pin: fx/add33_syn_584.fco
+net (fo=1)                              0.000          7.489          net: fx/add33_syn_557,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_585.fci
+ADDER               x017y027z3          0.132    f     7.621          pin: fx/add33_syn_585.fco
+net (fo=1)                              0.000          7.621          net: fx/add33_syn_561,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_586.fci
+ADDER               x017y028z2          0.132    f     7.753          pin: fx/add33_syn_586.fco
+net (fo=1)                              0.000          7.753          net: fx/add33_syn_565,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_587.fci
+ADDER               x017y028z3          0.132    f     7.885          pin: fx/add33_syn_587.fco
+net (fo=1)                              0.000          7.885          net: fx/add33_syn_569,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_588.fci
+ADDER               x017y029z2          0.132    f     8.017          pin: fx/add33_syn_588.fco
+net (fo=1)                              0.000          8.017          net: fx/add33_syn_573,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_589.fci
+ADDER               x017y029z3          0.387    f     8.404       4  pin: fx/add33_syn_589.fx[0]
+net (fo=2)                              1.298          9.702          net: fx/filtered_eq$low[17],  E:/fpga/src/modules/audio/audio_effects.v(96)
+                                                                      pin: fx/sub7_syn_186.b[0]
+ADDER               x015y032z1          0.627    f    10.329       5  pin: fx/sub7_syn_186.fco
+net (fo=1)                              0.000         10.329          net: fx/sub7_syn_124,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_189.fci
+ADDER               x015y033z0          0.073    f    10.402          pin: fx/sub7_syn_189.fco
+net (fo=1)                              0.000         10.402          net: fx/sub7_syn_126,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_192.fci
+ADDER               x015y033z1          0.073    f    10.475          pin: fx/sub7_syn_192.fco
+net (fo=1)                              0.000         10.475          net: fx/sub7_syn_128,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_195.fci
+ADDER               x015y034z0          0.355    f    10.830       6  pin: fx/sub7_syn_195.f[1]
+net (fo=12)                             1.078         11.908          net: fx/filtered_eq$high[24],  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/mult1_syn_89.b[6]
+MULT18              x016y036            3.563    f    15.471       7  pin: fx/mult1_syn_89.p[7]
+net (fo=1)                              0.765         16.236          net: fx/mult1_syn_40,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_275.b[0]
+ADDER               x015y037z0          0.627    f    16.863       8  pin: fx/mult1_syn_275.fco
+net (fo=1)                              0.000         16.863          net: fx/mult1_syn_232,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_278.fci
+ADDER               x015y037z1          0.073    f    16.936          pin: fx/mult1_syn_278.fco
+net (fo=1)                              0.000         16.936          net: fx/mult1_syn_234,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_281.fci
+ADDER               x015y038z0          0.073    f    17.009          pin: fx/mult1_syn_281.fco
+net (fo=1)                              0.000         17.009          net: fx/mult1_syn_236,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_284.fci
+ADDER               x015y038z1          0.073    f    17.082          pin: fx/mult1_syn_284.fco
+net (fo=1)                              0.000         17.082          net: fx/mult1_syn_238,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_287.fci
+ADDER               x015y039z0          0.073    f    17.155          pin: fx/mult1_syn_287.fco
+net (fo=1)                              0.000         17.155          net: fx/mult1_syn_240,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_289.fci
+ADDER               x015y039z1          0.144    f    17.299       9  pin: fx/mult1_syn_289.f[0]
+net (fo=27)                             1.569         18.868          net: fx/mult1_syn_91[17],  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/add36_syn_645.b[1]
+ADDER               x015y035z3          0.770    f    19.638      10  pin: fx/add36_syn_645.fco
+net (fo=1)                              0.000         19.638          net: fx/add36_syn_600,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_646.fci
+ADDER               x015y036z2          0.132    f    19.770          pin: fx/add36_syn_646.fco
+net (fo=1)                              0.000         19.770          net: fx/add36_syn_604,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_647.fci
+ADDER               x015y036z3          0.132    f    19.902          pin: fx/add36_syn_647.fco
+net (fo=1)                              0.000         19.902          net: fx/add36_syn_608,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_648.fci
+ADDER               x015y037z2          0.132    f    20.034          pin: fx/add36_syn_648.fco
+net (fo=1)                              0.000         20.034          net: fx/add36_syn_612,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_649.fci
+ADDER               x015y037z3          0.132    f    20.166          pin: fx/add36_syn_649.fco
+net (fo=1)                              0.000         20.166          net: fx/add36_syn_616,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_650.fci
+ADDER               x015y038z2          0.132    f    20.298          pin: fx/add36_syn_650.fco
+net (fo=1)                              0.000         20.298          net: fx/add36_syn_620,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_651.fci
+ADDER               x015y038z3          0.132    f    20.430          pin: fx/add36_syn_651.fco
+net (fo=1)                              0.000         20.430          net: fx/add36_syn_624,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_652.fci
+ADDER               x015y039z2          0.387    f    20.817      11  pin: fx/add36_syn_652.fx[0]
+net (fo=4)                              0.972         21.789          net: fx/filtered_eq$eq_sum[48],  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/lt0_syn_120.a[1]
+ADDER               x011y035z0          0.627    f    22.416      12  pin: fx/lt0_syn_120.fco
+net (fo=1)                              0.000         22.416          net: fx/lt0_syn_54,  E:/fpga/src/modules/audio/audio_effects.v(51)
+                                                                      pin: fx/lt0_syn_122.fci
+ADDER               x011y035z1          0.144    f    22.560      13  pin: fx/lt0_syn_122.f[0]
+net (fo=23)                             0.601         23.161          net: fx/eq_b_n,  NOFILE(0)
+                                                                      pin: fx/eq_d_reg[4]_syn_4.d[1]
+LUT3                x011y036z3          0.262    r    23.423      14  pin: fx/eq_d_reg[4]_syn_4.f[1]
+net (fo=1)                              1.542         24.965          net: fx/eq[4],  E:/fpga/src/modules/audio/audio_effects.v(64)
+                                                                      pin: fx/ramread0_syn_6.dia[4]
+EMB32K (reg)        x008y063            0.000    f    24.965      15       
+--------------------------------------------------------------------  ---------------
+Arrival                                               24.965               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_6.clka
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -1.217         27.148               
+clock uncertainty                      -0.100         27.048               
+clock pessimism                         0.263         27.311               
+--------------------------------------------------------------------  ---------------
+Required                                              27.311               
+--------------------------------------------------------------------  ---------------
+Slack                                                  2.346               
+
+Slack               : 3.378ns
+Begin Point         : fx/ramread0_syn_24.clkb (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : out_right[7]_syn_1.do[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.418ns (cell 12.333ns (57%), net 9.085ns (43%))
+Clock Skew          : 0.043ns
+Logic Level         : 8 ( ADDER=5  MULT18=1  LUT3=1  LUT2=1 )
+Max Fanout          : 23
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.743          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clkb
+launch edge                             0.000    r     3.743               
+--------------------------------------------------------------------  ---------------
+EMB32K (clk2q)      x032y063            3.970    f     7.713          pin: fx/ramread0_syn_24.dob[0]
+net (fo=1)                              2.521         10.234          net: fx/echo_delay$delayed[16],  E:/fpga/src/modules/audio/audio_effects.v(135)
+                                                                      pin: fx/mult2_syn_98.b[16]
+MULT18              x016y027            3.563    f    13.797       1  pin: fx/mult2_syn_98.p[18]
+net (fo=1)                              0.936         14.733          net: fx/mult2_syn_21,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_266.a[1]
+ADDER               x014y022z0          0.627    f    15.360       2  pin: fx/mult2_syn_266.fco
+net (fo=1)                              0.000         15.360          net: fx/mult2_syn_221,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_269.fci
+ADDER               x014y022z1          0.073    f    15.433          pin: fx/mult2_syn_269.fco
+net (fo=1)                              0.000         15.433          net: fx/mult2_syn_223,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_272.fci
+ADDER               x014y023z0          0.073    f    15.506          pin: fx/mult2_syn_272.fco
+net (fo=1)                              0.000         15.506          net: fx/mult2_syn_225,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_275.fci
+ADDER               x014y023z1          0.073    f    15.579          pin: fx/mult2_syn_275.fco
+net (fo=1)                              0.000         15.579          net: fx/mult2_syn_227,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_278.fci
+ADDER               x014y024z0          0.073    f    15.652          pin: fx/mult2_syn_278.fco
+net (fo=1)                              0.000         15.652          net: fx/mult2_syn_229,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_281.fci
+ADDER               x014y024z1          0.073    f    15.725          pin: fx/mult2_syn_281.fco
+net (fo=1)                              0.000         15.725          net: fx/mult2_syn_231,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_284.fci
+ADDER               x014y025z0          0.073    f    15.798          pin: fx/mult2_syn_284.fco
+net (fo=1)                              0.000         15.798          net: fx/mult2_syn_233,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_287.fci
+ADDER               x014y025z1          0.073    f    15.871          pin: fx/mult2_syn_287.fco
+net (fo=1)                              0.000         15.871          net: fx/mult2_syn_235,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_290.fci
+ADDER               x014y026z0          0.355    f    16.226       3  pin: fx/mult2_syn_290.f[1]
+net (fo=1)                              0.618         16.844          net: fx/mult2_syn_101[16],  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mux8_syn_139.d[0]
+LUT2                x012y024z3          0.262    r    17.106       4  pin: fx/mux8_syn_139.f[0]
+net (fo=1)                              0.459         17.565          net: fx/mux8_syn_42,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_303.e[0]
+ADDER               x013y023z3          0.781    f    18.346       5  pin: fx/add39_syn_303.fco
+net (fo=1)                              0.000         18.346          net: fx/add39_syn_271,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_304.fci
+ADDER               x013y024z2          0.132    f    18.478          pin: fx/add39_syn_304.fco
+net (fo=1)                              0.000         18.478          net: fx/add39_syn_275,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_305.fci
+ADDER               x013y024z3          0.132    f    18.610          pin: fx/add39_syn_305.fco
+net (fo=1)                              0.000         18.610          net: fx/add39_syn_279,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_306.fci
+ADDER               x013y025z2          0.132    f    18.742          pin: fx/add39_syn_306.fco
+net (fo=1)                              0.000         18.742          net: fx/add39_syn_283,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_307.fci
+ADDER               x013y025z3          0.132    f    18.874          pin: fx/add39_syn_307.fco
+net (fo=1)                              0.000         18.874          net: fx/add39_syn_287,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_308.fci
+ADDER               x013y026z2          0.132    f    19.006          pin: fx/add39_syn_308.fco
+net (fo=1)                              0.000         19.006          net: fx/add39_syn_291,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_309.fci
+ADDER               x013y026z3          0.132    f    19.138          pin: fx/add39_syn_309.fco
+net (fo=1)                              0.000         19.138          net: fx/add39_syn_295,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_310.fci
+ADDER               x013y027z2          0.387    f    19.525       6  pin: fx/add39_syn_310.fx[0]
+net (fo=4)                              1.095         20.620          net: fx/echoed[48],  E:/fpga/src/modules/audio/audio_effects.v(129)
+                                                                      pin: fx/lt2_syn_126.a[0]
+ADDER               x012y024z1          0.823    f    21.443       7  pin: fx/lt2_syn_126.f[1]
+net (fo=23)                             0.858         22.301          net: fx/out_left_b2_n,  NOFILE(0)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[32]_syn_4.d[1]
+LUT3                x017y025z2          0.262    r    22.563       8  pin: fx/filtered_eq$historical_sum_reg[32]_syn_4.f[1]
+net (fo=2)                              2.598         25.161          net: fx/out_left_b1[7],  NOFILE(0)
+                                                                      pin: out_right[7]_syn_1.do[0]
+PAD (reg)           x025y071            0.000    f    25.161          net: out_right[7],  E:/fpga/sim/tb_audio_effects.v(6)
+--------------------------------------------------------------------  ---------------
+Arrival                                               25.161               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: out_right[7]_syn_1.osclk
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.061         28.304               
+clock uncertainty                      -0.100         28.204               
+clock pessimism                         0.335         28.539               
+--------------------------------------------------------------------  ---------------
+Required                                              28.539               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.378               
+
+Slack               : 3.380ns
+Begin Point         : fx/ramread0_syn_24.clkb (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : out_left[6]_syn_4.do[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.416ns (cell 12.333ns (57%), net 9.083ns (43%))
+Clock Skew          : 0.043ns
+Logic Level         : 8 ( ADDER=5  MULT18=1  LUT3=1  LUT2=1 )
+Max Fanout          : 23
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.743          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clkb
+launch edge                             0.000    r     3.743               
+--------------------------------------------------------------------  ---------------
+EMB32K (clk2q)      x032y063            3.970    f     7.713          pin: fx/ramread0_syn_24.dob[0]
+net (fo=1)                              2.521         10.234          net: fx/echo_delay$delayed[16],  E:/fpga/src/modules/audio/audio_effects.v(135)
+                                                                      pin: fx/mult2_syn_98.b[16]
+MULT18              x016y027            3.563    f    13.797       1  pin: fx/mult2_syn_98.p[18]
+net (fo=1)                              0.936         14.733          net: fx/mult2_syn_21,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_266.a[1]
+ADDER               x014y022z0          0.627    f    15.360       2  pin: fx/mult2_syn_266.fco
+net (fo=1)                              0.000         15.360          net: fx/mult2_syn_221,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_269.fci
+ADDER               x014y022z1          0.073    f    15.433          pin: fx/mult2_syn_269.fco
+net (fo=1)                              0.000         15.433          net: fx/mult2_syn_223,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_272.fci
+ADDER               x014y023z0          0.073    f    15.506          pin: fx/mult2_syn_272.fco
+net (fo=1)                              0.000         15.506          net: fx/mult2_syn_225,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_275.fci
+ADDER               x014y023z1          0.073    f    15.579          pin: fx/mult2_syn_275.fco
+net (fo=1)                              0.000         15.579          net: fx/mult2_syn_227,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_278.fci
+ADDER               x014y024z0          0.073    f    15.652          pin: fx/mult2_syn_278.fco
+net (fo=1)                              0.000         15.652          net: fx/mult2_syn_229,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_281.fci
+ADDER               x014y024z1          0.073    f    15.725          pin: fx/mult2_syn_281.fco
+net (fo=1)                              0.000         15.725          net: fx/mult2_syn_231,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_284.fci
+ADDER               x014y025z0          0.073    f    15.798          pin: fx/mult2_syn_284.fco
+net (fo=1)                              0.000         15.798          net: fx/mult2_syn_233,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_287.fci
+ADDER               x014y025z1          0.073    f    15.871          pin: fx/mult2_syn_287.fco
+net (fo=1)                              0.000         15.871          net: fx/mult2_syn_235,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_290.fci
+ADDER               x014y026z0          0.355    f    16.226       3  pin: fx/mult2_syn_290.f[1]
+net (fo=1)                              0.618         16.844          net: fx/mult2_syn_101[16],  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mux8_syn_139.d[0]
+LUT2                x012y024z3          0.262    r    17.106       4  pin: fx/mux8_syn_139.f[0]
+net (fo=1)                              0.459         17.565          net: fx/mux8_syn_42,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_303.e[0]
+ADDER               x013y023z3          0.781    f    18.346       5  pin: fx/add39_syn_303.fco
+net (fo=1)                              0.000         18.346          net: fx/add39_syn_271,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_304.fci
+ADDER               x013y024z2          0.132    f    18.478          pin: fx/add39_syn_304.fco
+net (fo=1)                              0.000         18.478          net: fx/add39_syn_275,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_305.fci
+ADDER               x013y024z3          0.132    f    18.610          pin: fx/add39_syn_305.fco
+net (fo=1)                              0.000         18.610          net: fx/add39_syn_279,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_306.fci
+ADDER               x013y025z2          0.132    f    18.742          pin: fx/add39_syn_306.fco
+net (fo=1)                              0.000         18.742          net: fx/add39_syn_283,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_307.fci
+ADDER               x013y025z3          0.132    f    18.874          pin: fx/add39_syn_307.fco
+net (fo=1)                              0.000         18.874          net: fx/add39_syn_287,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_308.fci
+ADDER               x013y026z2          0.132    f    19.006          pin: fx/add39_syn_308.fco
+net (fo=1)                              0.000         19.006          net: fx/add39_syn_291,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_309.fci
+ADDER               x013y026z3          0.132    f    19.138          pin: fx/add39_syn_309.fco
+net (fo=1)                              0.000         19.138          net: fx/add39_syn_295,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_310.fci
+ADDER               x013y027z2          0.387    f    19.525       6  pin: fx/add39_syn_310.fx[0]
+net (fo=4)                              1.095         20.620          net: fx/echoed[48],  E:/fpga/src/modules/audio/audio_effects.v(129)
+                                                                      pin: fx/lt2_syn_126.a[0]
+ADDER               x012y024z1          0.823    f    21.443       7  pin: fx/lt2_syn_126.f[1]
+net (fo=23)                             0.858         22.301          net: fx/out_left_b2_n,  NOFILE(0)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[32]_syn_4.d[0]
+LUT3                x017y025z2          0.262    r    22.563       8  pin: fx/filtered_eq$historical_sum_reg[32]_syn_4.f[0]
+net (fo=2)                              2.596         25.159          net: fx/out_left_b1[6],  NOFILE(0)
+                                                                      pin: out_left[6]_syn_4.do[0]
+PAD (reg)           x028y071            0.000    f    25.159          net: out_left[6],  E:/fpga/sim/tb_audio_effects.v(6)
+--------------------------------------------------------------------  ---------------
+Arrival                                               25.159               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: out_left[6]_syn_4.osclk
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.061         28.304               
+clock uncertainty                      -0.100         28.204               
+clock pessimism                         0.335         28.539               
+--------------------------------------------------------------------  ---------------
+Required                                              28.539               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.380               
+
+Slack               : 3.560ns
+Begin Point         : fx/ramread0_syn_24.clkb (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : out_right[13]_syn_1.do[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.236ns (cell 12.333ns (58%), net 8.903ns (42%))
+Clock Skew          : 0.043ns
+Logic Level         : 8 ( ADDER=5  MULT18=1  LUT3=1  LUT2=1 )
+Max Fanout          : 23
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.743          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clkb
+launch edge                             0.000    r     3.743               
+--------------------------------------------------------------------  ---------------
+EMB32K (clk2q)      x032y063            3.970    f     7.713          pin: fx/ramread0_syn_24.dob[0]
+net (fo=1)                              2.521         10.234          net: fx/echo_delay$delayed[16],  E:/fpga/src/modules/audio/audio_effects.v(135)
+                                                                      pin: fx/mult2_syn_98.b[16]
+MULT18              x016y027            3.563    f    13.797       1  pin: fx/mult2_syn_98.p[18]
+net (fo=1)                              0.936         14.733          net: fx/mult2_syn_21,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_266.a[1]
+ADDER               x014y022z0          0.627    f    15.360       2  pin: fx/mult2_syn_266.fco
+net (fo=1)                              0.000         15.360          net: fx/mult2_syn_221,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_269.fci
+ADDER               x014y022z1          0.073    f    15.433          pin: fx/mult2_syn_269.fco
+net (fo=1)                              0.000         15.433          net: fx/mult2_syn_223,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_272.fci
+ADDER               x014y023z0          0.073    f    15.506          pin: fx/mult2_syn_272.fco
+net (fo=1)                              0.000         15.506          net: fx/mult2_syn_225,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_275.fci
+ADDER               x014y023z1          0.073    f    15.579          pin: fx/mult2_syn_275.fco
+net (fo=1)                              0.000         15.579          net: fx/mult2_syn_227,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_278.fci
+ADDER               x014y024z0          0.073    f    15.652          pin: fx/mult2_syn_278.fco
+net (fo=1)                              0.000         15.652          net: fx/mult2_syn_229,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_281.fci
+ADDER               x014y024z1          0.073    f    15.725          pin: fx/mult2_syn_281.fco
+net (fo=1)                              0.000         15.725          net: fx/mult2_syn_231,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_284.fci
+ADDER               x014y025z0          0.073    f    15.798          pin: fx/mult2_syn_284.fco
+net (fo=1)                              0.000         15.798          net: fx/mult2_syn_233,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_287.fci
+ADDER               x014y025z1          0.073    f    15.871          pin: fx/mult2_syn_287.fco
+net (fo=1)                              0.000         15.871          net: fx/mult2_syn_235,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_290.fci
+ADDER               x014y026z0          0.355    f    16.226       3  pin: fx/mult2_syn_290.f[1]
+net (fo=1)                              0.618         16.844          net: fx/mult2_syn_101[16],  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mux8_syn_139.d[0]
+LUT2                x012y024z3          0.262    r    17.106       4  pin: fx/mux8_syn_139.f[0]
+net (fo=1)                              0.459         17.565          net: fx/mux8_syn_42,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_303.e[0]
+ADDER               x013y023z3          0.781    f    18.346       5  pin: fx/add39_syn_303.fco
+net (fo=1)                              0.000         18.346          net: fx/add39_syn_271,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_304.fci
+ADDER               x013y024z2          0.132    f    18.478          pin: fx/add39_syn_304.fco
+net (fo=1)                              0.000         18.478          net: fx/add39_syn_275,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_305.fci
+ADDER               x013y024z3          0.132    f    18.610          pin: fx/add39_syn_305.fco
+net (fo=1)                              0.000         18.610          net: fx/add39_syn_279,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_306.fci
+ADDER               x013y025z2          0.132    f    18.742          pin: fx/add39_syn_306.fco
+net (fo=1)                              0.000         18.742          net: fx/add39_syn_283,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_307.fci
+ADDER               x013y025z3          0.132    f    18.874          pin: fx/add39_syn_307.fco
+net (fo=1)                              0.000         18.874          net: fx/add39_syn_287,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_308.fci
+ADDER               x013y026z2          0.132    f    19.006          pin: fx/add39_syn_308.fco
+net (fo=1)                              0.000         19.006          net: fx/add39_syn_291,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_309.fci
+ADDER               x013y026z3          0.132    f    19.138          pin: fx/add39_syn_309.fco
+net (fo=1)                              0.000         19.138          net: fx/add39_syn_295,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_310.fci
+ADDER               x013y027z2          0.387    f    19.525       6  pin: fx/add39_syn_310.fx[0]
+net (fo=4)                              1.095         20.620          net: fx/echoed[48],  E:/fpga/src/modules/audio/audio_effects.v(129)
+                                                                      pin: fx/lt2_syn_126.a[0]
+ADDER               x012y024z1          0.823    f    21.443       7  pin: fx/lt2_syn_126.f[1]
+net (fo=23)                             0.747         22.190          net: fx/out_left_b2_n,  NOFILE(0)
+                                                                      pin: fx/out_left_b1[13]_syn_4.d[1]
+LUT3                x018y021z2          0.262    r    22.452       8  pin: fx/out_left_b1[13]_syn_4.f[1]
+net (fo=2)                              2.527         24.979          net: fx/out_left_b1[13],  NOFILE(0)
+                                                                      pin: out_right[13]_syn_1.do[0]
+PAD (reg)           x028y071            0.000    f    24.979          net: out_right[13],  E:/fpga/sim/tb_audio_effects.v(6)
+--------------------------------------------------------------------  ---------------
+Arrival                                               24.979               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: out_right[13]_syn_1.osclk
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.061         28.304               
+clock uncertainty                      -0.100         28.204               
+clock pessimism                         0.335         28.539               
+--------------------------------------------------------------------  ---------------
+Required                                              28.539               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.560               
+
+Slack               : 3.586ns
+Begin Point         : fx/filtered_eq$historical_sum_reg[5]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/eq_d_reg[21]_syn_4.d[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.062ns (cell 11.921ns (56%), net 9.141ns (44%))
+Clock Skew          : 0.136ns
+Logic Level         : 14 ( ADDER=12  MULT18=1  LUT3=1 )
+Max Fanout          : 27
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            2.062          3.952          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.clk
+launch edge                             0.000    r     3.952               
+--------------------------------------------------------------------  ---------------
+clk2q               x017y023z3          0.146    r     4.098          pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.q[1]
+net (fo=1)                              0.476          4.574          net: fx/filtered_eq$historical_sum[5],  E:/fpga/src/modules/audio/audio_effects.v(73)
+                                                                      pin: fx/add33_syn_591.e[0]
+ADDER               x018y024z2          0.781    f     5.355       1  pin: fx/add33_syn_591.fco
+net (fo=1)                              0.000          5.355          net: fx/add33_syn_367,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_592.fci
+ADDER               x018y024z3          0.132    f     5.487          pin: fx/add33_syn_592.fco
+net (fo=1)                              0.000          5.487          net: fx/add33_syn_371,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_593.fci
+ADDER               x018y025z2          0.387    f     5.874       2  pin: fx/add33_syn_593.fx[0]
+net (fo=1)                              0.900          6.774          net: fx/add33_syn_32[8],  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_584.d[1]
+ADDER               x017y027z2          0.715    f     7.489       3  pin: fx/add33_syn_584.fco
+net (fo=1)                              0.000          7.489          net: fx/add33_syn_557,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_585.fci
+ADDER               x017y027z3          0.132    f     7.621          pin: fx/add33_syn_585.fco
+net (fo=1)                              0.000          7.621          net: fx/add33_syn_561,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_586.fci
+ADDER               x017y028z2          0.132    f     7.753          pin: fx/add33_syn_586.fco
+net (fo=1)                              0.000          7.753          net: fx/add33_syn_565,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_587.fci
+ADDER               x017y028z3          0.132    f     7.885          pin: fx/add33_syn_587.fco
+net (fo=1)                              0.000          7.885          net: fx/add33_syn_569,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_588.fci
+ADDER               x017y029z2          0.132    f     8.017          pin: fx/add33_syn_588.fco
+net (fo=1)                              0.000          8.017          net: fx/add33_syn_573,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_589.fci
+ADDER               x017y029z3          0.387    f     8.404       4  pin: fx/add33_syn_589.fx[0]
+net (fo=2)                              1.298          9.702          net: fx/filtered_eq$low[17],  E:/fpga/src/modules/audio/audio_effects.v(96)
+                                                                      pin: fx/sub7_syn_186.b[0]
+ADDER               x015y032z1          0.627    f    10.329       5  pin: fx/sub7_syn_186.fco
+net (fo=1)                              0.000         10.329          net: fx/sub7_syn_124,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_189.fci
+ADDER               x015y033z0          0.073    f    10.402          pin: fx/sub7_syn_189.fco
+net (fo=1)                              0.000         10.402          net: fx/sub7_syn_126,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_192.fci
+ADDER               x015y033z1          0.073    f    10.475          pin: fx/sub7_syn_192.fco
+net (fo=1)                              0.000         10.475          net: fx/sub7_syn_128,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_195.fci
+ADDER               x015y034z0          0.355    f    10.830       6  pin: fx/sub7_syn_195.f[1]
+net (fo=12)                             1.078         11.908          net: fx/filtered_eq$high[24],  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/mult1_syn_89.b[6]
+MULT18              x016y036            3.563    f    15.471       7  pin: fx/mult1_syn_89.p[7]
+net (fo=1)                              0.765         16.236          net: fx/mult1_syn_40,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_275.b[0]
+ADDER               x015y037z0          0.627    f    16.863       8  pin: fx/mult1_syn_275.fco
+net (fo=1)                              0.000         16.863          net: fx/mult1_syn_232,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_278.fci
+ADDER               x015y037z1          0.073    f    16.936          pin: fx/mult1_syn_278.fco
+net (fo=1)                              0.000         16.936          net: fx/mult1_syn_234,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_281.fci
+ADDER               x015y038z0          0.073    f    17.009          pin: fx/mult1_syn_281.fco
+net (fo=1)                              0.000         17.009          net: fx/mult1_syn_236,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_284.fci
+ADDER               x015y038z1          0.073    f    17.082          pin: fx/mult1_syn_284.fco
+net (fo=1)                              0.000         17.082          net: fx/mult1_syn_238,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_287.fci
+ADDER               x015y039z0          0.073    f    17.155          pin: fx/mult1_syn_287.fco
+net (fo=1)                              0.000         17.155          net: fx/mult1_syn_240,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_289.fci
+ADDER               x015y039z1          0.144    f    17.299       9  pin: fx/mult1_syn_289.f[0]
+net (fo=27)                             1.569         18.868          net: fx/mult1_syn_91[17],  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/add36_syn_645.b[1]
+ADDER               x015y035z3          0.770    f    19.638      10  pin: fx/add36_syn_645.fco
+net (fo=1)                              0.000         19.638          net: fx/add36_syn_600,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_646.fci
+ADDER               x015y036z2          0.132    f    19.770          pin: fx/add36_syn_646.fco
+net (fo=1)                              0.000         19.770          net: fx/add36_syn_604,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_647.fci
+ADDER               x015y036z3          0.132    f    19.902          pin: fx/add36_syn_647.fco
+net (fo=1)                              0.000         19.902          net: fx/add36_syn_608,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_648.fci
+ADDER               x015y037z2          0.132    f    20.034          pin: fx/add36_syn_648.fco
+net (fo=1)                              0.000         20.034          net: fx/add36_syn_612,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_649.fci
+ADDER               x015y037z3          0.132    f    20.166          pin: fx/add36_syn_649.fco
+net (fo=1)                              0.000         20.166          net: fx/add36_syn_616,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_650.fci
+ADDER               x015y038z2          0.132    f    20.298          pin: fx/add36_syn_650.fco
+net (fo=1)                              0.000         20.298          net: fx/add36_syn_620,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_651.fci
+ADDER               x015y038z3          0.132    f    20.430          pin: fx/add36_syn_651.fco
+net (fo=1)                              0.000         20.430          net: fx/add36_syn_624,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_652.fci
+ADDER               x015y039z2          0.387    f    20.817      11  pin: fx/add36_syn_652.fx[0]
+net (fo=4)                              0.972         21.789          net: fx/filtered_eq$eq_sum[48],  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/lt0_syn_120.a[1]
+ADDER               x011y035z0          0.627    f    22.416      12  pin: fx/lt0_syn_120.fco
+net (fo=1)                              0.000         22.416          net: fx/lt0_syn_54,  E:/fpga/src/modules/audio/audio_effects.v(51)
+                                                                      pin: fx/lt0_syn_122.fci
+ADDER               x011y035z1          0.144    f    22.560      13  pin: fx/lt0_syn_122.f[0]
+net (fo=23)                             2.083         24.643          net: fx/eq_b_n,  NOFILE(0)
+                                                                      pin: fx/eq_d_reg[21]_syn_4.d[0]
+LUT3 (reg)          x023y047z2          0.371    r    25.014      14  net: fx/eq_d[22],  E:/fpga/src/modules/audio/audio_effects.v(118)
+--------------------------------------------------------------------  ---------------
+Arrival                                               25.014               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.553          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/eq_d_reg[21]_syn_4.clk
+capture edge                           25.000    r    28.553               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.116         28.437               
+clock uncertainty                      -0.100         28.337               
+clock pessimism                         0.263         28.600               
+--------------------------------------------------------------------  ---------------
+Required                                              28.600               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.586               
+
+Slack               : 3.586ns
+Begin Point         : fx/filtered_eq$historical_sum_reg[5]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/eq_d_reg[21]_syn_4.d[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.062ns (cell 11.921ns (56%), net 9.141ns (44%))
+Clock Skew          : 0.136ns
+Logic Level         : 14 ( ADDER=12  MULT18=1  LUT3=1 )
+Max Fanout          : 27
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            2.062          3.952          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.clk
+launch edge                             0.000    r     3.952               
+--------------------------------------------------------------------  ---------------
+clk2q               x017y023z3          0.146    r     4.098          pin: fx/filtered_eq$historical_sum_reg[5]_syn_3.q[1]
+net (fo=1)                              0.476          4.574          net: fx/filtered_eq$historical_sum[5],  E:/fpga/src/modules/audio/audio_effects.v(73)
+                                                                      pin: fx/add33_syn_591.e[0]
+ADDER               x018y024z2          0.781    f     5.355       1  pin: fx/add33_syn_591.fco
+net (fo=1)                              0.000          5.355          net: fx/add33_syn_367,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_592.fci
+ADDER               x018y024z3          0.132    f     5.487          pin: fx/add33_syn_592.fco
+net (fo=1)                              0.000          5.487          net: fx/add33_syn_371,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_593.fci
+ADDER               x018y025z2          0.387    f     5.874       2  pin: fx/add33_syn_593.fx[0]
+net (fo=1)                              0.900          6.774          net: fx/add33_syn_32[8],  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_584.d[1]
+ADDER               x017y027z2          0.715    f     7.489       3  pin: fx/add33_syn_584.fco
+net (fo=1)                              0.000          7.489          net: fx/add33_syn_557,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_585.fci
+ADDER               x017y027z3          0.132    f     7.621          pin: fx/add33_syn_585.fco
+net (fo=1)                              0.000          7.621          net: fx/add33_syn_561,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_586.fci
+ADDER               x017y028z2          0.132    f     7.753          pin: fx/add33_syn_586.fco
+net (fo=1)                              0.000          7.753          net: fx/add33_syn_565,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_587.fci
+ADDER               x017y028z3          0.132    f     7.885          pin: fx/add33_syn_587.fco
+net (fo=1)                              0.000          7.885          net: fx/add33_syn_569,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_588.fci
+ADDER               x017y029z2          0.132    f     8.017          pin: fx/add33_syn_588.fco
+net (fo=1)                              0.000          8.017          net: fx/add33_syn_573,  E:/fpga/src/modules/audio/audio_effects.v(36)
+                                                                      pin: fx/add33_syn_589.fci
+ADDER               x017y029z3          0.387    f     8.404       4  pin: fx/add33_syn_589.fx[0]
+net (fo=2)                              1.298          9.702          net: fx/filtered_eq$low[17],  E:/fpga/src/modules/audio/audio_effects.v(96)
+                                                                      pin: fx/sub7_syn_186.b[0]
+ADDER               x015y032z1          0.627    f    10.329       5  pin: fx/sub7_syn_186.fco
+net (fo=1)                              0.000         10.329          net: fx/sub7_syn_124,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_189.fci
+ADDER               x015y033z0          0.073    f    10.402          pin: fx/sub7_syn_189.fco
+net (fo=1)                              0.000         10.402          net: fx/sub7_syn_126,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_192.fci
+ADDER               x015y033z1          0.073    f    10.475          pin: fx/sub7_syn_192.fco
+net (fo=1)                              0.000         10.475          net: fx/sub7_syn_128,  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/sub7_syn_195.fci
+ADDER               x015y034z0          0.355    f    10.830       6  pin: fx/sub7_syn_195.f[1]
+net (fo=12)                             1.078         11.908          net: fx/filtered_eq$high[24],  E:/fpga/src/modules/audio/audio_effects.v(97)
+                                                                      pin: fx/mult1_syn_89.b[6]
+MULT18              x016y036            3.563    f    15.471       7  pin: fx/mult1_syn_89.p[7]
+net (fo=1)                              0.765         16.236          net: fx/mult1_syn_40,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_275.b[0]
+ADDER               x015y037z0          0.627    f    16.863       8  pin: fx/mult1_syn_275.fco
+net (fo=1)                              0.000         16.863          net: fx/mult1_syn_232,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_278.fci
+ADDER               x015y037z1          0.073    f    16.936          pin: fx/mult1_syn_278.fco
+net (fo=1)                              0.000         16.936          net: fx/mult1_syn_234,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_281.fci
+ADDER               x015y038z0          0.073    f    17.009          pin: fx/mult1_syn_281.fco
+net (fo=1)                              0.000         17.009          net: fx/mult1_syn_236,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_284.fci
+ADDER               x015y038z1          0.073    f    17.082          pin: fx/mult1_syn_284.fco
+net (fo=1)                              0.000         17.082          net: fx/mult1_syn_238,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_287.fci
+ADDER               x015y039z0          0.073    f    17.155          pin: fx/mult1_syn_287.fco
+net (fo=1)                              0.000         17.155          net: fx/mult1_syn_240,  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/mult1_syn_289.fci
+ADDER               x015y039z1          0.144    f    17.299       9  pin: fx/mult1_syn_289.f[0]
+net (fo=27)                             1.569         18.868          net: fx/mult1_syn_91[17],  E:/fpga/src/modules/audio/audio_effects.v(99)
+                                                                      pin: fx/add36_syn_645.b[1]
+ADDER               x015y035z3          0.770    f    19.638      10  pin: fx/add36_syn_645.fco
+net (fo=1)                              0.000         19.638          net: fx/add36_syn_600,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_646.fci
+ADDER               x015y036z2          0.132    f    19.770          pin: fx/add36_syn_646.fco
+net (fo=1)                              0.000         19.770          net: fx/add36_syn_604,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_647.fci
+ADDER               x015y036z3          0.132    f    19.902          pin: fx/add36_syn_647.fco
+net (fo=1)                              0.000         19.902          net: fx/add36_syn_608,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_648.fci
+ADDER               x015y037z2          0.132    f    20.034          pin: fx/add36_syn_648.fco
+net (fo=1)                              0.000         20.034          net: fx/add36_syn_612,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_649.fci
+ADDER               x015y037z3          0.132    f    20.166          pin: fx/add36_syn_649.fco
+net (fo=1)                              0.000         20.166          net: fx/add36_syn_616,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_650.fci
+ADDER               x015y038z2          0.132    f    20.298          pin: fx/add36_syn_650.fco
+net (fo=1)                              0.000         20.298          net: fx/add36_syn_620,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_651.fci
+ADDER               x015y038z3          0.132    f    20.430          pin: fx/add36_syn_651.fco
+net (fo=1)                              0.000         20.430          net: fx/add36_syn_624,  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/add36_syn_652.fci
+ADDER               x015y039z2          0.387    f    20.817      11  pin: fx/add36_syn_652.fx[0]
+net (fo=4)                              0.972         21.789          net: fx/filtered_eq$eq_sum[48],  E:/fpga/src/modules/audio/audio_effects.v(102)
+                                                                      pin: fx/lt0_syn_120.a[1]
+ADDER               x011y035z0          0.627    f    22.416      12  pin: fx/lt0_syn_120.fco
+net (fo=1)                              0.000         22.416          net: fx/lt0_syn_54,  E:/fpga/src/modules/audio/audio_effects.v(51)
+                                                                      pin: fx/lt0_syn_122.fci
+ADDER               x011y035z1          0.144    f    22.560      13  pin: fx/lt0_syn_122.f[0]
+net (fo=23)                             2.083         24.643          net: fx/eq_b_n,  NOFILE(0)
+                                                                      pin: fx/eq_d_reg[21]_syn_4.d[1]
+LUT3 (reg)          x023y047z2          0.371    r    25.014      14  net: fx/eq_d[21],  E:/fpga/src/modules/audio/audio_effects.v(118)
+--------------------------------------------------------------------  ---------------
+Arrival                                               25.014               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.553          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/eq_d_reg[21]_syn_4.clk
+capture edge                           25.000    r    28.553               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.116         28.437               
+clock uncertainty                      -0.100         28.337               
+clock pessimism                         0.263         28.600               
+--------------------------------------------------------------------  ---------------
+Required                                              28.600               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.586               
+
+Slack               : 3.607ns
+Begin Point         : fx/ramread0_syn_24.clkb (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : out_right[12]_syn_1.do[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.062ns (cell 12.333ns (58%), net 8.729ns (42%))
+Clock Skew          : 0.170ns
+Logic Level         : 8 ( ADDER=5  MULT18=1  LUT3=1  LUT2=1 )
+Max Fanout          : 23
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.743          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clkb
+launch edge                             0.000    r     3.743               
+--------------------------------------------------------------------  ---------------
+EMB32K (clk2q)      x032y063            3.970    f     7.713          pin: fx/ramread0_syn_24.dob[0]
+net (fo=1)                              2.521         10.234          net: fx/echo_delay$delayed[16],  E:/fpga/src/modules/audio/audio_effects.v(135)
+                                                                      pin: fx/mult2_syn_98.b[16]
+MULT18              x016y027            3.563    f    13.797       1  pin: fx/mult2_syn_98.p[18]
+net (fo=1)                              0.936         14.733          net: fx/mult2_syn_21,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_266.a[1]
+ADDER               x014y022z0          0.627    f    15.360       2  pin: fx/mult2_syn_266.fco
+net (fo=1)                              0.000         15.360          net: fx/mult2_syn_221,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_269.fci
+ADDER               x014y022z1          0.073    f    15.433          pin: fx/mult2_syn_269.fco
+net (fo=1)                              0.000         15.433          net: fx/mult2_syn_223,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_272.fci
+ADDER               x014y023z0          0.073    f    15.506          pin: fx/mult2_syn_272.fco
+net (fo=1)                              0.000         15.506          net: fx/mult2_syn_225,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_275.fci
+ADDER               x014y023z1          0.073    f    15.579          pin: fx/mult2_syn_275.fco
+net (fo=1)                              0.000         15.579          net: fx/mult2_syn_227,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_278.fci
+ADDER               x014y024z0          0.073    f    15.652          pin: fx/mult2_syn_278.fco
+net (fo=1)                              0.000         15.652          net: fx/mult2_syn_229,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_281.fci
+ADDER               x014y024z1          0.073    f    15.725          pin: fx/mult2_syn_281.fco
+net (fo=1)                              0.000         15.725          net: fx/mult2_syn_231,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_284.fci
+ADDER               x014y025z0          0.073    f    15.798          pin: fx/mult2_syn_284.fco
+net (fo=1)                              0.000         15.798          net: fx/mult2_syn_233,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_287.fci
+ADDER               x014y025z1          0.073    f    15.871          pin: fx/mult2_syn_287.fco
+net (fo=1)                              0.000         15.871          net: fx/mult2_syn_235,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_290.fci
+ADDER               x014y026z0          0.355    f    16.226       3  pin: fx/mult2_syn_290.f[1]
+net (fo=1)                              0.618         16.844          net: fx/mult2_syn_101[16],  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mux8_syn_139.d[0]
+LUT2                x012y024z3          0.262    r    17.106       4  pin: fx/mux8_syn_139.f[0]
+net (fo=1)                              0.459         17.565          net: fx/mux8_syn_42,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_303.e[0]
+ADDER               x013y023z3          0.781    f    18.346       5  pin: fx/add39_syn_303.fco
+net (fo=1)                              0.000         18.346          net: fx/add39_syn_271,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_304.fci
+ADDER               x013y024z2          0.132    f    18.478          pin: fx/add39_syn_304.fco
+net (fo=1)                              0.000         18.478          net: fx/add39_syn_275,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_305.fci
+ADDER               x013y024z3          0.132    f    18.610          pin: fx/add39_syn_305.fco
+net (fo=1)                              0.000         18.610          net: fx/add39_syn_279,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_306.fci
+ADDER               x013y025z2          0.132    f    18.742          pin: fx/add39_syn_306.fco
+net (fo=1)                              0.000         18.742          net: fx/add39_syn_283,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_307.fci
+ADDER               x013y025z3          0.132    f    18.874          pin: fx/add39_syn_307.fco
+net (fo=1)                              0.000         18.874          net: fx/add39_syn_287,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_308.fci
+ADDER               x013y026z2          0.132    f    19.006          pin: fx/add39_syn_308.fco
+net (fo=1)                              0.000         19.006          net: fx/add39_syn_291,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_309.fci
+ADDER               x013y026z3          0.132    f    19.138          pin: fx/add39_syn_309.fco
+net (fo=1)                              0.000         19.138          net: fx/add39_syn_295,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_310.fci
+ADDER               x013y027z2          0.387    f    19.525       6  pin: fx/add39_syn_310.fx[0]
+net (fo=4)                              1.095         20.620          net: fx/echoed[48],  E:/fpga/src/modules/audio/audio_effects.v(129)
+                                                                      pin: fx/lt2_syn_126.a[0]
+ADDER               x012y024z1          0.823    f    21.443       7  pin: fx/lt2_syn_126.f[1]
+net (fo=23)                             0.911         22.354          net: fx/out_left_b2_n,  NOFILE(0)
+                                                                      pin: fx/out_left_b1[12]_syn_4.d[0]
+LUT3                x017y020z3          0.262    r    22.616       8  pin: fx/out_left_b1[12]_syn_4.f[0]
+net (fo=2)                              2.189         24.805          net: fx/out_left_b1[12],  NOFILE(0)
+                                                                      pin: out_right[12]_syn_1.do[0]
+PAD (reg)           x040y041            0.000    f    24.805          net: out_right[12],  E:/fpga/sim/tb_audio_effects.v(6)
+--------------------------------------------------------------------  ---------------
+Arrival                                               24.805               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.538          3.238          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: out_right[12]_syn_1.osclk
+capture edge                           25.000    r    28.238               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.061         28.177               
+clock uncertainty                      -0.100         28.077               
+clock pessimism                         0.335         28.412               
+--------------------------------------------------------------------  ---------------
+Required                                              28.412               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.607               
+
+Slack               : 3.721ns
+Begin Point         : fx/ramread0_syn_24.clkb (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : out_right[20]_syn_1.do[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 25.000ns { clk rising@25.000ns - clk rising@0.000ns }
+Data Path Delay     : 21.075ns (cell 12.333ns (58%), net 8.742ns (42%))
+Clock Skew          : 0.043ns
+Logic Level         : 8 ( ADDER=5  MULT18=1  LUT3=1  LUT2=1 )
+Max Fanout          : 23
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.890          1.890          pin: clk_syn_2.di
+net (fo=275)                            1.853          3.743          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/ramread0_syn_24.clkb
+launch edge                             0.000    r     3.743               
+--------------------------------------------------------------------  ---------------
+EMB32K (clk2q)      x032y063            3.970    f     7.713          pin: fx/ramread0_syn_24.dob[0]
+net (fo=1)                              2.521         10.234          net: fx/echo_delay$delayed[16],  E:/fpga/src/modules/audio/audio_effects.v(135)
+                                                                      pin: fx/mult2_syn_98.b[16]
+MULT18              x016y027            3.563    f    13.797       1  pin: fx/mult2_syn_98.p[18]
+net (fo=1)                              0.936         14.733          net: fx/mult2_syn_21,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_266.a[1]
+ADDER               x014y022z0          0.627    f    15.360       2  pin: fx/mult2_syn_266.fco
+net (fo=1)                              0.000         15.360          net: fx/mult2_syn_221,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_269.fci
+ADDER               x014y022z1          0.073    f    15.433          pin: fx/mult2_syn_269.fco
+net (fo=1)                              0.000         15.433          net: fx/mult2_syn_223,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_272.fci
+ADDER               x014y023z0          0.073    f    15.506          pin: fx/mult2_syn_272.fco
+net (fo=1)                              0.000         15.506          net: fx/mult2_syn_225,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_275.fci
+ADDER               x014y023z1          0.073    f    15.579          pin: fx/mult2_syn_275.fco
+net (fo=1)                              0.000         15.579          net: fx/mult2_syn_227,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_278.fci
+ADDER               x014y024z0          0.073    f    15.652          pin: fx/mult2_syn_278.fco
+net (fo=1)                              0.000         15.652          net: fx/mult2_syn_229,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_281.fci
+ADDER               x014y024z1          0.073    f    15.725          pin: fx/mult2_syn_281.fco
+net (fo=1)                              0.000         15.725          net: fx/mult2_syn_231,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_284.fci
+ADDER               x014y025z0          0.073    f    15.798          pin: fx/mult2_syn_284.fco
+net (fo=1)                              0.000         15.798          net: fx/mult2_syn_233,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_287.fci
+ADDER               x014y025z1          0.073    f    15.871          pin: fx/mult2_syn_287.fco
+net (fo=1)                              0.000         15.871          net: fx/mult2_syn_235,  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mult2_syn_290.fci
+ADDER               x014y026z0          0.355    f    16.226       3  pin: fx/mult2_syn_290.f[1]
+net (fo=1)                              0.618         16.844          net: fx/mult2_syn_101[16],  E:/fpga/src/modules/audio/audio_effects.v(150)
+                                                                      pin: fx/mux8_syn_139.d[0]
+LUT2                x012y024z3          0.262    r    17.106       4  pin: fx/mux8_syn_139.f[0]
+net (fo=1)                              0.459         17.565          net: fx/mux8_syn_42,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_303.e[0]
+ADDER               x013y023z3          0.781    f    18.346       5  pin: fx/add39_syn_303.fco
+net (fo=1)                              0.000         18.346          net: fx/add39_syn_271,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_304.fci
+ADDER               x013y024z2          0.132    f    18.478          pin: fx/add39_syn_304.fco
+net (fo=1)                              0.000         18.478          net: fx/add39_syn_275,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_305.fci
+ADDER               x013y024z3          0.132    f    18.610          pin: fx/add39_syn_305.fco
+net (fo=1)                              0.000         18.610          net: fx/add39_syn_279,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_306.fci
+ADDER               x013y025z2          0.132    f    18.742          pin: fx/add39_syn_306.fco
+net (fo=1)                              0.000         18.742          net: fx/add39_syn_283,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_307.fci
+ADDER               x013y025z3          0.132    f    18.874          pin: fx/add39_syn_307.fco
+net (fo=1)                              0.000         18.874          net: fx/add39_syn_287,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_308.fci
+ADDER               x013y026z2          0.132    f    19.006          pin: fx/add39_syn_308.fco
+net (fo=1)                              0.000         19.006          net: fx/add39_syn_291,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_309.fci
+ADDER               x013y026z3          0.132    f    19.138          pin: fx/add39_syn_309.fco
+net (fo=1)                              0.000         19.138          net: fx/add39_syn_295,  E:/fpga/src/modules/audio/audio_effects.v(152)
+                                                                      pin: fx/add39_syn_310.fci
+ADDER               x013y027z2          0.387    f    19.525       6  pin: fx/add39_syn_310.fx[0]
+net (fo=4)                              1.095         20.620          net: fx/echoed[48],  E:/fpga/src/modules/audio/audio_effects.v(129)
+                                                                      pin: fx/lt2_syn_126.a[0]
+ADDER               x012y024z1          0.823    f    21.443       7  pin: fx/lt2_syn_126.f[1]
+net (fo=23)                             0.380         21.823          net: fx/out_left_b2_n,  NOFILE(0)
+                                                                      pin: fx/out_left_b1[20]_syn_4.d[1]
+LUT3                x012y022z3          0.262    r    22.085       8  pin: fx/out_left_b1[20]_syn_4.f[1]
+net (fo=2)                              2.733         24.818          net: fx/out_left_b1[20],  NOFILE(0)
+                                                                      pin: out_right[20]_syn_1.do[0]
+PAD (reg)           x030y071            0.000    f    24.818          net: out_right[20],  E:/fpga/sim/tb_audio_effects.v(6)
+--------------------------------------------------------------------  ---------------
+Arrival                                               24.818               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.700          1.700          pin: clk_syn_2.di
+net (fo=275)                            1.665          3.365          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: out_right[20]_syn_1.osclk
+capture edge                           25.000    r    28.365               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.061         28.304               
+clock uncertainty                      -0.100         28.204               
+clock pessimism                         0.335         28.539               
+--------------------------------------------------------------------  ---------------
+Required                                              28.539               
+--------------------------------------------------------------------  ---------------
+Slack                                                  3.721               
+
+
+
+Min Paths
+----------------------------------------------------------------------------------------------------
+Slack               : 0.214ns
+Begin Point         : fx/filtered_eq$history_reg[233]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[211]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.420ns (cell 0.204ns (48%), net 0.216ns (52%))
+Clock Skew          : 0.045ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[233]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x022y028z2          0.109    f     3.175          pin: fx/filtered_eq$history_reg[233]_syn_3.q[0]
+net (fo=5)                              0.216          3.391          net: fx/filtered_eq$history[4][19],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[211]_syn_3.mi[1]
+reg                 x023y028z2          0.095    f     3.486          net: fx/filtered_eq$history[5][19],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.486               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[211]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.259          3.272               
+--------------------------------------------------------------------  ---------------
+Required                                               3.272               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.214               
+
+Slack               : 0.223ns
+Begin Point         : fx/filtered_eq$history_reg[74]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[50]_syn_3.mi[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.045ns
+Logic Level         : 0
+Max Fanout          : 4
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[74]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x027y020z2          0.109    f     3.175          pin: fx/filtered_eq$history_reg[74]_syn_3.q[1]
+net (fo=4)                              0.225          3.400          net: fx/filtered_eq$history[10][2],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[50]_syn_3.mi[0]
+reg                 x028y020z2          0.095    f     3.495          net: fx/filtered_eq$history[11][2],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[50]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.259          3.272               
+--------------------------------------------------------------------  ---------------
+Required                                               3.272               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.223               
+
+Slack               : 0.223ns
+Begin Point         : fx/filtered_eq$history_reg[228]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[204]_syn_3.mi[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.045ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[228]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x023y022z2          0.109    f     3.175          pin: fx/filtered_eq$history_reg[228]_syn_3.q[0]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[4][13],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[204]_syn_3.mi[0]
+reg                 x022y022z3          0.095    f     3.495          net: fx/filtered_eq$history[5][13],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[204]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.259          3.272               
+--------------------------------------------------------------------  ---------------
+Required                                               3.272               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.223               
+
+Slack               : 0.230ns
+Begin Point         : fx/filtered_eq$history_reg[222]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[83]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.436ns (cell 0.204ns (46%), net 0.232ns (54%))
+Clock Skew          : 0.045ns
+Logic Level         : 0
+Max Fanout          : 7
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[222]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x026y019z3          0.109    f     3.175          pin: fx/filtered_eq$history_reg[222]_syn_3.q[0]
+net (fo=7)                              0.232          3.407          net: fx/filtered_eq$history[9][11],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[83]_syn_3.mi[1]
+reg                 x027y019z3          0.095    f     3.502          net: fx/filtered_eq$history[10][11],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.502               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[83]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.259          3.272               
+--------------------------------------------------------------------  ---------------
+Required                                               3.272               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.230               
+
+Slack               : 0.238ns
+Begin Point         : fx/filtered_eq$history_reg[305]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[262]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.428ns (cell 0.204ns (47%), net 0.224ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 7
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[305]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x026y027z2          0.109    f     3.175          pin: fx/filtered_eq$history_reg[305]_syn_3.q[0]
+net (fo=7)                              0.224          3.399          net: fx/filtered_eq$history[2][22],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[262]_syn_3.mi[1]
+reg                 x026y028z3          0.095    f     3.494          net: fx/filtered_eq$history[3][22],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.494               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[262]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.238               
+
+Slack               : 0.239ns
+Begin Point         : fx/filtered_eq$history_reg[150]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[140]_syn_3.mi[0] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[150]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x021y027z2          0.109    f     3.175          pin: fx/filtered_eq$history_reg[150]_syn_3.q[0]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[7][21],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[140]_syn_3.mi[0]
+reg                 x021y026z2          0.095    f     3.495          net: fx/filtered_eq$history[8][21],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[140]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.239               
+
+Slack               : 0.239ns
+Begin Point         : fx/filtered_eq$history_reg[176]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[152]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[176]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x025y030z3          0.109    f     3.175          pin: fx/filtered_eq$history_reg[176]_syn_3.q[1]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[6][8],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[152]_syn_3.mi[1]
+reg                 x025y029z2          0.095    f     3.495          net: fx/filtered_eq$history[7][8],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[152]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.239               
+
+Slack               : 0.239ns
+Begin Point         : fx/filtered_eq$history_reg[178]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[154]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[178]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x023y032z3          0.109    f     3.175          pin: fx/filtered_eq$history_reg[178]_syn_3.q[1]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[6][10],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[154]_syn_3.mi[1]
+reg                 x023y031z2          0.095    f     3.495          net: fx/filtered_eq$history[7][10],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[154]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.239               
+
+Slack               : 0.239ns
+Begin Point         : fx/filtered_eq$history_reg[246]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[222]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[246]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x026y021z3          0.109    f     3.175          pin: fx/filtered_eq$history_reg[246]_syn_3.q[1]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[3][6],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[222]_syn_3.mi[1]
+reg                 x026y019z3          0.095    f     3.495          net: fx/filtered_eq$history[4][6],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[222]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.239               
+
+Slack               : 0.239ns
+Begin Point         : fx/filtered_eq$history_reg[256]_syn_3.clk (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+End Point           : fx/filtered_eq$history_reg[232]_syn_3.mi[1] (rising edge triggered by clock clk  { rise@0.000000ns  fall@12.500000ns  period=25.000000 })
+Check Type          : hold
+Process             : fast
+Budget              : 0.000ns { clk rising@0.000ns - clk rising@0.000ns }
+Data Path Delay     : 0.429ns (cell 0.204ns (47%), net 0.225ns (53%))
+Clock Skew          : 0.029ns
+Logic Level         : 0
+Max Fanout          : 5
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.310          1.310          pin: clk_syn_2.di
+net (fo=275)                            1.756          3.066          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[256]_syn_3.clk
+launch edge                             0.000    r     3.066               
+--------------------------------------------------------------------  ---------------
+clk2q               x020y032z3          0.109    f     3.175          pin: fx/filtered_eq$history_reg[256]_syn_3.q[0]
+net (fo=5)                              0.225          3.400          net: fx/filtered_eq$history[3][16],  E:/fpga/src/modules/audio/audio_effects.v(68)
+                                                                      pin: fx/filtered_eq$history_reg[232]_syn_3.mi[1]
+reg                 x020y031z3          0.095    f     3.495          net: fx/filtered_eq$history[4][16],  E:/fpga/src/modules/audio/audio_effects.v(68)
+--------------------------------------------------------------------  ---------------
+Arrival                                                3.495               
+
+source latency                          0.000          0.000               
+port                                    0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x014y000            1.440          1.440          pin: clk_syn_2.di
+net (fo=275)                            1.930          3.370          net: clk_dup_1,  E:/fpga/sim/tb_audio_effects.v(5)
+                                                                      pin: fx/filtered_eq$history_reg[232]_syn_3.clk
+capture edge                            0.000    r     3.370               
+--------------------------------------------------------------------  ---------------
+hold                                    0.061          3.431               
+clock uncertainty                       0.100          3.531               
+clock pessimism                        -0.275          3.256               
+--------------------------------------------------------------------  ---------------
+Required                                               3.256               
+--------------------------------------------------------------------  ---------------
+Slack                                                  0.239               
+
+
+Inter clock domain timing
+--------------------------------------------------
+
+IP timing
+--------------------------------------------------

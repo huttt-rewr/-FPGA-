@@ -1,0 +1,37 @@
+standard
+***Report Model: audio_effects_probe Device: EG4S20BG256***
+
+IO Statistics
+#IO                        76
+  #input                   27
+  #output                  49
+  #inout                    0
+
+Gate Statistics
+#Basic gates              438
+  #and                      0
+  #nand                     0
+  #or                       0
+  #nor                      0
+  #xor                      0
+  #xnor                     0
+  #buf                      0
+  #not                      1
+  #bufif1                   0
+  #MX21                    26
+  #FADD                     0
+  #DFF                    411
+  #LATCH                    0
+#MACRO_ADD                 69
+#MACRO_EQ                   1
+#MACRO_MULT                 3
+#MACRO_MUX                 94
+#MACRO_OTHERS               1
+
+Report Hierarchy Area:
++------------------------------------------------------+
+|Instance |Module              |gates  |seq    |macros |
++------------------------------------------------------+
+|top      |audio_effects_probe |27     |411    |74     |
+|  fx     |audio_effects       |27     |411    |74     |
++------------------------------------------------------+

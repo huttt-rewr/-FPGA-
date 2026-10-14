@@ -695,7 +695,13 @@ audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.vol
  .mute(video_mute),.mode_800(mode_video),.stream_ok(audio_stream_video[0] && !audio_stream_video[1] && !video_mute),
  .fifo_empty(audio_fifo_empty),.fifo_used(audio_rd_used),.fifo_data(audio_fifo_data),.fifo_rd_en(audio_fifo_read),
  .valid(audio_src_valid),.left_pcm(audio_src_left),.right_pcm(audio_src_right),.underflow(audio_underflow),.pcm_valid(audio_pcm_valid));
-audio_effects fx(.clk(video_clk),.rst(rst_video),
+`ifdef AUDIO_EFFECTS_ENABLED_BUILD
+    // Optional fixed build profile; no runtime controls or CDC are added.
+    audio_effects #(.BASS_GAIN(16'sd3276),.TREBLE_GAIN(16'sd3276),
+     .ECHO_FEEDBACK(16'sd22938)) fx(.clk(video_clk),.rst(rst_video),
+`else
+    audio_effects fx(.clk(video_clk),.rst(rst_video),
+`endif
  .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
  .out_valid(audio_valid),.out_left(audio_left),.out_right(audio_right));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
