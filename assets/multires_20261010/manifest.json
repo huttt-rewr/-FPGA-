@@ -1,0 +1,72 @@
+[
+  {
+    "file": "image_320x240.bmp",
+    "width": 320,
+    "height": 240,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 230454,
+    "sha256": "311abb498be30a71b32c54239e2674d936ccfe5d5966ae0c7c62527c5bc970c2"
+  },
+  {
+    "file": "image_321x241.bmp",
+    "width": 321,
+    "height": 241,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 232378,
+    "sha256": "e44964d490457437f895075cb48a0eabf8c64207875b3403f5091c779825ffc8"
+  },
+  {
+    "file": "image_640x480.bmp",
+    "width": 640,
+    "height": 480,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 921654,
+    "sha256": "c093f45a517b3e99fe0cbe91fbdb692abd94f794753253bd744811a46cfcfdac"
+  },
+  {
+    "file": "image_800x600.bmp",
+    "width": 800,
+    "height": 600,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 1440054,
+    "sha256": "2e5127e4359ec39c2d3881b4b900ebcd2c84023f492d661fcdff9868125b350c"
+  },
+  {
+    "file": "image_1280x720.bmp",
+    "width": 1280,
+    "height": 720,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 2764854,
+    "sha256": "1eb748a739c0a8435571274be7bd75549f6944777798b75a704fce8fa78bab56"
+  },
+  {
+    "file": "image_480x800.bmp",
+    "width": 480,
+    "height": 800,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 1152054,
+    "sha256": "541d536c7b99416acf4b1d6a8506871088ab3d569738cb590af05e02fb226a08"
+  },
+  {
+    "file": "image_1920x1080.bmp",
+    "width": 1920,
+    "height": 1080,
+    "bits": 24,
+    "dib_size": 40,
+    "pixel_offset": 54,
+    "bytes": 6220854,
+    "sha256": "697b9c57682665d2e87089a5f5c13d8942ca8de538e339ee0f428c948ad55d68"
+  }
+]

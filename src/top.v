@@ -689,10 +689,15 @@ audio_async_fifo audio_fifo(.wr_clk(sd_card_clk),.rd_clk(video_clk),
  .rst(!mode_ready | audio_queue_reset),.wr_en(wav_sample_valid),.wr_data(wav_sample),
  .full(audio_fifo_full),.rd_en(audio_fifo_read),.rd_data(audio_fifo_data),.empty(audio_fifo_empty),
  .wr_used(audio_wr_used),.rd_used(audio_rd_used));
+wire audio_src_valid;
+wire [23:0] audio_src_left,audio_src_right;
 audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.volume(video_volume),
  .mute(video_mute),.mode_800(mode_video),.stream_ok(audio_stream_video[0] && !audio_stream_video[1] && !video_mute),
  .fifo_empty(audio_fifo_empty),.fifo_used(audio_rd_used),.fifo_data(audio_fifo_data),.fifo_rd_en(audio_fifo_read),
- .valid(audio_valid),.left_pcm(audio_left),.right_pcm(audio_right),.underflow(audio_underflow),.pcm_valid(audio_pcm_valid));
+ .valid(audio_src_valid),.left_pcm(audio_src_left),.right_pcm(audio_src_right),.underflow(audio_underflow),.pcm_valid(audio_pcm_valid));
+audio_effects fx(.clk(video_clk),.rst(rst_video),
+ .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
+ .out_valid(audio_valid),.out_left(audio_left),.out_right(audio_right));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
  .valid(edid_valid_boot),.data(edid_data_boot),.done(mode_done),.good(edid_good),
  .mode_800(mode_800),.fallback(mode_fallback));

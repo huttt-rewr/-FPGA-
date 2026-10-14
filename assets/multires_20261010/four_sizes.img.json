@@ -1,0 +1,57 @@
+{
+  "format": "fpga-contiguous-bmp-v1",
+  "filesystem": null,
+  "image_bytes": 67108864,
+  "image_sha256": "34df04c9a9931030ae073ef706abf297a8a4b9d4bf02b7f9a8904eb80aa32f1c",
+  "sector_bytes": 512,
+  "images": [
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_320x240.bmp",
+      "start_sector": 0,
+      "sectors": 451,
+      "width": 320,
+      "height": 240,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 230454,
+      "sha256": "311abb498be30a71b32c54239e2674d936ccfe5d5966ae0c7c62527c5bc970c2"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_800x600.bmp",
+      "start_sector": 451,
+      "sectors": 2813,
+      "width": 800,
+      "height": 600,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 1440054,
+      "sha256": "2e5127e4359ec39c2d3881b4b900ebcd2c84023f492d661fcdff9868125b350c"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_1280x720.bmp",
+      "start_sector": 3264,
+      "sectors": 5401,
+      "width": 1280,
+      "height": 720,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 2764854,
+      "sha256": "1eb748a739c0a8435571274be7bd75549f6944777798b75a704fce8fa78bab56"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_480x800.bmp",
+      "start_sector": 8665,
+      "sectors": 2251,
+      "width": 480,
+      "height": 800,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 1152054,
+      "sha256": "541d536c7b99416acf4b1d6a8506871088ab3d569738cb590af05e02fb226a08"
+    }
+  ]
+}

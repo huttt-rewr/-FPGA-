@@ -1,0 +1,31 @@
+{
+  "source_and_product_hashes": "PASS",
+  "official_ip_unchanged": "PASS",
+  "constraints_unchanged": "PASS",
+  "backup_integrity": "N/A (backups removed)",
+  "utf8_docs_and_links": "PASS",
+  "tests": [
+    "tb_bmp_stream",
+    "tb_cdc",
+    "tb_fifo_boundary",
+    "tb_frame_tail",
+    "tb_frame_writer",
+    "tb_ir_nec_rx",
+    "tb_load_recovery",
+    "tb_osd_text",
+    "tb_pll_clocks",
+    "tb_sd_address",
+    "tb_stream_queue",
+    "tb_uart_queue",
+    "tb_uart_rx",
+    "tb_upgrade",
+    "tb_video_scaler"
+  ],
+  "inventory_files": 699,
+  "timing_ns": {
+    "SWNS": 0.996,
+    "STNS": 0.0,
+    "HWNS": 0.003,
+    "HTNS": 0.0
+  }
+}

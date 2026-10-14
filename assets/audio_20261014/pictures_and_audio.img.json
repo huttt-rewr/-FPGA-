@@ -1,0 +1,68 @@
+{
+  "format": "fpga-bmp-wav-v1",
+  "filesystem": null,
+  "sector_bytes": 512,
+  "image_bytes": 67397120,
+  "image_sha256": "2ba160f1d82ff1e409792aba1b4ad38a5c61650fa82015b4bb7e33453fce3b71",
+  "images": [
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_320x240.bmp",
+      "start_sector": 0,
+      "sectors": 451,
+      "width": 320,
+      "height": 240,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 230454,
+      "sha256": "311abb498be30a71b32c54239e2674d936ccfe5d5966ae0c7c62527c5bc970c2"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_800x600.bmp",
+      "start_sector": 451,
+      "sectors": 2813,
+      "width": 800,
+      "height": 600,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 1440054,
+      "sha256": "2e5127e4359ec39c2d3881b4b900ebcd2c84023f492d661fcdff9868125b350c"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_1280x720.bmp",
+      "start_sector": 3264,
+      "sectors": 5401,
+      "width": 1280,
+      "height": 720,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 2764854,
+      "sha256": "1eb748a739c0a8435571274be7bd75549f6944777798b75a704fce8fa78bab56"
+    },
+    {
+      "source": "E:\\fpga\\assets\\multires_20261010\\image_480x800.bmp",
+      "start_sector": 8665,
+      "sectors": 2251,
+      "width": 480,
+      "height": 800,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 1152054,
+      "sha256": "541d536c7b99416acf4b1d6a8506871088ab3d569738cb590af05e02fb226a08"
+    }
+  ],
+  "audio": {
+    "start_sector": 131072,
+    "bytes": 288044,
+    "data_offset": 44,
+    "pcm_bytes": 288000,
+    "seconds": 3.0,
+    "rate": 48000,
+    "channels": 1,
+    "bits": 16,
+    "sha256": "2c5e82e21c68f06123eea475643bf6b46c5c67bf514d46946af4433d7c0d7697"
+  }
+}
