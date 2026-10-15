@@ -1,5 +1,13 @@
 # HX4S20C HDMI 图片与 WAV 播放工程
 
+2026-10-15 FAT32 v1：正式顶层读取普通FAT32卡根目录，直接复制最多4个BMP和第一个WAV，支持碎片簇链。无需裸镜像烧卡；KEY/SW与媒体格式要求保持。操作见[FAT32拷贝文件教程](docs/FAT32_USAGE_20261015.md)，实际回归/STA见[本轮结果](reports/fat32_20261015/RESULT.md)。旧裸扇区版的制卡方法与bit不适用于此版本。
+
+当前验证：静态与61项回归通过，综合/布局布线完成；STA**未通过 setup 时序验收**（SWNS -0.695ns，HWNS +0.021ns）。详见本轮报告，不能使用旧bit验证普通文件拷贝。
+
+
+以下10月14日及更早的构建数值、裸镜像操作和候选链接是历史记录；当前状态以本轮报告为准。
+
+
 2026-10-14 音频恢复修复：WAV失败后等待一秒自动重试，OSD保留具体错误原因并显示欠载记录，仍只用KEY/SW。57项ModelSim回归、静态检查及综合/布局布线通过；SWNS **+0.118ns**、HWNS **+0.021ns**，STNS/HTNS均0；LUT12976、REG8547、BRAM9K57/64、DSP17、PLL2。未达到整体+0.5ns，内部复位removal不是HDMI管脚hold，未上板出声验证。详见[音频恢复操作与设计](docs/AUDIO_RETRY_20261014.md)和[构建状态](docs/BUILD_STATUS.md)。本轮候选为[video_improve_audio_retry.bit](reports/audio_retry_20261014/video_improve_audio_retry.bit)，下文旧候选仅为历史对照。
 
 2026-10-14 WAV增量：TF卡48kHz/16bit/单声道PCM经现有HDMI_B音频口输出，默认静音；KEY3长按菜单新增AUDIO MUTE、VOLUME DOWN、VOLUME UP，KEY/SW原功能保留。 使用步骤见[WAV音频手册](docs/WAV_AUDIO_20261014.md)，当前61个设计源、36位IO。最新候选、回归和时序见[构建状态](docs/BUILD_STATUS.md)。下面早先板载版本的数值与bit属于历史对照。
@@ -14,7 +22,7 @@
 
 **显示器连接开发板的 HDMI_B（HDMIB）口，HDMI_A 本工程不用。** 已核对官方lab_ex4_tf/lab_ex5_i2s说明及相同的HDMI管脚位置；视频与WAV音频均经B口输出。
 
-面向安路 EG4S20BG256，从 TF/SD 连续原始扇区读取 BMP，通过合封 SDRAM 双缓冲和 HDMI 核显示。当前为待实板验证候选。当前源码支持启动时选择640×480/800×600；最新验证及候选bit见 [构建状态](docs/BUILD_STATUS.md)。旧缩放bit只支持640×480，不能代表屏幕自适应版。
+面向安路 EG4S20BG256，从普通 FAT32 TF/SD 根目录读取 BMP/WAV（支持碎片簇链），通过合封 SDRAM 双缓冲和 HDMI 核显示。当前为待实板验证候选。当前源码支持启动时选择640×480/800×600；最新验证及候选bit见 [构建状态](docs/BUILD_STATUS.md)。旧缩放bit只支持640×480，不能代表屏幕自适应版。
 
 2026-10-08 历史更新：择优合并 `E:/2/fpga` 的 SD 超时/初始化重试、BMP 扇区停滞检测、EDID 超时及单比特同步器标记；保留本地 FIFO 诊断。拒绝把切帧超时当成功，改成保护缓冲区并等待真实确认。21项模块回归、1项官方PLL模型、8项主机工具测试通过，已完成新综合、布局布线。两个 TD 工程入口均实际打开验证；仍引用同一套44个设计源。
 
@@ -34,7 +42,7 @@
 
 ## 可变尺寸缩放与实体参数调节
 
-读取宽1～1920、高1～1080的正高度24位BMP，在FPGA内保比例双线性缩放到所选640×480或800×600视口、居中补黑边；支持行尾填充、非整数比例、放大和缩小。不同尺寸可混放到同一原始镜像，最多4张。缩放使用扇区/双行缓存及带背压写FIFO，不增加原始大图整帧BRAM。
+读取宽1～1920、高1～1080的正高度24位BMP，在FPGA内保比例双线性缩放到所选640×480或800×600视口、居中补黑边；支持行尾填充、非整数比例、放大和缩小。不同尺寸BMP可直接复制到同一FAT32根目录，最多4张。缩放使用扇区/双行缓存及带背压写FIFO，不增加原始大图整帧BRAM。
 
 保留四路SW的字幕、滚动、转场控制；B1对应key3选择PLAY/BRIG/CONT，PLAY状态B2下一张、C1自动播放；BRIG/CONT状态B2减、C1加。亮度−64～+64，步长8；对比度0.50～2.00，步长0.25。OSD显示原图尺寸、亮度、对比度和操作项，参数在帧边界统一生效。UART/NEC仍禁用；当前WAV默认静音，可通过板载菜单解除。
 
@@ -46,11 +54,11 @@
 
 ## 功能
 
-输出两档：640×480使用25/125MHz、800×525总时序、约59.524Hz；800×600使用40/200MHz、1056×628总时序、约60.317Hz。VGA并非标准25.175MHz。最多索引4张正高度、24位BI_RGB BMP；DIB长度40/108/124，planes=1，像素偏移54～4096且位于完整头之后，文件长度为偏移加对齐行步长×高度。不支持FAT目录/簇链、JPEG、压缩音频或视频文件；WAV仅支持固定原始连续扇区的PCM。
+输出两档：640×480使用25/125MHz、800×525总时序、约59.524Hz；800×600使用40/200MHz、1056×628总时序、约60.317Hz。VGA并非标准25.175MHz。最多索引4张正高度、24位BI_RGB BMP；DIB长度40/108/124，planes=1，像素偏移54～4096且位于完整头之后，文件长度为偏移加对齐行步长×高度。支持FAT32根目录短名和碎片簇链；不支持子目录、exFAT、JPEG、压缩音频或视频文件。WAV限PCM/48kHz/16bit/单声道。
 
-支持双缓冲场消隐提交、按键/SW、OSD、字幕和转场。亮度/对比度已开放实体调节，测试图保持关闭。音频读取固定LBA131072处的48kHz/16bit/mono WAV，左右相同、24bit HDMI接口，默认静音，菜单可解除并调音量。N=6144、CTS=25000/40000保持原样。可变尺寸加载预算15秒，提交确认预算5秒；历史UART应答队列16项未接入；当前视频缓冲64像素，不能承受无限背压。
+支持双缓冲场消隐提交、按键/SW、OSD、字幕和转场。亮度/对比度已开放实体调节，测试图保持关闭。音频读取根目录第一个WAV，沿FAT簇链访问，左右相同、24bit HDMI接口，默认静音，菜单可解除并调音量。N=6144、CTS=25000/40000保持原样。可变尺寸加载预算15秒，提交确认预算5秒；历史UART应答队列16项未接入；当前视频缓冲64像素，不能承受无限背压。
 
-初始化每次尝试约8秒，失败暂停约1秒并复位底层后重试；扫描扇区停滞可重扫。已有索引的加载失败保留旧显示帧，重新初始化后按key1重试；换内容不同的卡须整机复位。切帧确认超时会报错并保持忙，不允许覆盖可能仍在显示的缓冲区；真实迟到确认可完成，否则需整机复位。
+SD初始化每次尝试约8秒，失败暂停约1秒并复位底层后重试。FAT32挂载失败显示错误，修正卡后整机复位；不支持运行中热插拔。已有索引的图片加载失败保留旧显示帧，可按KEY1换图重试。切帧确认超时会报错并保持忙，不允许覆盖可能仍在显示的缓冲区；真实迟到确认可完成，否则需整机复位。
 
 ## 先认识这个系统
 
@@ -60,14 +68,14 @@
 50 MHz晶振 ── sys_pll ── 100 MHz控制/SD、40 MHz内存、40 MHz内存相移时钟
            └─ adaptive_video_clock ── 25MHz启动时钟；全局切换25/125或40/200MHz
 
-SD卡 ─ SPI字节 ─ 扇区协议 ─ BMP扫描/解析 ─ 双线性缩放 ─ 写FIFO ─ SDRAM备用帧
+SD卡 ─ SPI字节 ─ 扇区协议/仲裁 ─ FAT32目录/簇链 ─ BMP解析/缩放 ─ 写FIFO ─ SDRAM备用帧
                                                         │ 写完、提交请求
                                                         ↓
                                             frame_swap在场消隐换帧并确认
                                                         │
 SDRAM显示帧 ─ 读FIFO ─ 像素/同步对齐 ─ 亮度/对比度/转场/OSD ─ RGB视频队列
                                                         │
-SD WAV ─ 仲裁/扇区缓存/异步FIFO/48kHz音量 ─ PCM/ACR ────────────────────────────── 官方HDMI核
+FAT32 WAV ─ RIFF解析/扇区缓存/异步FIFO/48kHz音量 ─ PCM/ACR ─────────────────────── 官方HDMI核
                                                         │ 10位TMDS符号
                                                    串行器 ─ HDMI
 
@@ -106,25 +114,25 @@ SD WAV ─ 仲裁/扇区缓存/异步FIFO/48kHz音量 ─ PCM/ACR ────�
 ### 图片从卡到屏幕的过程
 
 1. SD初始化，根据CMD8、OCR/CCS确认支持的卡与寻址方式。
-2. `bmp_read`逐扇区检查BMP头，把可用图起始扇区交给 `sd_card_bmp` 建立最多4项索引。当前不找文件名。
-3. 扫描结束，控制器选备用缓冲区，解析器申请帧写入，新加载器按需读行并缩放成所选视口的输出像素。
+2. `sd_fat32`挂载FAT32、遍历根目录短名条目，记录前4个BMP和第一个WAV的首簇与大小。碎片文件沿FAT簇链读取。
+3. 枚举结束，控制器按文件索引选备用缓冲区，BMP解析器从文件内第0扇区校验头，新加载器按需读行并缩放成所选视口的输出像素。
 4. 写FIFO把100 MHz输入与40 MHz内存接口隔开。写调度器按行翻转地址，纠正正高度BMP从底行开始存储的顺序。
 5. 必须同时知道“BMP已送完”和“SDRAM整帧已写完”，才提交换帧请求。
 6. 视频域在场消隐更新显示缓冲并返回确认。确认以前，控制端不能随意再次使用该缓冲。
 7. 每帧读取显示缓冲，经像素对齐、亮度调整、OSD、HDMI核编码和串行器输出。
 
-只准备1～3张图时，为寻找第4张，扫描可能继续到64 MiB边界；不能把这段有进度的扫描时间和单扇区停滞超时混为一谈。
+根目录遇到00结束项或簇链尾即结束枚举；没有“为寻找第4张而扫描整个64MiB图片区”的步骤。根目录遍历最多4096簇，损坏链会失败退出。
 
 ### 功能边界
 
 | 已接入顶层 | 尚未接入或未支持 |
 |---|---|
 | 不同尺寸BMP缩放为640×480或800×600 RGB输出 | 自动切换到720p/1080p |
-| 最多4张原始连续扇区BMP | FAT目录、簇链、按文件名选择 |
+| FAT32根目录前4张BMP，支持碎片簇链 | 子目录、长名显示、按字母排序与任意文件选择 |
 | 双缓冲、场消隐提交 | 任意取消/撤回已提交的换帧事务 |
-| 按键、SW、状态OSD、字幕、转场 | 当前未接入UART/NEC及音量调节 |
+| 按键、SW、状态OSD、字幕、转场、板载音量菜单 | 当前未接入UART/NEC控制 |
 | 固定原图像素来源 | 坐标渐变模块保留，本版不开放测试图开关 |
-| 固定扇区PCM WAV循环、HDMI双声道复制与ACR | FAT文件选择、MP3/视频解码、外部I2S采集 |
+| 根目录首个PCM WAV循环、HDMI双声道复制与ACR | 多曲目菜单、MP3/视频解码、外部I2S采集 |
 | EDID基础块检查 | EDID模式协商和动态PLL配置 |
 
 当前双线性缩放已接入实际顶层，支持上述范围内的图片尺寸。optional目录中的旧固定参数最近邻缩放、YCbCr转换和多模式表仍未接入；启动时的输出选择由edid_display_mode和adaptive_video_clock完成。
@@ -136,7 +144,7 @@ SD WAV ─ 仲裁/扇区缓存/异步FIFO/48kHz音量 ─ PCM/ACR ────�
 | src/top.v | 唯一活动顶层 top |
 | src/modules/common | 复位、CDC、启动 |
 | src/modules/control | SW同步消抖；保留历史UART/红外/应答模块 |
-| src/modules/sd、bmp | SD SPI、扫描和 BMP 解析 |
+| src/modules/sd、bmp | SD SPI、FAT32文件映射和BMP解析 |
 | src/modules/memory | 帧读写调度、SDRAM 包装 |
 | src/modules/video、hdmi | 光栅、视频缓冲、串行物理包装 |
 | src/modules/audio、osd、display | WAV解析、跨域PCM缓存/播放、字符、数码管 |
@@ -201,11 +209,12 @@ SD WAV ─ 仲裁/扇区缓存/异步FIFO/48kHz音量 ─ PCM/ACR ────�
 
 协议层级是“SPI字节 → SD命令/数据块 → 扇区服务”。出现无卡或缺token时要看错误在哪一层退出、是否传到上层，而不能只给某个底层状态加计数器。
 
-### 4. BMP 扫描与播放调度
+### 4. FAT32文件读取与BMP播放调度
 
 | 文件 | 具体职责 | 重要行为 |
 |---|---|---|
-| [bmp_read.v](src/modules/bmp/bmp_read.v) | 扫描校验BMP头，申请帧写入；顶层启用运行时尺寸和双线性加载器 | 支持宽1～1920、高1～1080正高度24位格式；有扇区无进度检测；ready不等于SDRAM写完 |
+| [sd_fat32.v](src/modules/sd/sd_fat32.v) | MBR/BPB挂载、根目录8.3枚举、文件大小检查、碎片簇链映射、双流FAT缓存 | 根目录前4个BMP与首个WAV；只读FAT32，缓存占2个BRAM9K；没有新控制接口 |
+| [bmp_read.v](src/modules/bmp/bmp_read.v) | 接收文件枚举数量，按文件索引校验BMP头，申请帧写入；顶层启用运行时尺寸和双线性加载器 | 支持宽1～1920、高1～1080正高度24位格式；有扇区无进度检测；ready不等于SDRAM写完 |
 | [sd_card_bmp.v](src/modules/bmp/sd_card_bmp.v) | 管理最多4图索引、上下张、自动播放、写缓冲选择、加载超时、SD错误恢复和跨域提交确认 | BMP送完且写端完成后才提交；确认超时保持忙保护帧，迟到真实ack仍可完成 |
 
 SD故障已中止不代表可以马上重写任意帧。已有索引加载失败保留旧帧；新卡内容变化时应整机复位重扫。OSD错误汇总不提供完整分类错误码。
@@ -264,12 +273,12 @@ P/N配对由管脚约束和工具实现。HDMI核做数字编码，不会替PCB�
 
 ### 8. 音频、OSD 与数码管
 
-当前WAV链路、固定扇区布局、菜单操作及7项音频验证见[详细音频手册](docs/WAV_AUDIO_20261014.md)。保留audio_test_source源码用于回退，当前顶层实例为audio_playback。
+当前WAV链路和菜单操作见[详细音频手册](docs/WAV_AUDIO_20261014.md)，文件准备见[FAT32教程](docs/FAT32_USAGE_20261015.md)。保留audio_test_source源码用于回退，当前顶层实例为audio_playback。
 
 | 文件 | 具体职责 | 当前效果 |
 |---|---|---|
 | [sd_read_arbiter.v](src/modules/sd/sd_read_arbiter.v) | 图片/音频共享SD，按扇区锁定授权与返回，音频按FIFO余量优先，超时复位 | 不新增SPI管脚，不把等待授权当图片停滞 |
-| [audio_wav.v](src/modules/audio/audio_wav.v) | RIFF块解析、CRC成功扇区缓存、16bit小端组包、循环与背压 | 固定LBA131072，48k/16bit/mono，≤16MiB；错误静音 |
+| [audio_wav.v](src/modules/audio/audio_wav.v) | RIFF块解析、CRC成功扇区缓存、16bit小端组包、循环与背压 | 正式顶层使用文件内相对扇区，48k/16bit/mono，≤16MiB；失败静音并延时重试 |
 | [audio_async_fifo.v](src/modules/audio/audio_async_fifo.v) | 1024×24双时钟RAM、格雷码指针及满空保护 | 100MHz写、25/40MHz读；约21.33ms样本 |
 | [audio_playback.v](src/modules/audio/audio_playback.v) | 48kHz分数累加、同步读流水、指数增益及24bit饱和 | 欠载送0并预填；0级静音，1..31幅度约51.1%..97.9% |
 | [audio_test_source.v](src/modules/audio/audio_test_source.v) | 用相位/采样累加生成平均48 kHz、24位、左右相同的约440 Hz方波 | mute和volume控制幅度；无SD音频读取 |
@@ -396,7 +405,7 @@ SDRAM 位置、局部时钟布线、外部 IO delay 等问题仍待解决。Spee
 
 J 盘的 `lab_ex4_tf`、`lab_ex5_i2s` 含可用的 BMP 转换器、样例图、HDMI 接口手册和音频素材。[复用审查](docs/OFFICIAL_LABS_REVIEW_20261007.md) 记录了实际转换/分频验证、文件对应关系及适配要求。不要直接运行其中会清空目标盘的 `sync_to_sd.py`，也不要覆盖回旧时序约束。
 
-已提供适配工具 `scripts/prepare_media.py`：`convert`、`check`、`pack`、`verify`。生成的镜像固定64MiB，图片按连续扇区排列，其余扫描区域清零，并附SHA-256清单。它是无FAT的原始镜像，不是复制到卡根目录的图片文件，也不直接写存储卡；[使用方法](docs/OFFICIAL_ADAPTATION_20261007.md)。
+已提供适配工具 `scripts/prepare_media.py`：`convert`、`check`、`pack`、`verify`。其中convert/check仍用于生成普通BMP；pack/verify仅保留给历史裸扇区测试。当前制卡是普通FAT32根目录文件复制，见[FAT32教程](docs/FAT32_USAGE_20261015.md)。旧工具生成的镜像固定64MiB，它是无FAT的原始镜像，不是复制到卡根目录的图片文件，也不直接写存储卡；[使用方法](docs/OFFICIAL_ADAPTATION_20261007.md)。
 
 ## 备份
 
@@ -413,3 +422,7 @@ SW修改前173个文件保存于 [SW备份包](backups/before_sw_controls_202610
 本次合并前205个文件已备份至 `backups/before_team_merge_20261008/workspace.zip`，逐项SHA-256验证通过；旁边的manifest记录校验值。它包含本轮修改前源码、工程、脚本、文档及选定报告，不含可重建仿真库/数据库。队友目录保持原样。
 
 更早的历史归档在本次开始时已不在本地；不能将队友README中提到的旧备份当作实际存在。旧清理记录见 [清理映射](reports/cleanup_plan.json) 与 [删除记录](reports/deleted_files.json)。
+
+## FAT32读取层（2026-10-15）
+
+[sd_fat32.v](src/modules/sd/sd_fat32.v)负责分区/BPB几何、根目录8.3枚举、碎片簇链和双流FAT扇区缓存。[bmp_read.v](src/modules/bmp/bmp_read.v)在正式模式仅用文件索引加载，原头解析/缩放不变；[audio_wav.v](src/modules/audio/audio_wav.v)输出相对文件扇区，原格式和延时重试不变。[sd_card_bmp.v](src/modules/bmp/sd_card_bmp.v)连接此中间层与原仲裁器。仅用现有KEY/SW，未修改官方IP、引脚或时钟约束。验证媒体由[make_fat32_image.py](scripts/make_fat32_image.py)纯Python生成/自检，不写实体卡。

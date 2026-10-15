@@ -1,8 +1,11 @@
 # 源文件与资料导航
 
+2026-10-15 FAT32 v1：正式顶层读取普通FAT32卡根目录，直接复制最多4个BMP和第一个WAV，支持碎片簇链。无需裸镜像烧卡；KEY/SW与媒体格式要求保持。操作见[FAT32拷贝文件教程](FAT32_USAGE_20261015.md)，实际回归/STA见[本轮结果](../reports/fat32_20261015/RESULT.md)。旧裸扇区版的制卡方法与bit不适用于此版本。
+
+
 音频恢复补充：audio_wav.v 增加一秒重试、四类错误码和100MHz流水优化；audio_playback.v 内新增 audio_error_history 模块，用真实PCM输出确认清除OSD失败历史。错误码在 top.v 用独立4位 cdc_snapshot 跨域，原70位状态总线保持不变。详见[音频恢复设计与操作](AUDIO_RETRY_20261014.md)。
 
-更新：2026-10-14。活动设计清单为 [design_files.txt](../scripts/design_files.txt)，共61个源、36位IO；两个TD入口一致，唯一顶层为 [top.v](../src/top.v)。每一个设计源的具体功能、上下游和修改注意事项都在 [README模块说明](../README.md#每个设计源文件负责什么)。
+更新：2026-10-15。活动设计清单为 [design_files.txt](../scripts/design_files.txt)，共63个源、36位IO；两个TD入口一致，唯一顶层为 [top.v](../src/top.v)。每一个设计源的具体功能、上下游和修改注意事项都在 [README模块说明](../README.md#每个设计源文件负责什么)。
 
 2026-10-14 WAV增量：TF卡48kHz/16bit/单声道PCM经现有HDMI_B音频口输出，默认静音；KEY3长按菜单新增AUDIO MUTE、VOLUME DOWN、VOLUME UP，KEY/SW原功能保留。 [WAV解析](../src/modules/audio/audio_wav.v)、[读卡仲裁](../src/modules/sd/sd_read_arbiter.v)、[异步FIFO](../src/modules/audio/audio_async_fifo.v)、[采样/音量](../src/modules/audio/audio_playback.v)是四个新增设计源；[媒体工具](../scripts/prepare_audio.py)不加入TD。顶层保留HDMI/ACR，测试音源码留作回退。
 
@@ -14,11 +17,12 @@
 | 复位与跨时钟状态 | [reset_sync.v](../src/modules/common/reset_sync.v)、[cdc_snapshot.v](../src/modules/common/cdc_snapshot.v) | PLL锁定、FIFO复位；同步标记不替代握手 |
 | 实体调节 | [picture_controls.v](../src/modules/control/picture_controls.v) | B1选项，B2/C1减加；UART/NEC历史模块未接入 |
 | SD初始化与扇区协议 | [sd_card_top.v](../src/modules/sd/sd_card_top.v)、[sd_card_cmd.v](../src/modules/sd/sd_card_cmd.v) | CMD17末尾CRC16已校验；lab4参考不能替代SD协议规范 |
-| BMP扫描与图片调度 | [bmp_read.v](../src/modules/bmp/bmp_read.v)、[sd_card_bmp.v](../src/modules/bmp/sd_card_bmp.v) | [媒体准备工具](../scripts/prepare_media.py)；原始扇区布局 |
+| FAT32文件枚举与簇链映射 | [sd_fat32.v](../src/modules/sd/sd_fat32.v) | [文件复制教程](FAT32_USAGE_20261015.md)；两流游标与FAT扇区缓存 |
+| BMP解析与图片调度 | [bmp_read.v](../src/modules/bmp/bmp_read.v)、[sd_card_bmp.v](../src/modules/bmp/sd_card_bmp.v) | [媒体准备工具](../scripts/prepare_media.py)；文件索引与相对扇区 |
 | SDRAM帧读写和FIFO | [frame_read_write.v](../src/modules/memory/frame_read_write.v)、[frame_fifo_read.v](../src/modules/memory/frame_fifo_read.v)、[sdram.v](../src/modules/memory/sdram.v) | 刷新宏在`global_def.v`；排空在读控制器；官方加密IP未改 |
 | 换帧、视频光栅与像素队列 | [frame_swap.v](../src/modules/video/frame_swap.v)、[video_rgb_to_axis_640x480.v](../src/modules/video/video_rgb_to_axis_640x480.v) | APUG092连续行时序 |
 | TMDS串行输出 | [hdmi_phy_wrapper.v](../src/modules/hdmi/hdmi_phy_wrapper.v)、[lane_lvds_10_1.v](../src/modules/hdmi/lane_lvds_10_1.v) | HDMI时钟架构、ODDR库、IO手册 |
-| 声音、文字和数码管 | [audio_wav.v](../src/modules/audio/audio_wav.v)、[audio_playback.v](../src/modules/audio/audio_playback.v)、[status_osd.v](../src/modules/osd/status_osd.v)、[seg_scan.v](../src/modules/display/seg_scan.v) | APUG092 Audio/ACR；固定原始扇区PCM WAV |
+| 声音、文字和数码管 | [audio_wav.v](../src/modules/audio/audio_wav.v)、[audio_playback.v](../src/modules/audio/audio_playback.v)、[status_osd.v](../src/modules/osd/status_osd.v)、[seg_scan.v](../src/modules/display/seg_scan.v) | APUG092 Audio/ACR；FAT32根目录PCM WAV |
 | 旧固定参数缩放/颜色/模式参考（未接入） | `src/modules/optional` | DSP可作后续学习；有源码不代表顶层已支持 |
 | 管脚与时序约束 | [pin.adc](../src/constraints/pin.adc)、[timing.sdc](../src/constraints/timing.sdc) | BG256引脚、IO/PLL、[时序边界](BOARD_TIMING.md) |
 
@@ -47,3 +51,7 @@
 ## 2026-10-13 静态画面与读卡修复
 
 仍是同一套54个活动源。`global_def.v`的刷新宏恢复非零间隔；`frame_fifo_read.v`按实际SDRAM返回数排空；`frame_read_write.v`提高显示优先级并将欠载接入OSD；`sd_card_cmd.v`验证扇区CRC16；`bmp_scale_loader.v`和`bmp_read.v`用寄存流水缩短100MHz长路径。完整测试覆盖范围和未解决的板级问题见[画面修复报告](DISPLAY_REPAIR_20261013.md)。
+
+## 2026-10-15 FAT32文件读取
+
+[sd_fat32.v](../src/modules/sd/sd_fat32.v)夹在BMP/WAV解析器与原扇区仲裁器之间，挂载MBR或superfloppy、枚举根目录、按双流簇链映射和缓存FAT扇区；原SD三层栈、仲裁、BMP头/缩放/帧提交、WAV RIFF状态机保持。测试见tb_fat32_mount/stream/player，仿真媒体工具为[make_fat32_image.py](../scripts/make_fat32_image.py)。

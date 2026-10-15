@@ -1,5 +1,8 @@
 # HX4S20C 图片播放器：详细接线与使用教程
 
+2026-10-15 FAT32 v1：正式顶层读取普通FAT32卡根目录，直接复制最多4个BMP和第一个WAV，支持碎片簇链。无需裸镜像烧卡；KEY/SW与媒体格式要求保持。操作见[FAT32拷贝文件教程](FAT32_USAGE_20261015.md)，实际回归/STA见[本轮结果](../reports/fat32_20261015/RESULT.md)。旧裸扇区版的制卡方法与bit不适用于此版本。
+
+
 音频最新修复：一秒延时重试、E1～E4错误码及U欠载历史；KEY/SW映射不变。见[恢复操作说明](AUDIO_RETRY_20261014.md)和[当前候选](BUILD_STATUS.md)。
 
 > 当前WAV增量：声音经HDMI_B，KEY3长按菜单新增AUDIO MUTE和VOLUME DOWN/UP。默认静音，制卡与完整操作见[音频手册](WAV_AUDIO_20261014.md)。仅用KEY/SW，不新增外设。
@@ -143,7 +146,7 @@ IO指南PDF11–15的“兼容5V输入”还要求特定串阻、钳位和供电
 
 ### 4. 一次完整演示
 
-1. 使用 [接线与制卡教程](CONNECTION_AND_USAGE.md) 准备至少两张支持范围内的正高度24位BMP的原始扇区镜像。普通复制文件不是本工程的可靠制卡方式。
+1. 使用 [接线与制卡教程](CONNECTION_AND_USAGE.md) 把至少两张支持范围内的正高度24位BMP复制到普通FAT32卡根目录。详见[FAT32教程](FAT32_USAGE_20261015.md)。
 2. 断电插卡，HDMI_B接显示器，选择对应HDMI输入，连接电源和下载器。
 3. 第1、2、3路设ON，第4路设OFF：这表示字幕显示、文字滚动、淡出淡入。
 4. 从构建状态页下载本轮显示修复bit，必要时按A2对应复位键。等待初始化、扫描和首张图显示。
@@ -196,61 +199,9 @@ IO指南PDF11–15的“兼容5V输入”还要求特定串阻、钳位和供电
 
 ## 7. 把照片做成 FPGA 能读的卡
 
-### 7.1 为什么不能直接复制 BMP
+确认卡为FAT32、512字节扇区。用`prepare_media.py convert/check`生成并检查BMP，用`prepare_audio.py convert/check`准备可选WAV；然后在资源管理器中直接复制到卡根目录、安全弹出、插回TF卡座并复位。
 
-当前硬件扫描原始LBA 0～131071，最多找4张图，不解析FAT目录/文件名/簇链。图片头必须位于扇区边界，内容连续。因此格式化后拖入BMP不保证有效，把IMG作为普通文件复制进去也不行。
-
-工具生成固定64 MiB（67,108,864字节）的原始镜像，没有FAT分区；BMP按参数顺序排列，剩余扫描区清零。该顺序就是图片索引顺序。
-
-这里的64MiB是SD卡上的扫描区域。芯片合封SDRAM只有8MiB，保存两帧约2.344MiB；卡上图片是按需逐张加载，不会把整个64MiB镜像一次塞进SDRAM。
-
-### 7.2 安装与转换
-
-使用Python 3。转换依赖Pillow；若提示 `No module named PIL`，在使用的Python环境执行：
-
-```powershell
-python -m pip install Pillow
-```
-
-先在 `E:\fpga\media\input` 放入自己的 `photo1.jpg`、`photo2.png`，或者修改下面输入路径。以下命令在PowerShell执行：
-
-```powershell
-cd E:/fpga
-New-Item -ItemType Directory -Force media/input,media/bmp,media/out
-python scripts/prepare_media.py convert media/input/photo1.jpg media/bmp/01.bmp --fit contain
-python scripts/prepare_media.py convert media/input/photo2.png media/bmp/02.bmp --fit contain
-python scripts/prepare_media.py check media/bmp/01.bmp media/bmp/02.bmp
-python scripts/prepare_media.py pack media/out/slides.img media/bmp/01.bmp media/bmp/02.bmp
-python scripts/prepare_media.py verify media/out/slides.img
-```
-
-每一步若出现ERROR应先处理，不继续往下做。成功时输出JSON信息、退出码0，不统一打印ALL PASS。示例路径中的照片要先由你提供，创建目录不会自动生成照片。
-
-| fit参数 | 处理方式 |
-|---|---|
-| contain，默认 | 保持比例，补黑边；首次建议使用 |
-| crop | 保持比例，裁掉边缘填满画面 |
-| stretch | 强制640×480，可能拉伸变形 |
-
-支持1～4张；首次单图测试把pack命令最后的 `media/bmp/02.bmp` 去掉即可。工具拒绝覆盖输出，重复操作改用 `slides_v2.img` 和新的BMP名。
-
-工具会生成 `slides.img` 和 `slides.img.json`，后者保存图片地址、长度、SHA-256，留在电脑辅助核验。硬件支持宽1～1920、高1～1080的正高度24位BI_RGB BMP，DIB为40/108/124、planes=1；加载时保比例缩放成640×480。上述命令默认生成640×480，可用--width/--height指定尺寸。JPEG/PNG只是电脑转换输入。写帧端处理正高度BMP行序，不要在电脑上额外上下翻转图片。
-
-### 7.3 镜像写卡是另一道操作
-
-本项目工具只生成文件、不直接写卡。用支持raw IMG写入整个设备的镜像工具执行以下过程；具体按钮名称以所用工具为准。
-
-1. 备份测试卡资料，插入读卡器。
-2. 在Windows磁盘管理中按容量、型号和插拔变化确认卡设备。不要把E盘工程盘、系统盘或其他U盘选为目标。
-3. 选择源 `E:\fpga\media\out\slides.img`，目标选择已确认的卡。
-4. 使用**整个设备从LBA 0开始原始写入**的模式；不要写入分区内部，不要自动重新分区/转换镜像格式。
-5. 执行写入和工具自带校验。若支持读回，读回前64 MiB与IMG比较哈希；本地 `verify` 只能证明IMG文件正确，不证明卡已写好。
-6. Windows提示格式化时取消。镜像没有FAT，这是预期；格式化会破坏已写布局。
-7. 安全弹出卡，开发板断电后插入板载卡座。
-
-**原始写卡会覆盖卡原有分区和文件。** 不要直接运行官方例程中可能清空目标盘的 `sync_to_sd.py` 代替设备确认。
-
-只有1～3张图时，扫描器可能继续寻找直到整个前64 MiB结束。持续显示状态2不一定卡死；每扇区持续有进度不会触发停滞超时。首次显示可能等待几十秒或更久，具体以卡和实板测量为准，不保证固定秒数。
+文件建议命名`1.BMP`、`2.BMP`、`SOUND.WAV`，主体≤8个英文/数字字符；按目录顺序取前4个BMP和首个WAV。图片格式、尺寸范围与之前一致，音频仍只支持48kHz/16bit/mono PCM。**本版不烧写裸镜像，不需要固定64MiB地址。**完整步骤见[FAT32拷贝文件教程](FAT32_USAGE_20261015.md)。
 
 ## 8. TD 打开、构建、下载流程
 
@@ -362,7 +313,7 @@ LOAD错误优先显示；提交超时显示E时，内部仍可能保持忙保护
 | 下载工具找不到器件 | 供电、驱动、下载线、启动模式 | 核对板卡下载接口；先不改BMP代码 |
 | 拨码无反应 | 当前是否SW版bit、SW引脚和极性 | 开第1路再试第2路；模式需换图后观察 |
 | HDMI无信号 | 显示器输入源、HDMI_B、线、供电 | 接好后复位，再查PLL/复位/HDMI电气 |
-| 有背景无图 | 仍在扫描、IMG数量、原始写卡方式 | 检查verify、是否又格式化；再定位SDRAM |
+| 有背景无图 | FAT32挂载、根目录BMP数量和格式 | 查本轮FAT32教程与数码管错误；再定位SDRAM |
 | 状态2较久 | 是否不足4张图仍在扫描 | 记录持续时间，不把扫描时间当停滞 |
 | LOAD E | SD传输/CRC错误或FIFO欠载/溢出 | 记录静止时是否出现；按显示修复说明排查，复位清粘性标志 |
 | 上下颠倒 | BMP正高度与额外翻转 | 使用工具原始输出，不额外翻转 |

@@ -1,5 +1,7 @@
 # 文档阅读入口
 
+2026-10-15：先看 [FAT32 文件复制与播放教程](FAT32_USAGE_20261015.md)，普通 FAT32 卡根目录放入 BMP/WAV，支持碎片文件。当前 63 个设计源、36 位 IO；[本轮实现与验证](../reports/fat32_20261015/RESULT.md)记录实际回归和 STA，旧裸镜像操作及 bit 属于历史版本。
+
 音频最新修复：一秒延时重试、E1～E4错误码及U欠载历史；KEY/SW映射不变。见[恢复操作说明](AUDIO_RETRY_20261014.md)和[当前候选](BUILD_STATUS.md)。
 
 2026-10-14 WAV增量：TF卡48kHz/16bit/单声道PCM经现有HDMI_B音频口输出，默认静音；KEY3长按菜单新增AUDIO MUTE、VOLUME DOWN、VOLUME UP，KEY/SW原功能保留。 首先看[WAV音频手册](WAV_AUDIO_20261014.md)。当前61设计源、36IO；候选、回归与STA见[构建状态](BUILD_STATUS.md)。下面早先板载日期记录对应历史版本。
@@ -23,7 +25,7 @@
 | 插哪个HDMI口、电源/下载/UART怎么接、怎样制卡 | [详细接线与使用教程](CONNECTION_AND_USAGE.md)；显示器接HDMI_B |
 | 使用滚动字幕、运行时间和淡出/滑动转场 | [效果使用说明](EFFECTS_20261009.md) |
 | 快速查构建命令、操作和状态码 | [用户手册](USER_GUIDE.md) |
-| 理解数据流及57个源文件各做什么 | [工程README](../README.md)、[源文件导航](SOURCE_MAP.md) |
+| 理解数据流及各源文件做什么 | [工程README](../README.md)、[源文件导航](SOURCE_MAP.md) |
 | 阅读J盘芯片/IP资料，并知道哪些可以借鉴 | [官方资料与工程对照](VENDOR_REFERENCE_20261009.md) |
 | 确认最近是否构建成功、时序是多少 | [构建状态](BUILD_STATUS.md)、[10月8日合并记录](TEAM_MERGE_20261008.md) |
 | 理解时序检查和未完成的验证 | [时序边界](BOARD_TIMING.md)、[待办与验收条件](BOARD_PENDING.md) |

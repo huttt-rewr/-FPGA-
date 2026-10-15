@@ -1,6 +1,14 @@
 # 构建状态
 
-## 当前：WAV音频失败自动恢复与错误诊断
+## 当前：2026-10-15 FAT32 根目录文件播放
+
+正式顶层读取普通 FAT32 卡根目录前四个 BMP 和第一个 WAV，支持碎片；63 源、36 IO。静态检查、61 项完整 ModelSim 回归通过，综合/布局布线完成；最终STA：**未通过 setup 时序验收**。SWNS -0.695ns、STNS -3.539ns；HWNS +0.021ns、HTNS 0.000ns。LUT 15044、REG 10033、BRAM9K 59/64、DSP 17、PLL 2。
+
+操作见[FAT32 文件复制教程](FAT32_USAGE_20261015.md)，精确路径/范围/冻结日志见[最终验证报告](../reports/fat32_20261015/RESULT.md)。当前未生成 FAT32 新 bit，旧裸扇区 bit 不适用。尚未实板验收，未达到 +0.5ns；内部 removal 不属于 HDMI 管脚 hold。CLI 使用同一源清单直接加载，GUI elaborate 在本机出现工具崩溃，不能宣称 GUI 综合已通过。
+
+下文均为历史证据，不能认证当前源码。
+
+## 早先：WAV音频失败自动恢复与错误诊断
 
 本轮57项完整ModelSim回归通过（此前54项加三个新测试），61设计源、36逻辑IO，两个TD入口一致。格式仍为48kHz/16bit/mono PCM；KEY/SW、原图片区、SD栈、仲裁、官方IP/PHY/引脚和时钟约束不变。70位status_source及全部status_video取位逐项审计通过。操作见[音频恢复说明](AUDIO_RETRY_20261014.md)。
 

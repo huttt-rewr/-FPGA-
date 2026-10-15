@@ -1,0 +1,23 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_menu.log -lib msim_work -c tb_board_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 17, found 15.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_mute'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_volume'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_menu(fast)
+# run -all 
+# ALL PASS tb_board_menu: short/long disjoint, menu navigation/actions, legacy modes, reset-held and simultaneous suppression
+# ** Note: $finish    : tb_board_menu.v(38)
+#    Time: 7240 ns  Iteration: 1  Instance: /tb_board_menu
