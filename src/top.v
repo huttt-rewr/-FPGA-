@@ -295,9 +295,8 @@ end
 sd_card_bmp #(
     .CLK_FREQ_HZ       (100_000_000),
     .ENABLE_SCALING(1),.ADAPTIVE(1),
-    .ENABLE_AUDIO(1),.AUDIO_START_SECTOR(32'd131072),
-    .SCAN_START_SECTOR (32'd0),
-    .SCAN_MAX_SECTOR   (32'd131071),
+    // 正式媒体来自 FAT32 根目录；裸扇区参数仅保留给历史单元测试。
+    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),
     .SCAN_TARGET_COUNT (3'd4)
 ) sd_card_bmp_m0(
     .clk               (sd_card_clk),

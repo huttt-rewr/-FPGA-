@@ -509,6 +509,14 @@
                     <Attr Name="CompileOrder" Val="62"/>
                 </FileInfo>
             </File>
+            <File Path="../modules/sd/sd_fat32.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="63"/>
+                </FileInfo>
+            </File>
         </Verilog>
         <ADC_FILE>
             <File Path="../../src/constraints/pin.adc">

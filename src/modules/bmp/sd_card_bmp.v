@@ -8,7 +8,9 @@ module sd_card_bmp #(
     parameter ADAPTIVE = 0,
     parameter ENABLE_SCALING = 0,
     parameter ENABLE_AUDIO = 0,
-    parameter [31:0] AUDIO_START_SECTOR = 131072
+    parameter [31:0] AUDIO_START_SECTOR = 131072,
+    parameter FAT32_ENABLE = 0,
+    parameter MAX_BMP = 4
 )(
     input                       clk,
     input                       rst,
@@ -75,30 +77,67 @@ wire [7:0] card_data;
 wire aud_req,aud_valid,aud_end,aud_read_error;
 wire [31:0] aud_addr;
 wire [7:0] aud_data;
-assign sd_transfer_error=ENABLE_AUDIO?bmp_transfer_error:raw_transfer_error;
+// 必须在generate实例之前声明，避免TD把前向引用当作局部隐式wire。
+reg [1:0] load_idx;
+wire fat_done,fat_error,fat_wav_found;
+wire [2:0] fat_count;
+wire [3:0] fat_error_code;
+wire [MAX_BMP*32-1:0] fat_sizes;
+wire [31:0] fat_wav_size;
+wire phy_bmp_req,phy_bmp_valid,phy_bmp_end,phy_bmp_error,phy_bmp_grant;
+wire [31:0] phy_bmp_addr;
+wire [7:0] phy_bmp_data;
+wire phy_aud_req,phy_aud_valid,phy_aud_end,phy_aud_error;
+wire [31:0] phy_aud_addr;
+wire [7:0] phy_aud_data;
+generate if(FAT32_ENABLE)begin: filesystem
+ sd_fat32 #(.MAX_BMP(MAX_BMP)) fat(.clk(clk),.rst(rst),.sd_init_done(sd_init_done),
+  .mount_done(fat_done),.mount_error(fat_error),.mount_error_code(fat_error_code),
+  .bmp_count(fat_count),.wav_found(fat_wav_found),.bmp_size(fat_sizes),.wav_size(fat_wav_size),
+  .bmp_req(sd_sec_read),.bmp_file_idx({1'b0,load_idx}),.bmp_rel_sector(sd_sec_read_addr),
+  .bmp_data(sd_sec_read_data),.bmp_valid(sd_sec_read_data_valid),.bmp_end(sd_sec_read_end),
+  .bmp_error(bmp_transfer_error),.bmp_grant(bmp_grant),.bmp_abort(load_abort),
+  .aud_req(aud_req),.aud_rel_sector(aud_addr),.aud_data(aud_data),.aud_valid(aud_valid),
+  .aud_end(aud_end),.aud_error(aud_read_error),
+  .arb_bmp_req(phy_bmp_req),.arb_bmp_addr(phy_bmp_addr),.arb_bmp_data(phy_bmp_data),
+  .arb_bmp_valid(phy_bmp_valid),.arb_bmp_end(phy_bmp_end),.arb_bmp_error(phy_bmp_error),.arb_bmp_grant(phy_bmp_grant),
+  .arb_aud_req(phy_aud_req),.arb_aud_addr(phy_aud_addr),.arb_aud_data(phy_aud_data),
+  .arb_aud_valid(phy_aud_valid),.arb_aud_end(phy_aud_end),.arb_aud_error(phy_aud_error));
+end else begin: raw_compatibility
+ assign fat_done=0;assign fat_error=0;assign fat_count=0;assign fat_wav_found=0;
+ assign fat_sizes=0;assign fat_wav_size=0;assign fat_error_code=0;
+ assign phy_bmp_req=sd_sec_read;assign phy_bmp_addr=sd_sec_read_addr;
+ assign sd_sec_read_data=phy_bmp_data;assign sd_sec_read_data_valid=phy_bmp_valid;
+ assign sd_sec_read_end=phy_bmp_end;assign bmp_transfer_error=phy_bmp_error;assign bmp_grant=phy_bmp_grant;
+ assign phy_aud_req=aud_req;assign phy_aud_addr=aud_addr;assign aud_data=phy_aud_data;
+ assign aud_valid=phy_aud_valid;assign aud_end=phy_aud_end;assign aud_read_error=phy_aud_error;
+end endgenerate
+assign sd_transfer_error=(ENABLE_AUDIO || FAT32_ENABLE)?bmp_transfer_error:raw_transfer_error;
 assign audio_stream_reset=rst || load_abort || transport_reset || !sd_init_done || audio_error;
 assign audio_error=|audio_error_code;
-generate if(ENABLE_AUDIO)begin: wav_enabled
+generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
  sd_read_arbiter #(.TIMEOUT_CYCLES(READ_STALL_CYCLES)) arbiter(
-  .clk(clk),.rst(rst | load_abort),.sd_ready(sd_init_done),
-  .bmp_req(sd_sec_read),.bmp_addr(sd_sec_read_addr),.bmp_data(sd_sec_read_data),
-  .bmp_valid(sd_sec_read_data_valid),.bmp_end(sd_sec_read_end),
-  .bmp_error(bmp_transfer_error),.bmp_grant(bmp_grant),
-  .aud_req(aud_req),.aud_addr(aud_addr),.aud_data(aud_data),
-  .aud_valid(aud_valid),.aud_end(aud_end),.aud_error(aud_read_error),
+  .clk(clk),.rst(rst | (load_abort && !FAT32_ENABLE)),.sd_ready(sd_init_done),
+  .bmp_req(phy_bmp_req),.bmp_addr(phy_bmp_addr),.bmp_data(phy_bmp_data),
+  .bmp_valid(phy_bmp_valid),.bmp_end(phy_bmp_end),
+  .bmp_error(phy_bmp_error),.bmp_grant(phy_bmp_grant),
+  .aud_req(phy_aud_req),.aud_addr(phy_aud_addr),.aud_data(phy_aud_data),
+  .aud_valid(phy_aud_valid),.aud_end(phy_aud_end),.aud_error(phy_aud_error),
   .sd_req(card_read),.sd_addr(card_addr),.sd_data(card_data),
   .sd_valid(card_valid),.sd_end(card_end),.sd_error(raw_transfer_error),
   .transport_reset(transport_reset));
- audio_wav #(.START_SECTOR(AUDIO_START_SECTOR)) wav(
+ audio_wav #(.START_SECTOR(AUDIO_START_SECTOR),.FILESYSTEM(FAT32_ENABLE)) wav(
   .clk(clk),.rst(rst | load_abort),.sd_init_done(sd_init_done),
-  .enable(audio_enable),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
+  .enable(ENABLE_AUDIO && audio_enable && (!FAT32_ENABLE || (fat_done && fat_wav_found))),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
   .req(aud_req),.addr(aud_addr),.data(aud_data),.data_valid(aud_valid),
   .sector_end(aud_end),.read_error(aud_read_error),
-  .sample_valid(audio_sample_valid),.sample(audio_sample),.error_code(audio_error_code),.ready(audio_ready));
+  .sample_valid(audio_sample_valid),.sample(audio_sample),.error(),.error_code(audio_error_code),.ready(audio_ready));
 end else begin: wav_disabled
- assign card_read=sd_sec_read;assign card_addr=sd_sec_read_addr;
- assign sd_sec_read_data=card_data;assign sd_sec_read_data_valid=card_valid;assign sd_sec_read_end=card_end;
- assign bmp_grant=1'b1;assign bmp_transfer_error=raw_transfer_error;
+ assign card_read=phy_bmp_req;assign card_addr=phy_bmp_addr;
+ assign phy_bmp_data=card_data;assign phy_bmp_valid=card_valid;assign phy_bmp_end=card_end;
+ assign phy_bmp_grant=1'b1;assign phy_bmp_error=raw_transfer_error;
+ assign phy_aud_data=0;assign phy_aud_valid=0;assign phy_aud_end=0;assign phy_aud_error=0;
+ assign aud_req=0;assign aud_addr=0;
  assign transport_reset=0;assign audio_sample_valid=0;assign audio_sample=0;
  assign audio_error_code=0;assign audio_ready=0;
 end endgenerate
@@ -119,7 +158,6 @@ reg              auto_play_en;
 reg [31:0]       auto_cnt;
 reg [2:0]        img_found_count;
 reg [1:0]        img_idx;              // 当前真正显示中的图片编号
-reg [1:0]        load_idx;             // 当前正在写入的图片编号
 reg [1:0]        pending_buf_idx;      // 当前正在写入的目标缓冲区
 reg [31:0]       img_sector0;
 reg [31:0]       img_sector1;
@@ -156,7 +194,8 @@ assign next_from_current = prev_requested ?
     ((img_idx == 0) ? img_found_count[1:0] - 2'd1 : img_idx - 2'd1) :
     next_index_limited(img_idx, img_found_count);
 assign write_finish_pulse = wrfin_tgl_sync[2] ^ wrfin_tgl_sync[1];
-assign state_code = state_code_i;
+// 挂载失败时在原状态数码管显示8+错误码，不增加物理引脚或跨域总线。
+assign state_code = (FAT32_ENABLE && fat_error)?(4'd8+fat_error_code):state_code_i;
 
 key_press_debounce #(
     .CLK_FREQ_HZ (CLK_FREQ_HZ),
@@ -260,7 +299,7 @@ always @(posedge clk or posedge rst) begin
         load_start_pulse <= 1'b0;
         load_abort       <= 1'b0;
 
-        if (sd_init_error) status_error <= 1'b1;
+        if (sd_init_error || fat_error) status_error <= 1'b1;
 
         if ((read_stall || sd_transfer_error) && !commit_wait) begin
             // Abort an incomplete sector instead of calling it a successful read.
@@ -450,7 +489,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-bmp_read #(.SHARED_SD(ENABLE_AUDIO),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPTIVE(ADAPTIVE),.ENABLE_SCALING(ENABLE_SCALING)) bmp_read_m0(
+bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPTIVE(ADAPTIVE),.ENABLE_SCALING(ENABLE_SCALING)) bmp_read_m0(
     .clk                    (clk),
     .rst                    (rst),
     .ready                  (bmp_ready),
@@ -459,6 +498,7 @@ bmp_read #(.SHARED_SD(ENABLE_AUDIO),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPT
     .scan_start_sector      (SCAN_START_SECTOR),
     .scan_max_sector        (SCAN_MAX_SECTOR),
     .scan_target_count      (SCAN_TARGET_COUNT),
+    .fs_mount_done(fat_done),.fs_bmp_count(fat_count),
     .scan_done              (scan_done),
     .scan_found_valid       (scan_found_valid),
     .scan_found_sector      (scan_found_sector),
@@ -487,7 +527,7 @@ bmp_read #(.SHARED_SD(ENABLE_AUDIO),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPT
 
 sd_card_top sd_card_top_m0(
     .clk                    (clk),
-    .rst                    (rst | load_abort | transport_reset),
+    .rst                    (rst | (load_abort && !FAT32_ENABLE) | transport_reset),
     .SD_nCS                 (SD_nCS),
     .SD_DCLK                (SD_DCLK),
     .SD_MOSI                (SD_MOSI),

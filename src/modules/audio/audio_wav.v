@@ -1,6 +1,6 @@
-// 原始连续扇区WAV：PCM/48kHz/16bit/单声道，遍历RIFF块和奇数字节填充。
+// WAV流解析：PCM/48kHz/16bit/单声道，遍历RIFF块和奇数字节填充。
 // 每扇区先缓存，收到成功end（CRC已通过）后才解析/输出，坏扇区不泄漏样本。
-module audio_wav #(parameter [31:0] START_SECTOR=131072,
+module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  parameter [31:0] MAX_BYTES=16777216,
  parameter integer RETRY_CYCLES=100_000_000)(
  input clk,rst,sd_init_done,enable,sector_room,sample_ready,
@@ -52,7 +52,8 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,
  // One-hot invariant: use the FETCH bit directly at the arbiter boundary,
  // avoiding a 15-bit equality decode on the read-request/timer path.
  assign req=state[2] && sd_init_done;
- assign addr=START_SECTOR+cache_tag;
+ // FAT32 中 addr 是 WAV 文件内的相对扇区，由 sd_fat32 重映射到 LBA。
+ assign addr=FILESYSTEM?cache_tag:START_SECTOR+cache_tag;
  // 同步RAM端口；ENSURE/WAIT_BYTE留出读延迟。
  always @(posedge clk)begin
   if(state[2] && data_valid && count<512)sector_mem[count[8:0]]<=data;

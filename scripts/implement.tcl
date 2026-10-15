@@ -6,6 +6,13 @@ update_timing
 source scripts/adaptive_clocks.tcl
 
 place
+# Physical mapping rebuilds mux clock pins. Rebind the same existing mode
+# clocks before timing-driven routing as well as before final STA.
+update_timing
+source scripts/adaptive_clocks.tcl
+phys_opt -post_place -effort high
+# post_place保留上述时钟；重复绑定会产生USR-8170重复定义告警。
+# route之后仍按原流程绑定最终映射引脚，不改变任何时钟约束。
 route
 update_timing -mode final
 # TD rebuilds clock objects during physical mapping; bind to the final mux pins.

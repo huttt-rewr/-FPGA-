@@ -60,3 +60,4 @@ src/modules/audio/audio_wav.v
 src/modules/audio/audio_async_fifo.v
 src/modules/audio/audio_playback.v
 src/modules/audio/audio_effects.v
+src/modules/sd/sd_fat32.v

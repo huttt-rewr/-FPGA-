@@ -21,6 +21,8 @@ assert root_files==nested_files, (
 listed=[(r/line.strip()).resolve() for line in (r/'scripts/design_files.txt').read_text().splitlines() if line.strip()]
 assert len(listed)==len(set(listed)), 'Duplicate design manifest entry'
 assert set(listed)==project(r/'video_improve.al'), 'Manifest differs from TD project'
+assert r/'src/modules/sd/sd_fat32.v' in listed, 'FAT32 remapper is not registered'
+assert '.FAT32_ENABLE(1)' in (r/'src/top.v').read_text(encoding='utf-8-sig'), 'Official top must use FAT32 files'
 modules={}
 for p in listed:
     source=p.read_text(encoding='utf-8-sig')

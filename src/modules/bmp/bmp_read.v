@@ -2,7 +2,8 @@ module bmp_read #(
     parameter integer READ_STALL_CYCLES = 67_108_864,
     parameter ADAPTIVE = 0,
     parameter ENABLE_SCALING = 0,
-    parameter SHARED_SD = 0
+    parameter SHARED_SD = 0,
+    parameter FILESYSTEM = 0
 )(
     input                       clk,
     input                       rst,
@@ -13,6 +14,8 @@ module bmp_read #(
     input  [31:0]               scan_start_sector,
     input  [31:0]               scan_max_sector,
     input  [2:0]                scan_target_count,
+    input                       fs_mount_done,
+    input  [2:0]                fs_bmp_count,
     output reg                  scan_done,
     output reg                  scan_found_valid,
     output reg [31:0]           scan_found_sector,
@@ -330,10 +333,10 @@ always @(posedge clk or posedge rst) begin
         raw_sd_sec_read       <= 1'b0;
         raw_sd_sec_read_addr  <= 32'd0;
         write_req         <= 1'b0;
-        scan_done         <= scan_done;
+        scan_done         <= FILESYSTEM && !sd_init_done ? 1'b0:scan_done;
         scan_found_valid  <= 1'b0;
         scan_found_sector <= 32'd0;
-        scan_found_total  <= scan_found_total;
+        scan_found_total  <= FILESYSTEM && !sd_init_done ? 3'd0:scan_found_total;
         scan_sector       <= 32'd0;
         load_sector_latched <= 32'd0;
     end else begin
@@ -352,14 +355,25 @@ always @(posedge clk or posedge rst) begin
                     raw_sd_sec_read_addr <= scan_start_sector;
                     state            <= ST_SCAN;
                 end else if (load_start) begin
-                    load_sector_latched <= load_sector;
-                    raw_sd_sec_read_addr    <= load_sector;
+                    load_sector_latched <= FILESYSTEM?32'd0:load_sector;
+                    raw_sd_sec_read_addr    <= FILESYSTEM?32'd0:load_sector;
                     state               <= ST_LOAD_HDR;
                 end
             end
 
             ST_SCAN: begin
                 state_code  <= 4'd2;
+                if(FILESYSTEM)begin
+                    // 枚举结果只携带文件索引；不再扫物理扇区寻找 BM。
+                    raw_sd_sec_read<=0;
+                    if(fs_mount_done)begin
+                        if(scan_found_total<fs_bmp_count)begin
+                            scan_found_valid<=1;
+                            scan_found_sector<={29'd0,scan_found_total};
+                            scan_found_total<=scan_found_total+1'b1;
+                        end else begin scan_done<=1;state<=ST_IDLE;end
+                    end
+                end else begin
                 raw_sd_sec_read <= 1'b1;
 
                 if (sd_sec_read_end) begin
@@ -388,6 +402,7 @@ always @(posedge clk or posedge rst) begin
                             scan_sector      <= next_scan_sector_if_miss;
                         end
                     end
+                end
                 end
             end
 

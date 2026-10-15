@@ -52,6 +52,13 @@ def main():
     args = parser.parse_args()
     REPORTS.mkdir(exist_ok=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/static_check.py')], cwd=ROOT, check=True)
+    design_files = [(ROOT / p.strip()).resolve() for p in
+                    (ROOT / 'scripts/design_files.txt').read_text().splitlines() if p.strip()]
+    if any(any(c.isspace() or c in '{};[$]' for c in p.as_posix()) for p in design_files):
+        raise RuntimeError('TD direct HDL loader requires source paths without spaces/Tcl metacharacters')
+    literal_files = ' '.join(p.as_posix() for p in design_files)
+    (REPORTS / 'design_sources.tcl').write_text(
+        'read_verilog -file {' + literal_files + '} -top top\n', encoding='utf-8')
     sources = snapshot()
     record = {'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'status': 'running', 'td': args.td, 'sources': sources}
