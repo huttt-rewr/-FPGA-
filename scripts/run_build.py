@@ -18,7 +18,7 @@ REPORTS = ROOT / 'reports'
 def snapshot():
     paths = [p for base in ('src', 'scripts', 'sim') for p in (ROOT / base).rglob('*')
              if p.is_file() and p.suffix in ('.v', '.vhd', '.adc', '.sdc', '.al', '.ipc', '.tcl', '.ps1', '.py', '.txt')
-             and not any(part in ('msim_work', 'pll_work') for part in p.parts)]
+             and not any(part in ('msim_work', 'pll_work', 'indexed_work', 'keyboard_work', 'sd_native_work') for part in p.parts)]
     paths.append(ROOT / 'video_improve.al')
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(paths)}

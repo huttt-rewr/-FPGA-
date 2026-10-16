@@ -1,12 +1,14 @@
 // Fixed 40x4 status panel; no uninitialized text RAM.
-module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0,parameter AUDIO_DIAGNOSTICS=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
+module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0,parameter AUDIO_DIAGNOSTICS=0,parameter FILE_UI=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input auto_play,input [1:0] image_index,input [2:0] image_count,
     input [4:0] volume,input mute,input busy,input error,input edid_ok,
     output [23:0] result,output [9:0] pixel_x,output [9:0] pixel_y,
     input signed [7:0] brightness,input [3:0] contrast,input [1:0] edit_mode,
     input [11:0] source_width,source_height,input mode_800,output out_vs,output out_de,
     input menu_open,input [2:0] menu_item,input gamma_enable,input debug_enable,input [1:0] debug_page,
-    input audio_ready,input audio_error,input [3:0] audio_error_code,input audio_underflow);
+    input audio_ready,input audio_error,input [3:0] audio_error_code,input audio_underflow,
+    input [6:0] file_image_index,file_image_count,file_audio_index,file_audio_count,
+    input file_table_truncated);
     wire expanded=ADAPTIVE && mode_800;
     wire [9:0] x,y,raw_x,raw_y;
     viewport_coordinates coords(clk,rst,vs,de,expanded,x,y,raw_x,raw_y);
@@ -99,11 +101,35 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
             end
         end
     end
+    // Metadata decimal conversion stays off the per-pixel font lookup path.
+    reg [7:0] it,iu,ct,cu,at,au,nt,nu;
+    wire [6:0] image_number=(file_image_count==0)?7'd0:file_image_index+7'd1;
+    wire [6:0] audio_number=(file_audio_count==0)?7'd0:file_audio_index+7'd1;
+    always @(posedge clk or posedge rst)begin
+        if(rst)begin it<=48;iu<=48;ct<=48;cu<=48;at<=48;au<=48;nt<=48;nu<=48;end
+        else begin
+            it<=48+image_number/10;iu<=48+image_number%10;
+            ct<=48+file_image_count/10;cu<=48+file_image_count%10;
+            at<=48+audio_number/10;au<=48+audio_number%10;
+            nt<=48+file_audio_count/10;nu<=48+file_audio_count%10;
+        end
+    end
     reg [319:0] menu_text;
     reg [7:0] board_ascii;
     always @* begin
         menu_text=320'd0;
         board_ascii=ascii;
+        if(FILE_UI && row==1)begin
+            menu_text="PLAY:OFF IMG:00/00 AUD:00/00 LOAD:-     ";
+            board_ascii=(col<40)?(menu_text >> ((39-col)*8)):8'h20;
+            case(col)
+                5:board_ascii="O";6:board_ascii=auto_play?"N":"F";7:board_ascii=auto_play?" ":"F";
+                13:board_ascii=it;14:board_ascii=iu;16:board_ascii=ct;17:board_ascii=cu;
+                23:board_ascii=at;24:board_ascii=au;26:board_ascii=nt;27:board_ascii=nu;
+                34:board_ascii=error?"E":(busy?"B":"-");
+                39:board_ascii=file_table_truncated?"T":" ";
+            endcase
+        end
         if(BOARD_UI)begin
             // 音频状态：E错误、M静音、R已解析，-尚未准备。
             if(AUDIO_UI && !menu_open && row==3 && col>=28)begin

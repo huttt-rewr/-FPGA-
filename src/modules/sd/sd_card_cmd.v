@@ -28,36 +28,49 @@ module sd_card_cmd #(
 	output[7:0]                 spi_data_in,                  //SPI module send data
 	input[7:0]                  spi_data_out                  //SPI module data returned
 );
-parameter S_IDLE         = 0;
-parameter S_WAIT         = 1;
-parameter S_INIT         = 2;
-parameter S_CMD_PRE      = 3;
-parameter S_CMD          = 4;
-parameter S_CMD_DATA     = 5;
-parameter S_READ_WAIT    = 6;
-parameter S_READ         = 7;
-parameter S_READ_ACK     = 8;
-parameter S_WRITE_TOKEN  = 9;
-parameter S_WRITE_DATA_0 = 10;
-parameter S_WRITE_DATA_1 = 11;
-parameter S_WRITE_CRC    = 12;
-parameter S_WRITE_SUC    = 13;
-parameter S_WRITE_BUSY   = 14;
-parameter S_WRITE_ACK    = 15;
-parameter S_ERR          = 16;
-parameter S_END          = 17;
+parameter S_IDLE         = 18'h00001;
+parameter S_WAIT         = 18'h00002;
+parameter S_INIT         = 18'h00004;
+parameter S_CMD_PRE      = 18'h00008;
+parameter S_CMD          = 18'h00010;
+parameter S_CMD_DATA     = 18'h00020;
+parameter S_READ_WAIT    = 18'h00040;
+parameter S_READ         = 18'h00080;
+parameter S_READ_ACK     = 18'h00100;
+parameter S_WRITE_TOKEN  = 18'h00200;
+parameter S_WRITE_DATA_0 = 18'h00400;
+parameter S_WRITE_DATA_1 = 18'h00800;
+parameter S_WRITE_CRC    = 18'h01000;
+parameter S_WRITE_SUC    = 18'h02000;
+parameter S_WRITE_BUSY   = 18'h04000;
+parameter S_WRITE_ACK    = 18'h08000;
+parameter S_ERR          = 18'h10000;
+parameter S_END          = 18'h20000;
 
-reg[4:0]                      state;
+(* syn_encoding="onehot" *) reg[17:0] state;
 reg                           CS_reg;
 reg[15:0]                     byte_cnt;
 reg[7:0]                      send_data;
 wire[7:0]                     data_recv;
 reg[9:0]                      wr_data_cnt;
 reg [31:0] wait_timeout_cnt;
-reg [4:0] wait_state;
+reg [17:0] wait_state;
 reg timeout_reached;
 reg [15:0] read_crc;
 reg [7:0] received_crc_hi;
+// SPI ACKs are separated by the master's ACK_WAIT/IDLE phases. Counter
+// predicates therefore settle a full host cycle before the next ACK; these
+// registers remove wide counter comparisons from state/request fanout.
+reg init_tail,command_timeout,response_phase,response_tail,read_tail,write_crc_tail;
+always @(posedge sys_clk or posedge rst)begin
+ if(rst)begin
+  init_tail<=0;command_timeout<=0;response_phase<=0;response_tail<=0;read_tail<=0;write_crc_tail<=0;
+ end else begin
+  init_tail<=byte_cnt>=16'd10;command_timeout<=byte_cnt==16'hffff;
+  response_phase<=byte_cnt>=16'd6;response_tail<=byte_cnt==cmd_data_len-16'd1;
+  read_tail<=byte_cnt==16'd513;write_crc_tail<=byte_cnt==16'd1;
+ end
+end
 function [15:0] crc16_byte;
  input [15:0] previous;
  input [7:0] value;
@@ -126,19 +139,19 @@ begin
 		CS_reg <= 1'b1;
 	end
 	else
-		case(state)
-			S_IDLE:
+		case(1'b1)
+			state[0]:
 			begin
 				state <= S_INIT;
 				clk_div <= spi_clk_div;
 				CS_reg <= 1'b1;
 			end
-			S_INIT:
+			state[2]:
 			begin
 				//send 11 bytes on power(at least 74 SPI clocks)
 				if(spi_wr_ack == 1'b1)
 				begin
-					if(byte_cnt >= 16'd10)
+					if(init_tail)
 					begin
 						byte_cnt <= 16'd0;
 						spi_wr_req <= 1'b0;
@@ -155,7 +168,7 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_WAIT:
+			state[1]:
 			begin
 				cmd_req_error <= 1'b0;
 				wr_data_cnt <= 10'd0;
@@ -168,7 +181,7 @@ begin
 					state <= S_WRITE_TOKEN;
 				clk_div <= spi_clk_div;
 			end
-			S_CMD_PRE:
+			state[3]:
 			begin
 				//before sending a command, send an byte 'ff',provide some clocks
 				if(spi_wr_ack == 1'b1)
@@ -184,17 +197,17 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_CMD:
+			state[4]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
-					if((byte_cnt == 16'hffff) || (byte_cnt>=6 && data_recv != cmd_r1 && data_recv[7] == 1'b0))
+					if(command_timeout || (response_phase && data_recv != cmd_r1 && data_recv[7] == 1'b0))
 					begin
 						state <= S_ERR;
 						spi_wr_req <= 1'b0;
 						byte_cnt <= 16'd0;
 					end
-					else if(byte_cnt>=6 && data_recv == cmd_r1)
+					else if(response_phase && data_recv == cmd_r1)
 					begin
 						spi_wr_req <= 1'b0;
 						if(cmd_data_len != 16'd0)
@@ -231,11 +244,11 @@ begin
 						send_data <= 8'hff;
 				end
 			end
-			S_CMD_DATA:
+			state[5]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
-					if(byte_cnt == cmd_data_len - 16'd1)
+					if(response_tail)
 					begin
 						state <= S_END;
 						spi_wr_req <= 1'b0;
@@ -252,7 +265,7 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_READ_WAIT:
+			state[6]:
 			begin
 				if(spi_wr_ack == 1'b1 && data_recv == 8'hfe)
 				begin
@@ -266,11 +279,11 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_READ:
+			state[7]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
-					if(byte_cnt == 16'd513)
+					if(read_tail)
 					begin
 						// SD read blocks always carry CRC16, even with command CRC off.
                         // Payload is speculative until this success handshake.
@@ -289,7 +302,7 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_WRITE_TOKEN:
+			state[9]:
 				if(spi_wr_ack == 1'b1)
 				begin
 					state <= S_WRITE_DATA_0;
@@ -301,12 +314,12 @@ begin
 					spi_wr_req <= 1'b1;
 					send_data <= 8'hfe;
 				end
-			S_WRITE_DATA_0:
+			state[10]:
 			begin
 				state <= S_WRITE_DATA_1;
 				wr_data_cnt <= wr_data_cnt + 10'd1;
 			end
-			S_WRITE_DATA_1:
+			state[11]:
 			begin
 				if(spi_wr_ack == 1'b1 && wr_data_cnt == 10'd512)
 				begin
@@ -324,11 +337,11 @@ begin
 					send_data <= block_write_data;
 				end
 			end
-			S_WRITE_CRC:
+			state[12]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
-					if(byte_cnt == 16'd1)
+					if(write_crc_tail)
 					begin
 						state <= S_WRITE_SUC;
 						spi_wr_req <= 1'b0;
@@ -345,7 +358,7 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_WRITE_SUC :
+			state[13]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
@@ -361,7 +374,7 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_WRITE_BUSY :
+			state[14]:
 			begin
 				if(spi_wr_ack == 1'b1)
 				begin
@@ -377,12 +390,12 @@ begin
 					send_data <= 8'hff;
 				end
 			end
-			S_ERR:
+			state[16]:
 			begin
 				state <= S_END;
 				cmd_req_error <= 1'b1;
 			end
-			S_READ_ACK,S_WRITE_ACK,S_END:
+			state[8] | state[15] | state[17]:
 			begin
 				state <= S_WAIT;
 			end

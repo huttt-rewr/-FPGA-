@@ -10,13 +10,13 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  output reg ready);
  // Explicit one-hot states: failure/retry is also observed outside the case,
  // so this tool does not automatically recode the original binary register.
- localparam [14:0] IDLE=15'h0001,ENSURE=15'h0002,FETCH=15'h0004,
+ localparam [15:0] IDLE=15'h0001,ENSURE=15'h0002,FETCH=15'h0004,
  WAIT_BYTE=15'h0008,CONSUME=15'h0010,RIFF_CHECK=15'h0020,
  CHUNK_CHECK=15'h0040,FMT_CHECK=15'h0080,WAIT_SPACE=15'h0100,
  FAILED=15'h0200,CHUNK_BOUNDS=15'h0400,CHUNK_APPLY=15'h0800,
- RIFF_APPLY=15'h1000,WAIT_SAMPLE=15'h2000,CHUNK_CLASSIFY=15'h4000;
+ RIFF_APPLY=15'h1000,WAIT_SAMPLE=15'h2000,CHUNK_CLASSIFY=15'h4000,FMT_APPLY=16'h8000;
  localparam RIFF=0,CHUNK=1,FMT=2,PCM=3;
- reg [14:0] state;
+ reg [15:0] state;
  reg [1:0] kind;
  reg [31:0] position,file_end,chunk_size,chunk_id,chunk_next;
  reg [31:0] available,trailing;
@@ -45,6 +45,11 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
    retry_count<=retry_count+1'b1;
    retry_due<=retry_count==RETRY_CYCLES-2;
   end
+ end
+ reg format_bad;
+ always @(posedge clk or posedge rst)begin
+  if(rst)format_bad<=0;
+  else format_bad<=format!=1 || channels!=1 || rate!=48000 || byte_rate!=96000 || align!=2 || bits!=16;
  end
  reg resume_space;
  reg last_pcm_byte,sector_last_byte;
@@ -201,8 +206,9 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      end else if(!tail_ok)begin error_code<=4;state<=FAILED;end
      else begin position<=chunk_next;field<=0;state<=ENSURE;end
     end
-    state[7]:begin
-     if(format!=1 || channels!=1 || rate!=48000 || byte_rate!=96000 || align!=2 || bits!=16)
+    state[7]:state<=FMT_APPLY; // let the final fmt byte reach format_bad
+    state[15]:begin
+     if(format_bad)
       begin error_code<=1;state<=FAILED;end
      else if(!tail_ok)begin error_code<=4;state<=FAILED;end
      else begin fmt_valid<=1;position<=chunk_next;kind<=CHUNK;field<=0;state<=ENSURE;end

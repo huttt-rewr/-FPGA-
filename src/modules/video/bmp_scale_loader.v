@@ -64,9 +64,9 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  wire subtract_ok=shifted_remainder>={1'b0,denominator};
  // Synchronous RAM reads; memories deliberately have no reset.
  always @(posedge clk) begin
-  if(state==FETCH && sector_valid && cache_count<512) sector_mem[cache_count[8:0]]<=sector_data;
+  if(state[8] && sector_valid && cache_count<512) sector_mem[cache_count[8:0]]<=sector_data;
   byte_q<=sector_mem[byte_address[8:0]];
-  if(state==BYTE && channel==2) begin
+  if(state[9] && channel==2) begin
    if(load_y[0])row1[load_x]<={byte_q,green,blue};
    else row0[load_x]<={byte_q,green,blue};
   end
@@ -87,8 +87,8 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
    row_last_pixel<=0;frame_last_row<=0;advance_source_y<=0;source_y_endpoint<=0;
   end else begin
    done<=0;error<=0;
-   case(state)
-    IDLE: if(start) begin
+   case(1'b1) // synthesis parallel_case
+    state[0]: if(start) begin
      ow<=(ADAPTIVE && mode_800)?800:640;oh<=(ADAPTIVE && mode_800)?600:480;
      w<=source_width;h<=source_height;offset<=pixel_offset;base<=base_sector;
      last_source_x<=source_width[10:0]-1'b1;
@@ -98,24 +98,24 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
     end
     // Validate and latch aspect ratio before enabling the divider registers.
     // This keeps height/range comparisons out of their high-fanout CE path.
-    CONFIG_CHECK: begin
+    state[23]: begin
      if(w==0 || w>1920 || h==0 || h>1080)begin error<=1;busy<=0;state<=IDLE;end
      else begin
       wide<=(w*14'd3 >= h*14'd4);
       state<=CONFIG;
      end
     end
-    CONFIG: begin
+    state[1]: begin
      quotient<=wide?((ow==800)?h*32'd800:h*32'd640):((ow==800)?w*32'd600:w*32'd480);
      denominator<=wide?w:h;
      remainder<=0;div_count<=32;div_phase<=0;state<=DIVIDE;
     end
-    DIVIDE: begin
+    state[2]: begin
      remainder<=subtract_ok?shifted_remainder-{1'b0,denominator}:shifted_remainder;
      quotient<={quotient[30:0],subtract_ok};div_count<=div_count-1'b1;
      if(div_count==1)state<=DIV_DONE;
     end
-    DIV_DONE: begin
+    state[3]: begin
      remainder<=0;div_count<=32;
      case(div_phase)
       0: begin
@@ -136,7 +136,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       2: begin y_step<=(dh==1)?0:quotient[27:0];state<=ROW;end
      endcase
     end
-    ROW: begin
+    state[4]: begin
      ox<=0;x_acc<=0;
      advance_source_y<=oy>=pad_y && oy<bottom_edge;
      source_y_endpoint<=oy==bottom_penult;
@@ -147,24 +147,24 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      if(oy>=pad_y && oy<=bottom_edge)state<=CHECK_ROWS;
      else state<=PIXEL;
     end
-    CHECK_ROWS: begin
+    state[5]: begin
      if(!(row_y0[0]?(tags_valid[1] && tag1==row_y0):(tags_valid[0] && tag0==row_y0)))begin
       load_y<=row_y0;state<=LINE_START;
      end else if(!(row_y1[0]?(tags_valid[1] && tag1==row_y1):(tags_valid[0] && tag0==row_y1)))begin
       load_y<=row_y1;state<=LINE_START;
      end else state<=PIXEL;
     end
-    LINE_START: begin
+    state[6]: begin
      byte_address<=offset+load_y*stride;load_x<=0;channel<=0;state<=CACHE;
     end
-    CACHE: begin
+    state[7]: begin
      if(cache_valid && cache_sector==byte_address[31:9])state<=BYTE;
      else begin
       cache_sector<=byte_address[31:9];cache_valid<=0;cache_count<=0;
       sector_address<=base+byte_address[31:9];sector_read<=1;state<=FETCH;
      end
     end
-    FETCH: begin
+    state[8]: begin
      if(sector_valid && cache_count<513)cache_count<=cache_count+1'b1;
      if(sector_end) begin
       sector_read<=0;
@@ -172,7 +172,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       else begin cache_valid<=1;state<=CACHE;end
      end
     end
-    BYTE: begin
+    state[9]: begin
      byte_address<=byte_address+1'b1;state<=CACHE;
      case(channel)
       0:begin blue<=byte_q;channel<=1;end
@@ -187,31 +187,31 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       end
      endcase
     end
-    PIXEL: begin
+    state[10]: begin
      row_last_pixel<=ox==ow-1;frame_last_row<=oy==oh-1;
      if(!inside_image)begin pixel<=0;pixel_valid<=1;state<=SEND;end
      else begin read_x<=x0;fx<=x_acc[15:8];fy<=y_acc[15:8];state<=LEFT_WAIT;end
     end
-    LEFT_WAIT:state<=LEFT_GET;
-    LEFT_GET:begin
+    state[11]:state<=LEFT_GET;
+    state[12]:begin
      left0<=q0;left1<=q1;read_x<=(x0+1<w)?x0+1'b1:x0;state<=RIGHT_WAIT;
     end
-    RIGHT_WAIT:state<=RIGHT_GET;
-    RIGHT_GET:state<=HWAIT1;
-    HWAIT1:state<=HWAIT2;
-    HWAIT2:state<=HCAPTURE;
-    HCAPTURE:begin
+    state[13]:state<=RIGHT_GET;
+    state[14]:state<=HWAIT1;
+    state[17]:state<=HWAIT2;
+    state[18]:state<=HCAPTURE;
+    state[19]:begin
      horizontal0<=horizontal_result0;horizontal1<=horizontal_result1;state<=VWAIT1;
     end
-    VWAIT1:state<=VWAIT2;
-    VWAIT2:state<=VWAIT3;
-    VWAIT3:state<=VERTICAL;
-    VERTICAL:begin
+    state[20]:state<=VWAIT2;
+    state[21]:state<=VWAIT3;
+    state[22]:state<=VERTICAL;
+    state[15]:begin
      if(y0==y1)pixel<=y0[0]?horizontal1:horizontal0;
      else pixel<=vertical_result;
      pixel_valid<=1;state<=SEND;
     end
-    SEND:if(pixel_ready)begin
+    state[16]:if(pixel_ready)begin
      pixel_valid<=0;
      if(row_last_pixel)begin
       if(frame_last_row)begin busy<=0;done<=1;state<=IDLE;end

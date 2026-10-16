@@ -9,6 +9,7 @@
 /sim/pll_work/
 /sim/sd_native_work/
 /sim/keyboard_work/
+/sim/indexed_work/
 /sim/transcript
 /sim/*.wlf
 /transcript

@@ -1,12 +1,18 @@
 # 构建状态
 
+## 当前阶段二：64文件索引（72项回归与STA通过）
+
+正式源码启用BMP/WAV合计64文件、数字选图片、A+数字选音频、完整OSD计数与取消排空。切WAV清PCM队列及FIR/回声历史而保留48k样本调度，FIFO许可寄存并预留四槽。静态检查67源/38IO、72项ModelSim回归、综合/P&R/STA通过：**SWNS +0.131ns、STNS 0、HWNS +0.024ns、HTNS 0**。资源LUT15401、REG10239、BRAM9K61/64、DSP17、PLL2。[冻结清单](../reports/keyboard_20261016/phase2_room_validation.json)、[阶段报告](../reports/keyboard_20261016/RESULT_phase2_room.md)。70bit状态布局及下标保持。
+
+R/F尚未正式消费请求。正式SD仍SPI25MHz，未生成本轮新bit、未实板，未达到整体+0.5ns。初轮及各时序失败版本均在本轮reports保留；内部recovery/removal没有当成HDMI管脚hold。没有降低100MHz或新增功能路径时序屏蔽。当前阶段二通过值只认证该阶段冻结源码。[多文件使用](MEDIA_INDEX_20261016.md)。
+
 ## 2026-10-16 PS/2键盘阶段一（仿真与STA通过）
 
 键盘专项及67项全量ModelSim回归通过，静态检查65源/38 IO通过。新增官方PS/2 CLK=M16、DATA=K16；KEY/SW保留，键盘用法与默认不静音的版本变化见[操作说明](KEYBOARD_USAGE_20261016.md)。数字、R/F尚仅存请求。最终综合/P&R/STA通过：**SWNS +0.001ns、STNS 0、HWNS +0.021ns、HTNS 0**，余量很小、未达到+0.5ns，未生成新bit、未实板。LUT15223、REG10132、BRAM9K59/64、DSP17、PLL2。[冻结源码绑定和范围审计](../reports/keyboard_20261016/validation_phase1.json)、[本轮报告](../reports/keyboard_20261016/RESULT_PHASE1.md)。
 
 初轮P&R：SWNS −0.516ns、STNS −3.289ns，HWNS −0.319ns、HTNS −0.539ns；负min实际是内部模式同步器复位removal，不是HDMI管脚hold。隔离WAV重试计数、同步各域模式复位释放后，第二轮：SWNS −1.200ns、STNS −6.617ns，HWNS +0.021ns、HTNS 0；setup仍失败。已继续检查WAV状态译码，后续结果以匹配输入哈希的冻结报告为准。两轮日志见 `reports/keyboard_20261016/phase1_initial/`、`phase1_fixed/`。不将旧SPI基线的正时序当成新键盘源码结果，也不宣称达到+0.5ns。
 
-独立多文件实验（尚未登记正式TD）：12BMP/3WAV、高簇号、碎片、64文件总限额、越界回卷、切音频排空，以及真实播放器缩放帧/PCM/提交仿真通过。它不属于已落地正式功能，须待阶段一过关及后续正式回归与P&R。
+历史阶段一期间独立多文件实验（现已由阶段二正式接入）：12BMP/3WAV、高簇号、碎片、64文件总限额、越界回卷、切音频排空，以及真实播放器缩放帧/PCM/提交仿真通过。它不属于已落地正式功能，须待阶段一过关及后续正式回归与P&R。
 
 ## 2026-10-16 四位SD独立候选
 

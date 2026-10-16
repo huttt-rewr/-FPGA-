@@ -7,6 +7,8 @@ try {
  New-Item -ItemType Directory -Force -Path '../reports/effects_20261009' | Out-Null
  & python ../scripts/make_fat32_image.py fixtures --out ../reports/fat32_20261015/vectors
  if($LASTEXITCODE -ne 0) { throw 'FAT32 fixture generation/verification failed' }
+ & python ../scripts/make_indexed_media.py
+ if($LASTEXITCODE -ne 0) { throw 'Indexed media fixture generation failed' }
  if(!(Test-Path 'msim_work')) { & "$ModelSim\vlib.exe" msim_work; if($LASTEXITCODE -ne 0) { throw 'Cannot create simulation library' } }
  $files=@('../src/modules/common/*.v','../src/modules/control/*.v','../src/modules/osd/*.v','../src/modules/video/*.v','../src/modules/audio/*.v','../src/modules/optional/*.v','../src/modules/bmp/bmp_read.v','../src/modules/bmp/sd_card_bmp.v','../src/modules/sd/sd_card_top.v','../src/modules/sd/sd_card_sec_read_write.v','../src/modules/sd/sd_card_cmd.v','../src/modules/sd/spi_master.v','tb_uart_rx.v','tb_ir_nec_rx.v','tb_video_scaler.v','tb_upgrade.v','tb_cdc.v','tb_stream_queue.v','tb_uart_queue.v','tb_sd_address.v','tb_load_recovery.v','tb_bmp_stream.v','../src/modules/memory/frame_fifo_write.v','../src/ip/fifo/afifo_16_32_256.v','tb_fifo_boundary.v','tb_frame_writer.v','../src/modules/memory/frame_fifo_read.v','../src/modules/memory/frame_read_write.v','../src/ip/fifo/afifo_32_16_256.v','tb_frame_tail.v','tb_osd_text.v')
  $files += @('tb_bmp_headers.v','tb_hdmi_line_contract.v','tb_sd_watchdog.v')
@@ -20,12 +22,13 @@ try {
  $mergeTests += @('tb_audio_sd_integration')
  $mergeTests += @('tb_audio_osd')
  $mergeTests += @('tb_audio_retry','tb_audio_retry_edges','tb_audio_diagnostics')
- $mergeTests += @('tb_audio_effects')
+ $mergeTests += @('tb_audio_effects','tb_audio_stream_flush','tb_audio_fifo_room')
  $mergeTests += @('tb_fat32_mount','tb_fat32_stream','tb_fat32_player')
  $files += @('../src/modules/sd/native/*.v','sd_native_card_model.v')
  $mergeTests += @('tb_sd_native','tb_sd_native_clock','tb_sd_native_fat32','tb_sd_native_player')
  $files += @('../src/modules/input/*.v')
  $mergeTests += @('tb_ps2_keyboard','tb_ps2_controls')
+ $mergeTests += @('tb_fat32_indexed','tb_indexed_player','tb_file_osd')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }

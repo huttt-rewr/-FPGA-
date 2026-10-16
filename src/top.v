@@ -52,6 +52,9 @@ wire wav_sample_valid,wav_error,wav_ready,audio_queue_reset;
 wire [23:0] wav_sample,audio_fifo_data;
 wire audio_fifo_full,audio_fifo_empty,audio_fifo_read,audio_underflow;
 wire [10:0] audio_wr_used,audio_rd_used;
+wire audio_sample_room;
+audio_fifo_room audio_admission(.clk(sd_card_clk),.rst(rst_sd | audio_queue_reset),
+ .full(audio_fifo_full),.used(audio_wr_used),.sample_ready(audio_sample_room));
 wire [1:0] audio_stream_video;
 wire [3:0] wav_error_code,audio_error_code_video,audio_last_error;
 wire audio_pcm_valid;
@@ -104,6 +107,11 @@ wire board_next,board_toggle;
 (* keep="true" *) reg [1:0] res_mode;
 (* keep="true" *) reg [3:0] fps_mode;
 reg osd_on;
+reg media_image_select,media_audio_select;
+wire [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count;
+wire media_truncated;
+wire [28:0] media_video;
+reg [28:0] frame_media;
 wire [1:0] transition_mode,slogan_select;
 wire captions_enable,scroll_enable;
 wire signed [7:0] brightness;
@@ -158,7 +166,7 @@ always @(posedge video_clk or posedge rst_video)begin
  if(rst_video)begin
   settings_vs_d<=1;frame_brightness<=0;frame_contrast<=4;frame_edit_mode<=0;frame_osd<=1;
   frame_source_width<=0;frame_source_height<=0;
-  frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;
+  frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;frame_media<=0;
  end else begin
   settings_vs_d<=vs;
   if(settings_vs_d && !vs)begin
@@ -168,6 +176,7 @@ always @(posedge video_clk or posedge rst_video)begin
    frame_source_width<=status_video[47:36];frame_source_height<=status_video[59:48];
    frame_ui<=status_video[67:60];frame_audio_status<=status_video[69:68];
    frame_audio_error_code<=audio_last_error;frame_audio_underflow<=audio_underflow;
+   frame_media<=media_video;
   end
  end
 end
@@ -252,23 +261,20 @@ wire rst_all;
 (* async_reg="true" *) reg [1:0] mode_vff,mode_sff,mode_mff;
 (* async_reg="true" *) reg [1:0] edid_good_vff;
 wire mode_video=mode_vff[1],mode_sd=mode_sff[1],mode_mem=mode_mff[1];
-// These synchronizers must settle BEFORE mode_ready releases the consumers.
-// Give them a local reset release independent of mode_ready, rather than the
-// boot-clock watchdog's raw deassertion (which violated video removal timing).
-wire rst_mode_video,rst_mode_sd,rst_mode_mem;
-reset_sync mode_reset_video(.clk(video_clk),.arst(rst_all),.rst(rst_mode_video));
-reset_sync mode_reset_sd(.clk(sd_card_clk),.arst(rst_all),.rst(rst_mode_sd));
-reset_sync mode_reset_mem(.clk(ext_mem_clk),.arst(rst_all),.rst(rst_mode_mem));
-always @(posedge video_clk or posedge rst_mode_video)begin
- if(rst_mode_video)begin mode_vff<=0;edid_good_vff<=0;end
+// Metadata is sampled while consumers are held reset for 4096 boot cycles.
+// It needs no asynchronous reset pins: initialize synchronously and allow the
+// two-stage samples to settle before releasing the actual consumers.
+always @(posedge video_clk)begin
+ if(rst_all)begin mode_vff<=0;edid_good_vff<=0;end
  else begin mode_vff<={mode_vff[0],mode_800};edid_good_vff<={edid_good_vff[0],edid_good};end
 end
-always @(posedge sd_card_clk or posedge rst_mode_sd)begin
- if(rst_mode_sd)mode_sff<=0;else mode_sff<={mode_sff[0],mode_800};
+always @(posedge sd_card_clk)begin
+ if(rst_all)mode_sff<=0;else mode_sff<={mode_sff[0],mode_800};
 end
-always @(posedge ext_mem_clk or posedge rst_mode_mem)begin
- if(rst_mode_mem)mode_mff<=0;else mode_mff<={mode_mff[0],mode_800};
+always @(posedge ext_mem_clk)begin
+ if(rst_all)mode_mff<=0;else mode_mff<={mode_mff[0],mode_800};
 end
+
 
 
 wire rst_sd,rst_mem,rst_video,rst_write;
@@ -319,7 +325,7 @@ sd_card_bmp #(
     .CLK_FREQ_HZ       (100_000_000),
     .ENABLE_SCALING(1),.ADAPTIVE(1),
     // 正式媒体来自 FAT32 根目录；裸扇区参数仅保留给历史单元测试。
-    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),
+    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),.INDEXED(1),.MAX_FILES(64),
     .SCAN_TARGET_COUNT (3'd4)
 ) sd_card_bmp_m0(
     .clk               (sd_card_clk),
@@ -327,6 +333,10 @@ sd_card_bmp #(
     .key_next          (1'b1),
     .key_auto          (1'b1),
     .cmd_next(cmd_next),.cmd_prev(cmd_prev),.cmd_toggle(cmd_toggle),
+    .image_select_index(image_index),.audio_select_index(audio_index),
+    .image_select_valid(media_image_select),.audio_select_valid(media_audio_select),
+    .media_image_index(media_image_index),.media_image_count(media_image_count),
+    .media_audio_index(media_audio_index),.media_audio_count(media_audio_count),.media_truncated(media_truncated),
     .commit_ack_toggle(commit_ack),.commit_req_toggle(commit_req),
     .commit_buffer(commit_buffer),.status_auto(status_auto),
     .status_index(status_index),.status_count(status_count),
@@ -349,7 +359,7 @@ sd_card_bmp #(
     .SD_MISO           (sd_miso),
     .pixel_ready(pixel_write_ready),.image_width(image_width),.image_height(image_height),
     .debug_sd_status(debug_sd_status),
-    .audio_enable(!mute),.audio_sample_ready(!audio_fifo_full),
+    .audio_enable(!mute),.audio_sample_ready(audio_sample_room),
     .audio_sector_room(audio_wr_used<=11'd764 && !audio_fifo_full),
     .audio_sample_valid(wav_sample_valid),.audio_sample(wav_sample),
     .audio_error(wav_error),.audio_ready(wav_ready),.audio_stream_reset(audio_queue_reset),
@@ -666,8 +676,10 @@ ps2_controls keyboard_events(.clk(sd_card_clk),.rst(rst_sd),.scan_code(kb_scan_c
  .ev_mute(kb_mute),.ev_osd(kb_osd),.ev_res(kb_res),.ev_fps(kb_fps),
  .ev_digit(kb_digit),.ev_image_select(kb_image_select),.ev_audio_select(kb_audio_select),.audio_pending(kb_audio_pending));
 always @(posedge sd_card_clk or posedge rst_sd)begin
- if(rst_sd)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;end
+ if(rst_sd)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;media_image_select<=0;media_audio_select<=0;end
  else begin
+  // Align pulses to the registered index, including consecutive choices.
+  media_image_select<=kb_image_select;media_audio_select<=kb_audio_select;
   if(kb_image_select)image_index<={4'd0,kb_digit};
   if(kb_audio_select)audio_index<={4'd0,kb_digit};
   if(kb_res)res_mode<=(res_mode==2)?0:res_mode+1'b1;
@@ -686,6 +698,10 @@ switch_controls switches(.clk(sd_card_clk),.rst(rst_sd),.sw(sw),
  .transition_mode(transition_mode));
 cdc_snapshot #(.WIDTH(70)) status_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data(status_source),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(status_video));
+// Independent bus: historical 70-bit status layout and selectors stay fixed.
+cdc_snapshot #(.WIDTH(29)) media_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
+ .src_data({media_truncated,media_audio_index,media_audio_count,media_image_index,media_image_count}),
+ .dst_clk(video_clk),.dst_rst(rst_video),.dst_data(media_video));
 frame_swap #(.ENABLE_EFFECTS(1),.ADAPTIVE(1)) swap(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vblank(vblank),
  .request_toggle(commit_req),.requested_buffer(commit_buffer),
  .ack_toggle(commit_ack),.active_buffer(active_buffer),.display_valid(visible),
@@ -707,7 +723,7 @@ caption_overlay #(.ADAPTIVE(1)) captions(.mode_800(mode_video),.clk(video_clk),.
  .rgb(transition_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
-status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
+status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
  .enable(frame_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
  .volume(video_volume),.mute(video_mute),.busy(video_busy),
  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),
@@ -717,7 +733,9 @@ status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1
  .menu_open(frame_ui[0]),.menu_item(frame_ui[3:1]),.gamma_enable(frame_ui[4]),
  .debug_enable(frame_ui[5]),.debug_page(frame_ui[7:6]),
  .audio_ready(frame_audio_status[0]),.audio_error(|frame_audio_error_code),
- .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow));
+ .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow),
+ .file_image_index(frame_media[13:7]),.file_image_count(frame_media[6:0]),
+ .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]));
 // 音频流有效标志单独整体跨域，不等待显示帧锁存；错误同时清空队列。
 cdc_snapshot #(.WIDTH(2)) audio_state_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data({wav_error,wav_ready}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(audio_stream_video));
@@ -732,6 +750,10 @@ audio_async_fifo audio_fifo(.wr_clk(sd_card_clk),.rd_clk(video_clk),
  .rst(!mode_ready | audio_queue_reset),.wr_en(wav_sample_valid),.wr_data(wav_sample),
  .full(audio_fifo_full),.rd_en(audio_fifo_read),.rd_data(audio_fifo_data),.empty(audio_fifo_empty),
  .wr_used(audio_wr_used),.rd_used(audio_rd_used));
+// A stream switch clears only the effects history; playback cadence and
+// sticky underflow diagnostics survive. Release is local to the pixel clock.
+wire audio_fx_reset;
+reset_sync audio_effect_reset(.clk(video_clk),.arst(rst_video | audio_queue_reset),.rst(audio_fx_reset));
 wire audio_src_valid;
 wire [23:0] audio_src_left,audio_src_right;
 audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.volume(video_volume),
@@ -740,12 +762,12 @@ audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.vol
  .valid(audio_src_valid),.left_pcm(audio_src_left),.right_pcm(audio_src_right),.underflow(audio_underflow),.pcm_valid(audio_pcm_valid));
 `ifdef AUDIO_EFFECTS_ENABLED_BUILD
     // Optional fixed build profile; no runtime controls or CDC are added.
-    audio_effects #(.BASS_GAIN(16'sd3276),.TREBLE_GAIN(16'sd3276),
+    audio_effects_stream #(.BASS_GAIN(16'sd3276),.TREBLE_GAIN(16'sd3276),
      .ECHO_FEEDBACK(16'sd22938)) fx(.clk(video_clk),.rst(rst_video),
 `else
-    audio_effects fx(.clk(video_clk),.rst(rst_video),
+    audio_effects_stream fx(.clk(video_clk),.rst(rst_video),
 `endif
- .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
+ .stream_rst(audio_fx_reset), .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
  .out_valid(audio_valid),.out_left(audio_left),.out_right(audio_right));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
  .valid(edid_valid_boot),.data(edid_data_boot),.done(mode_done),.good(edid_good),

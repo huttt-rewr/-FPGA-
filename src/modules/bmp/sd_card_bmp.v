@@ -1,5 +1,6 @@
 
 module sd_card_bmp #(
+    parameter integer INDEXED=0,parameter integer MAX_FILES=64,
     parameter integer CLK_FREQ_HZ       = 100_000_000,
     parameter [31:0]  SCAN_START_SECTOR = 32'd0,
     parameter [31:0]  SCAN_MAX_SECTOR   = 32'd131071,
@@ -49,11 +50,34 @@ module sd_card_bmp #(
     output [3:0]                debug_sd_status,
     input audio_enable,input audio_sample_ready,input audio_sector_room,
     output audio_sample_valid,output [23:0] audio_sample,
-    output audio_error,audio_ready,audio_stream_reset,
-    output [3:0] audio_error_code
+    output audio_error,audio_ready,output reg audio_stream_reset,
+    output [3:0] audio_error_code,
+    input [7:0] image_select_index,audio_select_index,
+    input image_select_valid,audio_select_valid,
+    output [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count,
+    output media_truncated
 );
 
+wire fat_done,fat_error,fat_wav_found;
+wire [6:0] fat_audio_count;wire fat_audio_idle;
+reg [6:0]        img_found_count;
+reg [5:0]        img_idx;
 wire [11:0] source_width,source_height;
+reg [5:0] audio_active,audio_target;
+reg audio_switching;
+wire [5:0] selected_audio=(audio_select_index>=fat_audio_count)?6'd0:audio_select_index[5:0];
+always @(posedge clk or posedge rst)begin
+ if(rst)begin audio_active<=0;audio_target<=0;audio_switching<=0;end
+ else if(INDEXED && fat_done)begin
+  if(!audio_switching)begin
+   if(audio_select_valid || selected_audio!=audio_active)begin audio_target<=selected_audio;audio_switching<=1;end
+  end else if(audio_select_valid)audio_target<=selected_audio;
+  else if(fat_audio_idle)begin audio_active<=audio_target;audio_switching<=0;end
+ end
+end
+assign media_image_index={1'b0,img_idx};assign media_image_count=img_found_count;
+assign media_audio_index={1'b0,audio_active};assign media_audio_count=fat_audio_count;
+
 wire key_next_press;
 wire key_auto_press;
 
@@ -78,9 +102,10 @@ wire aud_req,aud_valid,aud_end,aud_read_error;
 wire [31:0] aud_addr;
 wire [7:0] aud_data;
 // 必须在generate实例之前声明，避免TD把前向引用当作局部隐式wire。
-reg [1:0] load_idx;
-wire fat_done,fat_error,fat_wav_found;
-wire [2:0] fat_count;
+reg [5:0] load_idx;
+
+wire [(INDEXED?7:3)-1:0] fat_count;
+
 wire [3:0] fat_error_code;
 wire [MAX_BMP*32-1:0] fat_sizes;
 wire [31:0] fat_wav_size;
@@ -91,19 +116,21 @@ wire phy_aud_req,phy_aud_valid,phy_aud_end,phy_aud_error;
 wire [31:0] phy_aud_addr;
 wire [7:0] phy_aud_data;
 generate if(FAT32_ENABLE)begin: filesystem
- sd_fat32 #(.MAX_BMP(MAX_BMP)) fat(.clk(clk),.rst(rst),.sd_init_done(sd_init_done),
+ sd_fat32 #(.MAX_BMP(MAX_BMP),.INDEXED(INDEXED),.MAX_FILES(MAX_FILES)) fat(.clk(clk),.rst(rst),.sd_init_done(sd_init_done),
   .mount_done(fat_done),.mount_error(fat_error),.mount_error_code(fat_error_code),
   .bmp_count(fat_count),.wav_found(fat_wav_found),.bmp_size(fat_sizes),.wav_size(fat_wav_size),
-  .bmp_req(sd_sec_read),.bmp_file_idx({1'b0,load_idx}),.bmp_rel_sector(sd_sec_read_addr),
+  .bmp_req(sd_sec_read),.bmp_file_idx(INDEXED?{1'b0,load_idx}:load_idx[2:0]),.bmp_rel_sector(sd_sec_read_addr),
   .bmp_data(sd_sec_read_data),.bmp_valid(sd_sec_read_data_valid),.bmp_end(sd_sec_read_end),
   .bmp_error(bmp_transfer_error),.bmp_grant(bmp_grant),.bmp_abort(load_abort),
-  .aud_req(aud_req),.aud_rel_sector(aud_addr),.aud_data(aud_data),.aud_valid(aud_valid),
+  .aud_req(aud_req),.aud_file_idx(audio_active),.aud_abort(audio_switching),.aud_idle(fat_audio_idle),
+  .wav_count(fat_audio_count),.files_truncated(media_truncated),.aud_rel_sector(aud_addr),.aud_data(aud_data),.aud_valid(aud_valid),
   .aud_end(aud_end),.aud_error(aud_read_error),
   .arb_bmp_req(phy_bmp_req),.arb_bmp_addr(phy_bmp_addr),.arb_bmp_data(phy_bmp_data),
   .arb_bmp_valid(phy_bmp_valid),.arb_bmp_end(phy_bmp_end),.arb_bmp_error(phy_bmp_error),.arb_bmp_grant(phy_bmp_grant),
   .arb_aud_req(phy_aud_req),.arb_aud_addr(phy_aud_addr),.arb_aud_data(phy_aud_data),
   .arb_aud_valid(phy_aud_valid),.arb_aud_end(phy_aud_end),.arb_aud_error(phy_aud_error));
 end else begin: raw_compatibility
+ assign fat_audio_count=0;assign fat_audio_idle=1;assign media_truncated=0;
  assign fat_done=0;assign fat_error=0;assign fat_count=0;assign fat_wav_found=0;
  assign fat_sizes=0;assign fat_wav_size=0;assign fat_error_code=0;
  assign phy_bmp_req=sd_sec_read;assign phy_bmp_addr=sd_sec_read_addr;
@@ -113,7 +140,13 @@ end else begin: raw_compatibility
  assign aud_valid=phy_aud_valid;assign aud_end=phy_aud_end;assign aud_read_error=phy_aud_error;
 end endgenerate
 assign sd_transfer_error=(ENABLE_AUDIO || FAT32_ENABLE)?bmp_transfer_error:raw_transfer_error;
-assign audio_stream_reset=rst || load_abort || transport_reset || !sd_init_done || audio_error;
+// Register the shared flush at its source. Global reset still asserts at once;
+// local abort/error/switch requests take one SD clock, before any new stream
+// can parse a header or enqueue PCM. The FIFO/effects release locally per clock.
+always @(posedge clk or posedge rst)begin
+ if(rst)audio_stream_reset<=1'b1;
+ else audio_stream_reset<=load_abort || audio_switching || transport_reset || !sd_init_done || audio_error;
+end
 assign audio_error=|audio_error_code;
 generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
  sd_read_arbiter #(.TIMEOUT_CYCLES(READ_STALL_CYCLES)) arbiter(
@@ -127,7 +160,7 @@ generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
   .sd_valid(card_valid),.sd_end(card_end),.sd_error(raw_transfer_error),
   .transport_reset(transport_reset));
  audio_wav #(.START_SECTOR(AUDIO_START_SECTOR),.FILESYSTEM(FAT32_ENABLE)) wav(
-  .clk(clk),.rst(rst | load_abort),.sd_init_done(sd_init_done),
+  .clk(clk),.rst(rst | load_abort | audio_switching),.sd_init_done(sd_init_done),
   .enable(ENABLE_AUDIO && audio_enable && (!FAT32_ENABLE || (fat_done && fat_wav_found))),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
   .req(aud_req),.addr(aud_addr),.data(aud_data),.data_valid(aud_valid),
   .sector_end(aud_end),.read_error(aud_read_error),
@@ -144,8 +177,10 @@ end endgenerate
 assign debug_sd_status={sd_init_done,sd_init_error,sd_transfer_error,status_error};
 wire             read_stall;
 wire             bmp_ready;
-wire             scan_done;
-wire             scan_found_valid;
+wire scan_done,bmp_scan_done;
+assign scan_done=INDEXED?fat_done:bmp_scan_done;
+wire scan_found_valid,bmp_scan_found_valid;
+assign scan_found_valid=INDEXED?1'b0:bmp_scan_found_valid;
 wire [31:0]      scan_found_sector;
 wire [2:0]       scan_found_total;
 
@@ -156,8 +191,8 @@ reg              scan_kicked;
 reg              first_image_committed;
 reg              auto_play_en;
 reg [31:0]       auto_cnt;
-reg [2:0]        img_found_count;
-reg [1:0]        img_idx;              // 当前真正显示中的图片编号
+
+              // 当前真正显示中的图片编号
 reg [1:0]        pending_buf_idx;      // 当前正在写入的目标缓冲区
 reg [31:0]       img_sector0;
 reg [31:0]       img_sector1;
@@ -181,17 +216,19 @@ reg source_started;
 reg prev_requested;
 (* async_reg="true" *) reg [2:0] ack_sync;
 assign status_auto = auto_play_en;
-assign status_index = img_idx;
-assign status_count = img_found_count;
+assign status_index = img_idx[1:0];
+assign status_count = img_found_count[2:0];
 assign status_busy = load_busy;
 wire auto_tick;
-wire [1:0] next_from_current;
+wire [5:0] next_from_current;
+reg direct_pending;reg [5:0] direct_index;
+wire [5:0] requested_next=direct_pending?direct_index:next_from_current;
 
 assign write_en   = bmp_data_wr_en;
 assign write_data = {bmp_data[23:16], bmp_data[15:8], bmp_data[7:0], 8'b0};
 assign auto_tick  = (auto_cnt == (CLK_FREQ_HZ - 1));
 assign next_from_current = prev_requested ?
-    ((img_idx == 0) ? img_found_count[1:0] - 2'd1 : img_idx - 2'd1) :
+    ((img_idx == 0) ? img_found_count[5:0] - 6'd1 : img_idx - 2'd1) :
     next_index_limited(img_idx, img_found_count);
 assign write_finish_pulse = wrfin_tgl_sync[2] ^ wrfin_tgl_sync[1];
 // 挂载失败时在原状态数码管显示8+错误码，不增加物理引脚或跨域总线。
@@ -217,17 +254,11 @@ key_press_debounce #(
     .press_pulse(key_auto_press)
 );
 
-function [1:0] next_index_limited;
-    input [1:0] cur;
-    input [2:0] count;
+function [5:0] next_index_limited;
+    input [5:0] cur;
+    input [6:0] count;
     begin
-        case (count)
-            3'd0: next_index_limited = 2'd0;
-            3'd1: next_index_limited = 2'd0;
-            3'd2: next_index_limited = (cur == 2'd1) ? 2'd0 : (cur + 2'd1);
-            3'd3: next_index_limited = (cur == 2'd2) ? 2'd0 : (cur + 2'd1);
-            default: next_index_limited = (cur == 2'd3) ? 2'd0 : (cur + 2'd1);
-        endcase
+        next_index_limited=({1'b0,cur}+7'd1>=count)?6'd0:cur+6'd1;
     end
 endfunction
 
@@ -285,7 +316,7 @@ always @(posedge clk or posedge rst) begin
         img_sector1           <= 32'd0;
         img_sector2           <= 32'd0;
         img_sector3           <= 32'd0;
-        next_req_pending      <= 1'b0;
+        next_req_pending      <= 1'b0;direct_pending<=0;direct_index<=0;
         load_busy             <= 1'b0;
         load_timeout_cnt      <= 32'd0;
         load_abort            <= 1'b0;
@@ -328,7 +359,7 @@ always @(posedge clk or posedge rst) begin
             img_sector1           <= 32'd0;
             img_sector2           <= 32'd0;
             img_sector3           <= 32'd0;
-            next_req_pending      <= 1'b0;
+            next_req_pending      <= 1'b0;direct_pending<=0;direct_index<=0;
             load_busy             <= 1'b0;
             load_timeout_cnt      <= 32'd0;
             load_abort            <= 1'b0;
@@ -336,6 +367,7 @@ always @(posedge clk or posedge rst) begin
             write_done_seen       <= 1'b0;
             display_valid         <= 1'b0;
         end else begin
+            if(INDEXED && fat_done)img_found_count<=fat_count;
             if (scan_found_valid) status_error <= 1'b0;
             // 扫描阶段缓存前 4 张图的起始 sector
             if (scan_found_valid) begin
@@ -411,7 +443,7 @@ always @(posedge clk or posedge rst) begin
                 pending_buf_idx       <= 2'd0;
                 write_buf_idx         <= 2'd0;
                 disp_buf_idx          <= 2'd0;
-                next_req_pending      <= 1'b0;
+                next_req_pending      <= 1'b0;direct_pending<=0;direct_index<=0;
                 display_valid         <= 1'b0;
                 load_busy             <= 1'b0;
                 source_done_seen      <= 1'b0;
@@ -419,7 +451,11 @@ always @(posedge clk or posedge rst) begin
             end else begin
                 // 忙的时候也只记 1 次“下一张”请求，不会累积成连跳两张
                 if ((key_next_press || cmd_next || cmd_prev) && scan_done && (img_found_count > 3'd0))
-                    begin next_req_pending <= 1'b1; prev_requested <= cmd_prev; end
+                    begin next_req_pending <= 1'b1; prev_requested <= cmd_prev;direct_pending<=0;end
+                if(INDEXED && image_select_valid && scan_done && img_found_count!=0)begin
+                    direct_index<=(image_select_index>=img_found_count)?6'd0:image_select_index[5:0];
+                    direct_pending<=1;next_req_pending<=1;
+                end
 
                 // 自动播放开/关
                 if ((key_auto_press || cmd_toggle) && scan_done && (img_found_count > 3'd1)) begin
@@ -439,8 +475,8 @@ always @(posedge clk or posedge rst) begin
 
                 // 首图自动加载到 buffer0
                 if (scan_done && sd_init_done && !status_error && !first_image_committed && bmp_ready && !load_busy && (img_found_count != 3'd0)) begin
-                    load_idx         <= 2'd0;
-                    load_sector      <= img_sector0;
+                    load_idx         <= INDEXED?((image_select_index>=img_found_count)?6'd0:image_select_index[5:0]):6'd0;
+                    load_sector      <= INDEXED?0:img_sector0;
                     pending_buf_idx  <= 2'd0;
                     write_buf_idx    <= 2'd0;
                     load_start_pulse <= 1'b1;
@@ -450,13 +486,13 @@ always @(posedge clk or posedge rst) begin
                     load_busy        <= 1'b1;
                     source_done_seen <= 1'b0;
                     write_done_seen  <= 1'b0;
-                    next_req_pending <= 1'b0;
+                    next_req_pending <= 1'b0;direct_pending<=0;
                     auto_cnt         <= 32'd0;
                 end
                 // 手动下一张优先：写到“非当前显示”的另一块 buffer
                 else if (scan_done && sd_init_done && bmp_ready && !load_busy && next_req_pending && (img_found_count != 3'd0)) begin
-                    load_idx         <= next_from_current;
-                    load_sector      <= sector_lut(next_from_current);
+                    load_idx         <= requested_next;
+                    load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
                     write_buf_idx    <= next_buf_lut(disp_buf_idx, display_valid);
                     load_start_pulse <= 1'b1;
@@ -466,13 +502,13 @@ always @(posedge clk or posedge rst) begin
                     load_busy        <= 1'b1;
                     source_done_seen <= 1'b0;
                     write_done_seen  <= 1'b0;
-                    next_req_pending <= 1'b0;
+                    next_req_pending <= 1'b0;direct_pending<=0;
                     auto_cnt         <= 32'd0;
                 end
                 // 自动播放下一张：同样写到“非当前显示”的另一块 buffer
                 else if (scan_done && sd_init_done && !status_error && bmp_ready && display_valid && !load_busy && auto_play_en && auto_tick && (img_found_count > 3'd1)) begin
-                    load_idx         <= next_from_current;
-                    load_sector      <= sector_lut(next_from_current);
+                    load_idx         <= requested_next;
+                    load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
                     write_buf_idx    <= next_buf_lut(disp_buf_idx, display_valid);
                     load_start_pulse <= 1'b1;
@@ -498,9 +534,9 @@ bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.R
     .scan_start_sector      (SCAN_START_SECTOR),
     .scan_max_sector        (SCAN_MAX_SECTOR),
     .scan_target_count      (SCAN_TARGET_COUNT),
-    .fs_mount_done(fat_done),.fs_bmp_count(fat_count),
-    .scan_done              (scan_done),
-    .scan_found_valid       (scan_found_valid),
+    .fs_mount_done(fat_done),.fs_bmp_count(INDEXED?3'd0:fat_count[2:0]),
+    .scan_done              (bmp_scan_done),
+    .scan_found_valid       (bmp_scan_found_valid),
     .scan_found_sector      (scan_found_sector),
     .scan_found_total       (scan_found_total),
 
