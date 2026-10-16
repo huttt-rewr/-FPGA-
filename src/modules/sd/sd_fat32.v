@@ -44,6 +44,7 @@ module sd_fat32 #(
  reg [32:0] request_sectors;
  reg [7:0] spc_mask;
  reg geometry_bad,root_bad,fat_capacity_bad,boot_signature_ok,boot_super_ok,boot_partition_ok,geom_fields_bad;
+ reg cmp_to,cmp_vol,cmp_lo,cmp_hi;
  reg [15:0] bytes_per_sector,reserved_count,root_entries,fat16_size,ext_flags,fs_version,signature;
  reg [7:0] spc,num_fats;reg [2:0] spc_shift;
  reg [31:0] fat_area;reg [9:0] byte_count;
@@ -151,6 +152,7 @@ module sd_fat32 #(
    data_sectors<=0;total_minus_one<=0;map_minus_two<=0;map_shifted<=0;map_base<=0;
    request_sectors<=0;spc_mask<=0;geometry_bad<=0;root_bad<=0;fat_capacity_bad<=0;
    boot_signature_ok<=0;boot_super_ok<=0;boot_partition_ok<=0;geom_fields_bad<=0;
+   cmp_to<=0;cmp_vol<=0;cmp_lo<=0;cmp_hi<=0;
    dir_cluster<=0;dir_sector<=0;dir_hops<=0;dir_ended<=0;
    entry_first<=0;entry_attr<=0;ext0<=0;ext1<=0;ext2<=0;entry_cluster<=0;entry_size<=0;
    cursor_valid<=0;cursor_file<=0;request_rel<=0;request_size<=0;request_file<=0;
@@ -269,12 +271,21 @@ module sd_fat32 #(
      state<=GEOM3;
     end
     // 减法、可变移位、加一、比较分别寄存，避免100MHz串接进位链。
-    state[6]:begin data_sectors<=total_sectors-overhead;state<=GEOM4;end
+    state[6]:begin
+     data_sectors<=total_sectors-overhead;
+     // 依赖GEOM2已寄存的overhead/volume_last，提前完成宽比较。
+     cmp_to<=total_sectors<=overhead;cmp_vol<=volume_last<partition_lba;
+     state<=GEOM4;
+    end
     state[27]:begin data_clusters<=data_sectors>>spc_shift;state<=GEOM5;end
-    state[28]:begin max_cluster<=data_clusters+1'b1;state<=GEOM6;end
+    state[28]:begin
+     max_cluster<=data_clusters+1'b1;
+     // data_clusters在上一拍GEOM4稳定，此处与加一并行。
+     cmp_lo<=data_clusters<65525;cmp_hi<=data_clusters>=32'h0fffffee;
+     state<=GEOM6;
+    end
     state[29]:begin
-     geometry_bad<=total_sectors<=overhead || volume_last<partition_lba || data_clusters<65525 ||
-       data_clusters>=32'h0fffffee ||
+     geometry_bad<=cmp_to || cmp_vol || cmp_lo || cmp_hi ||
        (bpb_at_partition && (partition_size<total_sectors || partition_size==0));
      root_bad<=root_cluster<2 || root_cluster>max_cluster;
      fat_capacity_bad<=(fat_sectors<<7)<=max_cluster;
