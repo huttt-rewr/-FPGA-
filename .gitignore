@@ -7,6 +7,7 @@
 /top_route.check_timing
 /sim/msim_work/
 /sim/pll_work/
+/sim/sd_native_work/
 /sim/transcript
 /sim/*.wlf
 /transcript

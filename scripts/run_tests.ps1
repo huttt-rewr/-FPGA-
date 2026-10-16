@@ -22,6 +22,8 @@ try {
  $mergeTests += @('tb_audio_retry','tb_audio_retry_edges','tb_audio_diagnostics')
  $mergeTests += @('tb_audio_effects')
  $mergeTests += @('tb_fat32_mount','tb_fat32_stream','tb_fat32_player')
+ $files += @('../src/modules/sd/native/*.v','sd_native_card_model.v')
+ $mergeTests += @('tb_sd_native','tb_sd_native_clock','tb_sd_native_fat32','tb_sd_native_player')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
