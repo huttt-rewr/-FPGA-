@@ -1,0 +1,36 @@
+standard
+***Report Model: sd_card_top_native Device: EG4S20BG256***
+
+IO Statistics
+#IO                        57
+  #input                   36
+  #output                  16
+  #inout                    5
+
+Gate Statistics
+#Basic gates             1783
+  #and                    641
+  #nand                     0
+  #or                     319
+  #nor                      0
+  #xor                     16
+  #xnor                     0
+  #buf                      0
+  #not                     76
+  #bufif1                   5
+  #MX21                   139
+  #FADD                     0
+  #DFF                    587
+  #LATCH                    0
+#MACRO_ADD                 22
+#MACRO_EQ                  27
+#MACRO_MUX                373
+
+Report Hierarchy Area:
++-----------------------------------------------------------+
+|Instance     |Module               |gates  |seq    |macros |
++-----------------------------------------------------------+
+|top          |sd_card_top_native   |1196   |587    |49     |
+|  controller |sd_native_controller |517    |179    |18     |
+|  phy        |sd_bus_phy           |667    |408    |31     |
++-----------------------------------------------------------+

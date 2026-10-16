@@ -1,0 +1,29 @@
+{
+  "J:\\lab_ex4_tf\\src\\user_source\\constraints_source\\pin.adc": {
+    "sha256": "7da7aa5aff3bc147231d5808e832bc0b90f44d58bcdb51295714991c9acb1651",
+    "SD_assignments": [
+      "set_pin_assignment\t{ sd_dclk }\t{ LOCATION = A14; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_miso }\t{ LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_mosi }\t{ LOCATION = A13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_ncs }\t{ LOCATION = A12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }"
+    ]
+  },
+  "J:\\lab_ex5_i2s\\src\\user_source\\constraints_source\\pin.adc": {
+    "sha256": "bfec796ee0ebf506293d5d317fc9e3868197bcdd4c5c376ab9ba1061a4982ec8",
+    "SD_assignments": [
+      "set_pin_assignment\t{ sd_dclk }\t{ LOCATION = A14; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_miso }\t{ LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_mosi }\t{ LOCATION = A13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ sd_ncs }\t{ LOCATION = A12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }"
+    ]
+  },
+  "J:\\DEMO\\18_sd_card_audio\\sd_card_audido.adc": {
+    "sha256": "0f3c2c98104c5029d618406ab904686dfc8a0f9cedecca17341f6e2c413d057b",
+    "SD_assignments": [
+      "set_pin_assignment\t{ SD_DCLK }\t{ LOCATION = A14; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ SD_MISO }\t{ LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }",
+      "set_pin_assignment\t{ SD_MOSI }\t{ LOCATION = A13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }",
+      "set_pin_assignment\t{ SD_nCS }\t{ LOCATION = A12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }"
+    ]
+  }
+}

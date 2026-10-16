@@ -1,0 +1,40 @@
+standard
+***Report Model: sd_card_top_native Device: EG4S20BG256***
+
+IO Statistics
+#IO                        57   out of    188   30.32%
+  #input                   36
+  #output                  16
+  #inout                    5
+
+LUT Statistics
+#Total_luts               780
+  #lut4                   699
+  #lut5                    81
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     1074   out of  19600    5.48%
+#reg                      577   out of  19600    2.94%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                       57   out of    188   30.32%
+  #ireg                     0
+  #oreg                    14
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++--------------------------------------------------------------------------------+
+|Instance     |Module               |lut     |ripple  |seq     |bram    |dsp     |
++--------------------------------------------------------------------------------+
+|top          |sd_card_top_native   |927     |147     |591     |0       |0       |
+|  controller |sd_native_controller |357     |78      |177     |0       |0       |
+|  phy        |sd_bus_phy           |569     |69      |400     |0       |0       |
++--------------------------------------------------------------------------------+

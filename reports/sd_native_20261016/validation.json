@@ -1,0 +1,328 @@
+{
+  "scope": "native SD candidate; official board still SPI pending verified DAT1/DAT2 and pull-ups",
+  "protected_files_unchanged": {
+    "src/modules/audio/audio_wav.v": true,
+    "src/modules/bmp/bmp_read.v": true,
+    "src/modules/sd/sd_fat32.v": true,
+    "src/modules/sd/sd_read_arbiter.v": true,
+    "src/modules/video/bmp_scale_loader.v": true
+  },
+  "official_board_files_unchanged": {
+    "src/top.v": true,
+    "src/modules/bmp/sd_card_bmp.v": true,
+    "src/modules/sd/sd_card_top.v": true,
+    "src/modules/sd/sd_card_cmd.v": true,
+    "src/modules/sd/sd_card_sec_read_write.v": true,
+    "src/modules/sd/spi_master.v": true,
+    "src/constraints/pin.adc": true,
+    "src/constraints/timing.sdc": true,
+    "scripts/design_files.txt": true,
+    "video_improve.al": true,
+    "src/td_project/video_improve.al": true
+  },
+  "vendor_ip_unchanged": true,
+  "static_check": "ALL PASS static_check: 63 sources, 36 IO bits, unique pins, matching TD entries/refresh headers",
+  "regression_passed": 65,
+  "tests": {
+    "tb_adaptive_raster": {
+      "result": "PASS",
+      "sha256": "4517233712bb29da49e0eb712918192540261161359db6c7a4b0dc23bbc610e7"
+    },
+    "tb_audio_diagnostics": {
+      "result": "PASS",
+      "sha256": "127b66e5552dd971f40423d2349b50ce6b3bd183e466d42907273613a13c3608"
+    },
+    "tb_audio_effects": {
+      "result": "PASS",
+      "sha256": "d5a7b897c7974b93f83e4acfb1ac2daee0b6616fa12f4e95738a2d2c8e3a1890"
+    },
+    "tb_audio_fifo": {
+      "result": "PASS",
+      "sha256": "05d5484ba926410935050ade874c6cd85e2626e6cd673f66b6b5f33c9a8e2b0b"
+    },
+    "tb_audio_menu": {
+      "result": "PASS",
+      "sha256": "1a3faf77e9c4feb70182123c6e5275c1212dfe0a326cd25bd8a11278e066003b"
+    },
+    "tb_audio_osd": {
+      "result": "PASS",
+      "sha256": "69b27e0087af5fb5388172c269625f31fde8f0e36aa18a081566f740b0f53a0d"
+    },
+    "tb_audio_playback": {
+      "result": "PASS",
+      "sha256": "2e8874065eac39147a1743f0cb118ede037f27393920fa15b1e37b3d39bb16ee"
+    },
+    "tb_audio_retry": {
+      "result": "PASS",
+      "sha256": "f415e53f7715d1a3b1ce620111656aeb6094a854c7a579e01f84d7fcf1866778"
+    },
+    "tb_audio_retry_edges": {
+      "result": "PASS",
+      "sha256": "9ccb2b5733c181814881bc5ad99e36121c543afef39269b718609ca3fcf6f9f8"
+    },
+    "tb_audio_sd_integration": {
+      "result": "PASS",
+      "sha256": "85db9c353824dcf14550d3fa82be4ee1675cd6a9aff8ab093cf5876b12680f27"
+    },
+    "tb_audio_wav": {
+      "result": "PASS",
+      "sha256": "22b0f86f409247b99f0189b619b1d4293baf695cbe853deb2393bb416b43d59e"
+    },
+    "tb_bmp_headers": {
+      "result": "PASS",
+      "sha256": "d502e2935ee5444cb1f7de9cd16ae9c619304f3dca71c944c977728fc2234575"
+    },
+    "tb_bmp_stall": {
+      "result": "PASS",
+      "sha256": "4c6f481e62e34f06f670cf21670b30588fdc8d67675461c57185b43a23d30887"
+    },
+    "tb_bmp_stream": {
+      "result": "PASS",
+      "sha256": "8d0a97836f563a6f0cb587f31150f978c76346a9b694217609b9d1ee89b92421"
+    },
+    "tb_board_debug": {
+      "result": "PASS",
+      "sha256": "6421305f80ab8b7b89fdfefc3627cd3b96ed6a4bbf6b5e4feb376a384139f2f7"
+    },
+    "tb_board_menu": {
+      "result": "PASS",
+      "sha256": "dad075fdd7992590bf25e6db291d4893b71f3755d8846172032d9b147e66e535"
+    },
+    "tb_board_osd": {
+      "result": "PASS",
+      "sha256": "30ebf871f3ef3acc17ee9a1248e7425260283a37bc28854f79a7dc4c2e3a868a"
+    },
+    "tb_board_pipeline": {
+      "result": "PASS",
+      "sha256": "503ed41b69c92158d19cf9d46b773d91acd7f6bd3f44d489ef4fbd2185ef3462"
+    },
+    "tb_board_supervisor": {
+      "result": "PASS",
+      "sha256": "55bec82fc1be970b4aab0ca385fabd737930156392f4670217802eb1f8f1c3c6"
+    },
+    "tb_caption_overlay": {
+      "result": "PASS",
+      "sha256": "682d1eca2ee92e9d4c3617169023ac1c42722886634cbca5c9fca8697e1303b5"
+    },
+    "tb_cdc": {
+      "result": "PASS",
+      "sha256": "930efcce0ac8d352409429138f271fcfa34085581b99458273c013617cd21487"
+    },
+    "tb_commit_timeout": {
+      "result": "PASS",
+      "sha256": "621af879ee54c65021a36f25cbbf2b68a5d523a4fe0764f84c001629aa51af27"
+    },
+    "tb_edid_display_mode": {
+      "result": "PASS",
+      "sha256": "243f59e5dbe9f07c869fb49d7654c7621aa72d404930f0e7f4de78f9201f63d4"
+    },
+    "tb_edid_timeout": {
+      "result": "PASS",
+      "sha256": "d03dc81c7b2bfdfdb3ef5c0e42be920f920f4087b529c62aaf82cbebe8a49412"
+    },
+    "tb_effects_pipeline": {
+      "result": "PASS",
+      "sha256": "76c95d6e0be0588c8bf65af364f400f0134d8b37d67588654966f16e3e8b3fc6"
+    },
+    "tb_fat32_mount": {
+      "result": "PASS",
+      "sha256": "8f638da2e2f6ca44d8f3891d2ae28ef68385cdc148e7167147bab314f81e4b3a"
+    },
+    "tb_fat32_player": {
+      "result": "PASS",
+      "sha256": "ee1da0f134db07c4b004275872181b97394d20642cb80b5a97048ccd8ceef9f3"
+    },
+    "tb_fat32_stream": {
+      "result": "PASS",
+      "sha256": "6e5324d7edb3c8a474691e815bf7dab770b60d0bbf1ea66920b383e202cd4274"
+    },
+    "tb_fifo_boundary": {
+      "result": "PASS",
+      "sha256": "8e5eab112e238760154c19c5c6388571b0ddb7ee7b2c436217c8ccb48f1e4513"
+    },
+    "tb_frame_tail": {
+      "result": "PASS",
+      "sha256": "abaca0fc210ce992a9ae3b405723ad330e12c24f118f14dea22441e294de3c38"
+    },
+    "tb_frame_writer": {
+      "result": "PASS",
+      "sha256": "772a190bf06c797d96c5df87703892a663006da8eae4b7a032010140bab60cd6"
+    },
+    "tb_hdmi_line_contract": {
+      "result": "PASS",
+      "sha256": "9048b267e711c91a31f347c2edc03681c5d1dbd171343366cdb9afe24f640d64"
+    },
+    "tb_ir_nec_rx": {
+      "result": "PASS",
+      "sha256": "54f2fcd300d98b489a6a5a382054a5f9c38d01b21f7200094bd919ca607ee9ff"
+    },
+    "tb_load_recovery": {
+      "result": "PASS",
+      "sha256": "4f9bc4339707ffdd629aa767681e87a918e546c4445fff7e4e3a6d0fe8d146e9"
+    },
+    "tb_memory_refresh": {
+      "result": "PASS",
+      "sha256": "69e9ebbc1ca4b2720b43ac4048435f7339fea5ca0650ab476020d733ed077984"
+    },
+    "tb_osd_text": {
+      "result": "PASS",
+      "sha256": "05c37ce3c1b87972deee725f2f5473d17a6ebd58e0daa240a05d2d9d097547ef"
+    },
+    "tb_picture_adjust": {
+      "result": "PASS",
+      "sha256": "a39ef5b7c33d4a9648397d09b3c3c9be364a9095c5edad42e4caf5c177d68254"
+    },
+    "tb_picture_controls": {
+      "result": "PASS",
+      "sha256": "46338373f6adbe04eddb9af7a645f3cb06d27b0592c2c2abf81809f164266533"
+    },
+    "tb_picture_gamma": {
+      "result": "PASS",
+      "sha256": "d26d0f46ec090f43a2d5800b26ea6f31921cfb75413d9cb3aadf63d2a3b71f52"
+    },
+    "tb_picture_osd": {
+      "result": "PASS",
+      "sha256": "5f98d22aaf3e426e749565858685fe31a2bc7f8ddb4e2a35817d552adf458bb4"
+    },
+    "tb_read_drain": {
+      "result": "PASS",
+      "sha256": "59f387a477912d1e549436d81fddfae3f119ea3822ce769936d1bd94b3619b03"
+    },
+    "tb_scaled_bmp": {
+      "result": "PASS",
+      "sha256": "e28be01886baf2df4fd378d45cdcdaf3fe7d7dd628f082b527f8778461c51322"
+    },
+    "tb_scaled_svga": {
+      "result": "PASS",
+      "sha256": "0b6750c149f2cb731ef51f0a5c3a235cad224db7eb833d1108ab4923280ccdcf"
+    },
+    "tb_sd_address": {
+      "result": "PASS",
+      "sha256": "6f73bf34b9e58bccf2e5f4fefdb3227faeb50e92a2734e4ae6d40f4ed5e68517"
+    },
+    "tb_sd_audio_arbiter": {
+      "result": "PASS",
+      "sha256": "c7013ec949be5f0c15306aa5156b7d7a63c101bec82867cd5a26ab7df2008027"
+    },
+    "tb_sd_crc": {
+      "result": "PASS",
+      "sha256": "81208688ae83f26ec3dd372763e305cefa78b0b0641b711610c505cf872d01d0"
+    },
+    "tb_sd_native": {
+      "result": "PASS",
+      "sha256": "4cc4f7a7ec221ea7a7e4aaf17c3ea7358c44c1875d619a904d52f044ab1635b4"
+    },
+    "tb_sd_native_clock": {
+      "result": "PASS",
+      "sha256": "bcda166728cca207cbc113e11e50590e9dd43debe16486e396e7ddc5fe26db5c"
+    },
+    "tb_sd_native_fat32": {
+      "result": "PASS",
+      "sha256": "ce15a6dfd90901dc24f5ec5ebe95853947019fad93f9d056c0291e80ee060e0e"
+    },
+    "tb_sd_native_player": {
+      "result": "PASS",
+      "sha256": "9cda810e9951ab7d681db1d1cde0ab889f5be8cd6734bdf7dcc2dde1c3df1d46"
+    },
+    "tb_sd_waits": {
+      "result": "PASS",
+      "sha256": "1277bf79b92ebb08ad6e308dd89fef33a81e8cfdffc3d14b3407259182991800"
+    },
+    "tb_sd_watchdog": {
+      "result": "PASS",
+      "sha256": "2272d1a0e26e20ec391486b2f70279aac2155658824a5ad4da1dfb01722d2ea9"
+    },
+    "tb_stream_queue": {
+      "result": "PASS",
+      "sha256": "992a88b786afb47baf4034cf622b99f96997c97605397d61b237ec107bfa652f"
+    },
+    "tb_svga_memory": {
+      "result": "PASS",
+      "sha256": "ee4e7d29716fe11b7be847868c1769b0c5e73868892f1f7ec06dcbdf18d09d4c"
+    },
+    "tb_svga_osd": {
+      "result": "PASS",
+      "sha256": "d3fba597d703cd768f2e088050f5db35637a92dfcd13cb572c6ade3f23862a98"
+    },
+    "tb_svga_pipeline": {
+      "result": "PASS",
+      "sha256": "dc6982b49d99ab9f46445b760073b19e3f4688895c0db7cc4f0f5e02cb7d4910"
+    },
+    "tb_svga_writer": {
+      "result": "PASS",
+      "sha256": "92dc36a6a5393506fbeda3e585dcc9f2c5721240f5f3d5769b3852d1523955fc"
+    },
+    "tb_switch_controls": {
+      "result": "PASS",
+      "sha256": "a99ca146851cbde4d2fc9523be63c368b462298e8d584327c5c75ac2c556f6d3"
+    },
+    "tb_transition": {
+      "result": "PASS",
+      "sha256": "dd3e5bda53caedee608fe1f5b7961377db242c801a54d72a6508618383b05520"
+    },
+    "tb_transition_pixels": {
+      "result": "PASS",
+      "sha256": "8e3b5579eba126b14f7b5e95673fb09f5ecffd4f6128f0eb974dbc55e34b96ce"
+    },
+    "tb_uart_queue": {
+      "result": "PASS",
+      "sha256": "92229a864d07ffdf8b8e9bbfefeb54afc9a6bab48c38c464215581984e39366c"
+    },
+    "tb_uart_rx": {
+      "result": "PASS",
+      "sha256": "df59bc1e6df1f658432efc3ebd69a69a0ae39fee056ffb3d097ca5390f76b710"
+    },
+    "tb_upgrade": {
+      "result": "PASS",
+      "sha256": "37ed6d18e38ff0fe0433c3baf75505b7af1592f957ac2ff2e137c83a74cdb546"
+    },
+    "tb_video_scaler": {
+      "result": "PASS",
+      "sha256": "3b208675111b05db19b499a3720d9a7b7ea6b1d92f0f24baefe6c64cf9ff0cae"
+    },
+    "tb_write_backpressure": {
+      "result": "PASS",
+      "sha256": "5141bf72e6559f3121dde89a3cd4975795206402c559a5ee262abd324acf4389"
+    }
+  },
+  "native_candidate_synthesis": {
+    "completed": true,
+    "lut": 1074,
+    "reg": 577,
+    "bram": 0,
+    "dsp": 0,
+    "warning": "SYN-5025: Using 0 for all undriven pins and nets"
+  },
+  "logical_model_throughput": {
+    "bytes": 8192,
+    "host_cycles": 73113,
+    "host_hz": 100000000,
+    "MB_per_s": 11.204574,
+    "hardware_measured": false
+  },
+  "official_SPI_build": {
+    "status": "completed",
+    "timing_ns": {
+      "SWNS": 0.034,
+      "STNS": 0.0,
+      "HWNS": 0.021,
+      "HTNS": 0.0
+    }
+  },
+  "native_board_integrated": false,
+  "native_board_PnR_STA_completed": false,
+  "native_hardware_validated": false,
+  "sources_sha256": {
+    "src/modules/sd/native/sd_bus_phy.v": "c71e4b505c7abe0a369244dfedf7d31b5f2a84b8ec49be12263f5bbd7e3114e3",
+    "src/modules/sd/native/sd_card_top_native.v": "48882b9d79fd59ccfa860aff6b6e5d394ece07ad992953b26cb3cfb2db23a27a",
+    "src/modules/sd/native/sd_native_controller.v": "04b3666ef5309d80fa7f35af2f661b8c270d14d549d239c55de40543cd61f171",
+    "sim/sd_native_card_model.v": "86c7cf3d00647df8f1d6706a7793761435e027bed0b66dc29c431d0b49003b3e",
+    "sim/tb_sd_native.v": "7f34679edfa30d7613904b62033a0081ab05801fcaf90c4987713953aacaec04",
+    "sim/tb_sd_native_clock.v": "6a999ff12ef7ec1c4e1361a9da210c0c5413626bb9ca0e4f27e9ed6e4d9bad85",
+    "sim/tb_sd_native_fat32.v": "7dd05b59c61419f43bb4fd47f5a558db46987786a127af2191e0ed14b7cd0c12",
+    "sim/tb_sd_native_player.v": "82d063aee330202c776713907aba90d1e3a1d701a8e4c28a541882844682c160",
+    "scripts/run_sd_native_tests.ps1": "3109fb13d9751ad126b1bc996cd908b23d639c593f19c7c7b0186062398d62e6",
+    "scripts/synth_sd_native.tcl": "bce5397cae84fc933c44077f4dd61cf6d395aaf0ceb947a0eaa6ca7d50ae71ec",
+    "scripts/run_tests.ps1": "6b1085b2298816f0b71a20d30922141320327cd188b2310bc823dd968653e132"
+  }
+}

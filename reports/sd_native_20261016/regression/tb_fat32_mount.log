@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_mount.log -lib msim_work -c tb_fat32_mount 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_mount(fast)
+# run -all 
+# ALL PASS tb_fat32_mount: MBR/superfloppy/spc1/spc2/fragmented root/filters/sizes/errors/EOC
+# ** Note: $finish    : tb_fat32_mount.v(105)
+#    Time: 226245 ns  Iteration: 2  Instance: /tb_fat32_mount
