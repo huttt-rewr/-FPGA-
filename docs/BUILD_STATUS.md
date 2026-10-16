@@ -1,5 +1,13 @@
 # 构建状态
 
+## 2026-10-16 PS/2键盘阶段一（仿真与STA通过）
+
+键盘专项及67项全量ModelSim回归通过，静态检查65源/38 IO通过。新增官方PS/2 CLK=M16、DATA=K16；KEY/SW保留，键盘用法与默认不静音的版本变化见[操作说明](KEYBOARD_USAGE_20261016.md)。数字、R/F尚仅存请求。最终综合/P&R/STA通过：**SWNS +0.001ns、STNS 0、HWNS +0.021ns、HTNS 0**，余量很小、未达到+0.5ns，未生成新bit、未实板。LUT15223、REG10132、BRAM9K59/64、DSP17、PLL2。[冻结源码绑定和范围审计](../reports/keyboard_20261016/validation_phase1.json)、[本轮报告](../reports/keyboard_20261016/RESULT_PHASE1.md)。
+
+初轮P&R：SWNS −0.516ns、STNS −3.289ns，HWNS −0.319ns、HTNS −0.539ns；负min实际是内部模式同步器复位removal，不是HDMI管脚hold。隔离WAV重试计数、同步各域模式复位释放后，第二轮：SWNS −1.200ns、STNS −6.617ns，HWNS +0.021ns、HTNS 0；setup仍失败。已继续检查WAV状态译码，后续结果以匹配输入哈希的冻结报告为准。两轮日志见 `reports/keyboard_20261016/phase1_initial/`、`phase1_fixed/`。不将旧SPI基线的正时序当成新键盘源码结果，也不宣称达到+0.5ns。
+
+独立多文件实验（尚未登记正式TD）：12BMP/3WAV、高簇号、碎片、64文件总限额、越界回卷、切音频排空，以及真实播放器缩放帧/PCM/提交仿真通过。它不属于已落地正式功能，须待阶段一过关及后续正式回归与P&R。
+
 ## 2026-10-16 四位SD独立候选
 
 原生四位SD已完成协议、默认分频、真实FAT32及播放器四项仿真与独立TD综合。模型16扇区吞吐11.204574MB/s，非实板测量。DAT1/DAT2焊球和上拉依据尚缺，**未接入正式板级工程**，正式仍为SPI；四位模式整机P&R/STA和实板验收均未完成。[候选设计/仿真命令](SD_NATIVE_4BIT_20261016.md)、[本轮冻结结果](../reports/sd_native_20261016/RESULT.md)。

@@ -8,6 +8,9 @@ derive_clocks
 # Use the port startpoint because TD packs stage 0 into the IREG and removes
 # its RTL register name. Paths launching from that IREG are still timed.
 set_false_path -from [get_ports {key1 key2 key3 sw[*]}]
+# PS/2 clock/data are asynchronous inputs to their own stage-0 synchronizers.
+# This exception ends at that first stage; all receiver logic remains timed.
+set_false_path -from [get_ports {ps2_clk ps2_data}]
 # SDRAM is a device hard macro with TD-generated internal pad timing. Its DQ
 # pins are not user top-level GPIO. Never mask the SDRAM hard-macro paths.
 # External SD/DDC timing requires actual card/device and PCB propagation data;

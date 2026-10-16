@@ -35,6 +35,17 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  localparam RETRY_WIDTH=(RETRY_CYCLES<2)?1:$clog2(RETRY_CYCLES);
  reg [RETRY_WIDTH-1:0] retry_count;
  reg retry_due;
+ // Keep the delay counter outside the parser case. A second assignment inside
+ // FAILED would give the synthesizer a wide state-decode priority mux on every
+ // counter bit. The one-hot FAILED bit is sufficient and preserves the delay.
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin retry_count<=0;retry_due<=RETRY_CYCLES<=1;end
+  else if(!state[9] || retry_due)begin retry_count<=0;retry_due<=RETRY_CYCLES<=1;end
+  else begin
+   retry_count<=retry_count+1'b1;
+   retry_due<=retry_count==RETRY_CYCLES-2;
+  end
+ end
  reg resume_space;
  reg last_pcm_byte,sector_last_byte;
  reg sector_room_q;
@@ -68,23 +79,21 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
    cache_tag<=0;cache_valid<=0;fmt_valid<=0;low_valid<=0;low_byte<=0;
    count<=0;field<=0;riff_id<=0;riff_size<=0;wave_id<=0;rate<=0;byte_rate<=0;
    format<=0;channels<=0;align<=0;bits<=0;sample_valid<=0;sample<=0;error_code<=0;ready<=0;
-   retry_count<=0;retry_due<=RETRY_CYCLES<=1;
    resume_space<=0;last_pcm_byte<=0;sector_last_byte<=0;
   end else begin
    sample_valid<=0;
-   if(!state[9])begin retry_count<=0;retry_due<=RETRY_CYCLES<=1;end
    // Keep the failed-state delay across SD reinitialization. An arbiter timeout
    // resets transport, but must not erase the failure or trigger an immediate retry.
    // Gate SD availability at request/sample boundaries rather than inserting
    // a failed-state/global-init mux on every parser register enable.
-   case(state)
-    IDLE:begin
+   case(1'b1) // synthesis parallel_case
+    state[0]:begin
      cache_valid<=0;fmt_valid<=0;low_valid<=0;error_code<=0;ready<=0;sample<=0;
      if(enable && sd_init_done)begin
       position<=0;kind<=RIFF;field<=0;count<=0;state<=ENSURE;
      end
     end
-    ENSURE:begin
+    state[1]:begin
      // 初始RIFF最小长度及每次块尾检查保证下一个8字节块头在界内。
      if(!sd_init_done)begin state<=IDLE;ready<=0;cache_valid<=0;end
      else if(position>=MAX_BYTES)begin error_code<=4;state<=FAILED;end
@@ -92,7 +101,7 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      else if(cache_valid && cache_tag==position[31:9])state<=WAIT_BYTE;
      else begin cache_tag<=position[31:9];cache_valid<=0;count<=0;state<=FETCH;end
     end
-    FETCH:begin
+    state[2]:begin
      if(data_valid && count<513)count<=count+1'b1;
      if(read_error || !sd_init_done)begin error_code<=2;ready<=0;state<=FAILED;end
      else if(sector_end)begin
@@ -100,13 +109,13 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
       else begin cache_valid<=1;state<=WAIT_BYTE;end
      end
     end
-    WAIT_BYTE:begin
+    state[3]:begin
      // remaining/position are stable here. Compare before CONSUME to keep
      // the 32-bit terminal decode off state and sample-hold transitions.
      last_pcm_byte<=remaining==1;sector_last_byte<=position[8:0]==511;
      state<=CONSUME;
     end
-    CONSUME:begin
+    state[4]:begin
      if(kind==PCM)begin
       // 只在完整样本可被FIFO接受时推进；低字节可跨扇区保存。
       if(!enable)state<=CONSUME;
@@ -147,30 +156,30 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
       end
      end
     end
-    RIFF_CHECK:begin
+    state[5]:begin
      riff_ok<=riff_id==32'h46464952 && wave_id==32'h45564157 && riff_size>=36 && riff_size<=MAX_BYTES-8;
      file_end<=riff_size+8;
      state<=RIFF_APPLY;
     end
-    RIFF_APPLY:begin
+    state[12]:begin
      if(!riff_ok)begin
       error_code<=1;state<=FAILED;
      end else begin kind<=CHUNK;field<=0;state<=ENSURE;end
     end
-    CHUNK_CHECK:begin
+    state[6]:begin
      // 每级只做一次加/减，避免边界减法、padding减法、比较串联超出100MHz预算。
      available<=file_end-position;
      position_ok<=position<=file_end;
      padded_size<={1'b0,chunk_size}+chunk_size[0];
      state<=CHUNK_BOUNDS;
     end
-    CHUNK_BOUNDS:begin
+    state[10]:begin
      bounds_ok<=position_ok && padded_size<={1'b0,available};
      trailing<=available-padded_size[31:0];
      chunk_next<=position+padded_size[31:0];
      state<=CHUNK_CLASSIFY;
     end
-    CHUNK_CLASSIFY:begin
+    state[14]:begin
      // Classify after bounds arithmetic, before error/state/counter fanout.
      is_fmt<=chunk_id==32'h20746d66;is_data<=chunk_id==32'h61746164;
      fmt_chunk_ok<=chunk_size>=16 && !fmt_valid;
@@ -178,7 +187,7 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      tail_ok<=trailing>=8;
      state<=CHUNK_APPLY;
     end
-    CHUNK_APPLY:begin
+    state[11]:begin
      if(!bounds_ok)begin error_code<=4;state<=FAILED;end
      else if(is_fmt)begin
       if(!fmt_chunk_ok)begin error_code<=4;state<=FAILED;end
@@ -192,29 +201,25 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      end else if(!tail_ok)begin error_code<=4;state<=FAILED;end
      else begin position<=chunk_next;field<=0;state<=ENSURE;end
     end
-    FMT_CHECK:begin
+    state[7]:begin
      if(format!=1 || channels!=1 || rate!=48000 || byte_rate!=96000 || align!=2 || bits!=16)
       begin error_code<=1;state<=FAILED;end
      else if(!tail_ok)begin error_code<=4;state<=FAILED;end
      else begin fmt_valid<=1;position<=chunk_next;kind<=CHUNK;field<=0;state<=ENSURE;end
     end
-    WAIT_SPACE:begin
+    state[8]:begin
      if(!sd_init_done)begin state<=IDLE;ready<=0;end
      else if(enable && sector_room_q)state<=ENSURE;
     end
-    WAIT_SAMPLE:begin
+    state[13]:begin
      if(!sd_init_done)begin state<=IDLE;ready<=0;sample<=0;end
      else if(enable && sample_ready)begin
       sample_valid<=1;state<=resume_space?WAIT_SPACE:ENSURE;
      end
     end
-    FAILED:begin
+    state[9]:begin
      ready<=0;sample<=0;cache_valid<=0;low_valid<=0;
-     if(retry_due)begin error_code<=0;retry_count<=0;state<=IDLE;end
-     else begin
-      retry_count<=retry_count+1'b1;
-      retry_due<=retry_count==RETRY_CYCLES-2;
-     end
+     if(retry_due)begin error_code<=0;state<=IDLE;end
     end
     default:begin error_code<=4;state<=FAILED;end
    endcase

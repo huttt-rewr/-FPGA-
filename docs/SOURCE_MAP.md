@@ -1,5 +1,7 @@
 # 源文件与资料导航
 
+2026-10-16 新增 `src/modules/input/ps2_keyboard.v`（同步、滤波、11位帧与Set2前缀）和 `ps2_controls.v`（键码转换成单拍事件）。顶层保存请求状态，`picture_controls.v`仍唯一持有音量/静音；两个TD入口及`design_files.txt`已登记。激励是 `sim/tb_ps2_keyboard.v`、`sim/tb_ps2_controls.v`，专项脚本为 `scripts/run_keyboard_tests.ps1`。[操作与实际实施范围](KEYBOARD_USAGE_20261016.md)。
+
 2026-10-15 FAT32 v1：正式顶层读取普通FAT32卡根目录，直接复制最多4个BMP和第一个WAV，支持碎片簇链。无需裸镜像烧卡；KEY/SW与媒体格式要求保持。操作见[FAT32拷贝文件教程](FAT32_USAGE_20261015.md)，实际回归/STA见[本轮结果](../reports/fat32_20261015/RESULT.md)。旧裸扇区版的制卡方法与bit不适用于此版本。
 
 

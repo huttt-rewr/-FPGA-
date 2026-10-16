@@ -43,3 +43,7 @@ set_pin_assignment { sw[3] } { LOCATION = C5; IOSTANDARD = LVCMOS33; PULLTYPE = 
 
 # Third user key: official DEMO/2_key_led/AA.adc key[2].
 set_pin_assignment { key3 } { LOCATION = B1; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+
+# Official J:/DEMO/14_ps2_piano/A1.adc and 24_VGA_shiyan9_B/VGA.adc.
+set_pin_assignment { ps2_clk } { LOCATION = M16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment { ps2_data } { LOCATION = K16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }

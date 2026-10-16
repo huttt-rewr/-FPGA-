@@ -3,6 +3,8 @@ module top(
     input uart_rx_pin,
     output uart_tx_pin,
     input ir_rx_pin,
+    input ps2_clk,
+    input ps2_data,
     input                       clk,
     input                       rst_n,
     input                       key1,           // 手动下一张
@@ -90,6 +92,18 @@ wire adjusted_vs,adjusted_de;
 wire [9:0] adjusted_x;
 wire [4:0] volume;
 wire mute,osd_enable,test_pattern;
+wire kb_next,kb_prev,kb_toggle,kb_vol_up,kb_vol_dn,kb_mute,kb_osd,kb_res,kb_fps;
+wire kb_image_select,kb_audio_select,kb_audio_pending;
+wire [3:0] kb_digit;
+wire [7:0] kb_scan_code;
+wire kb_valid,kb_release,kb_extended,kb_error;
+wire board_next,board_toggle;
+// Stage 1 request registers: consumers for direct file selection and runtime
+// display/slide-rate changes are introduced only after this foundation passes.
+(* keep="true" *) reg [7:0] image_index,audio_index;
+(* keep="true" *) reg [1:0] res_mode;
+(* keep="true" *) reg [3:0] fps_mode;
+reg osd_on;
 wire [1:0] transition_mode,slogan_select;
 wire captions_enable,scroll_enable;
 wire signed [7:0] brightness;
@@ -139,14 +153,16 @@ reg [3:0] frame_contrast;
 reg [1:0] frame_edit_mode;
 reg [11:0] frame_source_width,frame_source_height;
 reg settings_vs_d;
+reg frame_osd;
 always @(posedge video_clk or posedge rst_video)begin
  if(rst_video)begin
-  settings_vs_d<=1;frame_brightness<=0;frame_contrast<=4;frame_edit_mode<=0;
+  settings_vs_d<=1;frame_brightness<=0;frame_contrast<=4;frame_edit_mode<=0;frame_osd<=1;
   frame_source_width<=0;frame_source_height<=0;
   frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;
  end else begin
   settings_vs_d<=vs;
   if(settings_vs_d && !vs)begin
+   frame_osd<=video_osd;
    frame_brightness<=video_brightness;frame_contrast<=status_video[33:30];
    frame_edit_mode<=status_video[35:34];
    frame_source_width<=status_video[47:36];frame_source_height<=status_video[59:48];
@@ -236,15 +252,22 @@ wire rst_all;
 (* async_reg="true" *) reg [1:0] mode_vff,mode_sff,mode_mff;
 (* async_reg="true" *) reg [1:0] edid_good_vff;
 wire mode_video=mode_vff[1],mode_sd=mode_sff[1],mode_mem=mode_mff[1];
-always @(posedge video_clk or posedge rst_all)begin
- if(rst_all)begin mode_vff<=0;edid_good_vff<=0;end
+// These synchronizers must settle BEFORE mode_ready releases the consumers.
+// Give them a local reset release independent of mode_ready, rather than the
+// boot-clock watchdog's raw deassertion (which violated video removal timing).
+wire rst_mode_video,rst_mode_sd,rst_mode_mem;
+reset_sync mode_reset_video(.clk(video_clk),.arst(rst_all),.rst(rst_mode_video));
+reset_sync mode_reset_sd(.clk(sd_card_clk),.arst(rst_all),.rst(rst_mode_sd));
+reset_sync mode_reset_mem(.clk(ext_mem_clk),.arst(rst_all),.rst(rst_mode_mem));
+always @(posedge video_clk or posedge rst_mode_video)begin
+ if(rst_mode_video)begin mode_vff<=0;edid_good_vff<=0;end
  else begin mode_vff<={mode_vff[0],mode_800};edid_good_vff<={edid_good_vff[0],edid_good};end
 end
-always @(posedge sd_card_clk or posedge rst_all)begin
- if(rst_all)mode_sff<=0;else mode_sff<={mode_sff[0],mode_800};
+always @(posedge sd_card_clk or posedge rst_mode_sd)begin
+ if(rst_mode_sd)mode_sff<=0;else mode_sff<={mode_sff[0],mode_800};
 end
-always @(posedge ext_mem_clk or posedge rst_all)begin
- if(rst_all)mode_mff<=0;else mode_mff<={mode_mff[0],mode_800};
+always @(posedge ext_mem_clk or posedge rst_mode_mem)begin
+ if(rst_mode_mem)mode_mff<=0;else mode_mff<={mode_mff[0],mode_800};
 end
 
 
@@ -623,20 +646,41 @@ hdmi_phy_wrapper #(
     .O_tmds_clk_p       (HDMI_CLK_P)
 );
 
-// Physical controls only in this build. Keep legacy package pins and source
-// modules for compatibility, but serial/IR traffic cannot change the settings.
+// PS/2 and physical KEY/SW share the existing control consumers. Legacy UART
+// and IR sources remain disabled; no duplicate playback or audio state.
 assign uart_tx_pin=1'b1;
 assign tx_overflow=1'b0;
-assign cmd_prev=1'b0;
-assign osd_enable=1'b1;
+assign cmd_next=board_next || kb_next;
+assign cmd_prev=kb_prev;
+assign cmd_toggle=board_toggle || kb_toggle;
+assign osd_enable=osd_on;
 assign test_pattern=1'b0;
 // Cycle the three built-in slogans with the displayed image index.
 assign slogan_select=(status_index==3)?2'd0:status_index;
-picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1)) buttons(.clk(sd_card_clk),.rst(rst_sd),
- .key1_n(key1),.key2_n(key2),.key3_n(key3),.next_pulse(cmd_next),.toggle_pulse(cmd_toggle),
+ps2_keyboard keyboard(.clk(sd_card_clk),.rst(rst_sd),.ps2_clk(ps2_clk),.ps2_data(ps2_data),
+ .scan_code(kb_scan_code),.key_valid(kb_valid),.key_release(kb_release),
+ .key_extended(kb_extended),.receive_error(kb_error));
+ps2_controls keyboard_events(.clk(sd_card_clk),.rst(rst_sd),.scan_code(kb_scan_code),
+ .key_valid(kb_valid),.key_release(kb_release),.key_extended(kb_extended),.receive_error(kb_error),
+ .ev_next(kb_next),.ev_prev(kb_prev),.ev_toggle_auto(kb_toggle),.ev_vol_up(kb_vol_up),.ev_vol_dn(kb_vol_dn),
+ .ev_mute(kb_mute),.ev_osd(kb_osd),.ev_res(kb_res),.ev_fps(kb_fps),
+ .ev_digit(kb_digit),.ev_image_select(kb_image_select),.ev_audio_select(kb_audio_select),.audio_pending(kb_audio_pending));
+always @(posedge sd_card_clk or posedge rst_sd)begin
+ if(rst_sd)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;end
+ else begin
+  if(kb_image_select)image_index<={4'd0,kb_digit};
+  if(kb_audio_select)audio_index<={4'd0,kb_digit};
+  if(kb_res)res_mode<=(res_mode==2)?0:res_mode+1'b1;
+  if(kb_fps)fps_mode<=(fps_mode==5)?0:fps_mode+1'b1;
+  if(kb_osd)osd_on<=!osd_on;
+ end
+end
+picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0)) buttons(.clk(sd_card_clk),.rst(rst_sd),
+ .key1_n(key1),.key2_n(key2),.key3_n(key3),.next_pulse(board_next),.toggle_pulse(board_toggle),
  .brightness(brightness),.contrast(contrast),.edit_mode(edit_mode),
  .menu_open(menu_open),.menu_item(menu_item),.gamma_enable(gamma_enable),
- .debug_enable(debug_enable),.debug_page(debug_page),.audio_volume(volume),.audio_mute(mute));
+ .debug_enable(debug_enable),.debug_page(debug_page),.audio_volume(volume),.audio_mute(mute),
+ .kb_vol_up(kb_vol_up),.kb_vol_dn(kb_vol_dn),.kb_mute(kb_mute));
 switch_controls switches(.clk(sd_card_clk),.rst(rst_sd),.sw(sw),
  .captions_enable(captions_enable),.scroll_enable(scroll_enable),
  .transition_mode(transition_mode));
@@ -664,7 +708,7 @@ caption_overlay #(.ADAPTIVE(1)) captions(.mode_800(mode_video),.clk(video_clk),.
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
 status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
- .enable(video_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
+ .enable(frame_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
  .volume(video_volume),.mute(video_mute),.busy(video_busy),
  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),
  .result(osd_rgb),.pixel_x(),.pixel_y(),
