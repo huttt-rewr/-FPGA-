@@ -1,5 +1,13 @@
 # 构建状态
 
+## 本轮候选bit（尚未下载）
+
+[video_improve_native50_delivery.bit](../reports/keyboard_20261016/video_improve_native50_delivery.bit)，633116字节；SHA-256：`82f125e85700aaed1f270d7b9ca3e3229aa1e66b3a9d2d5be505425099d6dfa6`。
+
+源码提交`5952318772ac12511f93c39d579cbdfe9ab2f188`，输入与80项回归绑定至[native50_ultra_validation.json](../reports/keyboard_20261016/native50_ultra_validation.json)。候选在同一TD实现会话内重新布局布线、核查非负时序后导出；该会话SWNS **+0.026ns**、HWNS **+0.022ns**、TNS0。[候选清单](../reports/keyboard_20261016/native50_delivery_bit_manifest.json)、[该会话STA](../reports/keyboard_20261016/native50_delivery_bit_timing_summary.txt)。
+
+仅为内部STA通过的实板待验候选，未物理下载、未写卡、未实测出图/出声/吞吐、未签核SD/HDMI外部IO。历史bit不含本轮功能。内部removal不是HDMI管脚hold，未达到整体+0.5ns。
+
 ## 当前交付：键盘、多文件、R/F与四位SD 25/50MHz
 
 正式源码完成键盘控制、64文件索引、R安全重启切模式、F目标换图频率，以及六线原生四位SD。CMD6查询/切换的64字节状态通过四路CRC、功能选择和busy检查后，等待八个SD时钟，再在完整周期边界启用50MHz；不支持/忙时保持25MHz，状态损坏或协商超时则重新初始化并禁用本轮高速尝试。普通CMD6选择High Speed，与ACMD6设置四位宽度不同。
@@ -73,7 +81,7 @@ R/F尚未正式消费请求。正式SD仍SPI25MHz，未生成本轮新bit、未�
 | SWNS / STNS | +0.118ns / 0.000ns |
 | HWNS / HTNS | +0.021ns / 0.000ns |
 | 资源 | LUT12976、REG8547、BRAM9K57/64、DSP17、PLL2 |
-| 候选 | [video_improve_audio_retry.bit](../reports/audio_retry_20261014/video_improve_audio_retry.bit)，633116字节 |
+| 候选 | video_improve_audio_retry.bit（历史路径 `../reports/audio_retry_20261014/video_improve_audio_retry.bit`，当前目录未保留），633116字节 |
 | bit SHA-256 | 565bfb3430ba7d11e7186a44307b1aa4e17066ace721f571e7138f4d9e15e196 |
 | max最差 | setup，+0.118ns |
 | min最差 | hold，+0.021ns |
@@ -81,7 +89,7 @@ R/F尚未正式消费请求。正式SD仍SPI25MHz，未生成本轮新bit、未�
 
 最差max起点 `sd_card_bmp_m0/sd_card_top_m0/sd_card_cmd_m0/rst_syn_67.clk (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })`，终点 `sd_card_bmp_m0/write_done_seen_reg_syn_19.a[0] (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })`。最差min起点 `sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })`，终点 `sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread1_syn_31.addra[8] (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })`。内部复位removal不能当HDMI管脚hold；整体未达到+0.5ns，外部SD/DDC/TMDS时序及Speed=NA、已有PHY警告仍未签核。
 
-源码、bit和报告绑定见[候选清单](../reports/audio_retry_20261014/candidate_manifest.json)，回归见[57项记录](../reports/audio_retry_20261014/regression_completion.json)，范围审计见[scope_audit.json](../reports/audio_retry_20261014/scope_audit.json)，最终时序见[冻结STA](../reports/audio_retry_20261014/timing_summary.txt)。修改前188文件已ZIP备份及SHA核验。调试阶段负时序分别归档在本轮报告目录，最终通过值只以本节及候选清单为准。
+源码、bit和报告绑定见候选清单（历史路径 `../reports/audio_retry_20261014/candidate_manifest.json`，当前目录未保留），回归见57项记录（历史路径 `../reports/audio_retry_20261014/regression_completion.json`，当前目录未保留），范围审计见scope_audit.json（历史路径 `../reports/audio_retry_20261014/scope_audit.json`，当前目录未保留），最终时序见冻结STA（历史路径 `../reports/audio_retry_20261014/timing_summary.txt`，当前目录未保留）。修改前188文件已ZIP备份及SHA核验。调试阶段负时序分别归档在本轮报告目录，最终通过值只以本节及候选清单为准。
 
 只读交付核验：
 
@@ -103,12 +111,12 @@ python reports/audio_retry_20261014/delivery.py
 | 资源 | LUT13063、REG8490、BRAM9K57/64（89.06%）、DSP17、PLL2 |
 | 对早先板载版增量 | LUT+1611、REG+1004、BRAM9K+11、DSP+1、PLL不增加 |
 | 测试 | 54项；新增7项音频；SD共享扫描/缩放/PCM循环及CRC失败隔离通过 |
-| 候选 | [video_improve_wav_audio.bit](../reports/wav_audio_20261014/video_improve_wav_audio.bit)，633116字节 |
+| 候选 | video_improve_wav_audio.bit（历史路径 `../reports/wav_audio_20261014/video_improve_wav_audio.bit`，当前目录未保留），633116字节 |
 | 保护审计 | 21个官方IP/PHY/管脚/SDC/模式时钟保护文件SHA与备份一致，两份HDMI/ACR实例逐字一致 |
 | 媒体 | [四张图片＋测试音](../assets/audio_20261014/pictures_and_audio.img)，WAV起始LBA131072 |
 | 外部与硬件 | Speed=NA、PHY-7002×2/PHY-5079×1及外部IO签核仍未解决；无实板完成声明 |
 
-候选SHA-256：f4bb57e5998b0e0081c361f95cc0a44a5c40543352dc4f80f097d8454055a8ca。证据：[候选清单](../reports/wav_audio_20261014/candidate_manifest.json)、[54项回归](../reports/wav_audio_20261014/regression_completion.json)、[冻结时序](../reports/wav_audio_20261014/timing_summary.txt)、[资源](../reports/wav_audio_20261014/physical_area.txt)、[备份记录](../reports/wav_audio_20261014/backup_record.json)。修改前174文件已ZIP备份并逐文件SHA核验，早先候选保留。
+候选SHA-256：f4bb57e5998b0e0081c361f95cc0a44a5c40543352dc4f80f097d8454055a8ca。证据：候选清单（历史路径 `../reports/wav_audio_20261014/candidate_manifest.json`，当前目录未保留）、54项回归（历史路径 `../reports/wav_audio_20261014/regression_completion.json`，当前目录未保留）、冻结时序（历史路径 `../reports/wav_audio_20261014/timing_summary.txt`，当前目录未保留）、资源（历史路径 `../reports/wav_audio_20261014/physical_area.txt`，当前目录未保留）、备份记录（历史路径 `../reports/wav_audio_20261014/backup_record.json`，当前目录未保留）。修改前174文件已ZIP备份并逐文件SHA核验，早先候选保留。
 
 全局max最差为 **setup**，+0.175ns；min最差为 **removal**，+0.022ns。起止点见候选清单。**内部复位recovery/removal不是HDMI管脚hold；没有达到整体+0.5ns，也没有完成SD/DDC/TMDS外部IO签核。**
 
@@ -130,11 +138,11 @@ python reports/audio_retry_20261014/delivery.py
 | HWNS / HTNS | **+0.022ns / 0.000ns** |
 | 资源 | LUT11452（58.43%）、REG7486（38.19%）、BRAM9K46/64（71.88%）、DSP16、PLL2 |
 | 相对10月13日 | LUT+571、REG+420、BRAM9K+3、DSP/PLL不增加；整体时序余量小幅下降 |
-| 候选 | [video_improve_board_opt.bit](../reports/board_opt_20261014/video_improve_board_opt.bit)，633116字节 |
+| 候选 | video_improve_board_opt.bit（历史路径 `../reports/board_opt_20261014/video_improve_board_opt.bit`，当前目录未保留），633116字节 |
 | 保护文件 | 官方IP、HDMI PHY、管脚、SDC及模式时钟约束与本轮修改前备份SHA一致 |
 | 实板/外部IO | 未下载、未签核；不能以模块仿真断言实物白条已消失 |
 
-bit SHA-256：`b7b401a2c4c5f9ad9b24ecb2a0b1060a2e7f662f7da79173145e3a2d6b979781`。来源：[候选清单](../reports/board_opt_20261014/candidate_manifest.json)、[47项回归证据](../reports/board_opt_20261014/regression_completion.json)、[冻结时序](../reports/board_opt_20261014/timing_summary.txt)、[资源报告](../reports/board_opt_20261014/physical_area.txt)。修改前174文件的[备份](../backups/board_opt_20261014_130455/workspace.zip)已逐文件SHA核验。10月13日候选保留。
+bit SHA-256：`b7b401a2c4c5f9ad9b24ecb2a0b1060a2e7f662f7da79173145e3a2d6b979781`。来源：候选清单（历史路径 `../reports/board_opt_20261014/candidate_manifest.json`，当前目录未保留）、47项回归证据（历史路径 `../reports/board_opt_20261014/regression_completion.json`，当前目录未保留）、冻结时序（历史路径 `../reports/board_opt_20261014/timing_summary.txt`，当前目录未保留）、资源报告（历史路径 `../reports/board_opt_20261014/physical_area.txt`，当前目录未保留）。修改前174文件的[备份](../backups/board_opt_20261014_130455/workspace.zip)已逐文件SHA核验。10月13日候选保留。
 
 SWNS最差是`supervisor/ready_reg`→`reset_writer/sync_ff_reg[1].sr`的 **recovery**，+0.110ns；最差纯setup为BMP宽度→`mult1`，+0.303ns。HWNS最差是HDMI同步复位→`osd/board_ascii[4].sr`的 **removal**，+0.022ns。内部复位recovery/removal不是HDMI管脚hold。**整体未达到+0.5ns，整体余量也没有优于基线+0.126/+0.027ns**；不能将局部路径优化或中间版较大数值当最终提升。
 
@@ -160,11 +168,11 @@ SWNS最差是`supervisor/ready_reg`→`reset_writer/sync_ff_reg[1].sr`的 **reco
 | SWNS / STNS | **+0.126ns / 0.000ns** |
 | HWNS / HTNS | **+0.027ns / 0.000ns** |
 | 资源 | LUT 10881, REG 7066, BRAM9K 43, DSP 16, PLL 2 |
-| 候选配置 | [video_improve_display_fix.bit](../reports/display_fix_20261013/video_improve_display_fix.bit)，629624 字节 |
+| 候选配置 | video_improve_display_fix.bit（历史路径 `../reports/display_fix_20261013/video_improve_display_fix.bit`，当前目录未保留），629624 字节 |
 | 官方 IP | 16 个官方 IP 文件与修改前备份哈希一致；仅配置头 global_def.v 修正刷新周期 |
 | 实板 / 外部 IO | 尚未下载验证；SDRAM PHY、SD/DDC/TMDS、电气和 Speed=NA 仍未签核 |
 
-bit SHA-256：`d439b776df6c002d786781c6ac2ccefa211d3444d1092b719266e178f52cde6b`。来源见 [候选清单](../reports/display_fix_20261013/candidate_manifest.json)、[完整回归清单](../reports/display_fix_20261013/regression_completion.json)、[冻结时序](../reports/display_fix_20261013/timing_summary.txt)、[官方 IP/备份核查](../reports/display_fix_20261013/source_audit.json)。旧 adaptive/SW/scaling bit 不含本轮修复。
+bit SHA-256：`d439b776df6c002d786781c6ac2ccefa211d3444d1092b719266e178f52cde6b`。来源见 候选清单（历史路径 `../reports/display_fix_20261013/candidate_manifest.json`，当前目录未保留）、完整回归清单（历史路径 `../reports/display_fix_20261013/regression_completion.json`，当前目录未保留）、冻结时序（历史路径 `../reports/display_fix_20261013/timing_summary.txt`，当前目录未保留）、官方 IP/备份核查（历史路径 `../reports/display_fix_20261013/source_audit.json`，当前目录未保留）。旧 adaptive/SW/scaling bit 不含本轮修复。
 
 最差 setup：`sd_card_bmp_m0/bmp_read_m0/scaling$loader/w_reg[5]_syn_3.clk` → `sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[21]_syn_4.a[0]`，0.126ns。最差 min：`u_hdmi_svga/u0_reset_sync/O_sync_reset_reg_syn_52.clk` → `u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_hdmi_video_source/S_col_cnt_reg[2]_syn_4.sr`，类型 **removal**，0.027ns。**内部复位 removal 不能当作 HDMI 管脚 hold，整体未达到 +0.5ns。**
 
@@ -189,11 +197,11 @@ bit SHA-256：`d439b776df6c002d786781c6ac2ccefa211d3444d1092b719266e178f52cde6b`
 | SWNS / STNS | **+0.113ns / 0** |
 | HWNS / HTNS | **+0.022ns / 0** |
 | 资源 | LUT10765、REG6916、BRAM9K43、DSP16、PLL2 |
-| 候选配置文件 | [video_improve_adaptive.bit](../reports/screen_adapt_20261010/video_improve_adaptive.bit)，629624字节 |
+| 候选配置文件 | video_improve_adaptive.bit（历史路径 `../reports/screen_adapt_20261010/video_improve_adaptive.bit`，当前目录未保留），629624字节 |
 | 官方IP | 与适配前备份逐文件SHA-256一致，没有删除或修改必要官方IP |
 | 实板与外部IO | 未烧录、未验证、未签核 |
 
-bit SHA-256：`b9fc006f2d3419fe16e1bd69bf5adc397234fa7d89c1afaf5a10e8f945361f80`。源码、数据库、回归日志和bit来源已绑定，见 [完整核验](../reports/screen_adapt_20261010/verification.json)、[候选清单](../reports/screen_adapt_20261010/candidate_manifest.json)、[冻结时序报告](../reports/screen_adapt_20261010/timing_summary.txt)。
+bit SHA-256：`b9fc006f2d3419fe16e1bd69bf5adc397234fa7d89c1afaf5a10e8f945361f80`。源码、数据库、回归日志和bit来源已绑定，见 完整核验（历史路径 `../reports/screen_adapt_20261010/verification.json`，当前目录未保留）、候选清单（历史路径 `../reports/screen_adapt_20261010/candidate_manifest.json`，当前目录未保留）、冻结时序报告（历史路径 `../reports/screen_adapt_20261010/timing_summary.txt`，当前目录未保留）。
 
 最差setup为100MHz缩放加载器的 `state_reg[3]` → `y_step_reg[8]`，+0.113ns。最差min为HDMI核内部 `S_CH0_D2_shift_reg[19].sr` 的 **removal** 检查，+0.022ns；它不是HDMI管脚hold。**整体未达到+0.5ns目标。**
 
@@ -219,7 +227,7 @@ bit SHA-256：`b9fc006f2d3419fe16e1bd69bf5adc397234fa7d89c1afaf5a10e8f945361f80`
 | SWNS / STNS | +0.118ns / 0 |
 | HWNS / HTNS | +0.004ns / 0 |
 | 资源 | LUT8849、REG5344、BRAM9K33、DSP13、PLL2 |
-| bit | [video_improve_scaling.bit](../reports/scaling_20261010/video_improve_scaling.bit) |
+| bit | video_improve_scaling.bit（历史路径 `../reports/scaling_20261010/video_improve_scaling.bit`，当前目录未保留） |
 | PLL模型 | 本轮PLL未改；沿用历史频率/锁定验证，未重跑，不验证实物模拟环路 |
 | 实板 | 未烧录、未验证 |
 
@@ -233,7 +241,7 @@ bit SHA-256：`b9fc006f2d3419fe16e1bd69bf5adc397234fa7d89c1afaf5a10e8f945361f80`
 
 官方HDMI/SDRAM/FIFO/PLL文件均未修改；ADC新增官方例程证实的B1按键，SDC只把key3纳入异步用户输入到首级同步器例外。RAM初值忽略提示对应缓存；新扇区/行缓存只有完整加载且tag有效才使用，复位/加载中断会使tag失效。
 
-本次源哈希、数据库及bit来源：[核验记录](../reports/scaling_20261010/verification.json)。冻结报告：[timing_summary](../reports/scaling_20261010/timing_summary.txt)、[build_manifest](../reports/scaling_20261010/build_manifest.json)。原SW/effects/根目录候选保留，均不能代表当前缩放与调参功能。
+本次源哈希、数据库及bit来源：核验记录（历史路径 `../reports/scaling_20261010/verification.json`，当前目录未保留）。冻结报告：timing_summary（历史路径 `../reports/scaling_20261010/timing_summary.txt`，当前目录未保留）、build_manifest（历史路径 `../reports/scaling_20261010/build_manifest.json`，当前目录未保留）。原SW/effects/根目录候选保留，均不能代表当前缩放与调参功能。
 
 ## 历史结果
 

@@ -1,0 +1,15 @@
+{
+  "stage": "native50_ultra",
+  "bit": "reports\\keyboard_20261016\\video_improve_native50_delivery.bit",
+  "sha256": "82f125e85700aaed1f270d7b9ca3e3229aa1e66b3a9d2d5be505425099d6dfa6",
+  "bytes": 633116,
+  "timing_ns": {
+    "SWNS": 0.026,
+    "STNS": 0.0,
+    "HWNS": 0.022,
+    "HTNS": 0.0
+  },
+  "board_signoff": false,
+  "programmed": false,
+  "source_commit": "5952318772ac12511f93c39d579cbdfe9ab2f188"
+}

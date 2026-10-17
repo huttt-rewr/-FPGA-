@@ -89,3 +89,7 @@ python scripts/run_build.py
 TD打开根目录`video_improve.al`，或`src/td_project/video_improve.al`；两者引用相同源码。CLI自动冻结输入哈希、归档旧报告、检查新综合/布线/STA，构建过程中不要改src/scripts/sim输入，也不要并发运行共享仿真库的专项。
 
 不能只看工具进程退出或COMPLETED文字：必须核对SWNS/STNS/HWNS/HTNS及源码哈希。内部复位recovery/removal不是HDMI管脚hold；当前没有整体+0.5ns完成声明。Speed=NA、外部SD/DDC/TMDS时序与已有PHY位置/局部时钟警告仍需核对。未满足板级条件前不自动下载、不写实体卡、不替换必要官方IP。
+
+## 本轮候选文件
+
+内部STA通过的[候选bit](reports/keyboard_20261016/video_improve_native50_delivery.bit)已导出，尚未下载或实板验收。校验值、对应源码及实际时序见[构建状态](docs/BUILD_STATUS.md)。
