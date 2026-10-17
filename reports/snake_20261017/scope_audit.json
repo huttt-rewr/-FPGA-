@@ -1,0 +1,15 @@
+{
+  "protected_src_count": 84,
+  "protected_src_changed": [],
+  "status_source_70bit_unchanged": true,
+  "status_video_selectors_unchanged": true,
+  "top_only_game_changes": true,
+  "sources": {
+    "src/top.v": "32b3297a693e01422e28d5cc90d2bdd7186d856a3646ddff508242cf337b9f4c",
+    "src/modules/input/ps2_controls.v": "3b438f0b527e3b1295bad041477e8f44ded4b0b7b18804ff9430dcf17992cfbe",
+    "src/modules/game/snake_game.v": "fe889f687e0dbdf3949709b00c92f70e5514a0bf30847b47c65eb9f7608a7937",
+    "sim/tb_snake_controls.v": "52504eab7a47c2e7f02136eb25f1c324170b14d80cba1e831c8ad39f12f86df1",
+    "sim/tb_snake_game.v": "4954e48514763ccf43b934f6e8cdfc0685da680c1fa4eb8639aa24f7c9555b5b",
+    "sim/tb_snake_pipeline.v": "a5f9c691d0f494ae837b063dbb8e48c311342af03691d3c794f0a656d1f66a75"
+  }
+}

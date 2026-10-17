@@ -623,6 +623,14 @@
                     <Attr Name="CompileOrder" Val="75"/>
                 </FileInfo>
             </File>
+            <File Path="src/modules/game/snake_game.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="75"/>
+                </FileInfo>
+            </File>
         </Verilog>
         <ADC_FILE>
             <File Path="src/constraints/pin.adc">

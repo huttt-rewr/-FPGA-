@@ -73,3 +73,4 @@ src/modules/sd/native/sd_card_top_native.v
 src/modules/video/pixel_effects.v
 src/modules/video/glass_osd.v
 src/modules/video/audio_visualizer.v
+src/modules/game/snake_game.v

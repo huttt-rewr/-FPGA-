@@ -1,0 +1,38 @@
+standard
+***Report Model: snake_game Device: EG4S20BG256***
+
+IO Statistics
+#IO                        87
+  #input                   52
+  #output                  35
+  #inout                    0
+
+Gate Statistics
+#Basic gates             1849
+  #and                    805
+  #nand                     0
+  #or                      59
+  #nor                      0
+  #xor                      5
+  #xnor                     0
+  #buf                      0
+  #not                    690
+  #bufif1                   0
+  #MX21                   125
+  #FADD                     0
+  #DFF                    165
+  #LATCH                    0
+#MACRO_ADD                 39
+#MACRO_EQ                  42
+#MACRO_MUX                230
+#MACRO_OTHERS               6
+
+Report Hierarchy Area:
++---------------------------------------------------+
+|Instance    |Module        |gates  |seq    |macros |
++---------------------------------------------------+
+|top         |snake_game    |1684   |165    |87     |
+|  board_mem |snake_lut_ram |3      |0      |6      |
+|  body_mem  |snake_lut_ram |4      |0      |6      |
+|  font      |osd_char_rom  |1365   |0      |0      |
++---------------------------------------------------+

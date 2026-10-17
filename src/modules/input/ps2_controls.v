@@ -10,6 +10,8 @@ module ps2_controls #(
  output reg ev_mute,ev_osd,ev_res,ev_fps,
  output reg [3:0] ev_digit,
  output reg ev_image_select,ev_audio_select,
+ output reg game_enable,
+ output held_up,held_down,held_left,held_right,
  output reg audio_pending
 );
  localparam PW=(PENDING_TIMEOUT_CYCLES<2)?1:$clog2(PENDING_TIMEOUT_CYCLES);
@@ -24,6 +26,8 @@ module ps2_controls #(
  end
  // One bit per supported semantic key (including the A/Esc prefix controls).
  reg [21:0] held;
+ assign held_up=held[3];assign held_down=held[4];
+ assign held_left=held[1];assign held_right=held[0];
  reg recognized;
  reg [4:0] key_id;
  reg digit_key;
@@ -51,7 +55,7 @@ module ps2_controls #(
    9:lane_code=8'h1c;10:lane_code=8'h76;11:lane_code=8'h45;
    12:lane_code=8'h16;13:lane_code=8'h1e;14:lane_code=8'h26;
    15:lane_code=8'h25;16:lane_code=8'h2e;17:lane_code=8'h36;
-   18:lane_code=8'h3d;19:lane_code=8'h3e;20:lane_code=8'h46;
+   18:lane_code=8'h3d;19:lane_code=8'h3e;20:lane_code=8'h46;21:lane_code=8'h34;
    default:lane_code=0;
   endcase end
  endfunction
@@ -61,7 +65,7 @@ module ps2_controls #(
   localparam EXTENDED=(km==0 || km==1 || km==3 || km==4);
   always @(posedge clk or posedge rst)begin
    if(rst)key_mask[km]<=0;
-   else key_mask[km]<=(km<21) && (key_extended==EXTENDED) && scan_code==CODE;
+   else key_mask[km]<=(km<22) && (key_extended==EXTENDED) && scan_code==CODE;
   end
  end endgenerate
  genvar h;
@@ -80,6 +84,7 @@ module ps2_controls #(
   endcase
   else case(scan_code)
    8'h29:raw_key_id=2;8'h3a:raw_key_id=5;8'h44:raw_key_id=6;
+   8'h34:raw_key_id=21;
    8'h2d:raw_key_id=7;8'h2b:raw_key_id=8;8'h1c:raw_key_id=9;8'h76:raw_key_id=10;
    8'h45:begin raw_key_id=11;raw_digit_key=1;raw_digit=0;end
    8'h16:begin raw_key_id=12;raw_digit_key=1;raw_digit=1;end
@@ -96,7 +101,7 @@ module ps2_controls #(
  end
  always @(posedge clk or posedge rst)begin
   if(rst)begin
-   audio_pending<=0;restart_pending<=0;ev_digit<=0;
+   game_enable<=0;audio_pending<=0;restart_pending<=0;ev_digit<=0;
    ev_next<=0;ev_prev<=0;ev_toggle_auto<=0;ev_vol_up<=0;ev_vol_dn<=0;
    ev_mute<=0;ev_osd<=0;ev_res<=0;ev_fps<=0;ev_image_select<=0;ev_audio_select<=0;
   end else begin
@@ -115,11 +120,12 @@ module ps2_controls #(
         ev_audio_select<=1;audio_pending<=0;
        end else ev_image_select<=1;
       end else case(key_id)
-       0:ev_next<=1;1:ev_prev<=1;2:ev_toggle_auto<=1;
-       3:ev_vol_up<=1;4:ev_vol_dn<=1;5:ev_mute<=1;6:ev_osd<=1;
+       0:if(!game_enable)ev_next<=1;1:if(!game_enable)ev_prev<=1;2:ev_toggle_auto<=1;
+       3:if(!game_enable)ev_vol_up<=1;4:if(!game_enable)ev_vol_dn<=1;5:ev_mute<=1;6:ev_osd<=1;
        7:ev_res<=1;8:ev_fps<=1;
        9:begin audio_pending<=1;restart_pending<=1;end
        10:begin audio_pending<=0;end
+       21:begin game_enable<=!game_enable;audio_pending<=0;end
       endcase
      end
     end

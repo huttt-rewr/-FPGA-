@@ -137,6 +137,11 @@ end
 wire [23:0] osd_rgb,enhanced_rgb,source_rgb,transition_rgb,caption_rgb;
 wire transition_vs,transition_de,caption_vs,caption_de;
 wire osd_vs,osd_de;
+wire game_vs,game_de,game_on,game_tick,game_over;
+wire [23:0] game_rgb;wire [7:0] game_score;
+wire kb_game_on,kb_held_up,kb_held_down,kb_held_left,kb_held_right;
+wire [4:0] game_controls_video;wire [1:0] game_dir;
+wire [9:0] game_x,game_y;
 wire [1:0] running_effect;
 wire [5:0] fade_level;
 wire [9:0] slide_offset;
@@ -521,9 +526,9 @@ video_rgb_to_axis_640x480 #(.ADAPTIVE(1)) u_video_rgb_to_axis_640x480(.mode_800(
     .I_rst         (rst_video),
     .I_ready       (axis_s_ready),
     .O_overflow    (video_overflow),
-    .I_vs          (osd_vs),
-    .I_de          (osd_de),
-    .I_rgb         (osd_rgb),
+    .I_vs          (game_vs),
+    .I_de          (game_de),
+    .I_rgb         (game_rgb),
     .O_video_user  (axis_s_user),
     .O_video_valid (axis_s_valid),
     .O_video_last  (axis_s_last),
@@ -684,6 +689,7 @@ ps2_controls keyboard_events(.clk(sd_card_clk),.rst(rst_controls),.scan_code(kb_
  .key_valid(kb_valid),.key_release(kb_release),.key_extended(kb_extended),.receive_error(kb_error),
  .ev_next(kb_next),.ev_prev(kb_prev),.ev_toggle_auto(kb_toggle),.ev_vol_up(kb_vol_up),.ev_vol_dn(kb_vol_dn),
  .ev_mute(kb_mute),.ev_osd(kb_osd),.ev_res(kb_res),.ev_fps(kb_fps),
+ .game_enable(kb_game_on),.held_up(kb_held_up),.held_down(kb_held_down),.held_left(kb_held_left),.held_right(kb_held_right),
  .ev_digit(kb_digit),.ev_image_select(kb_image_select),.ev_audio_select(kb_audio_select),.audio_pending(kb_audio_pending));
 always @(posedge sd_card_clk or posedge rst_controls)begin
  if(rst_controls)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;media_image_select<=0;media_audio_select<=0;end
@@ -768,6 +774,18 @@ status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1
  .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow),
  .file_image_index(frame_media[13:7]),.file_image_count(frame_media[6:0]),
  .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]),.slide_rate_mode(frame_rate[3:0]),.slide_rate_limited(frame_rate[4]),.requested_res_mode(frame_rate[6:5]));
+// Separate game control snapshot: historical 70-bit status layout is fixed.
+cdc_snapshot #(.WIDTH(5)) game_control_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data({kb_game_on,kb_held_up,kb_held_down,kb_held_left,kb_held_right}),
+ .dst_clk(video_clk),.dst_rst(rst_video),.dst_data(game_controls_video));
+snake_frame_control game_clock(.clk(video_clk),.rst(rst_video),.vs(osd_vs),
+ .controls(game_controls_video),.game_on(game_on),.dir_req(game_dir),.tick(game_tick));
+// status_osd.pixel_x/y describe its INPUT, before its registered output.
+// Rebuild at the actual output; logical 640x480 viewport also centers SVGA.
+viewport_coordinates game_coordinates(video_clk,rst_video,osd_vs,osd_de,mode_video,game_x,game_y,,);
+snake_game game(.clk(video_clk),.rst(rst_video),.vs(osd_vs),.de(osd_de),
+ .x(game_x),.y(game_y),.rgb(osd_rgb),.game_enable(game_on),.dir_req(game_dir),.tick(game_tick),
+ .out_vs(game_vs),.out_de(game_de),.out_rgb(game_rgb),.score(game_score),.game_over(game_over));
 // 音频流有效标志单独整体跨域，不等待显示帧锁存；错误同时清空队列。
 // Local reset release leaf for the audio-status source handshake.
 (* preserve="true" *) reg rst_audio_status;
