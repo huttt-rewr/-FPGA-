@@ -5,6 +5,8 @@ import_db reports/video_improve_gate.db
 update_timing
 source scripts/adaptive_clocks.tcl
 
+# Prefer LUT pairs: avoid wasting slice sites beside distributed line RAM.
+set_param place pack_mode more_lut_pair
 place
 # Physical mapping rebuilds mux clock pins. Rebind the same existing mode
 # clocks before timing-driven routing as well as before final STA.
@@ -18,6 +20,10 @@ phys_opt -post_place -effort ultra
 route
 update_timing -mode final
 # TD rebuilds clock objects during physical mapping; bind to the final mux pins.
+source scripts/adaptive_clocks.tcl
+# Optimize the actual routed paths after rebinding mode clocks.
+phys_opt -post_route -effort ultra
+update_timing -mode final
 source scripts/adaptive_clocks.tcl
 fix_hold
 update_timing -mode final

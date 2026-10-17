@@ -733,8 +733,26 @@ transition_pixels effects(.clk(video_clk),.rst(rst_video),.vs(gamma_vs),.de(gamm
  .x(gamma_x),.rgb(gamma_rgb),.effect_mode(running_effect),
  .fade_level(fade_level),.slide_offset(slide_offset),
  .out_vs(transition_vs),.out_de(transition_de),.out_rgb(transition_rgb));
-caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(transition_vs),.de(transition_de),
- .rgb(transition_rgb),.enable(video_captions),.scroll_enable(video_scroll),
+// Physical coordinates for line RAM, logical viewport for adaptive UI panels.
+wire [9:0] fx_x,fx_y,glass_x,glass_y,wave_x,wave_y;
+wire fx_vs,fx_de,glass_vs,glass_de,wave_vs,wave_de;
+wire [23:0] fx_rgb,glass_rgb,wave_rgb;
+wire [11:0] fx_luma_sum;wire [7:0] fx_luma;wire fx_window_valid,fx_sobel;
+video_coordinates fx_coordinates(video_clk,rst_video,transition_vs,transition_de,fx_x,fx_y);
+pixel_effects #(.DEPTH(800),.EDGE_TH(8'd80)) pixel_filter(
+ .clk(video_clk),.rst(rst_video),.vs(transition_vs),.de(transition_de),.x(fx_x),.rgb(transition_rgb),
+ .mode_sel(video_effect),.out_vs(fx_vs),.out_de(fx_de),.out_rgb(fx_rgb),
+ .out_luma_sum(fx_luma_sum),.out_luma(fx_luma),.out_window_valid(fx_window_valid),.out_sobel(fx_sobel));
+viewport_coordinates glass_coordinates(video_clk,rst_video,fx_vs,fx_de,mode_video,glass_x,glass_y,,);
+glass_osd #(.SHARED_LUMA(1)) frosted_panel(.clk(video_clk),.rst(rst_video),.vs(fx_vs),.de(fx_de),.x(glass_x),.y(glass_y),
+ .rgb(fx_rgb),.ascii_char(8'd0),.osd_enable(video_osd),.out_vs(glass_vs),.out_de(glass_de),.out_rgb(glass_rgb),
+ .shared_sum(fx_luma_sum),.shared_luma(fx_luma),.shared_valid(fx_window_valid),.shared_sobel(fx_sobel));
+viewport_coordinates waveform_coordinates(video_clk,rst_video,glass_vs,glass_de,mode_video,wave_x,wave_y,,);
+audio_visualizer waveform(.clk(video_clk),.rst(rst_video),.vs(glass_vs),.de(glass_de),.x(wave_x),.y(wave_y),
+ .rgb(glass_rgb),.audio_valid(audio_valid),.audio_left(audio_left),.enable(video_osd),
+ .out_vs(wave_vs),.out_de(wave_de),.out_rgb(wave_rgb));
+caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(wave_vs),.de(wave_de),
+ .rgb(wave_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
 status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),

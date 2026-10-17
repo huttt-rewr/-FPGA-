@@ -1,5 +1,7 @@
 # 构建状态
 
+> **2026-10-17 当前源码为OSD/波形实验版：75源/40IO静态检查、85项ModelSim通过；物理实现与时序未通过，未生成本轮新bit。** SW3/4增加原图/反色/Sobel/热成像，O统一开关状态OSD/玻璃/波形。操作、算法和失败路径见[本轮手册](OSD_AUDIO_VISUALIZER_20261017.md)。下文旧native50候选及其正时序只代表修改前版本，不能验收当前源码。
+
 ## 本轮候选bit（尚未下载）
 
 [video_improve_native50_delivery.bit](../reports/keyboard_20261016/video_improve_native50_delivery.bit)，633116字节；SHA-256：`82f125e85700aaed1f270d7b9ca3e3229aa1e66b3a9d2d5be505425099d6dfa6`。

@@ -70,3 +70,6 @@ src/modules/control/fps_control.v
 src/modules/sd/native/sd_bus_phy.v
 src/modules/sd/native/sd_native_controller.v
 src/modules/sd/native/sd_card_top_native.v
+src/modules/video/pixel_effects.v
+src/modules/video/glass_osd.v
+src/modules/video/audio_visualizer.v

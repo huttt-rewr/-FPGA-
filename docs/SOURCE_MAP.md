@@ -91,3 +91,7 @@
 ## CMD6高速增量
 
 sd_native_controller在25MHz查询/切换High Speed，锁存64字节状态中的支持、选中与busy，CRC成功后才采用；sd_bus_phy接收64/512字节并检查四路CRC16。50MHz采样许可延后一拍100MHz，不照搬SDRAM相位。正式top启用NATIVE_HIGH_SPEED，旧25MHz测试默认关闭。新激励tb_sd_highspeed和tb_sd_highspeed_player见[SD实现](SD_NATIVE_4BIT_20261016.md)。这属于3.3V High Speed SDR，不是1.8V UHS-I SDR50。
+
+## 实验：像素特效、玻璃与波形
+
+新增三份video模块和五项激励，清单75源。模块职责、操作、ModelSim入口和未解决的物理/时序问题见[本轮手册](OSD_AUDIO_VISUALIZER_20261017.md)。85项功能通过不代表可上板，本轮没有新bit。
