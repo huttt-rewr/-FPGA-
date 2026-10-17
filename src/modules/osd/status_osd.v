@@ -1,5 +1,5 @@
 // Fixed 40x4 status panel; no uninitialized text RAM.
-module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0,parameter AUDIO_DIAGNOSTICS=0,parameter FILE_UI=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
+module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPELINED=0,parameter BOARD_UI=0,parameter AUDIO_UI=0,parameter AUDIO_DIAGNOSTICS=0,parameter FILE_UI=0,parameter RATE_UI=0)(input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input auto_play,input [1:0] image_index,input [2:0] image_count,
     input [4:0] volume,input mute,input busy,input error,input edid_ok,
     output [23:0] result,output [9:0] pixel_x,output [9:0] pixel_y,
@@ -8,7 +8,7 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
     input menu_open,input [2:0] menu_item,input gamma_enable,input debug_enable,input [1:0] debug_page,
     input audio_ready,input audio_error,input [3:0] audio_error_code,input audio_underflow,
     input [6:0] file_image_index,file_image_count,file_audio_index,file_audio_count,
-    input file_table_truncated);
+    input file_table_truncated,input [3:0] slide_rate_mode,input slide_rate_limited,input [1:0] requested_res_mode);
     wire expanded=ADAPTIVE && mode_800;
     wire [9:0] x,y,raw_x,raw_y;
     viewport_coordinates coords(clk,rst,vs,de,expanded,x,y,raw_x,raw_y);
@@ -114,6 +114,15 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
             nt<=48+file_audio_count/10;nu<=48+file_audio_count%10;
         end
     end
+    function [15:0] rate_digits;
+        input [3:0] rate_mode;
+        begin case(rate_mode)
+            1:rate_digits="02";2:rate_digits="05";3:rate_digits="10";
+            4:rate_digits="15";5:rate_digits="30";default:rate_digits="01";
+        endcase end
+    endfunction
+    wire [15:0] rate_chars=rate_digits(slide_rate_mode);
+    wire [7:0] rate_tens=rate_chars[15:8],rate_units=rate_chars[7:0];
     reg [319:0] menu_text;
     reg [7:0] board_ascii;
     always @* begin
@@ -128,6 +137,16 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
                 23:board_ascii=at;24:board_ascii=au;26:board_ascii=nt;27:board_ascii=nu;
                 34:board_ascii=error?"E":(busy?"B":"-");
                 39:board_ascii=file_table_truncated?"T":" ";
+            endcase
+        end
+        if(RATE_UI && row==0 && col>=24)begin
+            case(col)
+                24:board_ascii="T";25:board_ascii="A";26:board_ascii="R";27:board_ascii="G";
+                28:board_ascii="E";29:board_ascii="T";30:board_ascii=":";
+                31:board_ascii=rate_tens;32:board_ascii=rate_units;
+                33:board_ascii=slide_rate_limited?"L":" ";
+                35:board_ascii="R";36:board_ascii=":";37:board_ascii="0"+requested_res_mode;
+                default:board_ascii=" ";
             endcase
         end
         if(BOARD_UI)begin

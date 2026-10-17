@@ -1,59 +1,79 @@
-# 源文件与资料导航
+# 正式源文件职责与工程入口
 
-2026-10-16 新增 `src/modules/input/ps2_keyboard.v`（同步、滤波、11位帧与Set2前缀）和 `ps2_controls.v`（键码转换成单拍事件）。顶层保存请求状态，`picture_controls.v`仍唯一持有音量/静音；两个TD入口及`design_files.txt`已登记。激励是 `sim/tb_ps2_keyboard.v`、`sim/tb_ps2_controls.v`，专项脚本为 `scripts/run_keyboard_tests.ps1`。[操作与实际实施范围](KEYBOARD_USAGE_20261016.md)。
+下面逐一列出design_files.txt登记的源。登记不等于每个模块都被正式top实例化，旧参考在表中明确标注。实际功能和验证见[README](../README.md)与[构建状态](BUILD_STATUS.md)。
 
-2026-10-15 FAT32 v1：正式顶层读取普通FAT32卡根目录，直接复制最多4个BMP和第一个WAV，支持碎片簇链。无需裸镜像烧卡；KEY/SW与媒体格式要求保持。操作见[FAT32拷贝文件教程](FAT32_USAGE_20261015.md)，实际回归/STA见[本轮结果](../reports/fat32_20261015/RESULT.md)。旧裸扇区版的制卡方法与bit不适用于此版本。
+| 正式源文件 | 职责/使用范围 |
+|---|---|
+| [src/modules/hdmi/hdmi_phy_wrapper.v](../src/modules/hdmi/hdmi_phy_wrapper.v) | 把HDMI核10bit并行通道送入串行器与差分输出包装。 |
+| [src/modules/hdmi/lane_lvds_10_1.v](../src/modules/hdmi/lane_lvds_10_1.v) | 使用器件ODDR将10bit通道按像素/5倍时钟序列化。 |
+| [src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v](../src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v) | 必要官方加密HDMI编码、控制包、EDID和内嵌音频IP。 |
+| [src/modules/bmp/bmp_read.v](../src/modules/bmp/bmp_read.v) | BMP头/尺寸/行填充校验及相对扇区、缩放调度；不把坏图提交显示。 |
+| [src/modules/video/color_bar.v](../src/modules/video/color_bar.v) | 旧固定VGA彩条/时序参考，正式自适应光栅替代其活动时序。 |
+| [src/modules/memory/frame_fifo_read.v](../src/modules/memory/frame_fifo_read.v) | SDRAM读突发、实际返回计数、显示FIFO库存与欠载帧恢复。 |
+| [src/modules/memory/frame_fifo_write.v](../src/modules/memory/frame_fifo_write.v) | 逐像素写队列、背压、整帧长度/帧尾与溢出诊断。 |
+| [src/modules/memory/frame_read_write.v](../src/modules/memory/frame_read_write.v) | 读写仲裁、显示优先和双缓冲地址调度。 |
+| [src/modules/bmp/sd_card_bmp.v](../src/modules/bmp/sd_card_bmp.v) | 图片/音频总调度、索引选择、取消排空、自动换图与真实提交确认。 |
+| [src/modules/video/video_timing_data.v](../src/modules/video/video_timing_data.v) | 两档光栅包装、场消隐脉冲和帧读请求握手。 |
+| [src/modules/video/video_delay.v](../src/modules/video/video_delay.v) | 既有视频控制/数据延迟参考模块，按实际实例决定综合保留。 |
+| [src/modules/sd/sd_card_cmd.v](../src/modules/sd/sd_card_cmd.v) | SPI命令/响应、数据token、CRC16、等待超时；计数预译码不增加线时钟等待。 |
+| [src/modules/sd/sd_card_sec_read_write.v](../src/modules/sd/sd_card_sec_read_write.v) | SD初始化、OCR寻址判定、扇区命令和失败重试。 |
+| [src/modules/sd/sd_card_top.v](../src/modules/sd/sd_card_top.v) | 正式SPI控制层与PHY连接，对上提供扇区字节流。 |
+| [src/modules/sd/spi_master.v](../src/modules/sd/spi_master.v) | SPI字节收发，100MHz域产生默认25MHz SCK。 |
+| [src/modules/memory/sdram.v](../src/modules/memory/sdram.v) | 合封SDRAM官方控制核包装及应用读写接口。 |
+| [src/modules/display/seg_decoder.v](../src/modules/display/seg_decoder.v) | 十六进制/状态值到数码管段码。 |
+| [src/modules/display/seg_scan.v](../src/modules/display/seg_scan.v) | 六位数码管位扫描。 |
+| [src/ip/sdram/sdr_as_ram.enc.v](../src/ip/sdram/sdr_as_ram.enc.v) | 必要官方合封SDRAM应用接口IP。 |
+| [src/ip/sdram/sdr_init_ref.enc.v](../src/ip/sdram/sdr_init_ref.enc.v) | 必要官方SDRAM初始化与刷新IP。 |
+| [src/ip/sdram/sdr_wrrd.enc.v](../src/ip/sdram/sdr_wrrd.enc.v) | 必要官方SDRAM读写时序IP。 |
+| [src/ip/pll/sys_pll.v](../src/ip/pll/sys_pll.v) | 50MHz参考到100MHz控制/40MHz内存与内存相移时钟。 |
+| [src/ip/pll/video_pll.v](../src/ip/pll/video_pll.v) | 旧VGA PLL包装保留；正式使用adaptive_video_clock中的固定多输出PLL。 |
+| [src/ip/fifo/afifo_16_32_256.v](../src/ip/fifo/afifo_16_32_256.v) | 官方异步FIFO宽度转换包装，内存/像素链依赖。 |
+| [src/ip/fifo/afifo_32_16_256.v](../src/ip/fifo/afifo_32_16_256.v) | 官方异步FIFO宽度转换包装，内存/像素链依赖。 |
+| [src/modules/common/startup_pulse.v](../src/modules/common/startup_pulse.v) | 上电延时/单拍启动辅助。 |
+| [src/modules/video/video_rgb_to_axis_640x480.v](../src/modules/video/video_rgb_to_axis_640x480.v) | 视频像素到官方HDMI AXIS握手，按有效行连续发送。 |
+| [src/modules/audio/audio_test_source.v](../src/modules/audio/audio_test_source.v) | 旧测试音参考；正式音源为WAV，不应误认为其代表TF音频。 |
+| [src/modules/common/cdc_snapshot.v](../src/modules/common/cdc_snapshot.v) | 握手保持多位一致快照；状态、媒体和请求使用独立实例。 |
+| [src/modules/common/reset_sync.v](../src/modules/common/reset_sync.v) | 异步置位、各时钟域多拍同步释放。 |
+| [src/modules/control/ir_nec_rx.v](../src/modules/control/ir_nec_rx.v) | NEC接收参考，正式顶层禁用IR控制。 |
+| [src/modules/control/player_control.v](../src/modules/control/player_control.v) | 旧UART/IR播放命令参考，正式KEY/SW/键盘路径不实例化。 |
+| [src/modules/control/uart_rx.v](../src/modules/control/uart_rx.v) | UART字节接收参考，正式控制禁用。 |
+| [src/modules/control/uart_tx.v](../src/modules/control/uart_tx.v) | UART字节发送参考，正式控制禁用。 |
+| [src/modules/optional/ycbcr_to_rgb.v](../src/modules/optional/ycbcr_to_rgb.v) | 未接入的YCbCr转RGB参考。 |
+| [src/modules/osd/osd_char_rom.v](../src/modules/osd/osd_char_rom.v) | ASCII字模查表。 |
+| [src/modules/osd/status_osd.v](../src/modules/osd/status_osd.v) | 状态字符、完整文件计数、错误和TARGET/L叠加与像素流水。 |
+| [src/top.v](../src/top.v) | 唯一活动顶层，连接时钟/复位、控制、媒体、帧缓存、视频/音频与物理管脚。 |
+| [src/modules/video/edid_base_check.v](../src/modules/video/edid_base_check.v) | EDID基础块校验辅助。 |
+| [src/modules/video/frame_swap.v](../src/modules/video/frame_swap.v) | 场消隐接收提交toggle、返回真实确认、逐帧推进转场参数。 |
+| [src/modules/video/video_enhance.v](../src/modules/video/video_enhance.v) | 旧视频调节参考，正式使用picture_adjust/picture_gamma。 |
+| [src/modules/optional/video_mode_table.v](../src/modules/optional/video_mode_table.v) | 未接入的模式参数表参考。 |
+| [src/modules/optional/video_scaler.v](../src/modules/optional/video_scaler.v) | 旧固定参数缩放参考，正式动态缩放由bmp_scale_loader承担。 |
+| [src/modules/control/uart_tx_queue.v](../src/modules/control/uart_tx_queue.v) | 旧串口应答排队，正式控制禁用。 |
+| [src/modules/video/video_coordinates.v](../src/modules/video/video_coordinates.v) | 有效区坐标与视口映射，OSD/字幕布局基础。 |
+| [src/modules/video/transition_pixels.v](../src/modules/video/transition_pixels.v) | 按逐帧权重/偏移实现淡出淡入和滑动像素处理。 |
+| [src/modules/osd/caption_overlay.v](../src/modules/osd/caption_overlay.v) | 内置ASCII字幕、滚动、运行时间与视口适配；正式三段流水同步延迟RGB/VS/DE。 |
+| [src/modules/control/switch_controls.v](../src/modules/control/switch_controls.v) | SW同步消抖及字幕/滚动/转场映射。 |
+| [src/modules/video/bmp_scale_loader.v](../src/modules/video/bmp_scale_loader.v) | 双行缓存、保比例双线性插值、补黑边、像素背压。 |
+| [src/modules/control/picture_controls.v](../src/modules/control/picture_controls.v) | KEY模式/长按菜单及唯一音量静音寄存器，接收键盘并联事件。 |
+| [src/modules/video/picture_adjust.v](../src/modules/video/picture_adjust.v) | 亮度偏移/对比度定点缩放与饱和；帧参数统一更新。 |
+| [src/modules/video/edid_display_mode.v](../src/modules/video/edid_display_mode.v) | 启动解析显示器是否支持800×600，结果作为能力而不是强制模式。 |
+| [src/modules/video/adaptive_video_clock.v](../src/modules/video/adaptive_video_clock.v) | 固定25/125及40/200MHz输出、永久25MHz启动时钟与全局时钟复用。 |
+| [src/modules/video/adaptive_raster.v](../src/modules/video/adaptive_raster.v) | 640×480和800×600内部有效区、同步与消隐计数。 |
+| [src/modules/common/board_supervisor.v](../src/modules/common/board_supervisor.v) | 上电保持、PLL和视频心跳看门狗、复位记录。 |
+| [src/modules/common/board_debug.v](../src/modules/common/board_debug.v) | 多域状态快照和数码管诊断页。 |
+| [src/modules/video/picture_gamma.v](../src/modules/video/picture_gamma.v) | 可选暗部提亮LUT；不是显示器色彩校准。 |
+| [src/modules/sd/sd_read_arbiter.v](../src/modules/sd/sd_read_arbiter.v) | 图片/音频共享物理扇区、授权/等待超时和传输恢复。 |
+| [src/modules/audio/audio_wav.v](../src/modules/audio/audio_wav.v) | RIFF/fmt/data解析、48k/16bit/mono约束、扇区缓存、错误分类和一秒重试。 |
+| [src/modules/audio/audio_async_fifo.v](../src/modules/audio/audio_async_fifo.v) | PCM双时钟FIFO、格雷指针与分域复位释放。 |
+| [src/modules/audio/audio_playback.v](../src/modules/audio/audio_playback.v) | 48k均匀采样、预填/欠载、音量乘法/饱和、真实PCM和粘滞错误历史。 |
+| [src/modules/audio/audio_effects.v](../src/modules/audio/audio_effects.v) | 固定参数15抽头FIR低/高频调节和单次延迟回声，默认等延迟旁路。 |
+| [src/modules/sd/sd_fat32.v](../src/modules/sd/sd_fat32.v) | FAT32只读挂载、目录、总64文件BRAM索引、双流簇链/FAT缓存和取消排空。 |
+| [src/modules/input/ps2_keyboard.v](../src/modules/input/ps2_keyboard.v) | PS/2双同步/滤波、11bit帧奇校验、Set2前缀和超时恢复。 |
+| [src/modules/input/ps2_controls.v](../src/modules/input/ps2_controls.v) | 扫描码译事件、按住防重复、A+数字等待与事件流水。 |
+| [src/modules/audio/audio_effects_stream.v](../src/modules/audio/audio_effects_stream.v) | 切音频清FIR/回声历史，同时保留48k样本valid调度和静音包。 |
+| [src/modules/audio/audio_fifo_room.v](../src/modules/audio/audio_fifo_room.v) | 寄存PCM接收许可并预留四槽，截断FIFO满反馈长组合路径。 |
+| [src/modules/video/video_mode_control.v](../src/modules/video/video_mode_control.v) | 启动域先复位后切模式、稳定等待、EDID不支持时回退VGA。 |
+| [src/modules/control/fps_control.v](../src/modules/control/fps_control.v) | 目标换图周期，忙时只等一个请求、受限记录；不改变HDMI刷新率。 |
 
+`src/constraints/pin.adc`与`timing.sdc`分别约束管脚与时序；`memory/global_def.v`通过include提供刷新等宏。两个TD入口是根video_improve.al与src/td_project/video_improve.al，必须与scripts/design_files.txt保持同一源集合。
 
-音频恢复补充：audio_wav.v 增加一秒重试、四类错误码和100MHz流水优化；audio_playback.v 内新增 audio_error_history 模块，用真实PCM输出确认清除OSD失败历史。错误码在 top.v 用独立4位 cdc_snapshot 跨域，原70位状态总线保持不变。详见[音频恢复设计与操作](AUDIO_RETRY_20261014.md)。
-
-更新：2026-10-15。活动设计清单为 [design_files.txt](../scripts/design_files.txt)，共63个源、36位IO；两个TD入口一致，唯一顶层为 [top.v](../src/top.v)。每一个设计源的具体功能、上下游和修改注意事项都在 [README模块说明](../README.md#每个设计源文件负责什么)。
-
-2026-10-14 WAV增量：TF卡48kHz/16bit/单声道PCM经现有HDMI_B音频口输出，默认静音；KEY3长按菜单新增AUDIO MUTE、VOLUME DOWN、VOLUME UP，KEY/SW原功能保留。 [WAV解析](../src/modules/audio/audio_wav.v)、[读卡仲裁](../src/modules/sd/sd_read_arbiter.v)、[异步FIFO](../src/modules/audio/audio_async_fifo.v)、[采样/音量](../src/modules/audio/audio_playback.v)是四个新增设计源；[媒体工具](../scripts/prepare_audio.py)不加入TD。顶层保留HDMI/ACR，测试音源码留作回退。
-
-早先板载版本新增[board_supervisor.v](../src/modules/common/board_supervisor.v)负责锁定后10ms保持及视频心跳监督；[board_debug.v](../src/modules/common/board_debug.v)把视频/内存状态整体快照到数码管；[picture_gamma.v](../src/modules/video/picture_gamma.v)用ROM实现可选暗部提亮并对齐两拍流水。KEY3菜单复用picture_controls/status_osd；观测总线复用现有模块接口，没有新增顶层管脚。[本轮优化说明](BOARD_OPTIMIZATION_20261014.md)解释数据流与验证边界。下面各日期数量为历史记录。
-
-| 想研究的内容 | 入口 | 配套官方资料 |
-|---|---|---|
-| 系统接线、参数与双缓冲 | [top.v](../src/top.v) | EG4S20手册BG256引脚及资源 |
-| 复位与跨时钟状态 | [reset_sync.v](../src/modules/common/reset_sync.v)、[cdc_snapshot.v](../src/modules/common/cdc_snapshot.v) | PLL锁定、FIFO复位；同步标记不替代握手 |
-| 实体调节 | [picture_controls.v](../src/modules/control/picture_controls.v) | B1选项，B2/C1减加；UART/NEC历史模块未接入 |
-| SD初始化与扇区协议 | [sd_card_top.v](../src/modules/sd/sd_card_top.v)、[sd_card_cmd.v](../src/modules/sd/sd_card_cmd.v) | CMD17末尾CRC16已校验；lab4参考不能替代SD协议规范 |
-| FAT32文件枚举与簇链映射 | [sd_fat32.v](../src/modules/sd/sd_fat32.v) | [文件复制教程](FAT32_USAGE_20261015.md)；两流游标与FAT扇区缓存 |
-| BMP解析与图片调度 | [bmp_read.v](../src/modules/bmp/bmp_read.v)、[sd_card_bmp.v](../src/modules/bmp/sd_card_bmp.v) | [媒体准备工具](../scripts/prepare_media.py)；文件索引与相对扇区 |
-| SDRAM帧读写和FIFO | [frame_read_write.v](../src/modules/memory/frame_read_write.v)、[frame_fifo_read.v](../src/modules/memory/frame_fifo_read.v)、[sdram.v](../src/modules/memory/sdram.v) | 刷新宏在`global_def.v`；排空在读控制器；官方加密IP未改 |
-| 换帧、视频光栅与像素队列 | [frame_swap.v](../src/modules/video/frame_swap.v)、[video_rgb_to_axis_640x480.v](../src/modules/video/video_rgb_to_axis_640x480.v) | APUG092连续行时序 |
-| TMDS串行输出 | [hdmi_phy_wrapper.v](../src/modules/hdmi/hdmi_phy_wrapper.v)、[lane_lvds_10_1.v](../src/modules/hdmi/lane_lvds_10_1.v) | HDMI时钟架构、ODDR库、IO手册 |
-| 声音、文字和数码管 | [audio_wav.v](../src/modules/audio/audio_wav.v)、[audio_playback.v](../src/modules/audio/audio_playback.v)、[status_osd.v](../src/modules/osd/status_osd.v)、[seg_scan.v](../src/modules/display/seg_scan.v) | APUG092 Audio/ACR；FAT32根目录PCM WAV |
-| 旧固定参数缩放/颜色/模式参考（未接入） | `src/modules/optional` | DSP可作后续学习；有源码不代表顶层已支持 |
-| 管脚与时序约束 | [pin.adc](../src/constraints/pin.adc)、[timing.sdc](../src/constraints/timing.sdc) | BG256引脚、IO/PLL、[时序边界](BOARD_TIMING.md) |
-
-新增字幕/转场入口：[transition_pixels.v](../src/modules/video/transition_pixels.v)、[caption_overlay.v](../src/modules/osd/caption_overlay.v)、[video_coordinates.v](../src/modules/video/video_coordinates.v)。frame_swap在顶层开启动画握手；详见 [效果手册](EFFECTS_20261009.md)。
-
-## 工程入口和生成文件
-
-[根工程](../video_improve.al)与 [第二入口](../src/td_project/video_improve.al)应引用相同源集合。`src/ip`中的官方加密HDMI/SDRAM、FIFO和PLL是必要依赖，不能因不可读或看起来重复就删除。宏头文件通过include生效，工具入口副本有用途；`.ipc/.vhd/.tcl`是否参与当前编译须看工程和脚本，不能一概删除。
-
-`sim`是测试台，`scripts`是构建/检查/媒体工具，`reports`是证据，`backups`是归档；这些目录不能通配加入TD。`legacy/user_source`保留独有历史参考，不参与活动构建。路径迁移记录见 [path_migration.json](path_migration.json)。
-
-新扫描的PDF/DOCX、Altium库和参考工程没有加入TD源清单。PDF帮助解释接口，SchLib/PcbLib用于画板，均不是本工程RTL。官方包与当前IP的关联及不匹配项见 [资料对照](VENDOR_REFERENCE_20261009.md)。当前合并进度见 [10月8日记录](TEAM_MERGE_20261008.md)，全部文档见 [索引](README.md)。
-
-## 2026-10-09 SW控制接入
-
-[switch_controls.v](../src/modules/control/switch_controls.v) 对C8/C7/C6/C5四路进行同步、20ms整体消抖和功能映射；两个TD入口与源清单共48个源。UART/IR/player_control保留但当前顶层未实例化。操作见 [SW手册](SW_CONTROLS_20261009.md)。
-
-## 2026-10-10 当前缩放与调参
-
-新增 [bmp_scale_loader.v](../src/modules/video/bmp_scale_loader.v)、[picture_controls.v](../src/modules/control/picture_controls.v)、[picture_adjust.v](../src/modules/video/picture_adjust.v)。当前两个TD入口均51个源、36位IO；bmp_read启用动态尺寸路径，原optional/video_scaler仍仅参考。完整数据流见 [缩放与亮度/对比度详细手册](SCALING_AND_PICTURE_CONTROLS_20261010.md)。
-
-## 2026-10-11 屏幕适配
-
-当前两个TD入口及清单均54个源、36位IO。新增 `edid_display_mode.v`、`adaptive_video_clock.v`、`adaptive_raster.v`；分别负责EDID两档选择、PLL/全局时钟切换和模式时序。顶层已替换旧固定video_pll实例；旧包装与官方IP保留。OSD增加一拍流水并同步延迟VS/DE；写FIFO ready在生产者时钟域寄存并在清空期间保持关闭。功能、模式限制、测试与产物见 [屏幕适配](SCREEN_ADAPTATION_20261010.md) 和 [构建状态](BUILD_STATUS.md)。
-
-## 2026-10-13 静态画面与读卡修复
-
-仍是同一套54个活动源。`global_def.v`的刷新宏恢复非零间隔；`frame_fifo_read.v`按实际SDRAM返回数排空；`frame_read_write.v`提高显示优先级并将欠载接入OSD；`sd_card_cmd.v`验证扇区CRC16；`bmp_scale_loader.v`和`bmp_read.v`用寄存流水缩短100MHz长路径。完整测试覆盖范围和未解决的板级问题见[画面修复报告](DISPLAY_REPAIR_20261013.md)。
-
-## 2026-10-15 FAT32文件读取
-
-[sd_fat32.v](../src/modules/sd/sd_fat32.v)夹在BMP/WAV解析器与原扇区仲裁器之间，挂载MBR或superfloppy、枚举根目录、按双流簇链映射和缓存FAT扇区；原SD三层栈、仲裁、BMP头/缩放/帧提交、WAV RIFF状态机保持。测试见tb_fat32_mount/stream/player，仿真媒体工具为[make_fat32_image.py](../scripts/make_fat32_image.py)。
+`src/modules/sd/native/`是未接入正式板级工程的四位SD候选，见[协议/硬件限制](SD_NATIVE_4BIT_20261016.md)。未登记的pixel_effects/玻璃OSD来自其他实验，不能据文件存在就宣称已启用。测试放sim，主机/仿真素材工具放scripts，报告和试验放reports，备份放backups，历史参考放legacy；这些目录不能通配加进TD。官方加密核、FIFO包装、PLL/SDRAM依赖不能当成重复垃圾删除。

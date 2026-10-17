@@ -407,6 +407,14 @@
                     <Attr Name="CompileOrder" Val="48"/>
                 </FileInfo>
             </File>
+            <File Path="src/modules/control/fps_control.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="69"/>
+                </FileInfo>
+            </File>
             <File Path="src/modules/video/bmp_scale_loader.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>

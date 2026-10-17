@@ -1,5 +1,7 @@
 # 文档阅读入口
 
+> 当前入口（2026-10-16）：[完整用户手册](USER_GUIDE.md)、[键盘/R/F教程](KEYBOARD_USAGE_20261016.md)、[KEY/SW教程](KEY_SW_OPERATION.md)、[逐源文件职责](SOURCE_MAP.md)、[实际构建与候选状态](BUILD_STATUS.md)。正式实现阶段1～4，SD仍SPI25MHz，四位50MHz和实板验收未完成。下列旧日期更新仅作历史对照。
+
 2026-10-16 键盘路线请先看[PS/2接线、键位与实施状态](KEYBOARD_USAGE_20261016.md)，实际整机时序进度见[构建状态](BUILD_STATUS.md)。新源码65设计源、38 IO；数字/R/F暂存请求，SD仍SPI25MHz。下文63源/36 IO是旧版本记录。
 
 2026-10-15：先看 [FAT32 文件复制与播放教程](FAT32_USAGE_20261015.md)，普通 FAT32 卡根目录放入 BMP/WAV，支持碎片文件。当前 63 个设计源、36 位 IO；[本轮实现与验证](../reports/fat32_20261015/RESULT.md)记录实际回归和 STA，旧裸镜像操作及 bit 属于历史版本。

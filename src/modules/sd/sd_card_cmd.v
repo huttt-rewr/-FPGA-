@@ -93,7 +93,11 @@ always @(posedge sys_clk or posedge rst) begin
 end
 wire timed_wait = (state[6]) || (state[13]) ||
                   (state[14]);
-wire wait_expired = timed_wait && (state == wait_state) &&
+// Both snapshots are one-hot. Compare only the three timed states rather
+// than sending an 18-bit equality through the chip-select abort enable.
+wire wait_expired = ((state[6] && wait_state[6]) ||
+                     (state[13] && wait_state[13]) ||
+                     (state[14] && wait_state[14])) &&
                     ((WAIT_TIMEOUT_CYCLES <= 1) || timeout_reached);
 // Invalid tokens and busy bytes are not progress. Each wait gets its own budget.
 always @(posedge sys_clk or posedge rst) begin

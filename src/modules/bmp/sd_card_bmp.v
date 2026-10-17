@@ -1,6 +1,6 @@
 
 module sd_card_bmp #(
-    parameter integer INDEXED=0,parameter integer MAX_FILES=64,
+    parameter integer RATE_CONTROLS=0,parameter integer INDEXED=0,parameter integer MAX_FILES=64,
     parameter integer CLK_FREQ_HZ       = 100_000_000,
     parameter [31:0]  SCAN_START_SECTOR = 32'd0,
     parameter [31:0]  SCAN_MAX_SECTOR   = 32'd131071,
@@ -55,7 +55,8 @@ module sd_card_bmp #(
     input [7:0] image_select_index,audio_select_index,
     input image_select_valid,audio_select_valid,
     output [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count,
-    output media_truncated
+    output media_truncated,
+    input [3:0] fps_mode,output rate_limited
 );
 
 // Local reset leaves: immediate assertion, one extra 100MHz release clock.
@@ -242,14 +243,27 @@ always @(posedge clk or posedge rst)begin
  if(rst)begin images_present<=0;images_multiple<=0;end
  else begin images_present<=(img_found_count!=0);images_multiple<=(img_found_count>1);end
 end
-wire auto_tick;
+wire auto_tick,rate_tick;
+generate if(RATE_CONTROLS)begin:rate_control
+ reg timer_enable;
+ always @(posedge clk or posedge rst)begin
+  if(rst)timer_enable<=0;
+  else timer_enable<=scan_done && auto_play_en && display_valid && first_image_committed && images_multiple;
+ end
+ fps_control #(.CLK_FREQ_HZ(CLK_FREQ_HZ)) timer(.clk(clk),.rst(rst),
+ .enable(timer_enable),
+ .busy(load_busy || !bmp_ready || next_req_pending),.mode(fps_mode),
+ .tick(rate_tick),.limited(rate_limited),.requested_fps());
+end else begin:legacy_rate
+ assign rate_tick=0;assign rate_limited=0;
+end endgenerate
 wire [5:0] next_from_current;
 reg direct_pending;reg [5:0] direct_index;
 wire [5:0] requested_next=direct_pending?direct_index:next_from_current;
 
 assign write_en   = bmp_data_wr_en;
 assign write_data = {bmp_data[23:16], bmp_data[15:8], bmp_data[7:0], 8'b0};
-assign auto_tick  = (auto_cnt == (CLK_FREQ_HZ - 1));
+assign auto_tick  = RATE_CONTROLS?rate_tick:(auto_cnt == (CLK_FREQ_HZ - 1));
 assign next_from_current = prev_requested ?
     ((img_idx == 0) ? img_found_count[5:0] - 6'd1 : img_idx - 2'd1) :
     next_index_limited(img_idx, img_found_count);
@@ -487,7 +501,7 @@ always @(posedge clk or posedge rst) begin
                 end
 
                 // 自动播放 1s 计数：只有当前没有写图任务时才计时
-                if (scan_done && auto_play_en && display_valid && !load_busy && first_image_committed && images_multiple) begin
+                if (!RATE_CONTROLS && scan_done && auto_play_en && display_valid && !load_busy && first_image_committed && images_multiple) begin
                     if (auto_tick)
                         auto_cnt <= 32'd0;
                     else

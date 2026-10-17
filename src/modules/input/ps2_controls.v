@@ -34,13 +34,36 @@ module ps2_controls #(
  reg [21:0] key_mask;
  wire already_held=|(held & key_mask);
  always @(posedge clk or posedge rst)begin
-  if(rst)begin recognized<=0;key_id<=0;digit_key<=0;digit<=0;valid_q<=0;release_q<=0;key_mask<=0;end
+  if(rst)begin recognized<=0;key_id<=0;digit_key<=0;digit<=0;valid_q<=0;release_q<=0;end
   else begin
    recognized<=raw_recognized;key_id<=raw_key_id;digit_key<=raw_digit_key;digit<=raw_digit;
    valid_q<=key_valid && !receive_error;release_q<=key_release;
-   key_mask<=22'b1<<raw_key_id;
   end
  end
+ // Decode each held-key lane directly. Encoding a key ID and then shifting
+ // a 22-bit mask needlessly cascades two large selection networks.
+ function [7:0] lane_code;
+  input integer lane;
+  begin case(lane)
+   0:lane_code=8'h74;1:lane_code=8'h6b;2:lane_code=8'h29;
+   3:lane_code=8'h75;4:lane_code=8'h72;5:lane_code=8'h3a;
+   6:lane_code=8'h44;7:lane_code=8'h2d;8:lane_code=8'h2b;
+   9:lane_code=8'h1c;10:lane_code=8'h76;11:lane_code=8'h45;
+   12:lane_code=8'h16;13:lane_code=8'h1e;14:lane_code=8'h26;
+   15:lane_code=8'h25;16:lane_code=8'h2e;17:lane_code=8'h36;
+   18:lane_code=8'h3d;19:lane_code=8'h3e;20:lane_code=8'h46;
+   default:lane_code=0;
+  endcase end
+ endfunction
+ genvar km;
+ generate for(km=0;km<22;km=km+1)begin:key_lanes
+  localparam [7:0] CODE=lane_code(km);
+  localparam EXTENDED=(km==0 || km==1 || km==3 || km==4);
+  always @(posedge clk or posedge rst)begin
+   if(rst)key_mask[km]<=0;
+   else key_mask[km]<=(km<21) && (key_extended==EXTENDED) && scan_code==CODE;
+  end
+ end endgenerate
  genvar h;
  generate for(h=0;h<22;h=h+1)begin:held_bits
   always @(posedge clk or posedge rst)begin

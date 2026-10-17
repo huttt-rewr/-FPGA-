@@ -1,12 +1,12 @@
 `timescale 1ns/1ps
 module tb_audio_stream_flush;
- reg clk=0,rst=1,flush=1,valid=0;reg signed [23:0] sample=0;
+ reg clk=0,rst=1,flush=1,valid=0,mute=0,zero_volume=0;reg signed [23:0] sample=0;
  always #20 clk=~clk;
  wire stream_rst,ov;wire signed [23:0] ol,orr;
  reset_sync sync_flush(clk,rst | flush,stream_rst);
  audio_effects_stream #(.BASS_GAIN(3276),.TREBLE_GAIN(3276),
   .ECHO_FEEDBACK(22938),.ECHO_DELAY(7)) dut(
-  clk,rst,stream_rst,valid,sample,sample,ov,ol,orr);
+  clk,rst,stream_rst | mute | zero_volume,valid,sample,sample,ov,ol,orr);
  reg previous=0,expected;integer errors=0,n,seen_nonzero=0;
  task check;input ok;input [511:0] msg;begin
   if(ok!==1)begin errors=errors+1;$display("FAILED stream flush %0s",msg);end
@@ -35,7 +35,18 @@ module tb_audio_stream_flush;
   for(n=0;n<22;n=n+1)begin
    send_sample(0);check(ol==0,"new silent track has no stale FIR/echo history");
   end
-  if(errors==0)$display("ALL PASS tb_audio_stream_flush: nonzero EQ/echo clear on source switch, scheduled silence and valid preserved");
+  // An optional echo profile must obey hard mute and volume zero too.
+  for(n=0;n<22;n=n+1)send_sample(24'sd1000000);
+  mute=1;
+  for(n=0;n<12;n=n+1)begin send_sample(24'sd1000000);check(ol==0,"mute suppresses an existing echo tail");end
+  mute=0;
+  for(n=0;n<22;n=n+1)begin send_sample(0);check(ol==0,"unmute has no old echo history");end
+  for(n=0;n<22;n=n+1)send_sample(24'sd1000000);
+  zero_volume=1;
+  for(n=0;n<12;n=n+1)begin send_sample(24'sd1000000);check(ol==0,"volume zero also suppresses echo");end
+  zero_volume=0;
+  for(n=0;n<22;n=n+1)begin send_sample(0);check(ol==0,"volume restore has no old echo");end
+  if(errors==0)$display("ALL PASS tb_audio_stream_flush: nonzero EQ/echo clear on source switch, scheduled silence and valid preserved; mute/volume0 clear old echo");
   else $display("FAILED stream flush errors=%0d",errors);
   $finish;
  end

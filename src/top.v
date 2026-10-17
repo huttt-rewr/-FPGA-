@@ -107,7 +107,7 @@ wire board_next,board_toggle;
 reg osd_on;
 reg media_image_select,media_audio_select;
 wire [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count;
-wire media_truncated;wire player_display_valid;
+wire media_truncated,rate_limited;wire [6:0] rate_video;reg [6:0] frame_rate;wire player_display_valid;
 reg committed_image_seen;reg [6:0] last_committed_image;
 // Track commits separately from selection requests. An idle cycle before
 // load_busy rises must not overwrite a newly requested file with the old frame.
@@ -171,7 +171,7 @@ always @(posedge video_clk or posedge rst_video)begin
  if(rst_video)begin
   settings_vs_d<=1;frame_brightness<=0;frame_contrast<=4;frame_edit_mode<=0;frame_osd<=1;
   frame_source_width<=0;frame_source_height<=0;
-  frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;frame_media<=0;
+  frame_ui<=0;frame_audio_status<=0;frame_audio_error_code<=0;frame_audio_underflow<=0;frame_media<=0;frame_rate<=0;
  end else begin
   settings_vs_d<=vs;
   if(settings_vs_d && !vs)begin
@@ -181,7 +181,7 @@ always @(posedge video_clk or posedge rst_video)begin
    frame_source_width<=status_video[47:36];frame_source_height<=status_video[59:48];
    frame_ui<=status_video[67:60];frame_audio_status<=status_video[69:68];
    frame_audio_error_code<=audio_last_error;frame_audio_underflow<=audio_underflow;
-   frame_media<=media_video;
+   frame_media<=media_video;frame_rate<=rate_video;
   end
  end
 end
@@ -332,7 +332,7 @@ sd_card_bmp #(
     .CLK_FREQ_HZ       (100_000_000),
     .ENABLE_SCALING(1),.ADAPTIVE(1),
     // 正式媒体来自 FAT32 根目录；裸扇区参数仅保留给历史单元测试。
-    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),.INDEXED(1),.MAX_FILES(64),
+    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),.INDEXED(1),.MAX_FILES(64),.RATE_CONTROLS(1),
     .SCAN_TARGET_COUNT (3'd4)
 ) sd_card_bmp_m0(
     .clk               (sd_card_clk),
@@ -343,7 +343,7 @@ sd_card_bmp #(
     .image_select_index(image_index),.audio_select_index(audio_index),
     .image_select_valid(media_image_select),.audio_select_valid(media_audio_select),
     .media_image_index(media_image_index),.media_image_count(media_image_count),
-    .media_audio_index(media_audio_index),.media_audio_count(media_audio_count),.media_truncated(media_truncated),
+    .media_audio_index(media_audio_index),.media_audio_count(media_audio_count),.media_truncated(media_truncated),.fps_mode(fps_mode),.rate_limited(rate_limited),
     .commit_ack_toggle(commit_ack),.commit_req_toggle(commit_req),
     .commit_buffer(commit_buffer),.status_auto(status_auto),
     .status_index(status_index),.status_count(status_count),
@@ -709,6 +709,8 @@ switch_controls switches(.clk(sd_card_clk),.rst(rst_controls),.sw(sw),
  .transition_mode(transition_mode));
 cdc_snapshot #(.WIDTH(70)) status_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data(status_source),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(status_video));
+cdc_snapshot #(.WIDTH(7)) rate_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data({res_mode,rate_limited,fps_mode}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(rate_video));
 // Independent bus: historical 70-bit status layout and selectors stay fixed.
 cdc_snapshot #(.WIDTH(29)) media_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data({media_truncated,media_audio_index,media_audio_count,media_image_index,media_image_count}),
@@ -734,7 +736,7 @@ caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.cl
  .rgb(transition_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
-status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
+status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
  .enable(frame_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
  .volume(video_volume),.mute(video_mute),.busy(video_busy),
  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),
@@ -746,7 +748,7 @@ status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1
  .audio_ready(frame_audio_status[0]),.audio_error(|frame_audio_error_code),
  .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow),
  .file_image_index(frame_media[13:7]),.file_image_count(frame_media[6:0]),
- .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]));
+ .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]),.slide_rate_mode(frame_rate[3:0]),.slide_rate_limited(frame_rate[4]),.requested_res_mode(frame_rate[6:5]));
 // 音频流有效标志单独整体跨域，不等待显示帧锁存；错误同时清空队列。
 // Local reset release leaf for the audio-status source handshake.
 (* preserve="true" *) reg rst_audio_status;
@@ -783,7 +785,7 @@ audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.vol
 `else
     audio_effects_stream fx(.clk(video_clk),.rst(rst_video),
 `endif
- .stream_rst(audio_fx_reset), .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
+ .stream_rst(audio_fx_reset || video_mute || video_volume==0), .src_valid(audio_src_valid),.src_left(audio_src_left),.src_right(audio_src_right),
  .out_valid(audio_valid),.out_left(audio_left),.out_right(audio_right));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
  .valid(edid_valid_boot),.data(edid_data_boot),.done(mode_done),.good(edid_good),
