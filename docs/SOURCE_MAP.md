@@ -17,7 +17,7 @@
 | [src/modules/video/video_delay.v](../src/modules/video/video_delay.v) | 既有视频控制/数据延迟参考模块，按实际实例决定综合保留。 |
 | [src/modules/sd/sd_card_cmd.v](../src/modules/sd/sd_card_cmd.v) | SPI命令/响应、数据token、CRC16、等待超时；计数预译码不增加线时钟等待。 |
 | [src/modules/sd/sd_card_sec_read_write.v](../src/modules/sd/sd_card_sec_read_write.v) | SD初始化、OCR寻址判定、扇区命令和失败重试。 |
-| [src/modules/sd/sd_card_top.v](../src/modules/sd/sd_card_top.v) | 正式SPI控制层与PHY连接，对上提供扇区字节流。 |
+| [src/modules/sd/sd_card_top.v](../src/modules/sd/sd_card_top.v) | 正式原生/旧SPI兼容profile封装，对上保留扇区字节流握手。 |
 | [src/modules/sd/spi_master.v](../src/modules/sd/spi_master.v) | SPI字节收发，100MHz域产生默认25MHz SCK。 |
 | [src/modules/memory/sdram.v](../src/modules/memory/sdram.v) | 合封SDRAM官方控制核包装及应用读写接口。 |
 | [src/modules/display/seg_decoder.v](../src/modules/display/seg_decoder.v) | 十六进制/状态值到数码管段码。 |
@@ -76,4 +76,14 @@
 
 `src/constraints/pin.adc`与`timing.sdc`分别约束管脚与时序；`memory/global_def.v`通过include提供刷新等宏。两个TD入口是根video_improve.al与src/td_project/video_improve.al，必须与scripts/design_files.txt保持同一源集合。
 
-`src/modules/sd/native/`是未接入正式板级工程的四位SD候选，见[协议/硬件限制](SD_NATIVE_4BIT_20261016.md)。未登记的pixel_effects/玻璃OSD来自其他实验，不能据文件存在就宣称已启用。测试放sim，主机/仿真素材工具放scripts，报告和试验放reports，备份放backups，历史参考放legacy；这些目录不能通配加进TD。官方加密核、FIFO包装、PLL/SDRAM依赖不能当成重复垃圾删除。
+`src/modules/sd/native/`已接正式板级工程，使用原生四位25MHz，见[协议/硬件限制](SD_NATIVE_4BIT_20261016.md)。未登记的pixel_effects/玻璃OSD来自其他实验，不能据文件存在就宣称已启用。测试放sim，主机/仿真素材工具放scripts，报告和试验放reports，备份放backups，历史参考放legacy；这些目录不能通配加进TD。官方加密核、FIFO包装、PLL/SDRAM依赖不能当成重复垃圾删除。
+
+## 新增正式原生SD源
+
+| 文件 | 功能 |
+|---|---|
+| src/modules/sd/native/sd_bus_phy.v | 100MHz域产生识别/25MHz线时钟，CMD三态、命令/响应CRC7、四路数据CRC16与字节拼接。 |
+| src/modules/sd/native/sd_native_controller.v | CMD0/8/55/41/2/3/7/ACMD6/16初始化、SDHC/SDSC寻址、CMD17和超时恢复。 |
+| src/modules/sd/native/sd_card_top_native.v | 原生扇区封装，保留请求和数据握手；只读，写请求报错。 |
+
+正式源数为72；sd_card_top按常量NATIVE_4BIT选择，正式top为1，旧SPI分支在正式综合中剪除。sim/tb_sd_native_integrated.v直接验证正式通路，原有SPI激励仍运行兼容profile。没有改官方IP或上层解析算法。

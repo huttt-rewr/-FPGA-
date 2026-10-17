@@ -1,5 +1,6 @@
 
 module sd_card_bmp #(
+    parameter NATIVE_4BIT=0,
     parameter integer RATE_CONTROLS=0,parameter integer INDEXED=0,parameter integer MAX_FILES=64,
     parameter integer CLK_FREQ_HZ       = 100_000_000,
     parameter [31:0]  SCAN_START_SECTOR = 32'd0,
@@ -55,6 +56,7 @@ module sd_card_bmp #(
     input [7:0] image_select_index,audio_select_index,
     input image_select_valid,audio_select_valid,
     output [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count,
+    output SD_CLK,inout SD_CMD,SD_DAT0,SD_DAT1,SD_DAT2,SD_DAT3,
     output media_truncated,
     input [3:0] fps_mode,output rate_limited
 );
@@ -598,9 +600,11 @@ bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.R
     .pixel_ready(pixel_ready),.source_width(source_width),.source_height(source_height)
 );
 
-sd_card_top sd_card_top_m0(
+sd_card_top #(.NATIVE_4BIT(NATIVE_4BIT)) sd_card_top_m0(
     .clk                    (clk),
     .rst                    (rst_phy | (load_abort && !FAT32_ENABLE) | transport_reset),
+    .SD_CLK(SD_CLK),.SD_CMD(SD_CMD),.SD_DAT0(SD_DAT0),
+    .SD_DAT1(SD_DAT1),.SD_DAT2(SD_DAT2),.SD_DAT3(SD_DAT3),
     .SD_nCS                 (SD_nCS),
     .SD_DCLK                (SD_DCLK),
     .SD_MOSI                (SD_MOSI),

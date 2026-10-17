@@ -7,7 +7,7 @@ try {
  if($LASTEXITCODE -ne 0){throw 'Indexed media generation failed'}
  if(!(Test-Path indexed_work)) { & "$ModelSim/vlib.exe" indexed_work }
  $files=@('../src/modules/common/*.v','../src/modules/control/*.v','../src/modules/video/*.v',
- '../src/modules/audio/*.v','../src/modules/osd/*.v','../src/modules/sd/*.v','../src/modules/bmp/*.v',
+ '../src/modules/sd/native/*.v','../src/modules/audio/*.v','../src/modules/osd/*.v','../src/modules/sd/*.v','../src/modules/bmp/*.v',
  'tb_fat32_indexed.v','tb_indexed_player.v','tb_file_osd.v')
  & "$ModelSim/vlog.exe" -work indexed_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0){throw 'Indexed compilation failed'}

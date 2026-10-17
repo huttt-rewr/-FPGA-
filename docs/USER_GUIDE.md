@@ -1,5 +1,7 @@
 # HDMI 图片与 WAV 播放器用户手册
 
+> 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
+
 当前完整操作见[键盘、分辨率和换图频率教程](KEYBOARD_USAGE_20261016.md)，[KEY/SW详细教程](KEY_SW_OPERATION.md)解释不接键盘时的全部板载操作。显示器接HDMI_B；新顶层默认不静音、音量08。是否有匹配的新bit及STA/回归通过状态，请先看[构建状态](BUILD_STATUS.md)。旧bit不能验证新功能。
 
 ## 第一次运行

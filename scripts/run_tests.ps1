@@ -30,7 +30,7 @@ try {
  $mergeTests += @('tb_ps2_keyboard','tb_ps2_controls')
  $mergeTests += @('tb_fat32_indexed','tb_indexed_player','tb_file_osd')
  $mergeTests += @('tb_video_mode_control','tb_mode_reload')
- $mergeTests += @('tb_fps_control','tb_rate_player')
+ $mergeTests += @('tb_fps_control','tb_rate_player','tb_sd_native_integrated')
  $mergeTests += @('tb_caption_pipeline')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files

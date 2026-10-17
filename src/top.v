@@ -25,11 +25,13 @@ module top(
     output                      HDMI_DDC_SCL,
     inout                       HDMI_DDC_SDA,
 
-    // TF card SPI
-    output                      sd_ncs,
-    output                      sd_dclk,
-    output                      sd_mosi,
-    input                       sd_miso
+    // TF native four-bit SDR, no SPI fallback in this profile.
+    output SD_CLK,
+    inout SD_CMD,
+    inout SD_DAT0,
+    inout SD_DAT1,
+    inout SD_DAT2,
+    inout SD_DAT3
 );
 
 parameter MEM_DATA_BITS = 32;
@@ -332,7 +334,7 @@ sd_card_bmp #(
     .CLK_FREQ_HZ       (100_000_000),
     .ENABLE_SCALING(1),.ADAPTIVE(1),
     // 正式媒体来自 FAT32 根目录；裸扇区参数仅保留给历史单元测试。
-    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),.INDEXED(1),.MAX_FILES(64),.RATE_CONTROLS(1),
+    .ENABLE_AUDIO(1),.FAT32_ENABLE(1),.MAX_BMP(4),.NATIVE_4BIT(1),.INDEXED(1),.MAX_FILES(64),.RATE_CONTROLS(1),
     .SCAN_TARGET_COUNT (3'd4)
 ) sd_card_bmp_m0(
     .clk               (sd_card_clk),
@@ -360,10 +362,9 @@ sd_card_bmp #(
     .write_req_ack     (sd_card_write_req_ack),
     .write_en          (sd_card_write_en),
     .write_data        (sd_card_write_data),
-    .SD_nCS            (sd_ncs),
-    .SD_DCLK           (sd_dclk),
-    .SD_MOSI           (sd_mosi),
-    .SD_MISO           (sd_miso),
+    .SD_nCS(),.SD_DCLK(),.SD_MOSI(),.SD_MISO(1'b1),
+    .SD_CLK(SD_CLK),.SD_CMD(SD_CMD),.SD_DAT0(SD_DAT0),
+    .SD_DAT1(SD_DAT1),.SD_DAT2(SD_DAT2),.SD_DAT3(SD_DAT3),
     .pixel_ready(pixel_write_ready),.image_width(image_width),.image_height(image_height),
     .debug_sd_status(debug_sd_status),
     .audio_enable(!mute),.audio_sample_ready(audio_sample_room),

@@ -1,5 +1,14 @@
 # 构建状态
 
+## 当前：原生四位SD 25MHz已接入
+
+阶段1～4完成以后，正式TF通路切换为六线原生SDR四位25MHz，主控制时钟100MHz。没有SPI运行时回退。扇区侧请求/地址/字节valid/成功end/错误语义保留，FAT32、仲裁、BMP、WAV及缩放器相对阶段四零改动。旧SPI仅保留作兼容测试profile。
+
+静态72源/40IO、78项ModelSim回归、综合/P&R/STA通过：SWNS **+0.260ns**、HWNS **+0.022ns**，TNS均0。新激励直接使用正式原生profile和物理引脚，不force替换扇区通道。[冻结验收](../reports/keyboard_20261016/native25_delivery_validation.json)、[报告](../reports/keyboard_20261016/RESULT_native25_delivery.md)。70位状态布局保留；没有降频、屏蔽功能路径或整体+0.5ns声明。
+
+CMD6高速代码已在隔离候选完成逻辑仿真，尚未接入本阶段正式profile；当前仍25MHz。四位25MHz理想模型11.20MB/s不是实体卡实测。没有下载、写实体卡或实板出图/出声/吞吐验收。以下较早“当前SPI”记录属于历史阶段。
+
+
 ## 当前：键盘、多文件、R安全切换与F目标换图频率
 
 本轮正式源码完成阶段1～4。静态检查69源/38IO、77项ModelSim回归、综合、布局布线及STA通过，精确输入哈希见[冻结清单](../reports/keyboard_20261016/phase4_keylanes_validation.json)。SWNS **+0.213ns**、STNS 0.000ns、HWNS **+0.021ns**、HTNS 0.000ns。[本轮报告](../reports/keyboard_20261016/RESULT_phase4_keylanes.md)、[操作手册](KEYBOARD_USAGE_20261016.md)。没有降低100MHz控制时钟，没有新增功能路径false path，70位状态布局及全部下标保持；内部复位recovery/removal没有当作HDMI管脚hold。没有整体+0.5ns声明。

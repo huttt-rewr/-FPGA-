@@ -14,10 +14,6 @@ set_pin_assignment	{ clk }	{ LOCATION = R7; IOSTANDARD = LVCMOS33; PULLTYPE = NO
 set_pin_assignment	{ key1 }	{ LOCATION = B2; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
 set_pin_assignment	{ key2 }	{ LOCATION = C1; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
 set_pin_assignment	{ rst_n }	{ LOCATION = A2; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
-set_pin_assignment	{ sd_dclk }	{ LOCATION = A14; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
-set_pin_assignment	{ sd_miso }	{ LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; }
-set_pin_assignment	{ sd_mosi }	{ LOCATION = A13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
-set_pin_assignment	{ sd_ncs }	{ LOCATION = A12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
 set_pin_assignment	{ seg_data[0] }	{ LOCATION = C15; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
 set_pin_assignment	{ seg_data[1] }	{ LOCATION = C16; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
 set_pin_assignment	{ seg_data[2] }	{ LOCATION = B6; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
@@ -47,3 +43,10 @@ set_pin_assignment { key3 } { LOCATION = B1; IOSTANDARD = LVCMOS33; PULLTYPE = P
 # Official J:/DEMO/14_ps2_piano/A1.adc and 24_VGA_shiyan9_B/VGA.adc.
 set_pin_assignment { ps2_clk } { LOCATION = M16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
 set_pin_assignment { ps2_data } { LOCATION = K16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+
+set_pin_assignment { SD_CLK } { LOCATION = A14; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; }
+set_pin_assignment { SD_CMD } { LOCATION = A13; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment { SD_DAT0 } { LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment { SD_DAT1 } { LOCATION = B15; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment { SD_DAT2 } { LOCATION = A11; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment { SD_DAT3 } { LOCATION = A12; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }

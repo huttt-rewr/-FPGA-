@@ -30,7 +30,7 @@ module tb_sd_waits;
  always @(negedge clk)begin
   if(!rst)begin
    if(init_fail && !pause_d)pauses=pauses+1;
-   if(init_fail && (wrapper.sd_card_cmd_m0.state!=wrapper.sd_card_cmd_m0.S_IDLE || wrapper.spi_wr_req))errors=errors+1;
+   if(init_fail && (wrapper.legacy_spi.sd_card_cmd_m0.state!=wrapper.legacy_spi.sd_card_cmd_m0.S_IDLE || wrapper.legacy_spi.spi_wr_req))errors=errors+1;
    pause_d=init_fail;
   end
  end

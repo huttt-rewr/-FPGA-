@@ -1,5 +1,7 @@
 # HX4S20C 图片播放器：详细接线与使用教程
 
+> 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
+
 > 2026-10-16当前接线与操作：HDMI_B、原TF卡槽、可选PS/2 Set2键盘（CLK=M16、DATA=K16）。KEY/SW原操作保留；默认不静音、音量08，FAT32根目录BMP+WAV合计最多64份。复位默认VGA，R请求SVGA受EDID支持限制；F仅调目标换图频率。完整新操作见[键盘手册](KEYBOARD_USAGE_20261016.md)，新bit和精确验收见[构建状态](BUILD_STATUS.md)。下文原有裸扇区/串口/默认静音/启动自动选SVGA说明属于旧版，先按当前手册使用。
 
 2026-10-16 键盘源码新增两根PS/2输入（CLK=M16、DATA=K16，官方例程映射），原HDMI_B、TF及KEY/SW接线保留。键盘接法、键位和默认不静音的变化见[键盘教程](KEYBOARD_USAGE_20261016.md)。数字/R/F尚未接消费者；新键盘bit尚未交付，当前STA进度见[构建状态](BUILD_STATUS.md)。

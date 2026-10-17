@@ -11,7 +11,7 @@
 - [完整接线教程](docs/CONNECTION_AND_USAGE.md)、[用户手册](docs/USER_GUIDE.md)、[FAT32复制文件](docs/FAT32_USAGE_20261015.md)。
 - [多文件索引原理](docs/MEDIA_INDEX_20261016.md)、[本轮限制与后续工作](docs/KEYBOARD_REMAINING_20261016.md)。
 
-显示器接 **HDMI_B（HDMIB）**；HDMI_A不用。PS/2 CLK=M16、DATA=K16是官方例程的FPGA封装映射；普通USB键盘不能直接接这两个信号。SD正式接口仍为 **SPI25MHz**，控制时钟100MHz。四位25MHz只存在[独立候选](docs/SD_NATIVE_4BIT_20261016.md)，官方手册已确认DAT1=B15、DAT2=A11及10kΩ上拉；正式集成待阶段1～4验收；尚无正式四位50MHz或实测≥10MB/s声明。
+显示器接 **HDMI_B（HDMIB）**；HDMI_A不用。PS/2 CLK=M16、DATA=K16是官方例程的FPGA封装映射；普通USB键盘不能直接接这两个信号。SD正式接口为 **原生四位25MHz**，主控制100MHz；同一TF卡槽，六线映射及10kΩ上拉已核对。阶段1～4和原生25MHz整机回归/STA通过；50MHz CMD6目前为隔离候选，尚未正式安装或实板验收。
 
 ## 现在能做什么
 
@@ -48,9 +48,9 @@ R由永久启动时钟域控制：停消费者→各域复位→专用全局时�
 | `input/ps2_controls.v` | 扫描码到事件、按住防重复、A+数字等待，事件和数据同拍流水 |
 | `control/picture_controls.v` | KEY短长按、播放/亮度/对比度/菜单与唯一音量静音状态；接键盘音量事件 |
 | `control/switch_controls.v` | SW同步消抖，字幕、滚动与转场模式 |
-| `sd/spi_master.v` | 发送接收SPI字节，默认工作SCK25MHz |
+| `sd/spi_master.v` | 旧兼容profile的SPI字节收发；正式native profile不使用 |
 | `sd/sd_card_cmd.v` | 命令、token、扇区CRC、等待超时；独热按位译码缩短100MHz控制路径 |
-| `sd/sd_card_sec_read_write.v`、`sd_card_top.v` | 初始化、寻址类型、重试、扇区读写握手和SPI封装 |
+| `sd/sd_card_sec_read_write.v`、`sd_card_top.v` | 扇区封装选择原生/旧SPI兼容profile；正式选择原生四位 |
 | `sd/sd_read_arbiter.v` | 图片/音频共享扇区通道、等待授权、超时与事务恢复 |
 | `sd/sd_fat32.v` | MBR/BPB几何校验、根目录、BRAM索引、两流FAT缓存/簇链与取消排空 |
 | `bmp/sd_card_bmp.v` | 总播放器调度：选文件、忙时请求、WAV切源、加载/提交和自动换图消费者 |
@@ -69,7 +69,7 @@ R由永久启动时钟域控制：停消费者→各域复位→专用全局时�
 | `audio/audio_effects.v`、`audio_effects_stream.v` | FIR/回声与切源清历史，保持HDMI采样valid节奏 |
 | `common/reset_sync.v`、`cdc_snapshot.v` | 各域复位与多位一致性快照；旧70bit状态布局保持，新增状态走独立快照 |
 | `hdmi/`、`src/ip/` | HDMI物理包装与必要官方HDMI/PLL/FIFO/SDRAM IP，禁止当重复源删除 |
-| `sd/native/` | 独立四位SD候选，未接正式顶层/TD源清单 |
+| `sd/native/` | 已接正式顶层与TD源清单的原生四位SD25MHz协议、PHY和封装 |
 | `src/constraints/` | 唯一pin.adc与timing.sdc；外部IO预算仍需板级资料 |
 | `scripts/design_files.txt` | 正式源清单，两TD入口/CLI构建保持一致 |
 | `sim/`、`scripts/run_tests.ps1` | ModelSim激励和全量执行；镜像脚本只写电脑普通文件 |

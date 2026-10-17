@@ -67,3 +67,6 @@ src/modules/audio/audio_effects_stream.v
 src/modules/audio/audio_fifo_room.v
 src/modules/video/video_mode_control.v
 src/modules/control/fps_control.v
+src/modules/sd/native/sd_bus_phy.v
+src/modules/sd/native/sd_native_controller.v
+src/modules/sd/native/sd_card_top_native.v

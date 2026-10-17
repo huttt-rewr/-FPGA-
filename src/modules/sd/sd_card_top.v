@@ -1,6 +1,7 @@
 
 module sd_card_top
 #(
+	parameter NATIVE_4BIT=0,
 	parameter  SPI_LOW_SPEED_DIV = 248,         // SD card low speed mode frequency division parameter,spi clk speed = clk speed /((SPI_LOW_SPEED_DIV + 2) * 2 )
 	parameter  SPI_HIGH_SPEED_DIV = 0,
 	parameter  INIT_TIMEOUT_CYCLES = 800_000_000,
@@ -26,8 +27,38 @@ module sd_card_top
 	input[31:0]      sd_sec_write_addr,         //SD card sector write address
 	input[7:0]       sd_sec_write_data,         //SD card sector write data
 	output           sd_sec_write_data_req,     //SD card sector write data next clock is valid
-	output           sd_sec_write_end           //SD card sector write end
+	output           sd_sec_write_end,          //SD card sector write end
+    output SD_CLK,inout SD_CMD,SD_DAT0,SD_DAT1,SD_DAT2,SD_DAT3
 );
+generate if(NATIVE_4BIT)begin:native_bus
+ assign SD_nCS=1'b1;assign SD_DCLK=1'b0;assign SD_MOSI=1'b1;
+ sd_card_top_native #(.SPI_LOW_SPEED_DIV(SPI_LOW_SPEED_DIV),
+  .INIT_TIMEOUT_CYCLES(INIT_TIMEOUT_CYCLES),.INIT_PAUSE_CYCLES(INIT_PAUSE_CYCLES),
+  .WAIT_TIMEOUT_CYCLES(WAIT_TIMEOUT_CYCLES)) transport(
+  .clk(clk),
+  .rst(rst),
+  .sd_init_done(sd_init_done),
+  .sd_init_error(sd_init_error),
+  .sd_transfer_error(sd_transfer_error),
+  .sd_sec_read(sd_sec_read),
+  .sd_sec_read_addr(sd_sec_read_addr),
+  .sd_sec_read_data(sd_sec_read_data),
+  .sd_sec_read_data_valid(sd_sec_read_data_valid),
+  .sd_sec_read_end(sd_sec_read_end),
+  .sd_sec_write(sd_sec_write),
+  .sd_sec_write_addr(sd_sec_write_addr),
+  .sd_sec_write_data(sd_sec_write_data),
+  .sd_sec_write_data_req(sd_sec_write_data_req),
+  .sd_sec_write_end(sd_sec_write_end),
+  .SD_CLK(SD_CLK),
+  .SD_CMD(SD_CMD),
+  .SD_DAT0(SD_DAT0),
+  .SD_DAT1(SD_DAT1),
+  .SD_DAT2(SD_DAT2),
+  .SD_DAT3(SD_DAT3));
+end else begin:legacy_spi
+ assign SD_CLK=1'b0;
+ assign SD_CMD=1'bz;assign SD_DAT0=1'bz;assign SD_DAT1=1'bz;assign SD_DAT2=1'bz;assign SD_DAT3=1'bz;
 wire response_valid;
 wire [7:0] response_data;
 wire[15:0]           spi_clk_div;               //SPI module clock division parameter
@@ -137,4 +168,5 @@ spi_master spi_master_m0(
 	.data_in                        (spi_data_in            ),
 	.data_out                       (spi_data_out           )
 );
+end endgenerate
 endmodule

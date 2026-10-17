@@ -122,6 +122,30 @@
                     <Attr Name="CompileOrder" Val="14"/>
                 </FileInfo>
             </File>
+            <File Path="../../src/modules/sd/native/sd_bus_phy.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="70"/>
+                </FileInfo>
+            </File>
+            <File Path="../../src/modules/sd/native/sd_native_controller.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="71"/>
+                </FileInfo>
+            </File>
+            <File Path="../../src/modules/sd/native/sd_card_top_native.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="72"/>
+                </FileInfo>
+            </File>
             <File Path="../../src/modules/sd/spi_master.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>

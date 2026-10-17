@@ -1,10 +1,12 @@
 # 原生四位 SD 候选与板级接入缺口（2026-10-16）
 
-**当前还没有把正式板级工程切换为四位 SD。** 原生控制器已完成逻辑仿真和独立综合；正式 `top.v`、`sd_card_top.v`、管脚约束和两个 TD 工程入口仍保留 SPI。原因是现有资料没有给出板载 TF 卡 DAT1、DAT2 的 FPGA 管脚和上拉电路，不能猜测或任由 TD 自动分配管脚后当作可下载工程。
+> 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
+
+**当前还没有把正式板级工程切换为四位 SD。** 原生控制器已完成逻辑仿真和独立综合；正式 `top.v`、`sd_card_top.v`、管脚约束和两个 TD 工程入口仍保留 SPI。原因一度是现有资料没有给出板载 TF 卡 DAT1、DAT2 的 FPGA 管脚；现已从 `J:/HX4S20开发板手册-HDL版2410.pdf`（第 2-21/2-22 节）查到 **DAT1=B15、DAT2=A11**，管脚障碍解除，剩余工作为正式接入与整机/实板验证。
 
 ## 硬件资料核对
 
-本轮检查了 `J:/lab_ex4_tf`、`J:/lab_ex5_i2s`、`J:/DEMO` 中的源与约束，并检查 `J:/6_EG4S20数据手册` 的文件清单和此前资料审查记录。官方 `J:/DEMO/18_sd_card_audio/sd_card_audido.adc`、lab4/lab5 与正式工程一致，只能确认下表四条 SPI 信号对应的原生 SD 用途。
+本轮检查了 `J:/lab_ex4_tf`、`J:/lab_ex5_i2s`、`J:/DEMO` 中的源与约束，并检查 `J:/6_EG4S20数据手册` 的文件清单和此前资料审查记录；最终在 **`J:/HX4S20开发板手册-HDL版2410.pdf`**（第 2-21/2-22 节 TF 卡引脚对照）找到完整六线映射。官方 `J:/DEMO/18_sd_card_audio/sd_card_audido.adc`、lab4/lab5 与正式工程一致，只能确认四条 SPI 信号，DAT1/DAT2 由开发板手册补齐。
 
 | 原生信号 | microSD 接点 | 原有信号 | 有依据的 FPGA 焊球 |
 |---|---:|---|---|
@@ -12,10 +14,10 @@
 | SD_CMD | 3 | sd_mosi | A13 |
 | SD_DAT0 | 7 | sd_miso | B14 |
 | SD_DAT3 | 2 | sd_ncs | A12 |
-| SD_DAT1 | 8 | 无 | **未知，不能分配** |
-| SD_DAT2 | 1 | 无 | **未知，不能分配** |
+| SD_DAT1 | 8 | 无 | **B15** |
+| SD_DAT2 | 1 | 无 | **A11** |
 
-未找到 DAT1/DAT2 映射不等于证明板子没有接线。芯片的封装引脚表也不能证明 TF 卡座的 PCB 走线。需要本板整板原理图对应页，或断电通断测量得到 DAT1/DAT2 的实际 FPGA 焊球；同时核对 CMD、DAT0～3 的外部 10～100kΩ 上拉和供电。内部 `PULLUP` 约束不能证明板上已经装了规定阻值的电阻。不要仅因 FPGA 有空闲 PAD 就任选两个 PAD。
+DAT1/DAT2 的焊球号已由开发板手册确定为 B15/A11（正式 `pin.adc` 中 B15、A11 当前为空闲，无外设冲突）。芯片封装引脚表只给芯片侧定义、不证明 TF 卡座 PCB 走线；开发板手册的引脚对照表证明走线存在。2026-10-17重新渲染核对该手册PDF第20页图2-22：RN18/RN19标注10kΩ、公共端接3V3，CMD与DAT0～3有上拉连接，图面已补齐阻值依据；[核对图](../reports/keyboard_20261016/board_tf_page20.png)和[引脚表文字](../reports/keyboard_20261016/board_pin_evidence.txt)可复查。板卡实物版本和装配一致性仍待实板核对。内部 `PULLUP` 约束不替代外部电阻。
 
 ## 本轮新增源码
 
@@ -25,7 +27,7 @@
 | [sd_native_controller.v](../src/modules/sd/native/sd_native_controller.v) | 原生初始化、RCA/CCS、CMD17 单扇区读取、初始化超时/次数限制/暂停重试、读错恢复、请求去重 |
 | [sd_card_top_native.v](../src/modules/sd/native/sd_card_top_native.v) | 独立候选封装，扇区侧保留原端口名称和位宽，物理侧为六根 SD 信号 |
 
-这些文件位于独立 `native/` 子目录，**没有登记到正式 `design_files.txt` 和两个 `video_improve.al` 中**，当前正式工程仍为63设计源、36位逻辑IO。可用独立 TD 综合脚本检查候选：`scripts/synth_sd_native.tcl`。独立候选综合中的扇区请求/数据端口是测试顶层 IO，报告里的57个 IO不是最终板级 IO 数量。
+这些文件位于独立 `native/` 子目录，**没有登记到正式 `design_files.txt` 和两个 `video_improve.al` 中**，源数量随键盘等阶段增加，准确登记数量见[构建状态](BUILD_STATUS.md)。可用独立 TD 综合脚本检查候选：`scripts/synth_sd_native.tcl`。独立候选综合中的扇区请求/数据端口是测试顶层 IO，报告里的57个 IO不是最终板级 IO 数量。
 
 指定不可修改的 `sd_read_arbiter.v`、`sd_fat32.v`、`bmp_read.v`、`audio_wav.v`、`bmp_scale_loader.v` 均未修改；本轮也未修改 `sd_card_bmp.v`、PLL、正式 SDC、官方 IP 和 KEY/SW 控制。
 
