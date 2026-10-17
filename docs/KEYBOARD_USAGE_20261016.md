@@ -1,6 +1,6 @@
 # 键盘、分辨率和换图频率操作手册
 
-> 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
+> 当前正式源码：六线原生四位 SD，CMD6 成功确认后自动从25MHz升至50MHz，不支持/忙时保持四位25MHz；主控制100MHz。80项ModelSim和内部STA结果见[构建状态](BUILD_STATUS.md)。尚未实板验证；下文明确标注的旧版本说明只作历史参考。
 
 本文说明本轮正式源码的操作。仿真、STA、候选bit与实板状态分别见[构建状态](BUILD_STATUS.md)，旧bit不能验证新增功能。
 
@@ -87,4 +87,4 @@ python scripts/run_build.py
 
 专项可用`run_keyboard_tests.ps1`与`run_indexed_tests.ps1`，全量回归另含模式控制、切模式重载、各档定时器、真实播放器自动换图和切源清音效。源文件登记进两个TD工程及design_files；原70bit状态总线位宽/位序保留，媒体/换图档位分别用独立一致性快照跨域。
 
-SD正式接口仍是SPI25MHz，不是四位50MHz。四位25MHz协议候选及其模型吞吐不能当成实板结果；官方手册已确认六线映射和10kΩ上拉，正式四位集成、50MHz CMD6协商/板级时序签核仍未完成，见[SD候选说明](SD_NATIVE_4BIT_20261016.md)。
+SD正式接口为原生四位，CMD6确认切换成功后使用50MHz；卡不支持或忙则保持25MHz。具体接线、协商、CRC、ModelSim激励与板级验收边界见[SD实现说明](SD_NATIVE_4BIT_20261016.md)。这不会改变KEY/SW/键盘的操作方式。

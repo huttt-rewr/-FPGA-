@@ -1,6 +1,6 @@
 
 module sd_card_bmp #(
-    parameter NATIVE_4BIT=0,
+    parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,
     parameter integer RATE_CONTROLS=0,parameter integer INDEXED=0,parameter integer MAX_FILES=64,
     parameter integer CLK_FREQ_HZ       = 100_000_000,
     parameter [31:0]  SCAN_START_SECTOR = 32'd0,
@@ -297,7 +297,10 @@ function [5:0] next_index_limited;
     input [5:0] cur;
     input [6:0] count;
     begin
-        next_index_limited=({1'b0,cur}+7'd1>=count)?6'd0:cur+6'd1;
+        // Compare the current index against the last entry in parallel with
+        // incrementing it. Avoid an add -> compare -> select setup path.
+        // Explicit zero handles the unsigned count-1 wrap at an empty table.
+        next_index_limited=(count==0 || {1'b0,cur}>=count-7'd1)?6'd0:cur+6'd1;
     end
 endfunction
 
@@ -600,7 +603,7 @@ bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.R
     .pixel_ready(pixel_ready),.source_width(source_width),.source_height(source_height)
 );
 
-sd_card_top #(.NATIVE_4BIT(NATIVE_4BIT)) sd_card_top_m0(
+sd_card_top #(.NATIVE_4BIT(NATIVE_4BIT),.NATIVE_HIGH_SPEED(NATIVE_HIGH_SPEED)) sd_card_top_m0(
     .clk                    (clk),
     .rst                    (rst_phy | (load_abort && !FAT32_ENABLE) | transport_reset),
     .SD_CLK(SD_CLK),.SD_CMD(SD_CMD),.SD_DAT0(SD_DAT0),

@@ -1,0 +1,12 @@
+PDF page 20
+20
+图 2-22 TF卡原理图
+注意：TF卡槽在开发板背面。
+TF 卡槽引脚分配
+TF信号名称 FPGA引脚 TF信号名称 FPGA引脚
+SD_DAT3（CS) A12 SD_DAT2 A11
+SD_DAT1 B15 SD_DAT0(MISO) B14
+SD_CLK A14 SD_CMD(MOSI) A13
+⑱、以太网接口
+网口采用了以太网RTL8211控制芯片，接口端HR911130A,相关资料在已提供资
+料包里查看。图2-23是RTL8211控制器件原理图。

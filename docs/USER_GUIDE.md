@@ -1,5 +1,7 @@
 # HDMI 图片与 WAV 播放器用户手册
 
+> 当前正式源码：六线原生四位 SD，CMD6 成功确认后自动从25MHz升至50MHz，不支持/忙时保持四位25MHz；主控制100MHz。80项ModelSim和内部STA结果见[构建状态](BUILD_STATUS.md)。尚未实板验证；下文明确标注的旧版本说明只作历史参考。
+
 > 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
 
 当前完整操作见[键盘、分辨率和换图频率教程](KEYBOARD_USAGE_20261016.md)，[KEY/SW详细教程](KEY_SW_OPERATION.md)解释不接键盘时的全部板载操作。显示器接HDMI_B；新顶层默认不静音、音量08。是否有匹配的新bit及STA/回归通过状态，请先看[构建状态](BUILD_STATUS.md)。旧bit不能验证新功能。
@@ -51,4 +53,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_tests.ps1
 python scripts/run_build.py
 ```
 
-不要在构建过程中改src/scripts/sim输入。两TD入口引用同一源清单，官方HDMI/SDRAM/PLL/FIFO IP是必要依赖。[源文件职责](SOURCE_MAP.md)、[多文件实现](MEDIA_INDEX_20261016.md)、[SD四位候选与50MHz限制](SD_NATIVE_4BIT_20261016.md)、[构建状态](BUILD_STATUS.md)。正式SD仍SPI25MHz；内部复位removal不能当作HDMI管脚hold，没有整体+0.5ns签核声明。
+不要在构建过程中改src/scripts/sim输入。两TD入口引用同一源清单，官方HDMI/SDRAM/PLL/FIFO IP是必要依赖。[源文件职责](SOURCE_MAP.md)、[多文件实现](MEDIA_INDEX_20261016.md)、[SD四位实现与50MHz验收边界](SD_NATIVE_4BIT_20261016.md)、[构建状态](BUILD_STATUS.md)。正式SD为原生四位CMD6自动协商25/50MHz；内部复位removal不能当作HDMI管脚hold，没有整体+0.5ns签核声明。

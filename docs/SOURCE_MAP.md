@@ -87,3 +87,7 @@
 | src/modules/sd/native/sd_card_top_native.v | 原生扇区封装，保留请求和数据握手；只读，写请求报错。 |
 
 正式源数为72；sd_card_top按常量NATIVE_4BIT选择，正式top为1，旧SPI分支在正式综合中剪除。sim/tb_sd_native_integrated.v直接验证正式通路，原有SPI激励仍运行兼容profile。没有改官方IP或上层解析算法。
+
+## CMD6高速增量
+
+sd_native_controller在25MHz查询/切换High Speed，锁存64字节状态中的支持、选中与busy，CRC成功后才采用；sd_bus_phy接收64/512字节并检查四路CRC16。50MHz采样许可延后一拍100MHz，不照搬SDRAM相位。正式top启用NATIVE_HIGH_SPEED，旧25MHz测试默认关闭。新激励tb_sd_highspeed和tb_sd_highspeed_player见[SD实现](SD_NATIVE_4BIT_20261016.md)。这属于3.3V High Speed SDR，不是1.8V UHS-I SDR50。

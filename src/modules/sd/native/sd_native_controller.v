@@ -1,11 +1,13 @@
 // Read-only SD v2 initialization and CMD17 controller. No FAT32/media logic.
 module sd_native_controller #(
+ parameter ENABLE_HIGH_SPEED=0,
  parameter integer INIT_TIMEOUT_CYCLES=800000000,
  parameter integer INIT_PAUSE_CYCLES=100000000,
  parameter integer INIT_ATTEMPT_LIMIT=4096
 )(
  input clk,rst,rise_tick,
  output reg high_speed,open_drain,output reg phy_reset,
+ output reg high_speed_50,output [9:0] read_length,
  output reg sd_init_done,sd_init_error,sd_transfer_error,
  input sd_sec_read,input [31:0] sd_sec_read_addr,
  output [7:0] sd_sec_read_data,output sd_sec_read_data_valid,
@@ -18,9 +20,27 @@ module sd_native_controller #(
  output reg read_arm,read_cancel,
  input [7:0] read_data,input read_valid,read_done,read_error
 );
- localparam S_CLOCKS=0,S_ISSUE=1,S_RESPONSE=2,S_READY=3,S_READ=4,S_GAP=5,S_ERR=6,S_RECOVER=7;
- reg [2:0] state;
+ localparam S_CLOCKS=0,S_ISSUE=1,S_RESPONSE=2,S_READY=3,S_READ=4,S_GAP=5,S_ERR=6,S_RECOVER=7,S_SWITCH_READ=8,S_SWITCH_APPLY=9,S_SPEED_WAIT=10;
+ reg [3:0] state;
  reg [3:0] step;
+ reg hs_disabled,hs_supported,hs_busy,hs_selected;
+ reg [6:0] switch_count;
+ reg [3:0] speed_clocks;
+ wire switch_step=(step==11 || step==12);
+ assign read_length=switch_step?10'd64:10'd512;
+ // Capture status independently of response FSM. It is not trusted until
+ // read_done confirms all four CRCs and the end bit.
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin switch_count<=0;hs_supported<=0;hs_busy<=0;hs_selected<=0;end
+  else if(read_arm)begin switch_count<=0;hs_supported<=0;hs_busy<=0;hs_selected<=0;end
+  else if(switch_step && read_valid)begin
+   if(switch_count<65)switch_count<=switch_count+1'b1;
+   if(switch_count==13)hs_supported<=read_data[1];
+   if(switch_count==16)hs_selected<=read_data[3:0]==1;
+   if(switch_count==29)hs_busy<=read_data[1];
+  end
+ end
+
  reg [6:0] boot_clocks;
  reg [15:0] rca;
  reg block_addressed;
@@ -57,7 +77,7 @@ module sd_native_controller #(
  always @(posedge clk or posedge rst)begin
   if(rst)begin
    state<=S_CLOCKS;step<=0;boot_clocks<=0;rca<=0;block_addressed<=0;
-   high_speed<=0;open_drain<=1;phy_reset<=0;sd_init_done<=0;sd_init_error<=0;
+   high_speed<=0;high_speed_50<=0;hs_disabled<=0;speed_clocks<=0;open_drain<=1;phy_reset<=0;sd_init_done<=0;sd_init_error<=0;
    sd_transfer_error<=0;sd_sec_read_end<=0;pause_timer<=0;attempts<=0;
    cmd_start<=0;cmd_index<=0;cmd_argument<=0;response_type<=0;
    read_arm<=0;read_cancel<=0;
@@ -83,29 +103,58 @@ module sd_native_controller #(
       7:begin cmd_index<=55;cmd_argument<={rca,16'd0};response_type<=1;end
       8:begin cmd_index<=6;cmd_argument<=2;response_type<=1;end
       9:begin cmd_index<=16;cmd_argument<=512;response_type<=1;end
+      11:begin cmd_index<=6;cmd_argument<=32'h00fffff1;response_type<=1;read_arm<=1;end
+      12:begin cmd_index<=6;cmd_argument<=32'h80fffff1;response_type<=1;read_arm<=1;end
       default:begin // CMD17 arguments were latched when the request was accepted.
        cmd_index<=17;response_type<=1;read_arm<=1;
       end
      endcase
     end
     S_RESPONSE:if(cmd_done)begin
-     if(cmd_error || ((step==2 || step==6 || step==7 || step==8 || step==9 || step==10) && r1_bad) ||
+     if(cmd_error || ((step==2 || step==6 || step==7 || step==8 || step==9 || step==10 || switch_step) && r1_bad) ||
         (step==1 && response[19:8]!=12'h1aa) ||
         (step==5 && (r6_bad || response[39:24]==0)) ||
         ((step==2 || step==7) && !response[13]))begin
       if(sd_init_done)begin sd_transfer_error<=1;state<=S_RECOVER;end
-      else begin read_cancel<=1;state<=S_ERR;sd_init_error<=1;phy_reset<=1;pause_timer<=0;end
+      else begin
+       if(switch_step)hs_disabled<=1;
+       read_cancel<=1;state<=S_ERR;sd_init_error<=1;phy_reset<=1;pause_timer<=0;
+      end
      end else if(step==3)begin
       if(response[39])begin block_addressed<=response[38];step<=4;state<=S_ISSUE;end
       else if(attempts>=INIT_ATTEMPT_LIMIT-1)begin
        state<=S_ERR;sd_init_error<=1;phy_reset<=1;pause_timer<=0;
       end else begin attempts<=attempts+1'b1;step<=2;state<=S_ISSUE;end
-     end else if(step==9)begin sd_init_done<=1;high_speed<=1;state<=S_READY;end
+     end else if(step==9)begin
+      high_speed<=1;
+      if(ENABLE_HIGH_SPEED && !hs_disabled)begin step<=11;state<=S_ISSUE;end
+      else begin sd_init_done<=1;state<=S_READY;end
+     end
+     else if(switch_step)state<=S_SWITCH_READ;
      else if(step==10)state<=S_READ;
      else begin
       if(step==5)begin rca<=response[39:24];open_drain<=0;end
       step<=step+1'b1;state<=S_ISSUE;
      end
+    end
+    S_SWITCH_READ:begin
+     if(read_error)begin
+      hs_disabled<=1;read_cancel<=1;phy_reset<=1;sd_init_error<=1;pause_timer<=0;state<=S_ERR;
+     end else if(read_done)state<=S_SWITCH_APPLY;
+    end
+    S_SWITCH_APPLY:begin
+     if(switch_count!=64 || (step==12 && (!hs_selected || hs_busy)))begin
+      // A damaged switch reply may hide a card-side mode change. Reinitialize
+      // with this power-cycle's high-speed attempt disabled; never guess.
+      hs_disabled<=1;read_cancel<=1;phy_reset<=1;sd_init_error<=1;pause_timer<=0;state<=S_ERR;
+     end else if(step==11)begin
+      if(hs_supported && !hs_busy)begin step<=12;state<=S_ISSUE;end
+      else begin sd_init_done<=1;state<=S_READY;end
+     end else begin speed_clocks<=0;state<=S_SPEED_WAIT;end
+    end
+    S_SPEED_WAIT:if(rise_tick)begin
+     if(speed_clocks==7)begin high_speed_50<=1;sd_init_done<=1;state<=S_READY;end
+     else speed_clocks<=speed_clocks+1'b1;
     end
     S_READY:if(sd_sec_write)begin
      // Write inputs retained for interface compatibility; writes unsupported.
@@ -129,13 +178,16 @@ module sd_native_controller #(
     S_RECOVER:if(data_finished && cmd_ready)state<=S_GAP;
     S_ERR:begin
      if(pause_timer>=INIT_PAUSE_CYCLES-1)begin
-      pause_timer<=0;phy_reset<=0;sd_init_error<=0;high_speed<=0;open_drain<=1;
+      pause_timer<=0;phy_reset<=0;sd_init_error<=0;high_speed<=0;high_speed_50<=0;open_drain<=1;
       sd_init_done<=0;state<=S_CLOCKS;boot_clocks<=0;step<=0;attempts<=0;
       rca<=0;block_addressed<=0;
      end else pause_timer<=pause_timer+1'b1;
     end
     default:begin state<=S_ERR;sd_init_error<=1;phy_reset<=1;pause_timer<=0;end
    endcase
+   if(switch_step && state==S_RESPONSE && read_error)begin
+    hs_disabled<=1;read_cancel<=1;phy_reset<=1;sd_init_error<=1;pause_timer<=0;state<=S_ERR;
+   end
    // Capture a bad/missing token even if it arrives with the CMD17 response.
    if(step==10 && state==S_RESPONSE && read_error)begin
     sd_transfer_error<=1;state<=S_RECOVER;

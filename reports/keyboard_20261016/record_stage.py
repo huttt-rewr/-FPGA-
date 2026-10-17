@@ -10,6 +10,8 @@ resources={k:int(re.search(r'^#'+k+r'\s+(\d+)',area,re.M).group(1)) for k in ('l
 t=v['timing_ns'];passed=v['build_status']=='completed'
 native='.NATIVE_4BIT(1)' in (R/'src/top.v').read_text(encoding='utf-8')
 sd_note=('正式SD为原生四位25MHz；模型吞吐不是实体卡实测。50MHz尚待CMD6正式集成及板级验证。' if native else '正式SD仍SPI25MHz。四位25MHz候选未接板，50MHz缺CMD6协商和板级签核。')
+if native and '.NATIVE_HIGH_SPEED(1)' in (R/'src/top.v').read_text(encoding='utf-8'):
+ sd_note='正式SD已集成CMD6协商：确认成功才升四位50MHz，不支持或忙时留在四位25MHz；外部IO和实体卡吞吐仍待实板验证。'
 s=f'''# {args.description}
 
 本阶段{args.tests}项ModelSim回归全部通过，静态检查、综合与布局布线完成；STA{'通过' if passed else '未通过'}。原70bit状态布局和全部下标审计保持，构建输入哈希与冻结报告一致。

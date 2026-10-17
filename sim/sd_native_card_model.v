@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 // Logical SD card peer: works only from pins, never peeks at DUT state.
 // CRC7 uses polynomial long division, independently of the host implementation.
-module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
+module sd_native_card_model #(parameter integer IMAGE_MODE=0,parameter integer DOUT_DELAY=0)(
  input rst,SD_CLK,inout SD_CMD,inout [3:0] SD_DAT,
- input ccs,input [3:0] fault,
+ input ccs,input [3:0] fault,input [3:0] hs_mode,
  output reg [31:0] last_read_argument,
  output reg [31:0] commands,reads,errors
 );
@@ -12,9 +12,10 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
  // 12=ACMD41 never ready, 13=R1 error, 14=R2 CRC, 15=bad R6.
  reg cmd_oe=0,cmd_out=1,dat_oe=0;
  reg [3:0] dat_out=15;
- assign SD_CMD=cmd_oe?cmd_out:1'bz;
- assign SD_DAT=dat_oe?dat_out:4'bzzzz;
+ assign #(DOUT_DELAY) SD_CMD=cmd_oe?cmd_out:1'bz;
+ assign #(DOUT_DELAY) SD_DAT=dat_oe?dat_out:4'bzzzz;
  reg [47:0] command_frame;
+ integer payload_length=512;reg switch_block=0;reg switched=0;
  integer cmd_bits=0,resp_bits=0,response_delay=0,data_pos=-1,busy_left=0;
  reg [135:0] resp_frame;
  reg data_pending=0,busy_pending=0,app=0,selected=0,wide=0;
@@ -63,7 +64,7 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
  endtask
  task prepare_data;
   begin
-   if(IMAGE_MODE!=0)begin
+   if(IMAGE_MODE!=0 && !switch_block)begin
     seek_result=$fseek(fd,(ccs?arg:(arg>>9))*512,0);
     got=$fread(payload,fd);
     if(seek_result!=0 || got!=512)begin
@@ -71,8 +72,8 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
     end
    end
    for(lane=0;lane<4;lane=lane+1)data_crc[lane]=0;
-   for(i=0;i<512;i=i+1)begin
-    if(IMAGE_MODE==0)payload[i]=pattern(i,arg);
+   for(i=0;i<payload_length;i=i+1)begin
+    if(IMAGE_MODE==0 && !switch_block)payload[i]=pattern(i,arg);
     for(lane=0;lane<4;lane=lane+1)begin
      data_crc[lane]=reference_crc16(data_crc[lane],payload[i][lane+4]);
      data_crc[lane]=reference_crc16(data_crc[lane],payload[i][lane]);
@@ -91,7 +92,7 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
     errors=errors+1;$display("MODEL command CRC/frame error cmd=%0d frame=%h",command_index,command_frame);
    end
    if(fault!=10 || command_index==0)case(command_index)
-    0:begin app=0;selected=0;wide=0;attempts=0;end
+    0:begin app=0;selected=0;wide=0;attempts=0;switched=0;end
     8:reply(8,fault==1?32'h1ab:32'h1aa);
     55:begin
      if(arg!=(selected?{rca,16'd0}:32'd0))errors=errors+1;
@@ -115,13 +116,28 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
      selected=1;reply(7,32'h900);busy_pending=1;
     end
     6:begin
-     if(!app || !selected || arg!=2)errors=errors+1;
-     app=0;wide=1;reply(6,32'h900);
+     if(app)begin
+      if(!selected || arg!=2)errors=errors+1;
+      app=0;wide=1;reply(6,32'h900);
+     end else begin
+      if(!selected || !wide || (arg!=32'h00fffff1 && arg!=32'h80fffff1))errors=errors+1;
+      payload_length=64;switch_block=1;
+      for(i=0;i<64;i=i+1)payload[i]=0;
+      if(hs_mode!=0)payload[13]=2;
+      if(hs_mode==2)payload[29]=2;
+      if(arg[31] && hs_mode!=3)begin payload[16]=1;switched=1;end
+      if(arg[31] && hs_mode==8)payload[29]=2;
+      prepare_data;
+      if((hs_mode==4 && !arg[31]) || (hs_mode==5 && arg[31]))data_crc[2]=data_crc[2]^16'h0100;
+      reply(6,32'h900);
+      data_pending=!((arg[31] && hs_mode==6) || hs_mode==9);
+      if(hs_mode==7)resp_frame[5]=!resp_frame[5];
+     end
     end
     16:begin if(!wide || arg!=512)errors=errors+1;reply(16,32'h900);end
     17:begin
      if(!wide || !selected)errors=errors+1;
-     reads=reads+1;last_read_argument=arg;prepare_data;
+     payload_length=512;switch_block=0;reads=reads+1;last_read_argument=arg;prepare_data;
      reply(17,fault==13?32'h00400900:32'h900);
      data_pending=(fault!=9 && fault!=13);
     end
@@ -162,16 +178,16 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0)(
   end else if(data_pos>=0)begin
    dat_oe=1;
    if(data_pos==0)dat_out=(fault==7)?4'b1110:4'd0;
-   else if(data_pos<=1024)begin
+   else if(data_pos<=payload_length*2)begin
     if(data_pos[0])dat_out=payload[(data_pos-1)/2][7:4];
     else dat_out=payload[(data_pos-1)/2][3:0];
-   end else if(data_pos<=1040)begin
-    for(lane=0;lane<4;lane=lane+1)dat_out[lane]=data_crc[lane][1040-data_pos];
+   end else if(data_pos<=payload_length*2+16)begin
+    for(lane=0;lane<4;lane=lane+1)dat_out[lane]=data_crc[lane][payload_length*2+16-data_pos];
     if(data_pos==1027)case(fault)
      3:dat_out[0]=!dat_out[0];4:dat_out[1]=!dat_out[1];
      5:dat_out[2]=!dat_out[2];6:dat_out[3]=!dat_out[3];
     endcase
-   end else if(data_pos==1041)dat_out=(fault==8)?4'b0111:4'b1111;
+   end else if(data_pos==payload_length*2+17)dat_out=(fault==8)?4'b0111:4'b1111;
    else begin dat_oe=0;data_pos=-2;end
    data_pos=data_pos+1;
   end else dat_oe=0;

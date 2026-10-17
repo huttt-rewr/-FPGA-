@@ -1,86 +1,68 @@
-# 原生四位 SD 候选与板级接入缺口（2026-10-16）
+# 原生四位SD与CMD6高速实现
 
-> 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
+正式顶层已启用四位原生SD，并按卡能力自动协商25/50MHz。详细验证数字以[构建状态](BUILD_STATUS.md)及[本次冻结报告](../reports/keyboard_20261016/RESULT_native50_ultra.md)为准。旧SPI保留作兼容仿真profile，正式top不走SPI，也没有运行时回退SPI。
 
-**当前还没有把正式板级工程切换为四位 SD。** 原生控制器已完成逻辑仿真和独立综合；正式 `top.v`、`sd_card_top.v`、管脚约束和两个 TD 工程入口仍保留 SPI。原因一度是现有资料没有给出板载 TF 卡 DAT1、DAT2 的 FPGA 管脚；现已从 `J:/HX4S20开发板手册-HDL版2410.pdf`（第 2-21/2-22 节）查到 **DAT1=B15、DAT2=A11**，管脚障碍解除，剩余工作为正式接入与整机/实板验证。
+## 接线与电气依据
 
-## 硬件资料核对
+仍插板上原TF/microSD卡座，不增加外设。以下是FPGA焊球坐标，不是外接排针序号。
 
-本轮检查了 `J:/lab_ex4_tf`、`J:/lab_ex5_i2s`、`J:/DEMO` 中的源与约束，并检查 `J:/6_EG4S20数据手册` 的文件清单和此前资料审查记录；最终在 **`J:/HX4S20开发板手册-HDL版2410.pdf`**（第 2-21/2-22 节 TF 卡引脚对照）找到完整六线映射。官方 `J:/DEMO/18_sd_card_audio/sd_card_audido.adc`、lab4/lab5 与正式工程一致，只能确认四条 SPI 信号，DAT1/DAT2 由开发板手册补齐。
-
-| 原生信号 | microSD 接点 | 原有信号 | 有依据的 FPGA 焊球 |
+| 信号 | microSD接点 | FPGA焊球 | 方向 |
 |---|---:|---|---|
-| SD_CLK | 5 | sd_dclk | A14 |
-| SD_CMD | 3 | sd_mosi | A13 |
-| SD_DAT0 | 7 | sd_miso | B14 |
-| SD_DAT3 | 2 | sd_ncs | A12 |
-| SD_DAT1 | 8 | 无 | **B15** |
-| SD_DAT2 | 1 | 无 | **A11** |
+| SD_CLK | 5 | A14 | FPGA输出 |
+| SD_CMD | 3 | A13 | 双向，主机发送与卡响应分时 |
+| SD_DAT0 | 7 | B14 | 双向端口，本只读实现始终释放DAT |
+| SD_DAT1 | 8 | B15 | 同上 |
+| SD_DAT2 | 1 | A11 | 同上 |
+| SD_DAT3 | 2 | A12 | 同上，原SPI片选脚 |
 
-DAT1/DAT2 的焊球号已由开发板手册确定为 B15/A11（正式 `pin.adc` 中 B15、A11 当前为空闲，无外设冲突）。芯片封装引脚表只给芯片侧定义、不证明 TF 卡座 PCB 走线；开发板手册的引脚对照表证明走线存在。2026-10-17重新渲染核对该手册PDF第20页图2-22：RN18/RN19标注10kΩ、公共端接3V3，CMD与DAT0～3有上拉连接，图面已补齐阻值依据；[核对图](../reports/keyboard_20261016/board_tf_page20.png)和[引脚表文字](../reports/keyboard_20261016/board_pin_evidence.txt)可复查。板卡实物版本和装配一致性仍待实板核对。内部 `PULLUP` 约束不替代外部电阻。
+依据J:/HX4S20开发板手册-HDL版2410.pdf第20页图2-22，RN18/RN19为10kΩ上拉到3.3V，连接CMD与DAT0～3。[图面证据](../reports/keyboard_20261016/board_tf_page20.png)、[引脚文字](../reports/keyboard_20261016/board_pin_evidence.txt)。实物版本和装配仍需确认。CMD初始化阶段开漏，退出识别后推挽发送，收响应时关闭OE；读实现从不驱动DAT。
 
-## 本轮新增源码
+## 传输过程
 
-| 文件 | 职责 |
+1. 默认100MHz主控分频，200kHz识别阶段提供80个启动时钟。
+2. CMD0 → CMD8 → CMD55/ACMD41循环 → CMD2 → CMD3取得RCA → CMD7并等待DAT0解除busy → CMD55/ACMD6(2) → CMD16(512)。OCR的CCS决定地址单位。
+3. 进入四位25MHz。正式profile发CMD6(0x00FFFFF1)查询High Speed支持与busy；确认支持且空闲才发CMD6(0x80FFFFF1)切换。
+4. 两次CMD6都接收64字节状态和四路CRC16。字节13的bit1表示支持，字节16低4位为选中功能，字节29的bit1为busy。只有切换后选中1、非busy且CRC/结束位正确才等待八个SD时钟后升50MHz。未知结果重新初始化，不能直接假定卡仍处于旧模式。
+5. CMD17读单扇区；SDHC参数为LBA，SDSC参数为LBA左移9位，溢出报错。512字节由1024个四位数据拍接收，四条线分别计算CRC16。未实现CMD18/CMD12多块优化。
+
+这里是3.3V **High Speed、50MHz、单沿SDR**，不执行CMD11/1.8V切换，不是UHS-I SDR50或DDR50。理论数据阶段25MHz为12.5MB/s，50MHz为25MB/s；实际还包括命令、响应、CRC和卡等待。
+
+命令CRC7多项式0x09；数据CRC16为0x1021。48位R1/R6/R7校验头、结束位和CRC，136位R2对CID/CSD内容120位校验，R3保留CRC不作有效判断。错响应、起止标志、CRC或超时均走错误恢复。
+
+## 上层接口保持
+
+sd_card_top保留原扇区请求、地址、逐字节valid、成功end及init/error握手；物理侧为六线原生接口。数据字节在CRC最终判定前输出，只有CRC与结束位全部正确才产生sd_sec_read_end；失败产生sd_transfer_error，不能把已收到的字节当作成功扇区。响应损坏时排空仍在发送的数据或等待超时，再处理下一请求。只读不写卡，写请求报错而不假报写成功。
+
+FAT32、仲裁、BMP解析、WAV解析、缩放五个模块相对阶段四保持零差异。sd_card_bmp仅透传物理接口/构建参数和等价优化索引计算。两个TD入口与design_files使用同一正式源清单，必要官方IP保留。
+
+## 源文件与激励
+
+| 文件 | 作用 |
 |---|---|
-| [sd_bus_phy.v](../src/modules/sd/native/sd_bus_phy.v) | 100MHz 单时钟 PHY，SD 时钟分频，CMD OE/开漏识别阶段，48位命令发送、48/136位响应接收、CRC7、四条 DAT 的 CRC16、逐字节输出及超时 |
-| [sd_native_controller.v](../src/modules/sd/native/sd_native_controller.v) | 原生初始化、RCA/CCS、CMD17 单扇区读取、初始化超时/次数限制/暂停重试、读错恢复、请求去重 |
-| [sd_card_top_native.v](../src/modules/sd/native/sd_card_top_native.v) | 独立候选封装，扇区侧保留原端口名称和位宽，物理侧为六根 SD 信号 |
+| [sd_bus_phy.v](../src/modules/sd/native/sd_bus_phy.v) | 100MHz单域分频、CMD OE、命令/响应、64/512字节接收、CRC及超时；25MHz在名义上升沿采样，50MHz采样许可延后一拍100MHz |
+| [sd_native_controller.v](../src/modules/sd/native/sd_native_controller.v) | 初始化、RCA/CCS、CMD6查询切换、CMD17、错误重试与去重 |
+| [sd_card_top_native.v](../src/modules/sd/native/sd_card_top_native.v) | PHY与控制器封装；ENABLE_HIGH_SPEED为构建参数 |
+| [sd_native_card_model.v](../sim/sd_native_card_model.v) | 引脚级逻辑卡模型、独立CRC、FAT32镜像、可配置输出延迟 |
+| [tb_sd_native.v](../sim/tb_sd_native.v) | SDHC/SDSC、四线CRC、错响应/起止、超时恢复、吞吐和请求去重 |
+| [tb_sd_native_clock.v](../sim/tb_sd_native_clock.v) | 真实200kHz初始化、80启动时钟与25MHz完整周期切换 |
+| [tb_sd_native_fat32.v](../sim/tb_sd_native_fat32.v) | 真实FAT32/仲裁、碎片BMP/WAV逐字节校验 |
+| [tb_sd_native_integrated.v](../sim/tb_sd_native_integrated.v) | 正式原生25MHzprofile，经物理引脚到FAT/BMP/缩放/WAV，无force替换 |
+| [tb_sd_highspeed.v](../sim/tb_sd_highspeed.v) | CMD6支持/不支持/busy/拒绝、查询和切换CRC/响应/无数据超时、恢复25、50MHz周期及吞吐 |
+| [tb_sd_highspeed_player.v](../sim/tb_sd_highspeed_player.v) | 14ns输出延迟卡模型，经正式50MHzprofile校验两帧图片像素与PCM循环 |
 
-这些文件位于独立 `native/` 子目录，**没有登记到正式 `design_files.txt` 和两个 `video_improve.al` 中**，源数量随键盘等阶段增加，准确登记数量见[构建状态](BUILD_STATUS.md)。可用独立 TD 综合脚本检查候选：`scripts/synth_sd_native.tcl`。独立候选综合中的扇区请求/数据端口是测试顶层 IO，报告里的57个 IO不是最终板级 IO 数量。
-
-指定不可修改的 `sd_read_arbiter.v`、`sd_fat32.v`、`bmp_read.v`、`audio_wav.v`、`bmp_scale_loader.v` 均未修改；本轮也未修改 `sd_card_bmp.v`、PLL、正式 SDC、官方 IP 和 KEY/SW 控制。
-
-## 协议和性能
-
-正式默认输入为100MHz。初始化默认 `SPI_LOW_SPEED_DIV=248`，半周期250拍，SD_CLK 为200kHz；先提供80个时钟，再发送命令。这是 SD 上电识别所需的低速阶段，不能把25MHz运行目标直接用于上电初始化。
-
-初始化序列为：CMD0 → CMD8 → CMD55/ACMD41 循环 → CMD2 → CMD3 → CMD7 → CMD55/ACMD6(2) → CMD16(512)。CMD3 获得 RCA 后退出主机 CMD 开漏发送阶段；CMD7 使用 R1b，并等待 DAT0 busy 解除。ACMD41 返回 R3/OCR，不能按 R1 状态解释。OCR bit31 表示就绪、bit30 表示 CCS。
-
-初始化成功后，PHY 在完整时钟周期边界切到100MHz/4=25MHz，数据四线并行接收，无 SPI 回退。相邻命令保留 SD 规范要求的至少8个时钟 Ncc 间隔；正常读卡没有软件等待计数或人为暂停。
-
-SDHC 使用扇区 LBA；SDSC 使用 LBA 左移9位的字节地址，超出32位可表示范围时直接报错。单扇区采用 CMD17；本轮未实现 CMD18/CMD12 多块优化。
-
-CRC7 多项式为0x09，主机发送完整命令 CRC；R1/R6/R7 校验响应头、结束位和 CRC，R2 校验 CID 的120位内容 CRC，R3 的 CRC 字段为保留值，不作有效 CRC 判定。每个数据块由全零起始、1024个四位数据拍、四路独立16位 CRC、全一结束组成；任何一条数据线 CRC 不匹配、起止标志错误或超时均报读错。
-
-与原 SPI 版相同，字节输出在 CRC 最终判定之前产生，属于待提交数据；只有 CRC/结束位全部正确才发出 `sd_sec_read_end`。失败发出 `sd_transfer_error`，不会报成功。原有上层已按该事务约定处理错误，本轮不改图像/音频逻辑。
-
-响应损坏时，卡仍可能继续发送512字节。候选不会立即启动下一条命令，而是让接收机排空或到期，再接收后续请求；这段错误恢复时间不能算作正常无故障吞吐。扇区请求保持为高时只处理一次，撤销后下一笔请求可继续。写侧端口仅保留兼容位置：候选只读，不支持写卡，写请求报 `sd_transfer_error`，不发写成功握手。
-
-逻辑卡模型的连续16扇区测试：8192字节/73113个100MHz周期，**11.204574 MB/s**，计入 CMD17 命令、响应、数据、CRC、结束及请求握手。理论数据线原始带宽12.5MB/s。这是理想模型的接口级仿真结果，**不是实体卡实测**，也不能保证任意卡、任意随机读取和上层文件访问均达到10MB/s。
-
-## 如何运行 ModelSim 验证
-
-在 `E:/fpga` 的 PowerShell 中运行：
+完整ModelSim回归含以上测试：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_sd_native_tests.ps1
+cd E:\fpga
+python scripts/static_check.py
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_tests.ps1
+python scripts/run_build.py
 ```
 
-脚本自动生成 FAT32 夹具，使用独立 `sim/sd_native_work`，日志保存到 `reports/sd_native_20261016`。激励已经登记到全量 `scripts/run_tests.ps1` 的编译文件和测试循环，原有测试没有删除或放宽。
+不要同时运行共享sim/msim_work的仿真。旧25MHz专项可运行scripts/run_sd_native_tests.ps1，其独立库为sim/sd_native_work。逻辑模型测得25MHz约11.20MB/s、50MHz约22.34MB/s；这些不是实体卡或整机图片FPS。
 
-| 激励文件 | 验证内容 |
-|---|---|
-| [sd_native_card_model.v](../sim/sd_native_card_model.v) | 仅经 CMD/DAT 引脚交互的逻辑卡；独立多项式除法生成 CRC；可从真实 FAT32 夹具镜像按 LBA 读数据 |
-| [tb_sd_native.v](../sim/tb_sd_native.v) | SDHC/SDSC、R7错、响应CRC错、四条数据CRC逐条错、起止标志、无响应/数据、R1错误、R1b busy超时、ACMD41次数限制、R2/R6错误及恢复；连续吞吐、请求保持去重 |
-| [tb_sd_native_clock.v](../sim/tb_sd_native_clock.v) | 真实默认分频：200kHz初始化、至少80个启动时钟、CMD识别阶段释放高电平、切换后25MHz |
-| [tb_sd_native_fat32.v](../sim/tb_sd_native_fat32.v) | 原生物理引脚→真实仲裁器→原有 FAT32；MBR/无分区、碎片 BMP/WAV 文件逐字节核对 |
-| [tb_sd_native_player.v](../sim/tb_sd_native_player.v) | 保留真实播放器、缩放、FAT32、WAV模块，只把测试中的物理扇区源替换成原生控制器；两帧像素、PCM循环和提交确认核对 |
+## 实板仍要验证什么
 
-最后一项在测试中用 `force` 替换原 SPI 输出与播放器的连接；它验证上层在四位传输的节奏下工作，不等于正式顶层已经接入原生控制器。逻辑卡模型不覆盖实体卡输出延迟、PCB信号完整性、上拉电阻、IO电压或热插拔。
+本次80项回归、综合/P&R/内部STA通过，SWNS +0.026ns、HWNS +0.022ns，TNS0。时序报告不含已签核的SD卡输出延迟/PCB往返预算，0/6/14ns模型测试也不能代替板级STA。50MHz采样许可使用100MHz域的一拍延迟，没有照搬SDRAM移相或增加PLL。
 
-## 验证结论与下一步
-
-本轮日志与冻结哈希见 [交付记录](../reports/sd_native_20261016/RESULT.md)。正式整机 `run_build.py` 的结果属于当前仍用 SPI 的板级工程；独立原生综合成功也不能替代原生接入后的布局布线/STA。
-
-最终全量回归65/65通过，静态63源/36IO通过；正式SPI工程重建SWNS +0.034ns、HWNS +0.021ns、TNS均0。当前状态仍是“候选已验证、板级切换待接线依据”，不是本任务全部硬件验收完成。
-
-接线确认后，剩余实施顺序为：
-
-1. 将 `sd_card_top_native` 的原生实现替换进正式 `sd_card_top`，原物理层保存在备份中；只改 `sd_card_bmp` 的物理端口透传和 `top.v` 六根 SD 接线。
-2. 按真实焊球更新 `pin.adc`，CMD/DAT 设为双向并核对三态/OE；同步两个 TD 工程和源清单，不新增无依据的延迟数值。
-3. 为正式接入后的物理链路完成25MHz SD输出/输入的板级时序预算和约束，依据卡时序与PCB走线核实采样相位；100MHz内部STA通过不代表SD外部时序已签核。
-4. 重新运行全部回归、整机综合/布局布线/STA。现有初始化/错误看门狗、FAT32/BMP/WAV保持原逻辑。
-5. 用真实卡上板计数多扇区总字节和总周期，核对实际≥10MB/s，再验证静态图、换图和WAV播放。当前没有执行烧录、实体卡读写或实板测量。
-
-未解决硬件依据前，本轮不会生成号称“四位SD可上板”的bit，也不会将内部复位 removal 当作HDMI管脚hold或宣称达到+0.5ns。
+实板应先用NATIVE_HIGH_SPEED=0单独构建确认四位25MHz，再测默认自动协商50MHz；更换参数后必须重新回归/构建，不能沿用本页冻结哈希。测CMD/DAT波形、连续扇区总字节/总时间，检查CRC错误和长时间图像/音频播放；本轮没有执行物理下载或卡写入。内部removal不是HDMI管脚hold，也没有整体+0.5ns声明。

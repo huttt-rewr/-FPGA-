@@ -1,0 +1,17 @@
+from pathlib import Path
+R=Path(__file__).resolve().parents[2];D=Path(__file__).resolve().parent/'highspeed'
+p=R/'src/modules/sd/sd_card_top.v';s=p.read_text(encoding='utf-8')
+s=s.replace('parameter NATIVE_4BIT=0,','parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,')
+s=s.replace('sd_card_top_native #(.SPI_LOW_SPEED_DIV', 'sd_card_top_native #(.ENABLE_HIGH_SPEED(NATIVE_HIGH_SPEED),.SPI_LOW_SPEED_DIV')
+(D/'sd_card_top.v').write_text(s,encoding='utf-8')
+p=R/'src/modules/bmp/sd_card_bmp.v';s=p.read_text(encoding='utf-8')
+s=s.replace('parameter NATIVE_4BIT=0,', 'parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,')
+s=s.replace('sd_card_top #(.NATIVE_4BIT(NATIVE_4BIT))', 'sd_card_top #(.NATIVE_4BIT(NATIVE_4BIT),.NATIVE_HIGH_SPEED(NATIVE_HIGH_SPEED))')
+(D/'sd_card_bmp.v').write_text(s,encoding='utf-8')
+s=(R/'sim/tb_sd_native_integrated.v').read_text(encoding='utf-8')
+s=s.replace('tb_sd_native_integrated','tb_sd_highspeed_player')
+s=s.replace('.NATIVE_4BIT(1),', '.NATIVE_4BIT(1),.NATIVE_HIGH_SPEED(1),',1)
+s=s.replace('#(.IMAGE_MODE(1)) card', '#(.IMAGE_MODE(1),.DOUT_DELAY(14)) card')
+s=s.replace(".ccs(1'b1),.fault(4'd0),", ".ccs(1'b1),.fault(4'd0),.hs_mode(4'd1),")
+(D/'tb_sd_highspeed_player.v').write_text(s,encoding='utf-8')
+print('Prepared real high-speed parser/player probe outside active inputs')

@@ -1,7 +1,7 @@
 
 module sd_card_top
 #(
-	parameter NATIVE_4BIT=0,
+	parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,
 	parameter  SPI_LOW_SPEED_DIV = 248,         // SD card low speed mode frequency division parameter,spi clk speed = clk speed /((SPI_LOW_SPEED_DIV + 2) * 2 )
 	parameter  SPI_HIGH_SPEED_DIV = 0,
 	parameter  INIT_TIMEOUT_CYCLES = 800_000_000,
@@ -32,7 +32,7 @@ module sd_card_top
 );
 generate if(NATIVE_4BIT)begin:native_bus
  assign SD_nCS=1'b1;assign SD_DCLK=1'b0;assign SD_MOSI=1'b1;
- sd_card_top_native #(.SPI_LOW_SPEED_DIV(SPI_LOW_SPEED_DIV),
+ sd_card_top_native #(.ENABLE_HIGH_SPEED(NATIVE_HIGH_SPEED),.SPI_LOW_SPEED_DIV(SPI_LOW_SPEED_DIV),
   .INIT_TIMEOUT_CYCLES(INIT_TIMEOUT_CYCLES),.INIT_PAUSE_CYCLES(INIT_PAUSE_CYCLES),
   .WAIT_TIMEOUT_CYCLES(WAIT_TIMEOUT_CYCLES)) transport(
   .clk(clk),

@@ -1,5 +1,7 @@
 # 时序约束与验证边界
 
+> 当前正式源码：六线原生四位 SD，CMD6 成功确认后自动从25MHz升至50MHz，不支持/忙时保持四位25MHz；主控制100MHz。80项ModelSim和内部STA结果见[构建状态](BUILD_STATUS.md)。尚未实板验证；下文明确标注的旧版本说明只作历史参考。
+
 > 2026-10-17当前：正式SD已切为原生四位25MHz，CLK=A14、CMD=A13、DAT0=B14、DAT1=B15、DAT2=A11、DAT3=A12，仍使用原TF卡槽；CMD/DAT外部10kΩ上拉依据已确认。KEY/SW/键盘操作不变。50MHz尚为隔离候选，未实板。准确验收见[构建状态](BUILD_STATUS.md)。下文SPI与未接入描述为历史记录。
 
 > 当前10月14日板载优化版：SWNS **+0.110ns**、HWNS **+0.022ns**，STNS/HTNS均为0。最差max为上电监督器到写复位同步链的recovery，最差min为HDMI同步复位到OSD字符寄存器的removal；最差纯setup为+0.303ns。内部复位检查不是HDMI管脚hold。整体余量未优于10月13日基线，也未达+0.5ns；尚未上板及外部IO签核。来源、资源及独立bit见[构建状态](BUILD_STATUS.md)，下面10月11日及更早数值是历史证据。
