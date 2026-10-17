@@ -58,6 +58,15 @@ module sd_card_bmp #(
     output media_truncated
 );
 
+// Local reset leaves: immediate assertion, one extra 100MHz release clock.
+// Preserve separate physical drivers so the root reset does not drive every
+// parser, table RAM and SD register. No transaction starts before SD init.
+(* preserve="true" *) reg rst_fat,rst_bmp,rst_phy,rst_audio,rst_arb;
+always @(posedge clk or posedge rst)begin
+ if(rst)begin rst_fat<=1;rst_bmp<=1;rst_phy<=1;rst_audio<=1;rst_arb<=1;end
+ else begin rst_fat<=0;rst_bmp<=0;rst_phy<=0;rst_audio<=0;rst_arb<=0;end
+end
+
 wire fat_done,fat_error,fat_wav_found;
 wire [6:0] fat_audio_count;wire fat_audio_idle;
 reg [6:0]        img_found_count;
@@ -116,7 +125,7 @@ wire phy_aud_req,phy_aud_valid,phy_aud_end,phy_aud_error;
 wire [31:0] phy_aud_addr;
 wire [7:0] phy_aud_data;
 generate if(FAT32_ENABLE)begin: filesystem
- sd_fat32 #(.MAX_BMP(MAX_BMP),.INDEXED(INDEXED),.MAX_FILES(MAX_FILES)) fat(.clk(clk),.rst(rst),.sd_init_done(sd_init_done),
+ sd_fat32 #(.MAX_BMP(MAX_BMP),.INDEXED(INDEXED),.MAX_FILES(MAX_FILES)) fat(.clk(clk),.rst(rst_fat),.sd_init_done(sd_init_done),
   .mount_done(fat_done),.mount_error(fat_error),.mount_error_code(fat_error_code),
   .bmp_count(fat_count),.wav_found(fat_wav_found),.bmp_size(fat_sizes),.wav_size(fat_wav_size),
   .bmp_req(sd_sec_read),.bmp_file_idx(INDEXED?{1'b0,load_idx}:load_idx[2:0]),.bmp_rel_sector(sd_sec_read_addr),
@@ -150,7 +159,7 @@ end
 assign audio_error=|audio_error_code;
 generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
  sd_read_arbiter #(.TIMEOUT_CYCLES(READ_STALL_CYCLES)) arbiter(
-  .clk(clk),.rst(rst | (load_abort && !FAT32_ENABLE)),.sd_ready(sd_init_done),
+  .clk(clk),.rst(rst_arb | (load_abort && !FAT32_ENABLE)),.sd_ready(sd_init_done),
   .bmp_req(phy_bmp_req),.bmp_addr(phy_bmp_addr),.bmp_data(phy_bmp_data),
   .bmp_valid(phy_bmp_valid),.bmp_end(phy_bmp_end),
   .bmp_error(phy_bmp_error),.bmp_grant(phy_bmp_grant),
@@ -160,7 +169,7 @@ generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
   .sd_valid(card_valid),.sd_end(card_end),.sd_error(raw_transfer_error),
   .transport_reset(transport_reset));
  audio_wav #(.START_SECTOR(AUDIO_START_SECTOR),.FILESYSTEM(FAT32_ENABLE)) wav(
-  .clk(clk),.rst(rst | load_abort | audio_switching),.sd_init_done(sd_init_done),
+  .clk(clk),.rst(rst_audio | load_abort | audio_switching),.sd_init_done(sd_init_done),
   .enable(ENABLE_AUDIO && audio_enable && (!FAT32_ENABLE || (fat_done && fat_wav_found))),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
   .req(aud_req),.addr(aud_addr),.data(aud_data),.data_valid(aud_valid),
   .sector_end(aud_end),.read_error(aud_read_error),
@@ -219,6 +228,20 @@ assign status_auto = auto_play_en;
 assign status_index = img_idx[1:0];
 assign status_count = img_found_count[2:0];
 assign status_busy = load_busy;
+// Counts settle before media requests. Predecode them outside the priority
+// load/commit mux so a 7-bit count is not on every frame-control enable path.
+reg images_present,images_multiple;
+// Predecode the initialization branch before the frame-control priority mux.
+// Launch paths still require live sd_init_done; no SD request is issued early.
+reg waiting_for_init;
+always @(posedge clk or posedge rst)begin
+ if(rst)waiting_for_init<=1;
+ else waiting_for_init<=!sd_init_done && !scan_done;
+end
+always @(posedge clk or posedge rst)begin
+ if(rst)begin images_present<=0;images_multiple<=0;end
+ else begin images_present<=(img_found_count!=0);images_multiple<=(img_found_count>1);end
+end
 wire auto_tick;
 wire [5:0] next_from_current;
 reg direct_pending;reg [5:0] direct_index;
@@ -344,7 +367,7 @@ always @(posedge clk or posedge rst) begin
             source_done_seen <= 0;
             write_done_seen <= 0;
             next_req_pending <= 0;
-        end else if (!sd_init_done && !scan_done) begin
+        end else if (waiting_for_init) begin
             scan_kicked           <= 1'b0;
             first_image_committed <= 1'b0;
             auto_play_en          <= 1'b0;
@@ -450,21 +473,21 @@ always @(posedge clk or posedge rst) begin
                 write_done_seen       <= 1'b0;
             end else begin
                 // 忙的时候也只记 1 次“下一张”请求，不会累积成连跳两张
-                if ((key_next_press || cmd_next || cmd_prev) && scan_done && (img_found_count > 3'd0))
+                if ((key_next_press || cmd_next || cmd_prev) && scan_done && images_present)
                     begin next_req_pending <= 1'b1; prev_requested <= cmd_prev;direct_pending<=0;end
-                if(INDEXED && image_select_valid && scan_done && img_found_count!=0)begin
+                if(INDEXED && image_select_valid && scan_done && images_present)begin
                     direct_index<=(image_select_index>=img_found_count)?6'd0:image_select_index[5:0];
                     direct_pending<=1;next_req_pending<=1;
                 end
 
                 // 自动播放开/关
-                if ((key_auto_press || cmd_toggle) && scan_done && (img_found_count > 3'd1)) begin
+                if ((key_auto_press || cmd_toggle) && scan_done && images_multiple) begin
                     auto_play_en <= ~auto_play_en;
                     auto_cnt     <= 32'd0;
                 end
 
                 // 自动播放 1s 计数：只有当前没有写图任务时才计时
-                if (scan_done && auto_play_en && display_valid && !load_busy && first_image_committed && (img_found_count > 3'd1)) begin
+                if (scan_done && auto_play_en && display_valid && !load_busy && first_image_committed && images_multiple) begin
                     if (auto_tick)
                         auto_cnt <= 32'd0;
                     else
@@ -474,7 +497,7 @@ always @(posedge clk or posedge rst) begin
                 end
 
                 // 首图自动加载到 buffer0
-                if (scan_done && sd_init_done && !status_error && !first_image_committed && bmp_ready && !load_busy && (img_found_count != 3'd0)) begin
+                if (scan_done && sd_init_done && !status_error && !first_image_committed && bmp_ready && !load_busy && images_present) begin
                     load_idx         <= INDEXED?((image_select_index>=img_found_count)?6'd0:image_select_index[5:0]):6'd0;
                     load_sector      <= INDEXED?0:img_sector0;
                     pending_buf_idx  <= 2'd0;
@@ -490,7 +513,7 @@ always @(posedge clk or posedge rst) begin
                     auto_cnt         <= 32'd0;
                 end
                 // 手动下一张优先：写到“非当前显示”的另一块 buffer
-                else if (scan_done && sd_init_done && bmp_ready && !load_busy && next_req_pending && (img_found_count != 3'd0)) begin
+                else if (scan_done && sd_init_done && bmp_ready && !load_busy && next_req_pending && images_present) begin
                     load_idx         <= requested_next;
                     load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
@@ -506,7 +529,7 @@ always @(posedge clk or posedge rst) begin
                     auto_cnt         <= 32'd0;
                 end
                 // 自动播放下一张：同样写到“非当前显示”的另一块 buffer
-                else if (scan_done && sd_init_done && !status_error && bmp_ready && display_valid && !load_busy && auto_play_en && auto_tick && (img_found_count > 3'd1)) begin
+                else if (scan_done && sd_init_done && !status_error && bmp_ready && display_valid && !load_busy && auto_play_en && auto_tick && images_multiple) begin
                     load_idx         <= requested_next;
                     load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
@@ -527,7 +550,7 @@ end
 
 bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPTIVE(ADAPTIVE),.ENABLE_SCALING(ENABLE_SCALING)) bmp_read_m0(
     .clk                    (clk),
-    .rst                    (rst),
+    .rst                    (rst_bmp),
     .ready                  (bmp_ready),
 
     .scan_start             (scan_start_pulse),
@@ -563,7 +586,7 @@ bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.R
 
 sd_card_top sd_card_top_m0(
     .clk                    (clk),
-    .rst                    (rst | (load_abort && !FAT32_ENABLE) | transport_reset),
+    .rst                    (rst_phy | (load_abort && !FAT32_ENABLE) | transport_reset),
     .SD_nCS                 (SD_nCS),
     .SD_DCLK                (SD_DCLK),
     .SD_MOSI                (SD_MOSI),

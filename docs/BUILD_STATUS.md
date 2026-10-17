@@ -1,6 +1,14 @@
 # 构建状态
 
-## 当前阶段二：64文件索引（72项回归与STA通过）
+## 当前阶段三：R安全切模式和重新加载
+
+R已正式接入VGA/SVGA/小素材VGA请求，SVGA受EDID支持限制。独立控制复位保留用户设置，媒体/视频及EDID完成后的HDMI核先复位再切时钟，稳定等待后重新挂载和重载当前图片；自动轮播暂停。0和1均为VGA，0不自动降低大图读取量。
+
+静态68源/38IO、75项回归、综合/P&R/STA通过：SWNS **+0.451ns**、STNS 0.000ns、HWNS **+0.021ns**、HTNS 0.000ns。[精确输入清单](../reports/keyboard_20261016/phase3_wavlanes_validation.json)、[本轮报告](../reports/keyboard_20261016/RESULT_phase3_wavlanes.md)。70位状态布局和取位保留，100MHz未降低，没有新增功能路径false path。内部recovery/removal没有当成HDMI管脚hold，没有整体+0.5ns声明。
+
+F尚待正式接入；SD仍SPI25MHz，未生成本阶段bit，未实板。以下为各自冻结源码的历史结果。
+
+## 历史阶段二：64文件索引（72项回归与STA通过）
 
 正式源码启用BMP/WAV合计64文件、数字选图片、A+数字选音频、完整OSD计数与取消排空。切WAV清PCM队列及FIR/回声历史而保留48k样本调度，FIFO许可寄存并预留四槽。静态检查67源/38IO、72项ModelSim回归、综合/P&R/STA通过：**SWNS +0.131ns、STNS 0、HWNS +0.024ns、HTNS 0**。资源LUT15401、REG10239、BRAM9K61/64、DSP17、PLL2。[冻结清单](../reports/keyboard_20261016/phase2_room_validation.json)、[阶段报告](../reports/keyboard_20261016/RESULT_phase2_room.md)。70bit状态布局及下标保持。
 
@@ -16,7 +24,7 @@ R/F尚未正式消费请求。正式SD仍SPI25MHz，未生成本轮新bit、未�
 
 ## 2026-10-16 四位SD独立候选
 
-原生四位SD已完成协议、默认分频、真实FAT32及播放器四项仿真与独立TD综合。模型16扇区吞吐11.204574MB/s，非实板测量。DAT1/DAT2焊球和上拉依据尚缺，**未接入正式板级工程**，正式仍为SPI；四位模式整机P&R/STA和实板验收均未完成。[候选设计/仿真命令](SD_NATIVE_4BIT_20261016.md)、[本轮冻结结果](../reports/sd_native_20261016/RESULT.md)。
+原生四位SD已完成协议、默认分频、真实FAT32及播放器四项仿真与独立TD综合。模型16扇区吞吐11.204574MB/s，非实板测量。当时DAT1/DAT2焊球和上拉依据尚缺；现已由官方手册PDF第20页确认B15/A11及10kΩ上拉，**仍未接入正式板级工程**，正式仍为SPI；四位模式整机P&R/STA和实板验收均未完成。[候选设计/仿真命令](SD_NATIVE_4BIT_20261016.md)、[本轮冻结结果](../reports/sd_native_20261016/RESULT.md)。
 
 本轮正式SPI工程重建通过：SWNS +0.034ns、HWNS +0.021ns，TNS均0；完整65项回归通过。LUT15019、REG10052、BRAM9K59/64、DSP17、PLL2，未生成bit，未实板。冻结报告及源码哈希见上述本轮记录。先前FAT32修复见[10月16日时序证据](../reports/fat32_setup_20261016/RESULT.md)。以下10月15日负时序为修复前历史结果，不代表该修复后的源码。
 

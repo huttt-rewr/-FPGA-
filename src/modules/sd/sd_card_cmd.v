@@ -85,14 +85,14 @@ function [15:0] crc16_byte;
 endfunction
 always @(posedge sys_clk or posedge rst) begin
  if(rst)begin read_crc<=0;received_crc_hi<=0;end
- else if(state==S_READ_WAIT)begin read_crc<=0;received_crc_hi<=0;end
- else if(state==S_READ && spi_wr_ack)begin
+ else if(state[6])begin read_crc<=0;received_crc_hi<=0;end
+ else if(state[7] && spi_wr_ack)begin
   if(byte_cnt<512) read_crc<=crc16_byte(read_crc,data_recv);
   else if(byte_cnt==512) received_crc_hi<=data_recv;
  end
 end
-wire timed_wait = (state == S_READ_WAIT) || (state == S_WRITE_SUC) ||
-                  (state == S_WRITE_BUSY);
+wire timed_wait = (state[6]) || (state[13]) ||
+                  (state[14]);
 wire wait_expired = timed_wait && (state == wait_state) &&
                     ((WAIT_TIMEOUT_CYCLES <= 1) || timeout_reached);
 // Invalid tokens and busy bytes are not progress. Each wait gets its own budget.
@@ -113,18 +113,24 @@ always @(posedge sys_clk or posedge rst) begin
     end
 end
 
-assign cmd_req_ack = (state == S_END);
-assign block_read_req_ack = (state == S_READ_ACK);
-assign block_write_req_ack= (state == S_WRITE_ACK);
-assign block_write_data_rd = (state == S_WRITE_DATA_0);
+assign cmd_req_ack = (state[17]);
+assign block_read_req_ack = (state[8]);
+assign block_write_req_ack= (state[15]);
+assign block_write_data_rd = (state[10]);
 assign spi_data_in = send_data;
 assign data_recv = spi_data_out;
 assign nCS_ctrl = CS_reg;
+// Keep the original update conditions, without the shared parser-case CE.
+always @(posedge sys_clk or posedge rst)begin
+ if(rst)CS_reg<=1;
+ else if(wait_expired || state[0])CS_reg<=1;
+ else if(state[3] && !spi_wr_ack)CS_reg<=1;
+ else if(state[4] && !spi_wr_ack)CS_reg<=0;
+end
 always@(posedge sys_clk or posedge rst)
 begin
 	if(rst == 1'b1)
 	begin
-		CS_reg <= 1'b1;
 		spi_wr_req <= 1'b0;
 		byte_cnt <= 16'd0;
 		clk_div <= 16'd0;
@@ -136,7 +142,6 @@ begin
 	else if (wait_expired) begin
 		state <= S_ERR;
 		spi_wr_req <= 1'b0;
-		CS_reg <= 1'b1;
 	end
 	else
 		case(1'b1)
@@ -144,7 +149,6 @@ begin
 			begin
 				state <= S_INIT;
 				clk_div <= spi_clk_div;
-				CS_reg <= 1'b1;
 			end
 			state[2]:
 			begin
@@ -193,7 +197,6 @@ begin
 				else
 				begin
 					spi_wr_req <= 1'b1;
-					CS_reg <= 1'b1;
 					send_data <= 8'hff;
 				end
 			end
@@ -227,7 +230,6 @@ begin
 				else
 				begin
 					spi_wr_req <= 1'b1;
-					CS_reg <= 1'b0;
 					if(byte_cnt == 16'd0)
 						send_data <= (cmd[47:40] | 8'h40);
 					else if(byte_cnt == 16'd1)
@@ -407,7 +409,7 @@ always@(posedge sys_clk or posedge rst)
 begin
 	if(rst == 1'b1)
 		block_read_valid <= 1'b0;
-	else if(state == S_READ && byte_cnt < 16'd512)
+	else if(state[7] && byte_cnt < 16'd512)
 		block_read_valid <= spi_wr_ack;
 	else
 		block_read_valid <= 1'b0;
@@ -417,15 +419,15 @@ always@(posedge sys_clk or posedge rst)
 begin
 	if(rst == 1'b1)
 		block_read_data <= 8'd0;
-	else if(state == S_READ && spi_wr_ack == 1'b1)
+	else if(state[7] && spi_wr_ack == 1'b1)
 		block_read_data <= data_recv;
 end
 
 always @(posedge sys_clk or posedge rst) begin
     if (rst) begin response_valid <= 0; response_data <= 0; end
     else begin
-        response_valid <= (state == S_CMD_DATA) && spi_wr_ack;
-        if ((state == S_CMD_DATA) && spi_wr_ack) response_data <= data_recv;
+        response_valid <= (state[5]) && spi_wr_ack;
+        if ((state[5]) && spi_wr_ack) response_data <= data_recv;
     end
 end
 endmodule

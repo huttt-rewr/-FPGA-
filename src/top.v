@@ -63,22 +63,21 @@ reg frame_audio_underflow;
 wire gamma_vs,gamma_de;
 wire [9:0] gamma_x;
 wire [23:0] gamma_rgb;
-wire mode_800,mode_done,mode_fallback;
+wire mode_800,mode_done,mode_fallback,edid_mode_800;
 wire boot_clk,rst_boot;
-reg mode_ready;
-reg [12:0] settle_count;
+wire mode_ready;wire [1:0] active_res_mode,requested_mode_boot;
 wire [15:0] output_width=mode_sd?16'd800:16'd640;
 wire [15:0] output_height=mode_sd?16'd600:16'd480;
 wire [20:0] output_pixels=mode_mem?21'd480000:21'd307200;
 // Fixed non-overlapping slots sized for the maximum supported frame.
 wire [20:0] buffer1=21'd480000;
-always @(posedge boot_clk or posedge rst_boot)begin
- if(rst_boot)begin mode_ready<=0;settle_count<=0;end
- else if(mode_done && !mode_ready)begin
-  if(settle_count==4095)mode_ready<=1;
-  else settle_count<=settle_count+1'b1;
- end
-end
+// Runtime switching is controlled in the permanent EDID boot clock domain.
+cdc_snapshot #(.WIDTH(2)) mode_request_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data(res_mode),.dst_clk(boot_clk),.dst_rst(rst_boot),.dst_data(requested_mode_boot));
+video_mode_control mode_control(.clk(boot_clk),.rst(rst_boot),.edid_done(mode_done),
+ .supports_800(edid_mode_800),.requested_mode(requested_mode_boot),
+ .ready(mode_ready),.mode_800(mode_800),.active_mode(active_res_mode),.fallback(mode_fallback));
+
 
 // Upgrade control and status signals.
 (* async_reg="true" *) reg [1:0] video_overflow_sd;
@@ -101,15 +100,21 @@ wire [3:0] kb_digit;
 wire [7:0] kb_scan_code;
 wire kb_valid,kb_release,kb_extended,kb_error;
 wire board_next,board_toggle;
-// Stage 1 request registers: consumers for direct file selection and runtime
-// display/slide-rate changes are introduced only after this foundation passes.
+// Shared control registers: file selection and runtime display/slide-rate requests.
 (* keep="true" *) reg [7:0] image_index,audio_index;
 (* keep="true" *) reg [1:0] res_mode;
 (* keep="true" *) reg [3:0] fps_mode;
 reg osd_on;
 reg media_image_select,media_audio_select;
 wire [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count;
-wire media_truncated;
+wire media_truncated;wire player_display_valid;
+reg committed_image_seen;reg [6:0] last_committed_image;
+// Track commits separately from selection requests. An idle cycle before
+// load_busy rises must not overwrite a newly requested file with the old frame.
+always @(posedge sd_card_clk or posedge rst_sd)begin
+ if(rst_sd)begin committed_image_seen<=0;last_committed_image<=0;end
+ else if(player_display_valid)begin committed_image_seen<=1;last_committed_image<=media_image_index;end
+end
 wire [28:0] media_video;
 reg [28:0] frame_media;
 wire [1:0] transition_mode,slogan_select;
@@ -244,7 +249,7 @@ reg [7:0] edid_data_boot;
 // A local input stage also keeps data decode off the cross-clock timing path.
 always @(posedge boot_clk or posedge rst_boot)begin
  if(rst_boot)begin edid_valid_boot<=0;edid_data_boot<=0;end
- else begin edid_valid_boot<=edid_valid;edid_data_boot<=edid_data;end
+ else begin edid_valid_boot<=edid_valid && !mode_done;edid_data_boot<=edid_data;end
 end
 
 wire [9:0]  tmds_ch0_data;
@@ -278,6 +283,8 @@ end
 
 
 wire rst_sd,rst_mem,rst_video,rst_write;
+wire rst_controls;
+reset_sync reset_controls(.clk(sd_card_clk),.arst(rst_all),.rst(rst_controls));
 reset_sync reset_writer(.clk(ext_mem_clk),.arst(rst_all | !mode_ready | status_error),.rst(rst_write));
 // 10 ms after BOTH PLLs lock; frame heartbeat timeout is 2 seconds.
 // This fixed boot clock supervisor is outside its own reset feedback.
@@ -340,7 +347,7 @@ sd_card_bmp #(
     .commit_ack_toggle(commit_ack),.commit_req_toggle(commit_req),
     .commit_buffer(commit_buffer),.status_auto(status_auto),
     .status_index(status_index),.status_count(status_count),
-    .status_busy(status_busy),.status_error(status_error),
+    .status_busy(status_busy),.status_error(status_error),.display_valid(player_display_valid),
     .state_code        (state_code),
     .bmp_width         (output_width),
     .bmp_height        (output_height),
@@ -539,7 +546,9 @@ wire unused_ddc_sda;
 wire rst_vga,rst_svga;
 // Mode bits are settled before rst_video releases. Use local synchronized
 // signals here instead of decoding EDID-domain outputs into the core resets.
-reset_sync reset_vga(.clk(video_clk),.arst(rst_all | mode_video),.rst(rst_vga));
+// VGA must run during initial EDID acquisition (mode_done=0). Afterwards
+// both HDMI cores must remain reset throughout every runtime clock switch.
+reset_sync reset_vga(.clk(video_clk),.arst(rst_all | mode_video | (mode_done && rst_video)),.rst(rst_vga));
 reset_sync reset_svga(.clk(video_clk),.arst(rst_video | !mode_video),.rst(rst_svga));
 assign axis_s_ready=mode_video?svga_ready:vga_ready;
 assign tmds_ch0_data=mode_video?svga_ch0:vga_ch0;
@@ -667,19 +676,21 @@ assign osd_enable=osd_on;
 assign test_pattern=1'b0;
 // Cycle the three built-in slogans with the displayed image index.
 assign slogan_select=(status_index==3)?2'd0:status_index;
-ps2_keyboard keyboard(.clk(sd_card_clk),.rst(rst_sd),.ps2_clk(ps2_clk),.ps2_data(ps2_data),
+ps2_keyboard keyboard(.clk(sd_card_clk),.rst(rst_controls),.ps2_clk(ps2_clk),.ps2_data(ps2_data),
  .scan_code(kb_scan_code),.key_valid(kb_valid),.key_release(kb_release),
  .key_extended(kb_extended),.receive_error(kb_error));
-ps2_controls keyboard_events(.clk(sd_card_clk),.rst(rst_sd),.scan_code(kb_scan_code),
+ps2_controls keyboard_events(.clk(sd_card_clk),.rst(rst_controls),.scan_code(kb_scan_code),
  .key_valid(kb_valid),.key_release(kb_release),.key_extended(kb_extended),.receive_error(kb_error),
  .ev_next(kb_next),.ev_prev(kb_prev),.ev_toggle_auto(kb_toggle),.ev_vol_up(kb_vol_up),.ev_vol_dn(kb_vol_dn),
  .ev_mute(kb_mute),.ev_osd(kb_osd),.ev_res(kb_res),.ev_fps(kb_fps),
  .ev_digit(kb_digit),.ev_image_select(kb_image_select),.ev_audio_select(kb_audio_select),.audio_pending(kb_audio_pending));
-always @(posedge sd_card_clk or posedge rst_sd)begin
- if(rst_sd)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;media_image_select<=0;media_audio_select<=0;end
+always @(posedge sd_card_clk or posedge rst_controls)begin
+ if(rst_controls)begin image_index<=0;audio_index<=0;res_mode<=1;fps_mode<=2;osd_on<=1;media_image_select<=0;media_audio_select<=0;end
  else begin
   // Align pulses to the registered index, including consecutive choices.
   media_image_select<=kb_image_select;media_audio_select<=kb_audio_select;
+  if(!rst_sd && player_display_valid && (!committed_image_seen || media_image_index!=last_committed_image) && media_image_count!=0 && !status_busy && !kb_image_select && !media_image_select)
+   image_index<={1'b0,media_image_index}; // resume committed image after R
   if(kb_image_select)image_index<={4'd0,kb_digit};
   if(kb_audio_select)audio_index<={4'd0,kb_digit};
   if(kb_res)res_mode<=(res_mode==2)?0:res_mode+1'b1;
@@ -687,13 +698,13 @@ always @(posedge sd_card_clk or posedge rst_sd)begin
   if(kb_osd)osd_on<=!osd_on;
  end
 end
-picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0)) buttons(.clk(sd_card_clk),.rst(rst_sd),
+picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0)) buttons(.clk(sd_card_clk),.rst(rst_controls),
  .key1_n(key1),.key2_n(key2),.key3_n(key3),.next_pulse(board_next),.toggle_pulse(board_toggle),
  .brightness(brightness),.contrast(contrast),.edit_mode(edit_mode),
  .menu_open(menu_open),.menu_item(menu_item),.gamma_enable(gamma_enable),
  .debug_enable(debug_enable),.debug_page(debug_page),.audio_volume(volume),.audio_mute(mute),
  .kb_vol_up(kb_vol_up),.kb_vol_dn(kb_vol_dn),.kb_mute(kb_mute));
-switch_controls switches(.clk(sd_card_clk),.rst(rst_sd),.sw(sw),
+switch_controls switches(.clk(sd_card_clk),.rst(rst_controls),.sw(sw),
  .captions_enable(captions_enable),.scroll_enable(scroll_enable),
  .transition_mode(transition_mode));
 cdc_snapshot #(.WIDTH(70)) status_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
@@ -719,7 +730,7 @@ transition_pixels effects(.clk(video_clk),.rst(rst_video),.vs(gamma_vs),.de(gamm
  .x(gamma_x),.rgb(gamma_rgb),.effect_mode(running_effect),
  .fade_level(fade_level),.slide_offset(slide_offset),
  .out_vs(transition_vs),.out_de(transition_de),.out_rgb(transition_rgb));
-caption_overlay #(.ADAPTIVE(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(transition_vs),.de(transition_de),
+caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(transition_vs),.de(transition_de),
  .rgb(transition_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
@@ -737,7 +748,12 @@ status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1
  .file_image_index(frame_media[13:7]),.file_image_count(frame_media[6:0]),
  .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]));
 // 音频流有效标志单独整体跨域，不等待显示帧锁存；错误同时清空队列。
-cdc_snapshot #(.WIDTH(2)) audio_state_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
+// Local reset release leaf for the audio-status source handshake.
+(* preserve="true" *) reg rst_audio_status;
+always @(posedge sd_card_clk or posedge rst_sd)begin
+ if(rst_sd)rst_audio_status<=1;else rst_audio_status<=0;
+end
+cdc_snapshot #(.WIDTH(2)) audio_state_cdc(.src_clk(sd_card_clk),.src_rst(rst_audio_status),
  .src_data({wav_error,wav_ready}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(audio_stream_video));
 // Independent diagnostic bus; the original 70-bit status_source is untouched.
 cdc_snapshot #(.WIDTH(4)) audio_error_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
@@ -771,7 +787,7 @@ audio_playback #(.ADAPTIVE(1)) audio_source(.clk(video_clk),.rst(rst_video),.vol
  .out_valid(audio_valid),.out_left(audio_left),.out_right(audio_right));
 edid_display_mode edid_check(.clk(boot_clk),.rst(rst_boot),.start(edid_trig),
  .valid(edid_valid_boot),.data(edid_data_boot),.done(mode_done),.good(edid_good),
- .mode_800(mode_800),.fallback(mode_fallback));
+ .mode_800(edid_mode_800),.fallback());
 assign edid_done=mode_done;
 
 endmodule

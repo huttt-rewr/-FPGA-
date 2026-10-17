@@ -60,15 +60,30 @@ localparam ST_LOAD_DATA = 3'd4;
 
 reg [2:0]  state;
 reg [9:0]  rd_cnt;
-reg header_byte_valid;
+// Tag input first, then decode independent strobes with an aligned payload.
+// This separates the upstream shared-SD control path from byte-position
+// comparisons and avoids a wide priority mux at the header field enables.
+reg [33:0] header_select;
 reg [7:0] header_byte;
-reg [9:0] header_byte_index;
+reg header_tag_valid;
+reg [9:0] header_tag_index;
+reg [7:0] header_tag_data;
+integer header_decode;
 always @(posedge clk or posedge rst) begin
-    if(rst) begin header_byte_valid<=0; header_byte<=0; header_byte_index<=0; end
+    if(rst) begin header_tag_valid<=0;header_tag_index<=0;header_tag_data<=0;end
     else begin
-        header_byte_valid<=sd_sec_read_data_valid && ((state==ST_SCAN)||(state==ST_LOAD_HDR));
-        header_byte<=sd_sec_read_data;
-        header_byte_index<=rd_cnt;
+        header_tag_valid<=!load_abort && sd_init_done && sd_sec_read_data_valid &&
+            ((state==ST_SCAN)||(state==ST_LOAD_HDR));
+        header_tag_index<=rd_cnt;header_tag_data<=sd_sec_read_data;
+    end
+end
+always @(posedge clk or posedge rst) begin
+    if(rst) begin header_select<=0;header_byte<=0;end
+    else begin
+        header_byte<=header_tag_data;
+        for(header_decode=0;header_decode<34;header_decode=header_decode+1)
+            header_select[header_decode]<=header_tag_valid && !load_abort &&
+                (header_tag_index==header_decode);
     end
 end
 
@@ -216,48 +231,38 @@ always @(posedge clk or posedge rst) begin
         height       <= 32'd0;
         bit_count    <= 16'd0;
         compression  <= 32'd0;
-    end else if (((state == ST_SCAN) || (state == ST_LOAD_HDR)) && header_byte_valid) begin
-        case (header_byte_index)
-            10'd0 : header_0 <= header_byte;
-            10'd1 : header_1 <= header_byte;
-
-            10'd2 : file_len[7:0] <= header_byte;
-            10'd3 : file_len[15:8] <= header_byte;
-            10'd4 : file_len[23:16] <= header_byte;
-            10'd5 : file_len[31:24] <= header_byte;
-
-            10'd10: pixel_offset[7:0] <= header_byte;
-            10'd11: pixel_offset[15:8] <= header_byte;
-            10'd12: pixel_offset[23:16] <= header_byte;
-            10'd13: pixel_offset[31:24] <= header_byte;
-
-            10'd14: dib_size[7:0] <= header_byte;
-            10'd15: dib_size[15:8] <= header_byte;
-            10'd16: dib_size[23:16] <= header_byte;
-            10'd17: dib_size[31:24] <= header_byte;
-
-            10'd18: width[7:0] <= header_byte;
-            10'd19: width[15:8] <= header_byte;
-            10'd20: width[23:16] <= header_byte;
-            10'd21: width[31:24] <= header_byte;
-
-            10'd22: height[7:0] <= header_byte;
-            10'd23: height[15:8] <= header_byte;
-            10'd24: height[23:16] <= header_byte;
-            10'd25: height[31:24] <= header_byte;
-
-            10'd26: planes[7:0] <= header_byte;
-            10'd27: planes[15:8] <= header_byte;
-
-            10'd28: bit_count[7:0] <= header_byte;
-            10'd29: bit_count[15:8] <= header_byte;
-
-            10'd30: compression[7:0] <= header_byte;
-            10'd31: compression[15:8] <= header_byte;
-            10'd32: compression[23:16] <= header_byte;
-            10'd33: compression[31:24] <= header_byte;
-            default: ;
-        endcase
+    end else begin
+        // Current abort still cancels an already-tagged byte.
+        if(header_select[0] && !load_abort) header_0<=header_byte;
+        if(header_select[1] && !load_abort) header_1<=header_byte;
+        if(header_select[2] && !load_abort) file_len[7:0]<=header_byte;
+        if(header_select[3] && !load_abort) file_len[15:8]<=header_byte;
+        if(header_select[4] && !load_abort) file_len[23:16]<=header_byte;
+        if(header_select[5] && !load_abort) file_len[31:24]<=header_byte;
+        if(header_select[10] && !load_abort) pixel_offset[7:0]<=header_byte;
+        if(header_select[11] && !load_abort) pixel_offset[15:8]<=header_byte;
+        if(header_select[12] && !load_abort) pixel_offset[23:16]<=header_byte;
+        if(header_select[13] && !load_abort) pixel_offset[31:24]<=header_byte;
+        if(header_select[14] && !load_abort) dib_size[7:0]<=header_byte;
+        if(header_select[15] && !load_abort) dib_size[15:8]<=header_byte;
+        if(header_select[16] && !load_abort) dib_size[23:16]<=header_byte;
+        if(header_select[17] && !load_abort) dib_size[31:24]<=header_byte;
+        if(header_select[18] && !load_abort) width[7:0]<=header_byte;
+        if(header_select[19] && !load_abort) width[15:8]<=header_byte;
+        if(header_select[20] && !load_abort) width[23:16]<=header_byte;
+        if(header_select[21] && !load_abort) width[31:24]<=header_byte;
+        if(header_select[22] && !load_abort) height[7:0]<=header_byte;
+        if(header_select[23] && !load_abort) height[15:8]<=header_byte;
+        if(header_select[24] && !load_abort) height[23:16]<=header_byte;
+        if(header_select[25] && !load_abort) height[31:24]<=header_byte;
+        if(header_select[26] && !load_abort) planes[7:0]<=header_byte;
+        if(header_select[27] && !load_abort) planes[15:8]<=header_byte;
+        if(header_select[28] && !load_abort) bit_count[7:0]<=header_byte;
+        if(header_select[29] && !load_abort) bit_count[15:8]<=header_byte;
+        if(header_select[30] && !load_abort) compression[7:0]<=header_byte;
+        if(header_select[31] && !load_abort) compression[15:8]<=header_byte;
+        if(header_select[32] && !load_abort) compression[23:16]<=header_byte;
+        if(header_select[33] && !load_abort) compression[31:24]<=header_byte;
     end
 end
 

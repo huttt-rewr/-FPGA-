@@ -65,3 +65,4 @@ src/modules/input/ps2_keyboard.v
 src/modules/input/ps2_controls.v
 src/modules/audio/audio_effects_stream.v
 src/modules/audio/audio_fifo_room.v
+src/modules/video/video_mode_control.v

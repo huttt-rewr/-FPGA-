@@ -8,6 +8,12 @@ module tb_audio_sd_integration;
  wire [10:0] wu,ru;wire [11:0] sw,sh;
  integer errors=0,pixels=0,audio_reads=0,bmp_reads=0,samples=0,outputs=0,idx=0,busy=0,base=0,k;
  reg fault=0;reg [7:0] pcm_image[0:1535];
+ reg found_seen=0;
+ // found is a transaction pulse, not a level guaranteed at scan_done.
+ always @(posedge clk or posedge rst)begin
+  if(rst)found_seen<=0;
+  else if(found)found_seen<=1;
+ end
  bmp_read #(.SHARED_SD(1),.ENABLE_SCALING(1),.READ_STALL_CYCLES(900)) bmp(
  .clk(clk),.rst(rst),.ready(bready),.scan_start(scan),.scan_start_sector(32'd0),.scan_max_sector(32'd0),.scan_target_count(3'd1),.scan_done(sdone),.scan_found_valid(found),.load_start(load),.load_abort(1'b0),.load_sector(32'd0),.sd_init_done(1'b1),.read_granted(bg),.bmp_width(16'd640),.bmp_height(16'd480),.write_req(wrreq),.write_req_ack(wrreq),.sd_sec_read(br),.sd_sec_read_addr(ba),.sd_sec_read_data(bd),.sd_sec_read_data_valid(bv),.sd_sec_read_end(be),.bmp_data_wr_en(pen),.bmp_data(pixel),.read_stall(stall),.pixel_ready(1'b1),.source_width(sw),.source_height(sh));
  audio_wav #(.START_SECTOR(100)) wav(.clk(clk),.rst(rst),.sd_init_done(1'b1),.enable(enabled),.sector_room(wu<=764 && !full),.sample_ready(!full),.req(ar),.addr(aa),.data(ad),.data_valid(av),.sector_end(ae),.read_error(aer),.sample_valid(sample_valid),.sample(sample),.error(error),.ready(ready));
@@ -39,10 +45,10 @@ module tb_audio_sd_integration;
  for(k=0;k<1536;k=k+1)pcm_image[k]=0;
  u32(0,32'h46464952);u32(4,1060);u32(8,32'h45564157);u32(12,32'h20746d66);u32(16,16);pcm_image[20]=1;pcm_image[22]=1;u32(24,48000);u32(28,96000);pcm_image[32]=2;pcm_image[34]=16;u32(36,32'h61746164);u32(40,1024);
  for(k=44;k<1068;k=k+2)begin pcm_image[k]=8'h34;pcm_image[k+1]=8'h12;end
- repeat(5)@(negedge clk);rst=0;scan=1;@(negedge clk);scan=0;wait(sdone);check(found,"BMP scans while audio active");
+ repeat(5)@(negedge clk);rst=0;scan=1;@(negedge clk);scan=0;wait(sdone);@(negedge clk);check(found_seen || found,"BMP scans while audio active");
  @(negedge clk);load=1;@(negedge clk);load=0;wait(pixels==307200);wait(bready);repeat(30000)@(negedge clk);
  check(samples>1024 && outputs>10 && audio_reads>2 && bmp_reads>=3 && !error && !uf,"concurrent scan/scale/loop/HDMI stream");
- rst=1;repeat(5)@(negedge clk);pixels=0;samples=0;outputs=0;fault=1;rst=0;scan=1;@(negedge clk);scan=0;wait(error);wait(sdone);check(found && samples==0,"audio CRC failure isolated from BMP");
+ rst=1;repeat(5)@(negedge clk);pixels=0;samples=0;outputs=0;fault=1;rst=0;scan=1;@(negedge clk);scan=0;wait(error);wait(sdone);@(negedge clk);check((found_seen || found) && samples==0,"audio CRC failure isolated from BMP");
  @(negedge clk);load=1;@(negedge clk);load=0;wait(pixels==307200);check(error && !ber,"BMP continues after audio failure");
  if(errors==0)$display("ALL PASS tb_audio_sd_integration");else $display("FAILED integration %0d",errors);$finish;
  end

@@ -1,7 +1,7 @@
 // Pixel-domain layers: incoming picture -> half-transparent banner -> text/shadow.
 // One output register, with VS/DE delayed identically. Controls/time latch in blank.
 // Time is elapsed powered-on time, NOT wall clock. Text uses the existing ASCII font.
-module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0)(
+module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,parameter PIPELINED=0)(
     input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input scroll_enable,input [1:0] slogan_select,
     input [1:0] transition_mode,
@@ -66,11 +66,25 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0)(
     end
     wire [10:0] scroll_sum={1'b0,x}+{1'b0,scroll_x};
     wire [9:0] text_x=(scroll_sum>=640)?scroll_sum-11'd640:scroll_sum[9:0];
-    wire in_banner=(y>=432 && y<472);
-    wire in_clock=(x>=448 && x<624 && y>=16 && y<48);
-    wire [9:0] clock_x=x-10'd448;
-    wire [9:0] clock_y=y-10'd20;
-    wire [9:0] banner_y=y-10'd444;
+    // Split scroll arithmetic, 40-character selection and font/alpha into
+    // three stages. Legacy profiles retain one output register.
+    reg [9:0] x1,y1,tx1,x2,y2,tx2;
+    reg [23:0] rgb1,rgb2;
+    reg vs1,de1,vs2,de2,en1,en2,scroll1,scroll2;
+    reg [1:0] mode1,mode2;
+    reg [7:0] moving_char2,clock_char2;
+    wire [9:0] cx=PIPELINED?x1:x,cy=PIPELINED?y1:y;
+    wire [9:0] xx=PIPELINED?x2:x,yy=PIPELINED?y2:y;
+    wire [9:0] moving_x=PIPELINED?tx2:text_x;
+    wire [23:0] background=PIPELINED?rgb2:rgb;
+    wire draw_de=PIPELINED?de2:de,draw_vs=PIPELINED?vs2:vs;
+    wire draw_enabled=PIPELINED?en2:enabled,draw_scroll=PIPELINED?scroll2:scrolling;
+    wire [1:0] draw_mode=PIPELINED?mode2:selected_mode;
+    wire in_banner=(yy>=432 && yy<472);
+    wire in_clock=(xx>=448 && xx<624 && yy>=16 && yy<48);
+    wire [9:0] clock_x=cx-10'd448;
+    wire [9:0] clock_y=yy-10'd20;
+    wire [9:0] banner_y=yy-10'd444;
     reg [7:0] clock_char;
     always @* begin
         case(clock_x[7:4])
@@ -84,34 +98,51 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0)(
             default:clock_char=" ";
         endcase
     end
-    wire [7:0] moving_char=(text_x<640)?(slogan >> ((39-text_x[9:4])*8)):8'h20;
+    wire [9:0] select_x=PIPELINED?tx1:text_x;
+    wire [7:0] moving_char=(select_x<640)?(slogan >> ((39-select_x[9:4])*8)):8'h20;
+    wire [9:0] glyph_clock_x=xx-10'd448;
+    generate if(PIPELINED)begin:font_pipeline
+      always @(posedge clk or posedge rst)begin
+        if(rst)begin
+          x1<=0;y1<=0;tx1<=0;x2<=0;y2<=0;tx2<=0;rgb1<=0;rgb2<=0;
+          vs1<=0;de1<=0;vs2<=0;de2<=0;en1<=0;en2<=0;
+          scroll1<=0;scroll2<=0;mode1<=0;mode2<=0;moving_char2<=32;clock_char2<=32;
+        end else begin
+          x1<=x;y1<=y;tx1<=text_x;rgb1<=rgb;vs1<=vs;de1<=de;
+          en1<=enabled;scroll1<=scrolling;mode1<=selected_mode;
+          x2<=x1;y2<=y1;tx2<=tx1;rgb2<=rgb1;vs2<=vs1;de2<=de1;
+          en2<=en1;scroll2<=scroll1;mode2<=mode1;
+          moving_char2<=moving_char;clock_char2<=clock_char;
+        end
+      end
+    end endgenerate
     wire [7:0] moving_glyph,clock_glyph;
-    osd_char_rom moving_font(moving_char,banner_y[4:1],moving_glyph);
-    osd_char_rom clock_font(clock_char,clock_y[4:1],clock_glyph);
-    wire moving_lit=in_banner && y>=444 && y<458 && text_x[3:1]<5 && moving_glyph[4-text_x[3:1]];
-    wire clock_lit=in_clock && y>=20 && y<34 && clock_x[3:1]<5 && clock_glyph[4-clock_x[3:1]];
+    osd_char_rom moving_font(PIPELINED?moving_char2:moving_char,banner_y[4:1],moving_glyph);
+    osd_char_rom clock_font(PIPELINED?clock_char2:clock_char,clock_y[4:1],clock_glyph);
+    wire moving_lit=in_banner && yy>=444 && yy<458 && moving_x[3:1]<5 && moving_glyph[4-moving_x[3:1]];
+    wire clock_lit=in_clock && yy>=20 && yy<34 && glyph_clock_x[3:1]<5 && clock_glyph[4-glyph_clock_x[3:1]];
     // alpha=1/2: each channel average of background and dark blue (0,16,32).
-    wire [7:0] br={1'b0,rgb[23:17]};
-    wire [7:0] bg={1'b0,rgb[15:9]}+8'd8;
-    wire [7:0] bb={1'b0,rgb[7:1]}+8'd16;
+    wire [7:0] br={1'b0,background[23:17]};
+    wire [7:0] bg={1'b0,background[15:9]}+8'd8;
+    wire [7:0] bb={1'b0,background[7:1]}+8'd16;
     wire [23:0] tint={br,bg,bb};
     // Mode indicator: white=cut, amber=fade, cyan=slide, purple=alternating.
-    wire [23:0] mode_color=(selected_mode==0)?24'hffffff:
-                           (selected_mode==1)?24'hffb040:
-                           (selected_mode==2)?24'h40e0ff:24'hd080ff;
+    wire [23:0] mode_color=(draw_mode==0)?24'hffffff:
+                           (draw_mode==1)?24'hffb040:
+                           (draw_mode==2)?24'h40e0ff:24'hd080ff;
     reg [23:0] composed;
     always @* begin
-        composed=rgb;
-        if(enabled && de) begin
+        composed=background;
+        if(draw_enabled && draw_de) begin
             if(in_banner || in_clock) composed=tint;
-            if(in_banner && y>=432 && y<434) composed=mode_color;
-            if(x>=632 && y>=436 && y<440) composed=scrolling?24'h40ff80:24'hff6060;
+            if(in_banner && yy>=432 && yy<434) composed=mode_color;
+            if(xx>=632 && yy>=436 && yy<440) composed=draw_scroll?24'h40ff80:24'hff6060;
             if(moving_lit) composed=24'hffe090;
             if(clock_lit) composed=24'hffffff;
         end
     end
     always @(posedge clk or posedge rst) begin
         if(rst) begin out_vs<=0;out_de<=0;out_rgb<=0;end
-        else begin out_vs<=vs;out_de<=de;out_rgb<=de?composed:24'd0;end
+        else begin out_vs<=draw_vs;out_de<=draw_de;out_rgb<=draw_de?composed:24'd0;end
     end
 endmodule

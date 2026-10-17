@@ -1,7 +1,7 @@
 // Additional fixed outputs, not undocumented dynamic PLL programming.
 // Derived from the existing 1GHz NOCOMP video PLL configuration.
-// Select changes only during boot with ALL consumers held in reset for 4096
-// reference pixel cycles. Dedicated global switches select related 1x/5x pairs.
+// Boot and runtime selections hold consumers reset around the clock change
+// and for 4096 boot clocks afterwards. Dedicated muxes select related 1x/5x pairs.
 module adaptive_video_clock(input refclk,input reset,input mode_800,
  output locked,output boot_clk,output pixel_clk,output serial_clk);
  wire c25,c125,c40,c200;

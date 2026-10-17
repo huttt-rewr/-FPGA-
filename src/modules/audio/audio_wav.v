@@ -10,13 +10,14 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  output reg ready);
  // Explicit one-hot states: failure/retry is also observed outside the case,
  // so this tool does not automatically recode the original binary register.
- localparam [15:0] IDLE=15'h0001,ENSURE=15'h0002,FETCH=15'h0004,
+ localparam [16:0] IDLE=17'h00001,ENSURE=17'h00002,FETCH=17'h00004,
  WAIT_BYTE=15'h0008,CONSUME=15'h0010,RIFF_CHECK=15'h0020,
  CHUNK_CHECK=15'h0040,FMT_CHECK=15'h0080,WAIT_SPACE=15'h0100,
  FAILED=15'h0200,CHUNK_BOUNDS=15'h0400,CHUNK_APPLY=15'h0800,
- RIFF_APPLY=15'h1000,WAIT_SAMPLE=15'h2000,CHUNK_CLASSIFY=15'h4000,FMT_APPLY=16'h8000;
+ RIFF_APPLY=15'h1000,WAIT_SAMPLE=15'h2000,CHUNK_CLASSIFY=15'h4000,FMT_APPLY=17'h08000,
+ CACHE_PROBE=17'h10000;
  localparam RIFF=0,CHUNK=1,FMT=2,PCM=3;
- reg [15:0] state;
+ reg [16:0] state;
  reg [1:0] kind;
  reg [31:0] position,file_end,chunk_size,chunk_id,chunk_next;
  reg [31:0] available,trailing;
@@ -54,6 +55,7 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  reg resume_space;
  reg last_pcm_byte,sector_last_byte;
  reg sector_room_q;
+ reg position_limit,cache_hit;
  // Break FIFO Gray decode/occupancy arithmetic before WAV state/CE fanout.
  // Top reserves 260 slots for at most 256 sector samples; one-cycle delayed
  // permission cannot exhaust that guard space. WAIT_SAMPLE checks readiness
@@ -77,14 +79,15 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  end
  always @(posedge clk or posedge rst)begin
   if(rst)begin
-   state<=IDLE;kind<=RIFF;position<=0;file_end<=0;chunk_size<=0;chunk_id<=0;
+   state<=IDLE;kind<=RIFF;position<=0;file_end<=0;
    chunk_next<=0;pcm_start<=0;pcm_length<=0;remaining<=0;
    available<=0;trailing<=0;padded_size<=0;position_ok<=0;bounds_ok<=0;riff_ok<=0;
    fmt_chunk_ok<=0;data_chunk_ok<=0;tail_ok<=0;is_fmt<=0;is_data<=0;
    cache_tag<=0;cache_valid<=0;fmt_valid<=0;low_valid<=0;low_byte<=0;
-   count<=0;field<=0;riff_id<=0;riff_size<=0;wave_id<=0;rate<=0;byte_rate<=0;
-   format<=0;channels<=0;align<=0;bits<=0;sample_valid<=0;sample<=0;error_code<=0;ready<=0;
+   count<=0;field<=0;
+   sample_valid<=0;sample<=0;error_code<=0;ready<=0;
    resume_space<=0;last_pcm_byte<=0;sector_last_byte<=0;
+   position_limit<=0;cache_hit<=0;
   end else begin
    sample_valid<=0;
    // Keep the failed-state delay across SD reinitialization. An arbiter timeout
@@ -99,11 +102,18 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      end
     end
     state[1]:begin
+     // Register the wide address predicates before the request/count enables.
+     // Position and cache tag remain stable until CACHE_PROBE consumes them.
+     position_limit<=position>=MAX_BYTES;
+     cache_hit<=cache_valid && cache_tag==position[31:9];
+     state<=CACHE_PROBE;
+    end
+    state[16]:begin
      // 初始RIFF最小长度及每次块尾检查保证下一个8字节块头在界内。
      if(!sd_init_done)begin state<=IDLE;ready<=0;cache_valid<=0;end
-     else if(position>=MAX_BYTES)begin error_code<=4;state<=FAILED;end
+     else if(position_limit)begin error_code<=4;state<=FAILED;end
      else if(kind==PCM && (!enable || !sector_room_q))state<=WAIT_SPACE;
-     else if(cache_valid && cache_tag==position[31:9])state<=WAIT_BYTE;
+     else if(cache_hit)state<=WAIT_BYTE;
      else begin cache_tag<=position[31:9];cache_valid<=0;count<=0;state<=FETCH;end
     end
     state[2]:begin
@@ -141,24 +151,10 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      end else begin
       position<=position+1'b1;field<=field+1'b1;state<=ENSURE;
       if(kind==RIFF)begin
-       if(field<4)riff_id[field*8+:8]<=q;
-       else if(field<8)riff_size[(field-4)*8+:8]<=q;
-       else wave_id[(field-8)*8+:8]<=q;
        if(field==11)state<=RIFF_CHECK;
       end else if(kind==CHUNK)begin
-       if(field<4)chunk_id[field*8+:8]<=q;else chunk_size[(field-4)*8+:8]<=q;
        if(field==7)state<=CHUNK_CHECK;
-      end else begin
-       case(field)
-        0,1:format[field*8+:8]<=q;
-        2,3:channels[(field-2)*8+:8]<=q;
-        4,5,6,7:rate[(field-4)*8+:8]<=q;
-        8,9,10,11:byte_rate[(field-8)*8+:8]<=q;
-        12,13:align[(field-12)*8+:8]<=q;
-        14,15:bits[(field-14)*8+:8]<=q;
-       endcase
-       if(field==15)state<=FMT_CHECK;
-      end
+      end else if(field==15)state<=FMT_CHECK;
      end
     end
     state[5]:begin
@@ -231,4 +227,94 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
    endcase
   end
  end
+ // Independent fixed byte lanes avoid variable-part-select priority muxes.
+ // All bytes are overwritten before their check state; reset behavior retained.
+ genvar g_riff_id;
+ generate for(g_riff_id=0;g_riff_id<4;g_riff_id=g_riff_id+1)begin:decode_riff_id
+  always @(posedge clk or posedge rst)begin
+   if(rst)riff_id[g_riff_id*8+:8]<=0;
+   else if(state[4] && kind==RIFF && field==g_riff_id+0)
+    riff_id[g_riff_id*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_riff_size;
+ generate for(g_riff_size=0;g_riff_size<4;g_riff_size=g_riff_size+1)begin:decode_riff_size
+  always @(posedge clk or posedge rst)begin
+   if(rst)riff_size[g_riff_size*8+:8]<=0;
+   else if(state[4] && kind==RIFF && field==g_riff_size+4)
+    riff_size[g_riff_size*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_wave_id;
+ generate for(g_wave_id=0;g_wave_id<4;g_wave_id=g_wave_id+1)begin:decode_wave_id
+  always @(posedge clk or posedge rst)begin
+   if(rst)wave_id[g_wave_id*8+:8]<=0;
+   else if(state[4] && kind==RIFF && field==g_wave_id+8)
+    wave_id[g_wave_id*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_chunk_id;
+ generate for(g_chunk_id=0;g_chunk_id<4;g_chunk_id=g_chunk_id+1)begin:decode_chunk_id
+  always @(posedge clk or posedge rst)begin
+   if(rst)chunk_id[g_chunk_id*8+:8]<=0;
+   else if(state[4] && kind==CHUNK && field==g_chunk_id+0)
+    chunk_id[g_chunk_id*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_chunk_size;
+ generate for(g_chunk_size=0;g_chunk_size<4;g_chunk_size=g_chunk_size+1)begin:decode_chunk_size
+  always @(posedge clk or posedge rst)begin
+   if(rst)chunk_size[g_chunk_size*8+:8]<=0;
+   else if(state[4] && kind==CHUNK && field==g_chunk_size+4)
+    chunk_size[g_chunk_size*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_format;
+ generate for(g_format=0;g_format<2;g_format=g_format+1)begin:decode_format
+  always @(posedge clk or posedge rst)begin
+   if(rst)format[g_format*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_format+0)
+    format[g_format*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_channels;
+ generate for(g_channels=0;g_channels<2;g_channels=g_channels+1)begin:decode_channels
+  always @(posedge clk or posedge rst)begin
+   if(rst)channels[g_channels*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_channels+2)
+    channels[g_channels*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_rate;
+ generate for(g_rate=0;g_rate<4;g_rate=g_rate+1)begin:decode_rate
+  always @(posedge clk or posedge rst)begin
+   if(rst)rate[g_rate*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_rate+4)
+    rate[g_rate*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_byte_rate;
+ generate for(g_byte_rate=0;g_byte_rate<4;g_byte_rate=g_byte_rate+1)begin:decode_byte_rate
+  always @(posedge clk or posedge rst)begin
+   if(rst)byte_rate[g_byte_rate*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_byte_rate+8)
+    byte_rate[g_byte_rate*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_align;
+ generate for(g_align=0;g_align<2;g_align=g_align+1)begin:decode_align
+  always @(posedge clk or posedge rst)begin
+   if(rst)align[g_align*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_align+12)
+    align[g_align*8+:8]<=q;
+  end
+ end endgenerate
+ genvar g_bits;
+ generate for(g_bits=0;g_bits<2;g_bits=g_bits+1)begin:decode_bits
+  always @(posedge clk or posedge rst)begin
+   if(rst)bits[g_bits*8+:8]<=0;
+   else if(state[4] && kind==FMT && field==g_bits+14)
+    bits[g_bits*8+:8]<=q;
+  end
+ end endgenerate
 endmodule

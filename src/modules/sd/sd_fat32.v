@@ -22,7 +22,7 @@ module sd_fat32 #(
  output reg [6:0] wav_count,output reg files_truncated
 );
  // 独热编码；几何运算、比较、地址生成分拍完成。
- localparam [47:0] WAIT_INIT=40'h1,BOOT_REQ=40'h2,BOOT_RX=40'h4,
+ localparam [48:0] WAIT_INIT=40'h1,BOOT_REQ=40'h2,BOOT_RX=40'h4,
  BOOT_CHECK=40'h8,GEOM1=40'h10,GEOM2=40'h20,GEOM3=40'h40,
  DIR_ADDR=40'h80,DIR_REQ=40'h100,DIR_RX=40'h200,DIR_CHECK=40'h400,
  FAT_ADDR=40'h800,FAT_CHECK=40'h1000,FAT_REQ=40'h2000,FAT_RX=40'h4000,
@@ -36,8 +36,9 @@ module sd_fat32 #(
  STREAM_BASE=40'h1000000000,STREAM_FINISH=40'h2000000000,
  FAT_VALIDATE=40'h4000000000,META_DRAIN=40'h8000000000,
  STREAM_CHECK=41'h10000000000,BOOT_DECIDE=42'h20000000000,
- GEOM_FIELDS=43'h40000000000,FAT_COMMIT=44'h80000000000,TABLE_READ=47'h100000000000,TABLE_HIGH=47'h200000000000,TABLE_LATCH=47'h400000000000,FAT_PROBE=48'h800000000000;
- reg [47:0] state;
+ GEOM_FIELDS=43'h40000000000,FAT_COMMIT=44'h80000000000,TABLE_READ=47'h100000000000,TABLE_HIGH=47'h200000000000,TABLE_LATCH=47'h400000000000,FAT_PROBE=48'h800000000000,CURSOR_APPLY=49'h1000000000000;
+ reg [48:0] state;
+ reg cursor_reusable;
  reg owner,mount_fat,bpb_at_partition,dir_ended,cancel_bmp;
  reg [31:0] physical_addr,partition_lba,partition_size,selected_lba;
  reg partition_found;reg [7:0] partition_type;
@@ -136,6 +137,7 @@ module sd_fat32 #(
  reg spc_ok,cache_hit;
  reg cluster_ok,cluster_eoc,cluster_self,stream_bad,fat_rx_bad;
  reg meta_valid,meta_boot,meta_dir;reg [9:0] meta_index;reg [7:0] meta_data;
+ reg meta_partition;reg [3:0] meta_partition_offset;
  assign arb_bmp_req=!owner && transferring;assign arb_aud_req=owner && transferring;
  assign arb_bmp_addr=physical_addr;assign arb_aud_addr=physical_addr;
  assign bmp_data=disk_data;assign aud_data=disk_data;
@@ -164,11 +166,16 @@ module sd_fat32 #(
  // 元数据的接收使能、字节和索引先寄存，再译码写BPB/目录字段。
  // 末字节在CHECK拍落入字段寄存器，后续状态读取的是完整条目。
  always @(posedge clk or posedge rst)begin
-  if(rst)begin meta_valid<=0;meta_boot<=0;meta_dir<=0;meta_index<=0;meta_data<=0;end
+  if(rst)begin meta_valid<=0;meta_boot<=0;meta_dir<=0;meta_index<=0;meta_data<=0;meta_partition<=0;meta_partition_offset<=0;end
   else begin
    meta_valid<=sd_init_done && disk_valid && (state[2] || state[9]);
    meta_boot<=state[2];meta_dir<=state[9];
    meta_index<=byte_count;meta_data<=disk_data;
+   // MBR entries occupy 446..509; (index-446) modulo 16 equals
+   // the low nibble plus two. Register range/offset alongside this byte,
+   // rather than putting a wide subtract/range chain on selected_lba CE.
+   meta_partition<=!bpb_at_partition && byte_count>=446 && byte_count<510;
+   meta_partition_offset<=byte_count[3:0]+4'd2;
   end
  end
  // 每个流缓存一个FAT扇区，共1024B；同步读，复位仅清缓存标签。
@@ -177,15 +184,25 @@ module sd_fat32 #(
   if(state[14] && disk_valid && byte_count<512 && byte_count[1:0]==3)
    fat_cache[{owner,byte_count[8:2]}]<={disk_data,fat_word[23:0]};
  end
+ // A separate byte-counter owner prevents its saturating increment/hold
+ // decode being shared into every FSM register clock enable. Requests and
+ // returned-byte timing remain unchanged, including end+last-byte together.
+ always @(posedge clk or posedge rst)begin
+  if(rst)byte_count<=0;
+  else if(sd_init_done)begin
+   if(state[1] || state[8] || state[13] || state[22])byte_count<=0;
+   else if(transferring && disk_valid && byte_count<513)byte_count<=byte_count+1'b1;
+  end
+ end
  // synthesis translate_off
  initial if(MAX_BMP<1 || (!INDEXED && MAX_BMP>4) || MAX_FILES<1 || MAX_FILES>64 || ROOT_CLUSTER_LIMIT<1)begin $display("FAILED invalid FAT32 limits");$finish;end
  // synthesis translate_on
  always @(posedge clk or posedge rst)begin
   if(rst)begin
-   cache_hit<=0;state<=WAIT_INIT;mount_done<=0;mount_error<=0;mount_error_code<=0;
+   cursor_reusable<=0;cache_hit<=0;state<=WAIT_INIT;mount_done<=0;mount_error<=0;mount_error_code<=0;
    truncate_event<=0;cancel_aud<=0;
    store_bmp<=0;store_wav<=0;truncate_event<=0;store_index<=0;store_cluster<=0;store_size<=0;
-   owner<=0;mount_fat<=0;bpb_at_partition<=0;byte_count<=0;
+   owner<=0;mount_fat<=0;bpb_at_partition<=0;
    signature<=0;bytes_per_sector<=0;reserved_count<=0;root_entries<=0;fat16_size<=0;
    total_sectors<=0;fat_sectors<=0;root_cluster<=0;spc<=0;num_fats<=0;ext_flags<=0;fs_version<=0;
    partition_lba<=0;partition_size<=0;selected_lba<=0;partition_found<=0;
@@ -214,7 +231,6 @@ module sd_fat32 #(
    if(INDEXED && aud_abort)begin cursor_valid[1]<=0;cancel_aud<=1;end
    if(bmp_abort)begin cursor_valid[0]<=0;cancel_bmp<=1;end
    if(transferring && disk_valid)begin
-    if(byte_count<513)byte_count<=byte_count+1'b1;
     if(state[14])case(byte_count[1:0])
      0:fat_word[7:0]<=disk_data;1:fat_word[15:8]<=disk_data;2:fat_word[23:16]<=disk_data;default:;
     endcase
@@ -236,8 +252,8 @@ module sd_fat32 #(
       46:root_cluster[23:16]<=meta_data;47:root_cluster[31:24]<=meta_data;
       510:signature[7:0]<=meta_data;511:signature[15:8]<=meta_data;default:;
      endcase
-     if(!bpb_at_partition && meta_index>=446 && meta_index<510)begin
-      case((meta_index-446)&15)
+     if(meta_partition)begin
+      case(meta_partition_offset)
        4:partition_type<=meta_data;
        8:partition_candidate[7:0]<=meta_data;9:partition_candidate[15:8]<=meta_data;
        10:partition_candidate[23:16]<=meta_data;11:partition_candidate[31:24]<=meta_data;
@@ -273,7 +289,7 @@ module sd_fat32 #(
    end
    case(1'b1) // synthesis parallel_case
     state[0]:begin owner<=0;state<=BOOT_REQ;end
-    state[1]:begin byte_count<=0;state<=BOOT_RX;end
+    state[1]:begin state<=BOOT_RX;end
     state[2]:if(disk_error || disk_end)begin
      if(disk_error || !sector_length_ok)begin state<=FAULT;mount_error_code<=2;end else state<=META_DRAIN;
     end
@@ -347,7 +363,7 @@ module sd_fat32 #(
     state[31]:begin map_shifted<=map_minus_two<<spc_shift;state<=DIR_BASE;end
     state[32]:begin map_base<=first_data+map_shifted;state<=DIR_FINISH;end
     state[33]:begin physical_addr<=map_base+dir_sector;state<=DIR_REQ;end
-    state[8]:begin byte_count<=0;dir_ended<=0;state<=DIR_RX;end
+    state[8]:begin dir_ended<=0;state<=DIR_RX;end
     state[9]:if(disk_error || disk_end)begin
      if(disk_error || !sector_length_ok)begin state<=FAULT;mount_error_code<=2;end else state<=META_DRAIN;
     end
@@ -363,7 +379,7 @@ module sd_fat32 #(
      if(cache_hit)state<=FAT_LOOK;
      else begin physical_addr<=fat_lba;state<=FAT_REQ;end
     end
-    state[13]:begin byte_count<=0;fat_valid[owner]<=0;state<=FAT_RX;end
+    state[13]:begin fat_valid[owner]<=0;state<=FAT_RX;end
     state[14]:if(disk_error || disk_end)begin
      // 完整扇区校验先寄存，再提交标签，避免字节计数进位链串到缓存CE。
      fat_rx_bad<=disk_error || !sector_length_ok;state<=FAT_COMMIT;
@@ -407,7 +423,11 @@ module sd_fat32 #(
     state[34]:begin
      request_sectors<=({1'b0,request_size}+33'd511)>>9;
      // 先寄存目标簇序号，再比较游标，不串接可变移位与宽比较器。
-     if(cursor_valid[owner] && (cursor_file[owner]==request_file) && cursor_index[owner]<=target_index)begin
+     cursor_reusable<=cursor_valid[owner] && (cursor_file[owner]==request_file) && cursor_index[owner]<=target_index;
+     state<=CURSOR_APPLY;
+    end
+    state[48]:begin
+     if(cursor_reusable)begin
       working_cluster<=cursor_cluster[owner];working_index<=cursor_index[owner];
      end else begin working_cluster<=INDEXED?descriptor[63:32]:(owner?wav_cluster:image_cluster[request_file[1:0]]);working_index<=0;end
      state<=STREAM_CHECK;
@@ -433,7 +453,7 @@ module sd_fat32 #(
     state[35]:begin map_shifted<=map_minus_two<<spc_shift;state<=STREAM_BASE;end
     state[36]:begin map_base<=first_data+map_shifted;state<=STREAM_FINISH;end
     state[37]:begin physical_addr<=map_base+(request_rel & {24'd0,spc_mask});state<=STREAM_REQ;end
-    state[22]:begin byte_count<=0;state<=STREAM_RX;end
+    state[22]:begin state<=STREAM_RX;end
     state[23]:if(disk_error || disk_end)begin
      if(disk_error || !sector_length_ok)cursor_valid[owner]<=0;
      gap_count<=2;state<=GAP;

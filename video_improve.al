@@ -439,6 +439,14 @@
                     <Attr Name="CompileOrder" Val="52"/>
                 </FileInfo>
             </File>
+            <File Path="src/modules/video/video_mode_control.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="68"/>
+                </FileInfo>
+            </File>
             <File Path="src/modules/video/adaptive_video_clock.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>

@@ -13,14 +13,16 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg [9:0] ow,oh;
  // Explicit one-hot encoding avoids cascaded binary-state decoders in the
  // 100 MHz divider and pixel register enables. State transitions are unchanged.
- localparam [23:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
+ localparam [25:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
   DIV_DONE=24'h000008,ROW=24'h000010,CHECK_ROWS=24'h000020,
   LINE_START=24'h000040,CACHE=24'h000080,FETCH=24'h000100,BYTE=24'h000200,
   PIXEL=24'h000400,LEFT_WAIT=24'h000800,LEFT_GET=24'h001000,
   RIGHT_WAIT=24'h002000,RIGHT_GET=24'h004000,VERTICAL=24'h008000,
   SEND=24'h010000,HWAIT1=24'h020000,HWAIT2=24'h040000,HCAPTURE=24'h080000,
-  VWAIT1=24'h100000,VWAIT2=24'h200000,VWAIT3=24'h400000,CONFIG_CHECK=24'h800000;
- reg [23:0] state;
+  VWAIT1=24'h100000,VWAIT2=24'h200000,VWAIT3=24'h400000,CONFIG_CHECK=24'h800000,ROW_PROBE=25'h1000000,
+  SIZE_APPLY=26'h2000000;
+ reg [25:0] state;
+ reg row0_hit,row1_hit;
  reg [11:0] w,h,load_y,tag0,tag1;
  // Compute the invariant row end once, instead of w -> subtract -> compare
  // on every BYTE-state transition (the baseline worst setup path).
@@ -41,6 +43,13 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg [9:0] right_edge,bottom_edge,right_penult,bottom_penult;
  reg [27:0] x_acc,y_acc,x_step,y_step;
  reg [11:0] row_y0,row_y1;
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin row0_hit<=0;row1_hit<=0;end
+  else begin
+   row0_hit<=row_y0[0]?(tags_valid[1] && tag1==row_y0):(tags_valid[0] && tag0==row_y0);
+   row1_hit<=row_y1[0]?(tags_valid[1] && tag1==row_y1):(tags_valid[0] && tag0==row_y1);
+  end
+ end
  // Prepare terminal/vertical-enable decisions before SEND, rather than routing
  // output-height arithmetic and range comparisons into accumulator enables.
  reg row_last_pixel,frame_last_row,advance_source_y,source_y_endpoint;
@@ -62,6 +71,13 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg wide;
  wire [32:0] shifted_remainder={remainder[31:0],quotient[31]};
  wire subtract_ok=shifted_remainder>={1'b0,denominator};
+ // Keep the row-address load/increment separate from the pixel FSM.
+ // This prevents sparse state enables being shared into its address DSP CE.
+ always @(posedge clk or posedge rst)begin
+  if(rst)byte_address<=0;
+  else if(state[6])byte_address<=offset+load_y*stride;
+  else if(state[9])byte_address<=byte_address+1'b1;
+ end
  // Synchronous RAM reads; memories deliberately have no reset.
  always @(posedge clk) begin
   if(state[8] && sector_valid && cache_count<512) sector_mem[cache_count[8:0]]<=sector_data;
@@ -77,7 +93,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
    right_edge<=0;bottom_edge<=0;right_penult<=0;bottom_penult<=0;
    ow<=640;oh<=480;state<=IDLE;sector_read<=0;sector_address<=0;pixel<=0;pixel_valid<=0;
    done<=0;error<=0;busy<=0;w<=0;h<=0;stride<=0;offset<=0;base<=0;
-   byte_address<=0;cache_sector<=0;cache_valid<=0;cache_count<=0;
+   cache_sector<=0;cache_valid<=0;cache_count<=0;
    tags_valid<=0;tag0<=0;tag1<=0;load_y<=0;load_x<=0;read_x<=0;
    channel<=0;blue<=0;green<=0;dw<=0;dh<=0;pad_x<=0;pad_y<=0;
    ox<=0;oy<=0;x_acc<=0;y_acc<=0;x_step<=0;y_step<=0;
@@ -87,6 +103,14 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
    row_last_pixel<=0;frame_last_row<=0;advance_source_y<=0;source_y_endpoint<=0;
   end else begin
    done<=0;error<=0;
+   // Drive a next state on every clock. DIVIDE, FETCH and SEND may wait;
+   // spell out those self-loops below instead of sharing a large implicit
+   // hold-enable tree across all 25 state flip-flops.
+   state<=IDLE;
+   // Coordinates do not advance until SEND accepts this pixel. Weight
+   // samples therefore settle before either lerp consumes them; no large
+   // inside-image/state clock-enable tree is needed for these eight-bit data.
+   fx<=x_acc[15:8];fy<=y_acc[15:8];
    case(1'b1) // synthesis parallel_case
     state[0]: if(start) begin
      ow<=(ADAPTIVE && mode_800)?800:640;oh<=(ADAPTIVE && mode_800)?600:480;
@@ -111,6 +135,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      remainder<=0;div_count<=32;div_phase<=0;state<=DIVIDE;
     end
     state[2]: begin
+     state<=DIVIDE;
      remainder<=subtract_ok?shifted_remainder-{1'b0,denominator}:shifted_remainder;
      quotient<={quotient[30:0],subtract_ok};div_count<=div_count-1'b1;
      if(div_count==1)state<=DIV_DONE;
@@ -121,11 +146,8 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       0: begin
        dw<=wide?ow:((quotient==0)?1:quotient[9:0]);
        dh<=wide?((quotient==0)?1:quotient[9:0]):oh;
-       pad_x<=wide?0:(ow-((quotient==0)?1:quotient[9:0]))/2;
-       pad_y<=wide?(oh-((quotient==0)?1:quotient[9:0]))/2:0;
        quotient<=(w-32'd1)<<16;
-       denominator<=wide?(ow-1):((quotient<=1)?1:quotient-1'b1);
-       div_phase<=1;state<=DIVIDE;
+       div_phase<=1;state<=SIZE_APPLY;
       end
       1: begin
        right_edge<=pad_x+dw-1'b1;bottom_edge<=pad_y+dh-1'b1;
@@ -134,7 +156,15 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
        denominator<=(dh<=1)?1:dh-1'b1;div_phase<=2;state<=DIVIDE;
       end
       2: begin y_step<=(dh==1)?0:quotient[27:0];state<=ROW;end
+      default:state<=DIV_DONE;
      endcase
+    end
+    state[25]:begin
+     // Clamp dimensions first, then subtract them from the output size.
+     // Avoid quotient zero-decode/mux/subtract on the centering path.
+     pad_x<=(ow-dw)>>1;pad_y<=(oh-dh)>>1;
+     denominator<=(dw<=1)?1:dw-1'b1;
+     state<=DIVIDE;
     end
     state[4]: begin
      ox<=0;x_acc<=0;
@@ -144,18 +174,19 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      // combinational y_acc -> y1 comparator -> load_y CE path was the final
      // 100 MHz setup critical path after configuration was pipelined.
      row_y0<=y0;row_y1<=y1;
-     if(oy>=pad_y && oy<=bottom_edge)state<=CHECK_ROWS;
+     if(oy>=pad_y && oy<=bottom_edge)state<=ROW_PROBE;
      else state<=PIXEL;
     end
+    state[24]:state<=CHECK_ROWS;
     state[5]: begin
-     if(!(row_y0[0]?(tags_valid[1] && tag1==row_y0):(tags_valid[0] && tag0==row_y0)))begin
+     if(!row0_hit)begin
       load_y<=row_y0;state<=LINE_START;
-     end else if(!(row_y1[0]?(tags_valid[1] && tag1==row_y1):(tags_valid[0] && tag0==row_y1)))begin
+     end else if(!row1_hit)begin
       load_y<=row_y1;state<=LINE_START;
      end else state<=PIXEL;
     end
     state[6]: begin
-     byte_address<=offset+load_y*stride;load_x<=0;channel<=0;state<=CACHE;
+     load_x<=0;channel<=0;state<=CACHE;
     end
     state[7]: begin
      if(cache_valid && cache_sector==byte_address[31:9])state<=BYTE;
@@ -165,15 +196,16 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      end
     end
     state[8]: begin
+     state<=FETCH;
      if(sector_valid && cache_count<513)cache_count<=cache_count+1'b1;
      if(sector_end) begin
       sector_read<=0;
-      if(cache_count+sector_valid!=512)begin error<=1;busy<=0;state<=IDLE;end
+      if(!(sector_valid ? (cache_count==511) : (cache_count==512)))begin error<=1;busy<=0;state<=IDLE;end
       else begin cache_valid<=1;state<=CACHE;end
      end
     end
     state[9]: begin
-     byte_address<=byte_address+1'b1;state<=CACHE;
+     state<=CACHE;
      case(channel)
       0:begin blue<=byte_q;channel<=1;end
       1:begin green<=byte_q;channel<=2;end
@@ -182,7 +214,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
        if(load_x==last_source_x)begin
         if(load_y[0])begin tag1<=load_y;tags_valid[1]<=1;end
         else begin tag0<=load_y;tags_valid[0]<=1;end
-        state<=CHECK_ROWS;
+        state<=ROW_PROBE;
        end else load_x<=load_x+1'b1;
       end
      endcase
@@ -190,7 +222,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
     state[10]: begin
      row_last_pixel<=ox==ow-1;frame_last_row<=oy==oh-1;
      if(!inside_image)begin pixel<=0;pixel_valid<=1;state<=SEND;end
-     else begin read_x<=x0;fx<=x_acc[15:8];fy<=y_acc[15:8];state<=LEFT_WAIT;end
+     else begin read_x<=x0;state<=LEFT_WAIT;end
     end
     state[11]:state<=LEFT_GET;
     state[12]:begin
@@ -211,7 +243,9 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      else pixel<=vertical_result;
      pixel_valid<=1;state<=SEND;
     end
-    state[16]:if(pixel_ready)begin
+    state[16]:begin
+     state<=SEND;
+     if(pixel_ready)begin
      pixel_valid<=0;
      if(row_last_pixel)begin
       if(frame_last_row)begin busy<=0;done<=1;state<=IDLE;end
@@ -229,6 +263,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
        else x_acc<=x_acc+x_step;
       end
      end
+    end
     end
     default:begin state<=IDLE;busy<=0;pixel_valid<=0;sector_read<=0;error<=1;end
    endcase
