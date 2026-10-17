@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l ../reports/fat32_setup_20261016/active_fat.log -lib ../reports/fat32_setup_20261016/active_work -c tb_active_fat 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_active_fat(fast)
+# run -all 
+# ALL PASS active_fat: FAT2-only root and five fragmented files, exact Python bytes
+# ** Note: $finish    : E:/fpga/reports/fat32_setup_20261016/tb_active_fat.v(136)
+#    Time: 283630 ns  Iteration: 1  Instance: /tb_active_fat

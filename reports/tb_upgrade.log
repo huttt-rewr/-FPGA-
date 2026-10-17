@@ -3,7 +3,7 @@
 # 
 # ** Warning: tb_upgrade.v(26): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
 # 
-# ** Warning: tb_upgrade.v(42): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 34, found 22.
+# ** Warning: tb_upgrade.v(42): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 42, found 22.
 # 
 # ** Warning: tb_upgrade.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 9.
 # 

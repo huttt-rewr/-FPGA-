@@ -1,0 +1,25 @@
+# vsim -do {run -all; quit -f} -l ../reports/osd_audioviz_20261017/tb_glass_osd.log -lib msim_work -c tb_glass_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_glass_osd(fast)
+# run -all 
+# FAIL glass a=125 b=201 f=0 got=612c42 expected=530d2b
+# FAIL glass a=126 b=201 f=0 got=652851 expected=64144a
+# FAIL glass a=127 b=201 f=0 got=702c67 expected=751b69
+# FAIL glass a=128 b=201 f=0 got=772b79 expected=862288
+# FAIL glass a=129 b=201 f=0 got=7e2a8a expected=9729a7
+# FAIL glass a=130 b=201 f=0 got=852a9c expected=a830c6
+# FAIL glass a=131 b=201 f=0 got=922fb3 expected=b937e5
+# FAIL glass a=132 b=201 f=0 got=a2380c expected=ca3e04
+# FAILED glass errors=308698
+# ** Note: $finish    : E:/fpga/sim/tb_glass_osd.v(60)
+#    Time: 10959956 ns  Iteration: 0  Instance: /tb_glass_osd

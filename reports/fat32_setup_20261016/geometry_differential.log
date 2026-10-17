@@ -1,0 +1,57 @@
+# vsim -do {run -all; quit -f} -l ../reports/fat32_setup_20261016/geometry_differential.log -lib ../reports/fat32_setup_20261016/geometry_work -c tb_geometry_differential 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2685) [TFMPC] - Too few port connections for 'candidate'.  Expected 27, found 18.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'aerr'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'ae'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'av'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'ad'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'bg'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'berr'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'be'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'bv'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(176): (vopt-2718) [TFMPC] - Missing connection for port 'bd'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2685) [TFMPC] - Too few port connections for 'reference'.  Expected 27, found 18.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'aerr'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'ae'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'av'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'ad'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'bg'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'berr'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'be'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'bv'.
+# 
+# ** Warning: reports/fat32_setup_20261016/tb_geometry_differential.v(178): (vopt-2718) [TFMPC] - Missing connection for port 'bd'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_geometry_differential(fast)
+# run -all 
+# ALL PASS geometry_differential: 20 BPB scenarios, identical cycle/requests/addresses/status/sizes
+# ** Note: $finish    : E:/fpga/reports/fat32_setup_20261016/tb_geometry_differential.v(192)
+#    Time: 227720 ns  Iteration: 1  Instance: /tb_geometry_differential

@@ -1,0 +1,48 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VV7Q:jSnEHEb=32]WNnQ8f2
+04 20 4 work tb_shift_equivalence fast 0
+=1-bcfce7e1723c-6ad17407-2d8-1b04
+o-quiet -auto_acc_if_foreign -work reports/fat32_setup_20261016/shift_work
+n@_opt
+OL;O;10.1c;51
+vsd_fat32
+IBRXnTdWN`ON?g?BBQ]2Va3
+V?kE1bGUlEWEon0@PBTaTS3
+Z1 dE:\fpga
+w1792111500
+8src/modules/sd/sd_fat32.v
+Fsrc/modules/sd/sd_fat32.v
+L0 3
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792111621.638000
+Z4 !s107 reports/fat32_setup_20261016/tb_shift_equivalence.v|src/modules/sd/sd_fat32.v|
+Z5 !s90 -work|reports/fat32_setup_20261016/shift_work|src/modules/sd/sd_fat32.v|reports/fat32_setup_20261016/tb_shift_equivalence.v|
+Z6 o-work reports/fat32_setup_20261016/shift_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 7?Io<oghjRKj<_>VD>2zF2
+!s85 0
+vtb_shift_equivalence
+IEZKE0DoGinAB4Q<ZIK9lG1
+VILfc^Vj6SmkaO1MbcBHmc3
+R1
+w1792111618
+8reports/fat32_setup_20261016/tb_shift_equivalence.v
+Freports/fat32_setup_20261016/tb_shift_equivalence.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 8P?a908hcg:4za9n?o:nf3
+!s85 0

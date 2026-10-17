@@ -1,0 +1,45 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_bmp_headers.log -lib msim_work -c tb_bmp_headers 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 21.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'read_stall'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data_wr_en'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_addr'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bmp_headers(fast)
+# run -all 
+# ALL PASS tb_bmp_headers: DIB, planes, offset and stale/truncated header rejection
+# ** Note: $finish    : tb_bmp_headers.v(50)
+#    Time: 63560 ns  Iteration: 1  Instance: /tb_bmp_headers

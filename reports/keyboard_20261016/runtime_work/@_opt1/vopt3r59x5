@@ -1,0 +1,110 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VA@;Y9jma2a=nPPU<_^lnK3
+04 21 4 work tb_video_mode_control fast 0
+=1-bcfce7e1723c-6ad23cf4-2ea-ab28
+Z1 o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/runtime_work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+V[1SOLcHOCjA8G1I]R@CN_0
+04 14 4 work tb_fps_control fast 0
+=1-bcfce7e1723c-6ad253c5-3a3-b498
+R1
+n@_opt1
+R2
+vfps_control
+Ib[ERd8<FAn^HGcTMg6a4R0
+VAn[Se<Z`R=iM]_BG`J;W;0
+R3
+w1792168887
+8reports/keyboard_20261016/fps_control.v
+Freports/keyboard_20261016/fps_control.v
+L0 4
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792168899.256000
+Z6 !s107 reports/keyboard_20261016/tb_fps_control.v|reports/keyboard_20261016/fps_control.v|
+Z7 !s90 -work|reports/keyboard_20261016/runtime_work|reports/keyboard_20261016/fps_control.v|reports/keyboard_20261016/tb_fps_control.v|
+Z8 o-work reports/keyboard_20261016/runtime_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 FWk00IF0Y?G8_b;_iOLG71
+!s85 0
+vreset_sync
+IFh8fV@DaaPCXgY1zX?Wa32
+VW<T=fO6YHXUTgF0a;U3bc2
+R3
+w1792160148
+8src/modules/common/reset_sync.v
+Fsrc/modules/common/reset_sync.v
+L0 1
+R4
+r1
+31
+Z9 !s108 1792163057.183000
+Z10 !s107 sim/tb_video_mode_control.v|src/modules/video/video_mode_control.v|src/modules/common/reset_sync.v|
+Z11 !s90 -work|reports/keyboard_20261016/runtime_work|src/modules/common/reset_sync.v|src/modules/video/video_mode_control.v|sim/tb_video_mode_control.v|
+R8
+!s100 MfLa`NCAJmEaM0Ie:HdV93
+!i10b 1
+!s85 0
+vtb_fps_control
+IiVjKQoH64Y[GUJG;X31:N1
+VoM3EJnG:2a5dD^eEYNcN90
+R3
+w1792131028
+8reports/keyboard_20261016/tb_fps_control.v
+Freports/keyboard_20261016/tb_fps_control.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 hDR`5c?O@S0o@^>^Rm`6k0
+!s85 0
+vtb_video_mode_control
+Inm;WOKKkGK78?jd[N7TDV3
+Vz6GH149gIgLgdXk?S4R1d3
+R3
+w1792162792
+8sim/tb_video_mode_control.v
+Fsim/tb_video_mode_control.v
+L0 2
+R4
+r1
+31
+R9
+R10
+R11
+R8
+!s100 7N5<S0o28PXSoS0IBmT:i0
+!i10b 1
+!s85 0
+vvideo_mode_control
+Iag`0VUoV4@BJl_MEjckV83
+Vojo^QI4g5YBmCWBcd6NK72
+R3
+w1792130789
+8src/modules/video/video_mode_control.v
+Fsrc/modules/video/video_mode_control.v
+L0 3
+R4
+r1
+31
+R9
+R10
+R11
+R8
+!s100 ]1?==g`iYiFg91jZPm3i53
+!i10b 1
+!s85 0

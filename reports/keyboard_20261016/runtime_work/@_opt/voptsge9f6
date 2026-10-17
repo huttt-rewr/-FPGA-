@@ -1,0 +1,66 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VA@;Y9jma2a=nPPU<_^lnK3
+04 21 4 work tb_video_mode_control fast 0
+=1-bcfce7e1723c-6ad23cf4-2ea-ab28
+o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/runtime_work
+n@_opt
+OL;O;10.1c;51
+vreset_sync
+IFh8fV@DaaPCXgY1zX?Wa32
+VW<T=fO6YHXUTgF0a;U3bc2
+Z1 dE:\fpga
+w1792160148
+8src/modules/common/reset_sync.v
+Fsrc/modules/common/reset_sync.v
+L0 1
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792163057.183000
+Z4 !s107 sim/tb_video_mode_control.v|src/modules/video/video_mode_control.v|src/modules/common/reset_sync.v|
+Z5 !s90 -work|reports/keyboard_20261016/runtime_work|src/modules/common/reset_sync.v|src/modules/video/video_mode_control.v|sim/tb_video_mode_control.v|
+Z6 o-work reports/keyboard_20261016/runtime_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 MfLa`NCAJmEaM0Ie:HdV93
+!s85 0
+vtb_video_mode_control
+Inm;WOKKkGK78?jd[N7TDV3
+Vz6GH149gIgLgdXk?S4R1d3
+R1
+w1792162792
+8sim/tb_video_mode_control.v
+Fsim/tb_video_mode_control.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 7N5<S0o28PXSoS0IBmT:i0
+!s85 0
+vvideo_mode_control
+Iag`0VUoV4@BJl_MEjckV83
+Vojo^QI4g5YBmCWBcd6NK72
+R1
+w1792130789
+8src/modules/video/video_mode_control.v
+Fsrc/modules/video/video_mode_control.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 ]1?==g`iYiFg91jZPm3i53
+!s85 0

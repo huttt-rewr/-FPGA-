@@ -1,0 +1,38 @@
+standard
+***Report Model: sd_fat32 Device: EG4S20BG256***
+
+IO Statistics
+#IO                       354   out of    188  188.30%
+  #input                   95
+  #output                 259
+  #inout                    0
+
+LUT Statistics
+#Total_luts              1467
+  #lut4                  1403
+  #lut5                    64
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     2465   out of  19600   12.58%
+#reg                     1574   out of  19600    8.03%
+#bram                       2   out of     64    3.12%
+  #bram9k                   2
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                      354   out of    188  188.30%
+  #ireg                     4
+  #oreg                   233
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++----------------------------------------------------------------+
+|Instance |Module   |lut     |ripple  |seq     |bram    |dsp     |
++----------------------------------------------------------------+
+|top      |sd_fat32 |1966    |499     |1811    |2       |0       |
++----------------------------------------------------------------+

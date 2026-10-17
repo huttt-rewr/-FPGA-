@@ -1,0 +1,61 @@
+{
+  "timing_ns": {
+    "SWNS": -0.296,
+    "STNS": -2.281,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "source_sha256": "b95108eb41da2e58a7a97234acdff4f1642a93a7f1e7a71993be0a18fd68386f",
+  "negative_setup_paths": [
+    {
+      "slack_ns": -0.296,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/align_reg[8]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.287,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_id_reg[16]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.287,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_id_reg[17]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.28,
+      "begin": "sd_card_bmp_m0/filesystem$fat/state_reg[9]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/state_reg[17]_syn_15.ce"
+    },
+    {
+      "slack_ns": -0.266,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_id_reg[22]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.229,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_id_reg[18]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.199,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_size_reg[24]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.199,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/chunk_size_reg[25]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.119,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/bits_reg[0]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.119,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/fmt_valid_reg_syn_13.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/bits_reg[3]_syn_3.ce"
+    }
+  ]
+}

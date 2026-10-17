@@ -1,0 +1,19 @@
+# vsim -do {run -all; quit -f} -l ../reports/osd_audioviz_20261017/shared_tb_glass_osd.log -lib msim_work -c tb_glass_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_glass_osd.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 16, found 12.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_glass_osd(fast)
+# run -all 
+# ALL PASS tb_glass_osd: 1094400 active pixels, exact nine-tap luma/chroma/saturation/alpha, A glyph/shadow, VGA/SVGA, fixed six stages, disabled/frame-locked control
+# ** Note: $finish    : tb_glass_osd.v(60)
+#    Time: 10959956 ns  Iteration: 0  Instance: /tb_glass_osd

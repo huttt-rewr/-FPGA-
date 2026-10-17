@@ -1,0 +1,21 @@
+# vsim -do {run -all; quit -f} -l ../reports/fat32_20261015/player.log -lib msim_work -c tb_fat32_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: src/modules/bmp/sd_card_bmp.v(134): (vopt-2685) [TFMPC] - Too few port connections for 'wav'.  Expected 17, found 16.
+# 
+# ** Warning: src/modules/bmp/sd_card_bmp.v(134): (vopt-2718) [TFMPC] - Missing connection for port 'error'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_player(fast)
+# run -all 
+# ALL PASS tb_fat32_player: real scheduler/two scaled fragmented BMP frames/exact PCM concurrent loops/commit
+# ** Note: $finish    : E:/fpga/sim/tb_fat32_player.v(75)
+#    Time: 73990070 ns  Iteration: 1  Instance: /tb_fat32_player

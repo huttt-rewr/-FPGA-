@@ -1,0 +1,110 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VGU^O`9Ah^ClT?27B4?Gin2
+Z1 04 15 4 work tb_sd_highspeed fast 0
+=1-bcfce7e1723c-6ad326d5-12-570
+o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/highspeed/work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+VgM7e=P6Z]PHanIQo?2M4:3
+R1
+=1-bcfce7e1723c-6ad32747-362-7970
+o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/highspeed/work -g CARD_DELAY=14
+n@_opt1
+R2
+vsd_bus_phy
+I[bc2A<?EOUd[WUSVJP0>32
+VB[Vg4e:5XVKnbW=HT97BV2
+R3
+Z4 w1792222725
+8reports/keyboard_20261016/highspeed/sd_bus_phy.v
+Freports/keyboard_20261016/highspeed/sd_bus_phy.v
+L0 4
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1792222930.519000
+Z7 !s107 reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|reports/keyboard_20261016/highspeed/sd_native_card_model.v|reports/keyboard_20261016/highspeed/sd_card_top_native.v|reports/keyboard_20261016/highspeed/sd_native_controller.v|reports/keyboard_20261016/highspeed/sd_bus_phy.v|
+Z8 !s90 -work|reports/keyboard_20261016/highspeed/work|reports/keyboard_20261016/highspeed/sd_bus_phy.v|reports/keyboard_20261016/highspeed/sd_native_controller.v|reports/keyboard_20261016/highspeed/sd_card_top_native.v|reports/keyboard_20261016/highspeed/sd_native_card_model.v|reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|
+Z9 o-work reports/keyboard_20261016/highspeed/work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 D:]7;1XRif6kIiZT3Qk:h3
+!i10b 1
+!s85 0
+vsd_card_top_native
+Iz_2iH5PEQL9Q`GO`e>W[73
+V^=eM`RnhA_VEUoQM2i2RO2
+R3
+R4
+8reports/keyboard_20261016/highspeed/sd_card_top_native.v
+Freports/keyboard_20261016/highspeed/sd_card_top_native.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 eh<HIYVDae@YKPPAKHHJZ0
+!i10b 1
+!s85 0
+vsd_native_card_model
+IMd9jTdBF9Bl]4P9OHca3E1
+VUWS6nm_4jC0O7J05_6D5`2
+R3
+w1792222899
+8reports/keyboard_20261016/highspeed/sd_native_card_model.v
+Freports/keyboard_20261016/highspeed/sd_native_card_model.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 KC;h^U1Ea4]W`WlBV:VlY1
+!i10b 1
+!s85 0
+vsd_native_controller
+I`@K2i]D[=TZZ=cVi:kGA82
+VL0AlNZk^@bGbaY[:2lh2a1
+R3
+R4
+8reports/keyboard_20261016/highspeed/sd_native_controller.v
+Freports/keyboard_20261016/highspeed/sd_native_controller.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 SS>[OmQJ950k4ngJ=Z<0T2
+!i10b 1
+!s85 0
+vtb_sd_highspeed
+IMaYMi5ooR5`@Y8>LA99_U1
+V@6O8@Mi1Ao`ecCBDN3Nd80
+R3
+w1792223045
+8reports/keyboard_20261016/highspeed/tb_sd_highspeed.v
+Freports/keyboard_20261016/highspeed/tb_sd_highspeed.v
+L0 2
+R5
+r1
+31
+R9
+!i10b 1
+!s100 7=43;G5z8?UkB5P^=8Sk50
+!s85 0
+!s108 1792223045.527000
+!s107 reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|
+!s90 -work|reports/keyboard_20261016/highspeed/work|reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|

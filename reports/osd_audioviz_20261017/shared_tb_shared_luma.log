@@ -1,0 +1,7 @@
+# vsim -do {run -all; quit -f} -l ../reports/osd_audioviz_20261017/shared_tb_shared_luma.log -lib msim_work -c tb_shared_luma 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Error: tb_shared_luma.v(10): (vopt-2135) Too many port connections. Expected 10, found 14.
+# 
+# Optimization failed
+# Error loading design

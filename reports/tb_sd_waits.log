@@ -17,7 +17,19 @@
 # 
 # ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
 # 
-# ** Warning: tb_sd_waits.v(29): (vopt-2685) [TFMPC] - Too few port connections for 'wrapper'.  Expected 19, found 9.
+# ** Warning: tb_sd_waits.v(29): (vopt-2685) [TFMPC] - Too few port connections for 'wrapper'.  Expected 25, found 9.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
 # 
 # ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
 # 

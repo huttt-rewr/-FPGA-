@@ -1,0 +1,1 @@
+75 ModelSim regressions passed. TD route failed PHY-8023 local resource collision at WAV sel16. No fresh STA or accepted routed database.

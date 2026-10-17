@@ -1,7 +1,7 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_bmp_stall.log -lib msim_work -c tb_bmp_stall 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_bmp_stall.v(12): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 32, found 19.
+# ** Warning: tb_bmp_stall.v(12): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 19.
 # 
 # ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
 # 
@@ -28,6 +28,10 @@
 # ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_valid'.
 # 
 # ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_done'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
 # 
 # //  ModelSim SE-64 10.1c Jul 28 2012 
 # //

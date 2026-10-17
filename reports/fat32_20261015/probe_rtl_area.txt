@@ -1,0 +1,35 @@
+standard
+***Report Model: sd_fat32 Device: EG4S20BG256***
+
+IO Statistics
+#IO                       354
+  #input                   95
+  #output                 259
+  #inout                    0
+
+Gate Statistics
+#Basic gates             3860
+  #and                   1036
+  #nand                     0
+  #or                     677
+  #nor                      0
+  #xor                      0
+  #xnor                     0
+  #buf                      0
+  #not                     64
+  #bufif1                   0
+  #MX21                   467
+  #FADD                     0
+  #DFF                   1616
+  #LATCH                    0
+#MACRO_ADD                 49
+#MACRO_EQ                  44
+#MACRO_MUX                450
+#MACRO_OTHERS               1
+
+Report Hierarchy Area:
++-------------------------------------------+
+|Instance |Module   |gates  |seq    |macros |
++-------------------------------------------+
+|top      |sd_fat32 |2244   |1616   |94     |
++-------------------------------------------+

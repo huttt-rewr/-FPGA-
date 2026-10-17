@@ -1,0 +1,156 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+V7>Kl1LRb069PW3O=YDjcU1
+04 14 4 work tb_shared_luma fast 0
+=1-bcfce7e1723c-6ad370c7-19d-be04
+o-quiet -auto_acc_if_foreign -work reports/osd_audioviz_20261017/linear_work
+n@_opt
+OL;O;10.1c;51
+vglass_osd
+IZdlnUIBKlnQ_C:h^JYk[J1
+VQ9L7iz9ehmVK4ZnLAKJII2
+Z1 dE:\fpga
+Z2 w1792237516
+Z3 8src/modules/video/glass_osd.v
+Z4 Fsrc/modules/video/glass_osd.v
+L0 2
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1792241860.610000
+Z7 !s107 sim/tb_shared_luma.v|src/modules/video/glass_osd.v|reports/osd_audioviz_20261017/linear_pixel_effects.v|src/modules/osd/osd_char_rom.v|src/modules/video/video_coordinates.v|
+Z8 !s90 -work|reports/osd_audioviz_20261017/linear_work|src/modules/video/video_coordinates.v|src/modules/osd/osd_char_rom.v|reports/osd_audioviz_20261017/linear_pixel_effects.v|src/modules/video/glass_osd.v|sim/tb_shared_luma.v|
+Z9 o-work reports/osd_audioviz_20261017/linear_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 <EalK1]?FB8RP88iJceS=1
+!s85 0
+vglass_title_row
+IGRHPbCH<0ALeW8zfR27`60
+V4SSS7g8XmC7kPD<nfkL1`0
+R1
+R2
+R3
+R4
+L0 92
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 C>AbVODFG`^aFnQ]3@6eF2
+!s85 0
+vosd_char_rom
+IA[FdD<5Uf[6SDmSEmckgV1
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R1
+w1790409879
+8src/modules/osd/osd_char_rom.v
+Fsrc/modules/osd/osd_char_rom.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 j?k9bF?Y:VzJH>@He^8783
+!s85 0
+vpixel_effects
+IH>1H[1h@7NhWVQodiUhiT3
+V`Q;MP6BWBHTQ]_iDCk3;W2
+R1
+Z10 w1792238356
+Z11 8reports/osd_audioviz_20261017/linear_pixel_effects.v
+Z12 Freports/osd_audioviz_20261017/linear_pixel_effects.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 ?jkSj@SPA2doeLY:Oc>W>0
+!s85 0
+vtb_shared_luma
+Im:mQ]Q89lfU<02R]Y[cGi3
+V_M?beQYFK5?RG[8JPb4Wh3
+R1
+w1792234082
+8sim/tb_shared_luma.v
+Fsim/tb_shared_luma.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 Wf[?lDbSN9die^DSD5d1E3
+!s85 0
+vvideo_coordinates
+I65Fa8AW9>@FXfAC8OR>BV2
+Vd30A[z2mOgG5AJ76zA;ZC3
+R1
+Z13 w1791648393
+Z14 8src/modules/video/video_coordinates.v
+Z15 Fsrc/modules/video/video_coordinates.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 YU]bG5aof:c=Ven>DCb7K0
+!s85 0
+vvideo_luma_window
+IlH`Un0GYUUC13gjm:oakk0
+VGfF=PPn91z27jnX5IdJZ03
+R1
+R10
+R11
+R12
+L0 73
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 8R^;INliMd];m=R<oH?]e0
+!s85 0
+vviewport_coordinates
+IH:@e0fmc]hY7YHhdlIaf`3
+V50z[NI;67@9<bHHc3Y=L>1
+R1
+R13
+R14
+R15
+L0 22
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 XE1zSOR1194R21e?F?acH2
+!s85 0

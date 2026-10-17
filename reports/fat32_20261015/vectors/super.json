@@ -1,0 +1,76 @@
+{
+  "partition_lba": 0,
+  "spc": 1,
+  "first_fat": 32,
+  "first_data": 1058,
+  "root_chain": [
+    2,
+    130
+  ],
+  "files": [
+    {
+      "name": "FIRST   BMP",
+      "size": 2630,
+      "chain": [
+        10,
+        147,
+        284,
+        421,
+        558,
+        695
+      ],
+      "sha256": "0459363d22b18a417b71b230346eadbd7328367608a0c28b0723cc1b664c1703",
+      "expected": "super_FIRST___BMP.hex"
+    },
+    {
+      "name": "SECOND  bmp",
+      "size": 2554,
+      "chain": [
+        1810,
+        1947,
+        2084,
+        2221,
+        2358
+      ],
+      "sha256": "265da3deb1655e42d85a198fd73a2823e9afdc48d2bbab2978d7cba18f2f6b84",
+      "expected": "super_SECOND__bmp.hex"
+    },
+    {
+      "name": "THIRD   BMP",
+      "size": 730,
+      "chain": [
+        3610,
+        3747
+      ],
+      "sha256": "b0b2f46f4fad56eb5af8e15cc28ba47e0d4af534eb18450aa2c4103cc2197e66",
+      "expected": "super_THIRD___BMP.hex"
+    },
+    {
+      "name": "FOURTH  BMP",
+      "size": 1494,
+      "chain": [
+        5410,
+        5547,
+        5684
+      ],
+      "sha256": "3c18ffab9e802d2b80b63cd34a412a495ddadbd951db9e3ec8b28bac696b5109",
+      "expected": "super_FOURTH__BMP.hex"
+    },
+    {
+      "name": "SOUND   WAV",
+      "size": 4044,
+      "chain": [
+        7210,
+        7347,
+        7484,
+        7621,
+        7758,
+        7895,
+        8032,
+        8169
+      ],
+      "sha256": "2b41c42eb98a5a445ddb8eb5c67aa5c495f2204f3d76ebd163f468ccb4692b36",
+      "expected": "super_SOUND___WAV.hex"
+    }
+  ]
+}

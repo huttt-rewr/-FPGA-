@@ -1,0 +1,7 @@
+新增像素特效、玻璃与PCM波形实验链，记录物理验收阻塞
+
+三层固定11拍，共享亮度缓存并保持61 BRAM/17 DSP；新增五项黄金模型激励，静态75源40IO与85项ModelSim通过。
+当前分块版物理实现失败；前一完成布线版SWNS -6.744ns、HWNS -0.234ns，未生成新bit。
+文档明确实验状态、操作与失败证据，不以旧正时序验收本轮源码。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

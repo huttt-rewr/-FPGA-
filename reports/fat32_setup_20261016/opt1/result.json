@@ -1,0 +1,56 @@
+{
+  "timing_ns": {
+    "SWNS": -0.637,
+    "STNS": -1.727,
+    "HWNS": -0.327,
+    "HTNS": -0.555
+  },
+  "source_sha256": "75a8a66194ae7db8682cdce2ea5ad9c028812307bf2a76fa394ae5ceaaaa3c75",
+  "negative_setup_paths": [
+    {
+      "slack_ns": -0.637,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/wave_id_reg[8]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.247,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/align_reg[1]_syn_3.ce"
+    },
+    {
+      "slack_ns": -0.218,
+      "begin": "sd_card_bmp_m0/filesystem$fat/state_reg[29]_syn_4.clk",
+      "end": "audio_fifo/rreset/arst_syn_22.ce"
+    },
+    {
+      "slack_ns": -0.166,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/wave_id_reg[10]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.138,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/wave_id_reg[12]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.114,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/riff_size_reg[21]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.089,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/wave_id_reg[3]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.08,
+      "begin": "sd_card_bmp_m0/filesystem$fat/byte_count_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/mount_error_code_reg[0]_syn_9.a[1]"
+    },
+    {
+      "slack_ns": -0.038,
+      "begin": "sd_card_bmp_m0/wav_enabled$wav/last_pcm_byte_reg_syn_43.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/wave_id_reg[11]_syn_4.ce"
+    }
+  ]
+}

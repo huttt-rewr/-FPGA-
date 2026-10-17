@@ -1,0 +1,15 @@
+# vsim -do {run -all; quit -f} -l ../reports/keyboard_20261016/stage2/tb_file_osd.log -lib indexed_work -c tb_file_osd 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_file_osd(fast)
+# run -all 
+# ALL PASS tb_file_osd: 10/12,64/64,03/03,00/00,truncation,busy/error
+# ** Note: $finish    : tb_file_osd.v(27)
+#    Time: 172 ns  Iteration: 0  Instance: /tb_file_osd

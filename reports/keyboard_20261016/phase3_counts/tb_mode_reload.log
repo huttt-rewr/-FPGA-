@@ -1,0 +1,18 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_mode_reload.log -lib msim_work -c tb_mode_reload 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_mode_reload(fast)
+# run -all 
+# FAIL indexed player mid-load reset aborts old partial frame, then clean reload
+# FAILED mode reload errors=1
+# ** Note: $finish    : tb_mode_reload.v(98)
+#    Time: 206889720 ns  Iteration: 1  Instance: /tb_mode_reload

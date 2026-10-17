@@ -1,0 +1,1 @@
+Audio SD integration failed: investigate pulse sampling at scan_done; STA also failed. Not accepted.

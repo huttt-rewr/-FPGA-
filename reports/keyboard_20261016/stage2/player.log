@@ -1,0 +1,22 @@
+# vsim -do {run -all; quit -f} -l ../reports/keyboard_20261016/stage2/player.log -lib ../reports/keyboard_20261016/stage2/work -c tb_indexed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_indexed_player(fast)
+# run -all 
+# FAIL indexed RGB idx=0 pixel=2 got=000000 want=f01400
+# FAIL indexed RGB idx=0 pixel=3 got=000000 want=f01400
+# FAIL indexed RGB idx=0 pixel=4 got=000000 want=f01400
+# FAIL indexed RGB idx=0 pixel=5 got=000000 want=f01400
+# FAIL indexed RGB idx=0 pixel=6 got=000000 want=f01400
+# FAILED indexed player watchdog
+# ** Note: $finish    : ../reports/keyboard_20261016/stage2/tb_indexed_player.v(91)
+#    Time: 200 ms  Iteration: 0  Instance: /tb_indexed_player

@@ -1,0 +1,6 @@
+接入原生四位SD25MHz并保留上层扇区握手
+
+六线引脚与两TD入口同步；正式profile剪除SPI，旧SPI保留兼容测试。FAT32/仲裁/BMP/WAV/缩放相对阶段四零改动。新增无force替换的真实引脚端到端集成激励。
+验证：72源40IO静态通过，78项ModelSim全通过，综合P&R/STA通过，SWNS +0.260ns / HWNS +0.022ns，TNS0。模型吞吐不是实卡；未下载、未实板，50MHz仍隔离候选。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

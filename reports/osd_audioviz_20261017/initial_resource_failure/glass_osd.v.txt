@@ -1,0 +1,54 @@
+// Six registers: luma box blur -> retained chroma -> dark glass -> shadow/text.
+module glass_osd #(parameter DEPTH=1024,parameter [9:0] WIN_X=120,WIN_Y=80,WIN_W=400,WIN_H=320)(
+ input clk,rst,vs,de,input [9:0] x,y,input [23:0] rgb,input [7:0] ascii_char,input osd_enable,
+ output reg out_vs,out_de,output reg [23:0] out_rgb);
+ wire [9:0] raw_x,raw_y;video_coordinates physical_coordinates(clk,rst,vs,de,raw_x,raw_y);
+ wire [7:0] gray,t0,t1,t2,m0,m1,m2,b0,b1,b2;wire good;
+ video_luma_window #(.DEPTH(DEPTH)) window(clk,rst,vs,de,raw_x,rgb,gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good);
+ wire panel=(x>=WIN_X && {1'b0,x}<{1'b0,WIN_X}+WIN_W && y>=WIN_Y && {1'b0,y}<{1'b0,WIN_Y}+WIN_H);
+ wire [9:0] tx=x-WIN_X-10'd16,ty=y-WIN_Y-10'd16,sx=tx-10'd2,sy=ty-10'd2;
+ wire [7:0] glyph,shadow_glyph;
+ function [7:0] title;
+  input [6:0] col;
+  begin case(col)
+   0:title="F";1:title="P";2:title="G";3:title="A";
+   5:title="M";6:title="E";7:title="D";8:title="I";9:title="A";
+   default:title=" ";endcase end
+ endfunction
+ osd_char_rom font(ascii_char==0?title(tx[9:3]):ascii_char,ty[4:1],glyph);
+ osd_char_rom shadow_font(ascii_char==0?title(sx[9:3]):ascii_char,sy[4:1],shadow_glyph);
+ wire text_band=panel && x>=WIN_X+16 && {1'b0,x}<{1'b0,WIN_X}+WIN_W-16 && y>=WIN_Y+16 && y<WIN_Y+30;
+ wire shadow_band=panel && x>=WIN_X+18 && {1'b0,x}<{1'b0,WIN_X}+WIN_W-14 && y>=WIN_Y+18 && y<WIN_Y+32;
+ wire lit=text_band && tx[2:0]<5 && glyph[4-tx[2:0]],shade=shadow_band && sx[2:0]<5 && shadow_glyph[4-sx[2:0]];
+ reg enabled,vs_last;reg [9:0] sumt1,summ1,sumb1;reg [11:0] sum2;
+ (* dsp_style="no" *) wire [24:0] ninth=sum2*13'd7282;
+ // floor(sum/9), exact for 0..2295, using reciprocal/shift.
+ reg [7:0] blur3,gray1,gray2,gray3;reg [23:0] rgb1,rgb2,rgb3,rgb4,rgb5,recolor4,dark5;
+ reg [4:0] vp,dp,pp,lp,sp;
+ function [7:0] corrected;
+  input [7:0] c,g,a;reg signed [9:0] v;
+  begin v=$signed({2'd0,c})+$signed({2'd0,a})-$signed({2'd0,g});corrected=v<0?8'd0:(v>255?8'd255:v[7:0]);end
+ endfunction
+ function [7:0] darken;input [7:0] c;reg [15:0] p;begin p=c*16'd153;darken=p[15:8];end endfunction
+ function [7:0] blend;input [7:0] a,b;reg [15:0] v;begin v=a*16'd153+b*16'd103;blend=v[15:8];end endfunction
+ wire [23:0] mixed={blend(dark5[23:16],rgb5[23:16]),blend(dark5[15:8],rgb5[15:8]),blend(dark5[7:0],rgb5[7:0])};
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin
+   enabled<=0;vs_last<=1;sumt1<=0;summ1<=0;sumb1<=0;sum2<=0;blur3<=0;
+   rgb1<=0;rgb2<=0;rgb3<=0;rgb4<=0;rgb5<=0;gray1<=0;gray2<=0;gray3<=0;recolor4<=0;dark5<=0;
+   vp<=0;dp<=0;pp<=0;lp<=0;sp<=0;out_vs<=0;out_de<=0;out_rgb<=0;
+  end else begin
+   vs_last<=vs;if(vs_last && !vs)enabled<=osd_enable;
+   sumt1<={2'd0,t0}+{2'd0,t1}+{2'd0,t2};summ1<={2'd0,m0}+{2'd0,m1}+{2'd0,m2};sumb1<={2'd0,b0}+{2'd0,b1}+{2'd0,b2};
+   sum2<={2'd0,sumt1}+{2'd0,summ1}+{2'd0,sumb1};blur3<=ninth[23:16];
+   rgb1<=rgb;rgb2<=rgb1;rgb3<=rgb2;rgb4<=rgb3;rgb5<=rgb4;gray1<=gray;gray2<=gray1;gray3<=gray2;
+   recolor4<={corrected(rgb3[23:16],gray3,blur3),corrected(rgb3[15:8],gray3,blur3),corrected(rgb3[7:0],gray3,blur3)};
+   dark5<={darken(recolor4[23:16]),darken(recolor4[15:8]),darken(recolor4[7:0])};
+   vp<={vp[3:0],vs};dp<={dp[3:0],de};pp<={pp[3:0],enabled && panel && good};lp<={lp[3:0],enabled && lit};sp<={sp[3:0],enabled && shade};
+   out_vs<=vp[4];out_de<=dp[4];
+   if(!dp[4])out_rgb<=0;else if(lp[4])out_rgb<=24'hffffff;
+   else if(sp[4])out_rgb<=pp[4]?{1'b0,mixed[23:17],1'b0,mixed[15:9],1'b0,mixed[7:1]}:{1'b0,rgb5[23:17],1'b0,rgb5[15:9],1'b0,rgb5[7:1]};
+   else out_rgb<=pp[4]?mixed:rgb5;
+  end
+ end
+endmodule

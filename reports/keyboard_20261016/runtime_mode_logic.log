@@ -1,0 +1,18 @@
+# vsim -do {run -all; quit -f} -l reports/keyboard_20261016/runtime_mode_logic.log -lib sim/msim_work -c tb_video_mode_control 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_video_mode_control(fast)
+# run -all 
+# FAIL mode controller default VGA and core release
+# FAILED mode controller errors=1
+# ** Note: $finish    : sim/tb_video_mode_control.v(41)
+#    Time: 19880 ns  Iteration: 1  Instance: /tb_video_mode_control

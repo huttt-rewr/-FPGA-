@@ -1,0 +1,18 @@
+# vsim -do {run -all; quit -f} -l reports/osd_audioviz_20261017/linear_shared.log -lib reports/osd_audioviz_20261017/linear_work -c tb_shared_luma 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_shared_luma(fast)
+# Loading work.glass_title_row(fast)
+# run -all 
+# ALL PASS tb_shared_luma: four modes VGA/SVGA 3148800 exact pixels, shared transformed-luma sums equal independent post-effect blur, binary Sobel history exact
+# ** Note: $finish    : sim/tb_shared_luma.v(38)
+#    Time: 31532720 ns  Iteration: 1  Instance: /tb_shared_luma

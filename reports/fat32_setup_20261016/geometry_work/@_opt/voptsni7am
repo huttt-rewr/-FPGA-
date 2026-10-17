@@ -1,0 +1,120 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VdiQLCU1ozbGHL]@Hk?C4X0
+04 24 4 work tb_geometry_differential fast 0
+=1-bcfce7e1723c-6ad191bb-8e-64c8
+o-quiet -auto_acc_if_foreign -work ../reports/fat32_setup_20261016/geometry_work
+n@_opt
+OL;O;10.1c;51
+vgeometry_candidate
+I]z=`Yc<[[gF:l>nj0K5Yk3
+V0dzmKEk=ITALWn6T>:U]?0
+Z1 dE:\fpga
+Z2 w1792119223
+Z3 8reports/fat32_setup_20261016/tb_geometry_differential.v
+Z4 Freports/fat32_setup_20261016/tb_geometry_differential.v
+L0 5
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1792119224.259000
+Z7 !s107 reports/fat32_setup_20261016/tb_geometry_differential.v|reports/fat32_setup_20261016/sd_fat32_reference.v|src/modules/sd/sd_read_arbiter.v|src/modules/sd/sd_fat32.v|
+Z8 !s90 -work|reports/fat32_setup_20261016/geometry_work|src/modules/sd/sd_fat32.v|src/modules/sd/sd_read_arbiter.v|reports/fat32_setup_20261016/sd_fat32_reference.v|reports/fat32_setup_20261016/tb_geometry_differential.v|
+Z9 o-work reports/fat32_setup_20261016/geometry_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 ZaMTW6ZD6m>C?H_=k]5EO2
+!s85 0
+vgeometry_reference
+IHYk4<:In<425;B1f^oba;1
+VjcKBVOgCS<]=zT`5RNBVJ2
+R1
+R2
+R3
+R4
+L0 89
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 4ARYK?0[gVGVN2iV?lcGV3
+!s85 0
+vsd_fat32
+IFOe7QkaURVzPg5E>8jMS33
+V?kE1bGUlEWEon0@PBTaTS3
+R1
+w1792119090
+8src/modules/sd/sd_fat32.v
+Fsrc/modules/sd/sd_fat32.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 1o<Tl8IcInH;QkkZR>Hd83
+!s85 0
+vsd_fat32_reference
+IgZjTnJO^cNDhKQWhB]Mzd1
+Vg8oN6W8deQ_:^I>;IETKH1
+R1
+R2
+8reports/fat32_setup_20261016/sd_fat32_reference.v
+Freports/fat32_setup_20261016/sd_fat32_reference.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 :ZY3i<c84zo^[QWiRLI=Q1
+!s85 0
+vsd_read_arbiter
+IfTWlb2YgJ=2DFn1WTQJTP3
+VF]IVR3:`X:i`g^[RN_hk52
+R1
+w1791965534
+8src/modules/sd/sd_read_arbiter.v
+Fsrc/modules/sd/sd_read_arbiter.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 BMIMF_Ib4lWSS7co_Xn6=2
+!s85 0
+vtb_geometry_differential
+I7DJm[mZzQ?hH2f^:_nWRM2
+VX9j8XPLGGj>OZ@6LgOaGm0
+R1
+R2
+R3
+R4
+L0 170
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!i10b 1
+!s100 D]6l:CMh?`b6jPWYnAV1B0
+!s85 0

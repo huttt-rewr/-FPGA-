@@ -1,0 +1,1 @@
+Not accepted: scan pulse assertion must include current pulse and sampled history; setup/removal negative.

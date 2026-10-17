@@ -1,0 +1,6 @@
+接入F目标换图节拍及受限OSD，补齐使用文档
+
+1/2/5/10/15/30档包含加载时间，忙时只等待一次、不积压追赶；TARGET与L区分目标和受限。独立7位CDC保留原70位状态布局。静音/音量0清可选回声历史。
+验证：69源/38IO静态通过，77项ModelSim全通过，综合布局布线STA通过，SWNS +0.213ns / HWNS +0.021ns，TNS均0。SD仍SPI25MHz；尚未实板，未宣称+0.5ns。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

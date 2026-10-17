@@ -1,0 +1,1178 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VleLLF8cZDaCIX5HHZQEOQ3
+04 22 4 work tb_sd_highspeed_player fast 0
+=1-bcfce7e1723c-6ad32f7a-36a-9094
+o-quiet -auto_acc_if_foreign -work ../reports/keyboard_20261016/highspeed/work
+n@_opt
+Z1 OL;O;10.1c;51
+T_opt1
+VgM7e=P6Z]PHanIQo?2M4:3
+Z2 04 15 4 work tb_sd_highspeed fast 0
+=1-bcfce7e1723c-6ad32747-362-7970
+o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/highspeed/work -g CARD_DELAY=14
+n@_opt1
+R1
+Z3 dE:\fpga
+T_opt2
+V1?YHEXc3RijD2PR=FFe;m0
+R2
+=1-bcfce7e1723c-6ad3274b-2f5-6d8
+o-quiet -auto_acc_if_foreign -work reports/keyboard_20261016/highspeed/work -g CARD_DELAY=0
+n@_opt2
+R1
+R3
+vadaptive_raster
+Ie<TI5_n<VeSh4B4i[EgT[3
+Vne_l4gB5[1nJSdBTk_<bD0
+R3
+Z4 w1791647380
+8src/modules/video/adaptive_raster.v
+Fsrc/modules/video/adaptive_raster.v
+L0 3
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1792225140.138000
+Z7 !s107 src/modules/sd/sd_card_sec_read_write.v|src/modules/sd/sd_card_cmd.v|src/modules/sd/spi_master.v|src/modules/sd/sd_fat32.v|src/modules/sd/sd_read_arbiter.v|src/modules/bmp/bmp_read.v|src/modules/optional/ycbcr_to_rgb.v|src/modules/optional/video_scaler.v|src/modules/optional/video_mode_table.v|src/modules/audio/audio_wav.v|src/modules/audio/audio_test_source.v|src/modules/audio/audio_playback.v|src/modules/audio/audio_fifo_room.v|src/modules/audio/audio_effects_stream.v|src/modules/audio/audio_effects.v|src/modules/audio/audio_async_fifo.v|src/modules/video/video_timing_data.v|src/modules/video/video_rgb_to_axis_640x480.v|src/modules/video/video_mode_control.v|src/modules/video/video_enhance.v|src/modules/video/video_delay.v|src/modules/video/video_define.v|src/modules/video/video_coordinates.v|src/modules/video/transition_pixels.v|src/modules/video/pixel_effects.v|src/modules/video/picture_gamma.v|src/modules/video/picture_adjust.v|src/modules/video/frame_swap.v|src/modules/video/edid_display_mode.v|src/modules/video/edid_base_check.v|src/modules/video/color_bar.v|src/modules/video/bmp_scale_loader.v|src/modules/video/adaptive_video_clock.v|src/modules/video/adaptive_raster.v|src/modules/osd/status_osd.v|src/modules/osd/osd_char_rom.v|src/modules/osd/caption_overlay.v|src/modules/control/uart_tx_queue.v|src/modules/control/uart_tx.v|src/modules/control/uart_rx.v|src/modules/control/switch_controls.v|src/modules/control/player_control.v|src/modules/control/picture_controls.v|src/modules/control/ir_nec_rx.v|src/modules/control/fps_control.v|src/modules/common/startup_pulse.v|src/modules/common/reset_sync.v|src/modules/common/cdc_snapshot.v|src/modules/common/board_supervisor.v|src/modules/common/board_debug.v|
+Z8 !s90 -work|reports/keyboard_20261016/highspeed/work|+incdir+src/modules/video|src/modules/common/board_debug.v|src/modules/common/board_supervisor.v|src/modules/common/cdc_snapshot.v|src/modules/common/reset_sync.v|src/modules/common/startup_pulse.v|src/modules/control/fps_control.v|src/modules/control/ir_nec_rx.v|src/modules/control/picture_controls.v|src/modules/control/player_control.v|src/modules/control/switch_controls.v|src/modules/control/uart_rx.v|src/modules/control/uart_tx.v|src/modules/control/uart_tx_queue.v|src/modules/osd/caption_overlay.v|src/modules/osd/osd_char_rom.v|src/modules/osd/status_osd.v|src/modules/video/adaptive_raster.v|src/modules/video/adaptive_video_clock.v|src/modules/video/bmp_scale_loader.v|src/modules/video/color_bar.v|src/modules/video/edid_base_check.v|src/modules/video/edid_display_mode.v|src/modules/video/frame_swap.v|src/modules/video/picture_adjust.v|src/modules/video/picture_gamma.v|src/modules/video/pixel_effects.v|src/modules/video/transition_pixels.v|src/modules/video/video_coordinates.v|src/modules/video/video_define.v|src/modules/video/video_delay.v|src/modules/video/video_enhance.v|src/modules/video/video_mode_control.v|src/modules/video/video_rgb_to_axis_640x480.v|src/modules/video/video_timing_data.v|src/modules/audio/audio_async_fifo.v|src/modules/audio/audio_effects.v|src/modules/audio/audio_effects_stream.v|src/modules/audio/audio_fifo_room.v|src/modules/audio/audio_playback.v|src/modules/audio/audio_test_source.v|src/modules/audio/audio_wav.v|src/modules/optional/video_mode_table.v|src/modules/optional/video_scaler.v|src/modules/optional/ycbcr_to_rgb.v|src/modules/bmp/bmp_read.v|src/modules/sd/sd_read_arbiter.v|src/modules/sd/sd_fat32.v|src/modules/sd/spi_master.v|src/modules/sd/sd_card_cmd.v|src/modules/sd/sd_card_sec_read_write.v|
+Z9 o-work reports/keyboard_20261016/highspeed/work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+Z10 !s92 -work reports/keyboard_20261016/highspeed/work +incdir+src/modules/video -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 VT]eJl[Ai?71W0>KOR;T[2
+!s85 0
+vadaptive_video_clock
+I3fNmdeCBDI^J=l1[HW@CX1
+V8W;I^^3_JFJDaGRznOgIm0
+R3
+w1792162513
+8src/modules/video/adaptive_video_clock.v
+Fsrc/modules/video/adaptive_video_clock.v
+L0 5
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 4AYBT4KkV8AM?R6k85P]80
+!s85 0
+vaudio_async_fifo
+Ij<id1LS^BYC@zcUbBlAeA3
+VM9eViRGVW>?gUMCk<Z7jW0
+R3
+w1791959238
+8src/modules/audio/audio_async_fifo.v
+Fsrc/modules/audio/audio_async_fifo.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 E@QMHRB0OSDlWBEGz:MPf0
+!s85 0
+vaudio_effects
+IBS`dc:Q`kdHNGTzUbcUik1
+VR2YMe<j]YikaWdlM1Vj@C1
+R3
+w1791990963
+8src/modules/audio/audio_effects.v
+Fsrc/modules/audio/audio_effects.v
+L0 5
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 XU2CNLW0ePk:j5k9z0hC72
+!s85 0
+vaudio_effects_stream
+IJb`hSjZAZgb?7YdSjK1^]2
+V4?n5o>z?0kgSjLGjM=]nP0
+R3
+w1792135893
+8src/modules/audio/audio_effects_stream.v
+Fsrc/modules/audio/audio_effects_stream.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 hci[jRM9?_X>W[=lDV6Cn1
+!s85 0
+vaudio_error_history
+Il@L4mF;05kaRLgV=]O@ca0
+V^l30PP>[=nHX_H]UNCU<Z1
+R3
+Z11 w1791968133
+Z12 8src/modules/audio/audio_playback.v
+Z13 Fsrc/modules/audio/audio_playback.v
+L0 96
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 lJo17JD;L_USN[]S`:Q<a1
+!s85 0
+vaudio_fifo_room
+I^Gk4i3Y3OoTncL3YOzBEn3
+Vi1]?zV?I_E`P_J?LD1WkE2
+R3
+w1792141661
+8src/modules/audio/audio_fifo_room.v
+Fsrc/modules/audio/audio_fifo_room.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 91Wz9eJEbcWa2=>PoiN8X2
+!s85 0
+vaudio_playback
+Iz:GW1Q<<nX5T4:b=:A:=j3
+V02GGXY_dPX^S<F?0LTMUJ1
+R3
+R11
+R12
+R13
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 J<4IQ;=2[[0@ZCRdV6PMO3
+!s85 0
+vaudio_test_source
+IRF?4AWoSERDJ@hC=8^IN:1
+Ve3YFC@IO@_=naj[?^CJaa0
+R3
+w1790933118
+8src/modules/audio/audio_test_source.v
+Fsrc/modules/audio/audio_test_source.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 K?2HQN_RbB]Z<TnO1zVCg2
+!s85 0
+vaudio_wav
+I]TC8KfJ?AjF0[PkM8;8E82
+VYV[<;CBcJNCl`VEoAl>H02
+R3
+w1792219176
+8src/modules/audio/audio_wav.v
+Fsrc/modules/audio/audio_wav.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 F<c:z1Vl4X8Mf_19McdNh0
+!s85 0
+vbmp_read
+IBFKXf[=AhU=[AGHlNonUA1
+VJd4H7c1>TQ?hXRE8mD4id2
+R3
+Z14 w1792172255
+8src/modules/bmp/bmp_read.v
+Fsrc/modules/bmp/bmp_read.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 AElEmmg<iQFSN@fP?U1]U3
+!s85 0
+vbmp_scale_loader
+IJnQZ;`3Z_R8TiG`KzW>ZE3
+VH0HUO[lNeD<Lj[hARD=J03
+R3
+Z15 w1792217445
+Z16 8src/modules/video/bmp_scale_loader.v
+Z17 Fsrc/modules/video/bmp_scale_loader.v
+L0 5
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 ]k;YZHRg=6LK`?[U[0^RM3
+!s85 0
+vboard_debug
+Iif=b<Z7Y0FTTzG_G<UE?W2
+VA3gIki1=FLR2J1Az1WN520
+R3
+w1791954365
+8src/modules/common/board_debug.v
+Fsrc/modules/common/board_debug.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 d5G:AHdPVW[^EahBmcPoR1
+!s85 0
+vboard_supervisor
+IU3XOkBne[VIf2Zzkm:o662
+VoM:dmQNcIVe27<^4S>9Fz3
+R3
+w1791964773
+8src/modules/common/board_supervisor.v
+Fsrc/modules/common/board_supervisor.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 Nj=RbL1Y02E60bJh=Y8Ej0
+!s85 0
+vcaption_overlay
+Ik0Rf3R0GGl;zEMQWbZoX93
+VdNjZGe7PFN2DbLP^RM<SN0
+R3
+w1792165001
+8src/modules/osd/caption_overlay.v
+Fsrc/modules/osd/caption_overlay.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 AC@SGo9QhgH_YYDRSC]d:0
+!s85 0
+vcdc_snapshot
+IDc_XLLS;Xl<G;F2F@eA[U3
+V_Yo14;e_9K<ocG@dZH9Re1
+R3
+Z18 w1790587830
+8src/modules/common/cdc_snapshot.v
+Fsrc/modules/common/cdc_snapshot.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 X@e7[IkMz_>GTO6Vmm<]63
+!s85 0
+vcolor_bar
+IkRDV9IcA<lUTNI26AGKdm3
+V:PLi6mfO;4JCRSTZT<bDo3
+R3
+w1790931106
+8src/modules/video/color_bar.v
+Fsrc/modules/video/color_bar.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 >b6O`X03g3K0N:c<IBUhg3
+!s85 0
+vedid_base_check
+Im<WO2Zk_CIATZ4`Z;3^@I2
+VE_4moClS3Ih6dIgCo;E`i0
+R3
+w1791463020
+8src/modules/video/edid_base_check.v
+Fsrc/modules/video/edid_base_check.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 <LYTMH?L]Kd[GZIGj?gKg1
+!s85 0
+vedid_display_mode
+IOm2V2C9jB7D_79U;DPmK^3
+V6C4Ya81U]f;jMTLhPe>k71
+R3
+R4
+8src/modules/video/edid_display_mode.v
+Fsrc/modules/video/edid_display_mode.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 X<5aQA[69IB?3nc2?_Re:2
+!s85 0
+vfps_control
+IWCU<j9GH2RZ@ZoM0S@KFU1
+VAn[Se<Z`R=iM]_BG`J;W;0
+R3
+w1792168887
+8src/modules/control/fps_control.v
+Fsrc/modules/control/fps_control.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 Ih6NUe^Nog03g6I=3<[lQ2
+!s85 0
+vframe_swap
+Ik3P[B:Mz8]QUGVIBOkoWO3
+VR<ZgaO7ZTB=7:Fa_X[NWW0
+R3
+Z19 w1791647491
+8src/modules/video/frame_swap.v
+Fsrc/modules/video/frame_swap.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 Bo5:8ZaM]AU;O4]oMH_Pc1
+!s85 0
+vir_nec_rx
+IGD@9n2F;KFe^kX;35Q2H20
+V^m4j3P7z0^34V8fC;Udml3
+R3
+Z20 w1791462972
+8src/modules/control/ir_nec_rx.v
+Fsrc/modules/control/ir_nec_rx.v
+L0 16
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 HcT`;3aQReifk]e@VYzjX3
+!s85 0
+vkey_press_debounce
+ICj<VNjg3R;8L5>1m<>:jN3
+VFhkc<PRIIC7<S8WGnX8Cf2
+R3
+Z21 w1792225104
+Z22 8reports/keyboard_20261016/highspeed/sd_card_bmp.v
+Z23 Freports/keyboard_20261016/highspeed/sd_card_bmp.v
+L0 629
+R5
+r1
+31
+Z24 !s108 1792225105.271000
+Z25 !s107 reports/keyboard_20261016/highspeed/tb_sd_highspeed_player.v|reports/keyboard_20261016/highspeed/sd_card_bmp.v|reports/keyboard_20261016/highspeed/sd_card_top.v|reports/keyboard_20261016/highspeed/sd_native_card_model.v|
+Z26 !s90 -work|reports/keyboard_20261016/highspeed/work|reports/keyboard_20261016/highspeed/sd_native_card_model.v|reports/keyboard_20261016/highspeed/sd_card_top.v|reports/keyboard_20261016/highspeed/sd_card_bmp.v|reports/keyboard_20261016/highspeed/tb_sd_highspeed_player.v|
+R9
+!s100 6>;kWlj_XQZ25:`cDL]j30
+!i10b 1
+!s85 0
+vosd_char_rom
+IFHo2<M>_1m:X6QEPQ;3eb0
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R3
+w1790409879
+8src/modules/osd/osd_char_rom.v
+Fsrc/modules/osd/osd_char_rom.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 j?k9bF?Y:VzJH>@He^8783
+!s85 0
+vpicture_adjust
+Id?54NkC:IlmWF0>?GhZkI3
+V:k3GUddS;hOj19Ad]z>b[0
+R3
+w1791645369
+8src/modules/video/picture_adjust.v
+Fsrc/modules/video/picture_adjust.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 eY[;h60feA1IEaQnAJ9ca2
+!s85 0
+vpicture_controls
+I:ieW_I[Zo^Tf@ZdBaM<X_1
+V0UKN1Oa@4J0FH:fkC[i?10
+R3
+w1792168808
+8src/modules/control/picture_controls.v
+Fsrc/modules/control/picture_controls.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 MVWd:3Qhog`A=H1EiF[GT1
+!s85 0
+vpicture_gamma
+IXJC@g=g_ScGEkAdT5<00k3
+VQS5Ab`K`OHgW]eB;2dJjS2
+R3
+w1791954607
+8src/modules/video/picture_gamma.v
+Fsrc/modules/video/picture_gamma.v
+L0 5
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 KB@InC0FAo^^META8=:0I0
+!s85 0
+vpixel_effects
+IMS[V]eY;L`Fi5e;WnJmA:1
+V?TZO<IiJDNB79af3bQ?1H3
+R3
+w1792133031
+8src/modules/video/pixel_effects.v
+Fsrc/modules/video/pixel_effects.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 P<me0Uh][_;3o<aUR<A<h3
+!s85 0
+vplayer_control
+Ik=:KFF2XQK85Sh;VMO7PZ2
+Ve=<ebOkZ;QMJD];BV:>@F1
+R3
+Z27 w1791524485
+8src/modules/control/player_control.v
+Fsrc/modules/control/player_control.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 WTfmXDO==`iSeHkB3MOBa1
+!s85 0
+vreset_sync
+Il:^]lBBaX;]=PRQd031Ma0
+VW<T=fO6YHXUTgF0a;U3bc2
+R3
+w1792160148
+8src/modules/common/reset_sync.v
+Fsrc/modules/common/reset_sync.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 MfLa`NCAJmEaM0Ie:HdV93
+!s85 0
+vrgb_lerp_pipeline
+IPYF7<U<K^8:al6RLFM<Nn3
+V30:bSEleWYPbWz`P323YY3
+R3
+R15
+R16
+R17
+L0 275
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 DlR6JonMJYdAh9^MRHzJM3
+!s85 0
+vsd_bus_phy
+I[bc2A<?EOUd[WUSVJP0>32
+VB[Vg4e:5XVKnbW=HT97BV2
+R3
+Z28 w1792222725
+8reports/keyboard_20261016/highspeed/sd_bus_phy.v
+Freports/keyboard_20261016/highspeed/sd_bus_phy.v
+L0 4
+R5
+r1
+31
+Z29 !s108 1792222930.519000
+Z30 !s107 reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|reports/keyboard_20261016/highspeed/sd_native_card_model.v|reports/keyboard_20261016/highspeed/sd_card_top_native.v|reports/keyboard_20261016/highspeed/sd_native_controller.v|reports/keyboard_20261016/highspeed/sd_bus_phy.v|
+Z31 !s90 -work|reports/keyboard_20261016/highspeed/work|reports/keyboard_20261016/highspeed/sd_bus_phy.v|reports/keyboard_20261016/highspeed/sd_native_controller.v|reports/keyboard_20261016/highspeed/sd_card_top_native.v|reports/keyboard_20261016/highspeed/sd_native_card_model.v|reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|
+R9
+!s100 D:]7;1XRif6kIiZT3Qk:h3
+!i10b 1
+!s85 0
+vsd_card_bmp
+IB?z[DF6_?Q333CG?ZbM4z0
+VmTDiEkYeC5QC8N@o[H1d@2
+R3
+R21
+R22
+R23
+L0 2
+R5
+r1
+31
+R24
+R25
+R26
+R9
+!s100 @_84TYO]3gzeGDfd^TiN_3
+!i10b 1
+!s85 0
+vsd_card_cmd
+IE9_b[41?DF_<jj4eHo6^S3
+VKbY@c4Ee`da7QZaI_eN^o2
+R3
+w1792221842
+8src/modules/sd/sd_card_cmd.v
+Fsrc/modules/sd/sd_card_cmd.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 ;AWJmDR4^OEoFo4c:iC]_3
+!s85 0
+vsd_card_sec_read_write
+Ilf?:B:LmIc5T;R`V_n9VM1
+VXmHfA=5k@05W:ijHkRW_?3
+R3
+R20
+8src/modules/sd/sd_card_sec_read_write.v
+Fsrc/modules/sd/sd_card_sec_read_write.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 WN4AXiL3[c7EjCfdibQYC1
+!s85 0
+vsd_card_top
+IPiFZMEc>Z9_jK>OCcHiPU2
+Vl@>E?l5YMfgTmMQdaNj;k2
+R3
+R21
+8reports/keyboard_20261016/highspeed/sd_card_top.v
+Freports/keyboard_20261016/highspeed/sd_card_top.v
+L0 2
+R5
+r1
+31
+R24
+R25
+R26
+R9
+!s100 SGWMaHY:zIZ`8Nn3kW_W@3
+!i10b 1
+!s85 0
+vsd_card_top_native
+Iz_2iH5PEQL9Q`GO`e>W[73
+V^=eM`RnhA_VEUoQM2i2RO2
+R3
+R28
+8reports/keyboard_20261016/highspeed/sd_card_top_native.v
+Freports/keyboard_20261016/highspeed/sd_card_top_native.v
+L0 4
+R5
+r1
+31
+R29
+R30
+R31
+R9
+!s100 eh<HIYVDae@YKPPAKHHJZ0
+!i10b 1
+!s85 0
+vsd_fat32
+I==O`k>khcN7f87;:SRl3j1
+VW6ES5ci7M_g?k@`;EdZ>42
+R3
+R14
+8src/modules/sd/sd_fat32.v
+Fsrc/modules/sd/sd_fat32.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 [Eac56[MHPhil:iGioHJ:3
+!s85 0
+vsd_native_card_model
+I31cn<O`NgfH9T_6JK1V2f0
+VUWS6nm_4jC0O7J05_6D5`2
+R3
+R21
+8reports/keyboard_20261016/highspeed/sd_native_card_model.v
+Freports/keyboard_20261016/highspeed/sd_native_card_model.v
+L0 4
+R5
+r1
+31
+R24
+R25
+R26
+R9
+!s100 ?YTnB<2eB>6VEj]@L@mP<0
+!i10b 1
+!s85 0
+vsd_native_controller
+I`@K2i]D[=TZZ=cVi:kGA82
+VL0AlNZk^@bGbaY[:2lh2a1
+R3
+R28
+8reports/keyboard_20261016/highspeed/sd_native_controller.v
+Freports/keyboard_20261016/highspeed/sd_native_controller.v
+L0 2
+R5
+r1
+31
+R29
+R30
+R31
+R9
+!s100 SS>[OmQJ950k4ngJ=Z<0T2
+!i10b 1
+!s85 0
+vsd_read_arbiter
+I7L8B022UNbI<4MWQ^FTBZ3
+VF]IVR3:`X:i`g^[RN_hk52
+R3
+w1791965534
+8src/modules/sd/sd_read_arbiter.v
+Fsrc/modules/sd/sd_read_arbiter.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 BMIMF_Ib4lWSS7co_Xn6=2
+!s85 0
+vspi_master
+IaBA?b6YBdl5U8IUAamAI81
+Vjla62CeYcfjOzeS9ka_1@1
+R3
+w1790516146
+8src/modules/sd/spi_master.v
+Fsrc/modules/sd/spi_master.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 :Ge6eCc=PmWnh_>JfG1;@1
+!s85 0
+vstartup_pulse
+I3SdR8_Y[[;4F3j7[Leojb1
+Vjd;>DKUoGPRCHNLmf7HfQ1
+R3
+w1790516120
+8src/modules/common/startup_pulse.v
+Fsrc/modules/common/startup_pulse.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 fm1YX2FVTlUFGk8N^I4^>0
+!s85 0
+vstatus_osd
+I;9Dh@5RYQADVNf5TIZIcI2
+V:ndK:N;DdbKa=OWHF@40a1
+R3
+w1792219439
+8src/modules/osd/status_osd.v
+Fsrc/modules/osd/status_osd.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 ;I[FFASXE7e6H7OMO0S2@1
+!s85 0
+vswitch_controls
+IMG7Z5HlTPYUgUGCGGdZe73
+VXOnJUA@^PB`Cia1Qz1;Ff0
+R3
+w1791526104
+8src/modules/control/switch_controls.v
+Fsrc/modules/control/switch_controls.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 >4RIE=GF3[L>4Jl1DLDod2
+!s85 0
+vtb_sd_highspeed
+IMaYMi5ooR5`@Y8>LA99_U1
+V@6O8@Mi1Ao`ecCBDN3Nd80
+R3
+w1792223045
+8reports/keyboard_20261016/highspeed/tb_sd_highspeed.v
+Freports/keyboard_20261016/highspeed/tb_sd_highspeed.v
+L0 2
+R5
+r1
+31
+R9
+!s100 7=43;G5z8?UkB5P^=8Sk50
+!s108 1792223045.527000
+!s107 reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|
+!s90 -work|reports/keyboard_20261016/highspeed/work|reports/keyboard_20261016/highspeed/tb_sd_highspeed.v|
+!i10b 1
+!s85 0
+vtb_sd_highspeed_player
+I6[_K095XXn<cN0m5ZOX[L3
+VaTYN@KBNg0L8;4NWj@Vb92
+R3
+R21
+8reports/keyboard_20261016/highspeed/tb_sd_highspeed_player.v
+Freports/keyboard_20261016/highspeed/tb_sd_highspeed_player.v
+L0 3
+R5
+r1
+31
+R24
+R25
+R26
+R9
+!s100 X7oQ35KUGHOYezdmMbMAT2
+!i10b 1
+!s85 0
+vtransition_pixels
+I?K8`;M@P<OZ0QS2FYHTeB2
+V[EgHlUdbJ1]:_5=j4]fWf2
+R3
+R27
+8src/modules/video/transition_pixels.v
+Fsrc/modules/video/transition_pixels.v
+L0 5
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 CSO7h01?`YQeEBQ4lz]940
+!s85 0
+vuart_rx
+ICPO1]3SEiFTYEk1=]:6PX0
+VLhzRX@iWR_F]j>^5fG71k3
+R3
+R20
+8src/modules/control/uart_rx.v
+Fsrc/modules/control/uart_rx.v
+L0 11
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 363QYY;_:T9<9TDac_>922
+!s85 0
+vuart_tx
+I1Xh@4o6hD0dAfcbW1HnId3
+VCUbLP?`JIVQOaz3JV5Tmg2
+R3
+R18
+8src/modules/control/uart_tx.v
+Fsrc/modules/control/uart_tx.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 j1DDNKcNbQ7KK`bmnXXI`3
+!s85 0
+vuart_tx_queue
+IVkiP138nd9Lf3804NPkNo0
+VCNhKB9j`EDIQ4zE0<30[@2
+R3
+w1790931525
+8src/modules/control/uart_tx_queue.v
+Fsrc/modules/control/uart_tx_queue.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 =Z1]ecKlJ@mmgQll[^FRI3
+!s85 0
+vvideo_coordinates
+IPF;]`f]Ik13W0]h@J1^fY0
+Vd30A[z2mOgG5AJ76zA;ZC3
+R3
+Z32 w1791648393
+Z33 8src/modules/video/video_coordinates.v
+Z34 Fsrc/modules/video/video_coordinates.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 YU]bG5aof:c=Ven>DCb7K0
+!s85 0
+vvideo_delay
+Icinf9IGke[kdmd7Ef5kdO2
+VgFX5^C85z7HVm093QSAO32
+R3
+w1791889828
+8src/modules/video/video_delay.v
+Fsrc/modules/video/video_delay.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 ^_Y][GL25i@fSYdKz5zOg0
+!s85 0
+vvideo_enhance
+I>L:_mT>Uj9@UOJb>3FRg82
+VjOzBcX=m=Qcm>LNEN[NVf0
+R3
+R18
+8src/modules/video/video_enhance.v
+Fsrc/modules/video/video_enhance.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 VIPJl87FNHA88G;cDk>aS2
+!s85 0
+vvideo_mode_control
+II=8@Ld^cm1=b3kfL[KH<S3
+Vojo^QI4g5YBmCWBcd6NK72
+R3
+w1792130789
+8src/modules/video/video_mode_control.v
+Fsrc/modules/video/video_mode_control.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 ]1?==g`iYiFg91jZPm3i53
+!s85 0
+vvideo_mode_table
+I=aeGVT4H5_Fmc>A4ejB2g2
+V>95bH<W0D1gd^>D=<5C1=0
+R3
+w1790413006
+8src/modules/optional/video_mode_table.v
+Fsrc/modules/optional/video_mode_table.v
+L0 16
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 <jD2a[I=8So;CiF_blPcQ3
+!s85 0
+vvideo_rgb_to_axis_640x480
+IlDz2?V=heC5R2?8WSof>12
+V2f6k`dz<=XlKi;5lQcYe13
+R3
+R19
+8src/modules/video/video_rgb_to_axis_640x480.v
+Fsrc/modules/video/video_rgb_to_axis_640x480.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 M7fLm`7gJWBgFca3X4DOe1
+!s85 0
+vvideo_scaler
+I?EA:D5jIAY;1CO0bzh[U70
+VMc7[;l7E7;R@z^_Z4Sh8j3
+R3
+w1790413072
+8src/modules/optional/video_scaler.v
+Fsrc/modules/optional/video_scaler.v
+L0 25
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 3RMDjSLaS7`DkO?>>LCJ[3
+!s85 0
+vvideo_timing_data
+IUCA=>0>WXR:EfjD>dn]6f0
+VfOn26ao<RNQmb<MfQOdXQ3
+R3
+R19
+8src/modules/video/video_timing_data.v
+Fsrc/modules/video/video_timing_data.v
+L0 1
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 U1CKmj1]93JI0HBWRRPVM0
+!s85 0
+vviewport_coordinates
+I`2>H_3Q[59cgVGh;YnJf63
+V50z[NI;67@9<bHHc3Y=L>1
+R3
+R32
+R33
+R34
+L0 22
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 XE1zSOR1194R21e?F?acH2
+!s85 0
+vycbcr_to_rgb
+IZdTmCoPF_T483]`D>7d^03
+VOl6I0U2YbC:<T>jIZ4LJA2
+R3
+R18
+8src/modules/optional/ycbcr_to_rgb.v
+Fsrc/modules/optional/ycbcr_to_rgb.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+R10
+!i10b 1
+!s100 1K9B=Z_R7;8b3Q3EHEMBb2
+!s85 0

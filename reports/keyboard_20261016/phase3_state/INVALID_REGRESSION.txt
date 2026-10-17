@@ -1,0 +1,1 @@
+STA positive but NOT accepted: missing DIVIDE self-loop caused scaled BMP watchdog. See frozen regression log.

@@ -1,0 +1,10 @@
+{
+  "timing_ns": {
+    "SWNS": 0.034,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "source_sha256": "b1868febf4764ded54342e031d4e47f538ad7920fa81a8b2946df1f721c32331",
+  "negative_setup_paths": []
+}

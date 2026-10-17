@@ -1,0 +1,18 @@
+# vsim -do {run -all; quit -f} -l reports/keyboard_20261016/highspeed/test.log -lib reports/keyboard_20261016/highspeed/work -c tb_sd_highspeed 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_highspeed(fast)
+# run -all 
+# SDR50 logical peer: 8192B/36672 host cycles = 22.338569 MB/s; card output delay=6ns
+# ALL PASS tb_sd_highspeed: CMD6 support/check/switch/busy/reject, four-lane status CRC, timeout/response error reinit25, delayed pin peer and 50MHz throughput
+# ** Note: $finish    : reports/keyboard_20261016/highspeed/tb_sd_highspeed.v(53)
+#    Time: 1833900 ns  Iteration: 1  Instance: /tb_sd_highspeed

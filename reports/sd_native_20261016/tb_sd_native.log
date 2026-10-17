@@ -1,0 +1,33 @@
+# vsim -do {run -all; quit -f} -l ../reports/sd_native_20261016/tb_sd_native.log -lib sd_native_work -c tb_sd_native 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native(fast)
+# run -all 
+# NATIVE sustained: 8192 bytes / 73113 host cycles = 11.204574 MB/s (16 CMD17 sectors, all handshakes/CRC included)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE queued request recovered after 7613 host cycles (includes previous fault recovery)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE queued request recovered after 15049 host cycles (includes previous fault recovery)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4589 host cycles = 11.157115 MB/s (CMD17 request through CRC/end)
+# ALL PASS tb_sd_native: SDHC/SDSC init, R2/R3/R6/R7, busy, four CRC lanes, faults/recovery, >=10MB/s logical peer
+# ** Note: $finish    : tb_sd_native.v(120)
+#    Time: 3217920 ns  Iteration: 1  Instance: /tb_sd_native
