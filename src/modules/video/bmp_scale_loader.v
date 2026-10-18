@@ -14,7 +14,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg [9:0] ow,oh;
  // Explicit one-hot encoding avoids cascaded binary-state decoders in the
  // 100 MHz divider and pixel register enables. State transitions are unchanged.
- localparam [31:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
+ localparam [32:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
   DIV_DONE=24'h000008,ROW=24'h000010,CHECK_ROWS=24'h000020,
   LINE_START=24'h000040,CACHE=24'h000080,FETCH=24'h000100,BYTE=24'h000200,
   PIXEL=24'h000400,LEFT_WAIT=24'h000800,LEFT_GET=24'h001000,
@@ -24,8 +24,8 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
   SIZE_APPLY=26'h2000000,
   SAMPLE_CHECK=31'h04000000,SAMPLE_WAIT1=31'h08000000,
   SAMPLE_WAIT2=31'h10000000,SAMPLE_WAIT3=31'h20000000,SAMPLE_STORE=31'h40000000,
-  PIXEL_PROBE=32'h80000000;
- reg [31:0] state;
+  PIXEL_PROBE=32'h80000000,BYTE_ADDR_HI=33'h100000000;
+ reg [32:0] state;
  reg pixel_inside;
  reg sample_last,sample_endpoint;
  reg row0_hit,row1_hit;
@@ -36,6 +36,11 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg [1:0] tags_valid;
  reg [12:0] stride;
  reg [31:0] offset,base,byte_address,cache_sector;
+ reg byte_address_carry;
+ // The 26-bit assignment context preserves the full 13x13 product. Do not
+ // put the multiply inside a concatenation: that makes it self-sized.
+ wire [25:0] row_product_full={1'b0,load_y}*stride;
+ wire [31:0] row_product={6'd0,row_product_full};
  reg cache_valid;
  reg [9:0] cache_count;
  reg [10:0] load_x;reg [9:0] read_x,load_sample;
@@ -92,8 +97,13 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  // Keep the row-address load/increment separate from the pixel FSM.
  // This prevents sparse state enables being shared into its address DSP CE.
  always @(posedge clk or posedge rst)begin
-  if(rst)byte_address<=0;
-  else if(state[6])byte_address<=offset+load_y*stride;
+  if(rst)begin byte_address<=0;byte_address_carry<=0;end
+  else if(state[6])begin
+   {byte_address_carry,byte_address[15:0]}<={1'b0,offset[15:0]}+{1'b0,row_product[15:0]};
+  end
+  else if(state[32])begin
+   byte_address[31:16]<=offset[31:16]+row_product[31:16]+{15'd0,byte_address_carry};
+  end
   else if(state[9])byte_address<=byte_address+1'b1;
  end
  // Synchronous RAM reads; memories deliberately have no reset.
@@ -204,7 +214,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      end else state<=PIXEL_PROBE;
     end
     state[6]: begin
-     load_x<=0;load_sample<=0;x_acc<=0;channel<=0;state<=CACHE;
+     load_x<=0;load_sample<=0;x_acc<=0;channel<=0;state<=BYTE_ADDR_HI;
     end
     state[7]: begin
      if(cache_valid && cache_sector==byte_address[31:9])state<=BYTE;
@@ -310,6 +320,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       state<=SAMPLE_CHECK;
      end
     end
+    state[32]:state<=CACHE;
     default:begin state<=IDLE;busy<=0;pixel_valid<=0;sector_read<=0;error<=1;end
    endcase
   end

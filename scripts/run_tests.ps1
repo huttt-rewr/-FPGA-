@@ -35,6 +35,7 @@ try {
  $files += @('../src/modules/game/*.v')
  $mergeTests += @('tb_snake_game','tb_snake_controls','tb_snake_pipeline')
  $mergeTests += @('tb_bram_window','tb_osd_bcd','tb_bram_waveform')
+ $mergeTests += @('tb_scaler_row_address')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
