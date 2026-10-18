@@ -68,7 +68,9 @@ def main():
         record['synthesis_warnings'] = run(args.td, 'synth.tcl', 'synthesis.log', 'SYNTHESIS_COMPLETED',
                                            ['video_improve_gate.db', 'rtl_area.txt', 'gate_area.txt'])
         record['implementation_warnings'] = run(args.td, 'implement.tcl', 'implementation.log', 'IMPLEMENTATION_COMPLETED',
-            ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt', 'io.txt'])
+            ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt', 'io.txt',
+             'video_improve_prior_opt.db', 'prior_opt_timing_status.txt',
+             'prior_opt_timing_paths20.txt', 'routed_timing_paths20.txt'])
         if sources != snapshot():
             raise RuntimeError('Build inputs changed while TD was running')
         text = (REPORTS / 'timing_status.txt').read_text()
