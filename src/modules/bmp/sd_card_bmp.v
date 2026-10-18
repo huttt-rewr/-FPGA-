@@ -237,6 +237,14 @@ reg images_present,images_multiple;
 // Predecode the initialization branch before the frame-control priority mux.
 // Launch paths still require live sd_init_done; no SD request is issued early.
 reg waiting_for_init;
+// FAT mount completion otherwise drives the full load-control priority mux
+// through a long net. Metadata/count predecode already settles before launch;
+// capture a local copy without changing the sector stream or parser handshake.
+(* preserve="true" *) reg scan_control_done;
+always @(posedge clk or posedge rst)begin
+ if(rst)scan_control_done<=0;
+ else scan_control_done<=scan_done;
+end
 always @(posedge clk or posedge rst)begin
  if(rst)waiting_for_init<=1;
  else waiting_for_init<=!sd_init_done && !scan_done;
@@ -492,21 +500,21 @@ always @(posedge clk or posedge rst) begin
                 write_done_seen       <= 1'b0;
             end else begin
                 // 忙的时候也只记 1 次“下一张”请求，不会累积成连跳两张
-                if ((key_next_press || cmd_next || cmd_prev) && scan_done && images_present)
+                if ((key_next_press || cmd_next || cmd_prev) && scan_control_done && images_present)
                     begin next_req_pending <= 1'b1; prev_requested <= cmd_prev;direct_pending<=0;end
-                if(INDEXED && image_select_valid && scan_done && images_present)begin
+                if(INDEXED && image_select_valid && scan_control_done && images_present)begin
                     direct_index<=(image_select_index>=img_found_count)?6'd0:image_select_index[5:0];
                     direct_pending<=1;next_req_pending<=1;
                 end
 
                 // 自动播放开/关
-                if ((key_auto_press || cmd_toggle) && scan_done && images_multiple) begin
+                if ((key_auto_press || cmd_toggle) && scan_control_done && images_multiple) begin
                     auto_play_en <= ~auto_play_en;
                     auto_cnt     <= 32'd0;
                 end
 
                 // 自动播放 1s 计数：只有当前没有写图任务时才计时
-                if (!RATE_CONTROLS && scan_done && auto_play_en && display_valid && !load_busy && first_image_committed && images_multiple) begin
+                if (!RATE_CONTROLS && scan_control_done && auto_play_en && display_valid && !load_busy && first_image_committed && images_multiple) begin
                     if (auto_tick)
                         auto_cnt <= 32'd0;
                     else
@@ -516,7 +524,7 @@ always @(posedge clk or posedge rst) begin
                 end
 
                 // 首图自动加载到 buffer0
-                if (scan_done && sd_init_done && !status_error && !first_image_committed && bmp_ready && !load_busy && images_present) begin
+                if (scan_control_done && sd_init_done && !status_error && !first_image_committed && bmp_ready && !load_busy && images_present) begin
                     load_idx         <= INDEXED?((image_select_index>=img_found_count)?6'd0:image_select_index[5:0]):6'd0;
                     load_sector      <= INDEXED?0:img_sector0;
                     pending_buf_idx  <= 2'd0;
@@ -532,7 +540,7 @@ always @(posedge clk or posedge rst) begin
                     auto_cnt         <= 32'd0;
                 end
                 // 手动下一张优先：写到“非当前显示”的另一块 buffer
-                else if (scan_done && sd_init_done && bmp_ready && !load_busy && next_req_pending && images_present) begin
+                else if (scan_control_done && sd_init_done && bmp_ready && !load_busy && next_req_pending && images_present) begin
                     load_idx         <= requested_next;
                     load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
@@ -548,7 +556,7 @@ always @(posedge clk or posedge rst) begin
                     auto_cnt         <= 32'd0;
                 end
                 // 自动播放下一张：同样写到“非当前显示”的另一块 buffer
-                else if (scan_done && sd_init_done && !status_error && bmp_ready && display_valid && !load_busy && auto_play_en && auto_tick && images_multiple) begin
+                else if (scan_control_done && sd_init_done && !status_error && bmp_ready && display_valid && !load_busy && auto_play_en && auto_tick && images_multiple) begin
                     load_idx         <= requested_next;
                     load_sector      <= INDEXED?0:sector_lut(requested_next[1:0]);
                     pending_buf_idx  <= next_buf_lut(disp_buf_idx, display_valid);
