@@ -35,8 +35,12 @@ module tb_fat32_compare;
    dut.owner=(guard==1 || guard==7);
    dut.wav_found=(guard!=1);dut.bmp_count=4;
    dut.request_file=(guard==2)?6'd4:6'd0;
-   dut.target_index=(guard==3)?24'd100:24'd0;
-   dut.data_clusters=100;dut.max_cluster=101;
+   dut.target_index=(guard>=8 && guard<=10)?24'hffffff:
+    (guard==11)?24'd1:(guard==12)?24'h800000:(guard==3)?24'd100:24'd0;
+   dut.data_clusters=(guard==8)?32'h01000000:(guard==9)?32'hffffffff:
+    (guard==10 || guard==12)?32'h00ffffff:(guard==11)?32'd0:
+    (guard==13)?32'h00800000:32'd100;
+   dut.max_cluster=101;
    dut.working_cluster=(guard==4)?0:(guard==5)?1:(guard==6)?102:2;
    sectors=({1'b0,size_bytes}+33'd511)>>9;
    @(posedge clk);#1;
@@ -62,6 +66,8 @@ module tb_fat32_compare;
   repeat(3)@(negedge clk);rst=0;
   for(i=0;i<10;i=i+1)for(j=0;j<10;j=j+1)for(k=0;k<8;k=k+1)
    run_case(sizes[i],rels[j],k);
+  // A large volume is not bounded by the size of one file. Isolate that guard.
+  for(k=8;k<14;k=k+1)run_case(1024,0,k);
   // Exercise both sides of each exact ceiling as well as broad 32-bit values.
   for(i=0;i<512;i=i+1)begin
    random_size=$random;random_rel=$random;

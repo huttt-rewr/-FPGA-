@@ -474,7 +474,8 @@ module sd_fat32 #(
     end
     state[40]:begin
      stream_bad<=(owner && !wav_found) || (!owner && request_file>=bmp_count) || request_size==0 ||
-        (|request_rel[31:24]) || (request_rel[23:0]>=request_sectors[23:0]) || target_index>=data_clusters ||
+        (|request_rel[31:24]) || (request_rel[23:0]>=request_sectors[23:0]) ||
+        (!(|data_clusters[31:24]) && target_index>=data_clusters[23:0]) ||
         working_cluster<2 || working_cluster>max_cluster;
      state<=STREAM_PREP;
     end
