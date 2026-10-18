@@ -40,6 +40,22 @@ parameter FRAME_PIXELS  = 21'd307200;   // 640*480
 parameter BUF0_ADDR     = 21'd0;
 parameter BUF1_ADDR     = FRAME_PIXELS;
 parameter DEBUG_ENABLED = 1; // 0 removes snapshots and extra seven-segment logic.
+// Declare shared clocks, resets and mode payloads before their first use.
+wire sd_card_clk;
+wire ext_mem_clk;
+wire ext_mem_clk_sft;
+wire video_clk;
+wire hdmi_5x_clk;
+wire rst_sd,rst_mem,rst_video,rst_write;
+wire rst_controls;
+wire tx_overflow,video_overflow;
+wire vs;
+(* async_reg="true" *) reg [1:0] mode_vff,mode_sff,mode_mff;
+(* async_reg="true" *) reg [1:0] edid_good_vff;
+wire mode_video=mode_vff[1],mode_sd=mode_sff[1],mode_mem=mode_mff[1];
+(* keep="true" *) reg [7:0] image_index,audio_index;
+(* keep="true" *) reg [1:0] res_mode;
+(* keep="true" *) reg [3:0] fps_mode;
 wire menu_open,gamma_enable,debug_enable;
 wire [2:0] menu_item;
 wire [1:0] debug_page;
@@ -102,10 +118,6 @@ wire [3:0] kb_digit;
 wire [7:0] kb_scan_code;
 wire kb_valid,kb_release,kb_extended,kb_error;
 wire board_next,board_toggle;
-// Shared control registers: file selection and runtime display/slide-rate requests.
-(* keep="true" *) reg [7:0] image_index,audio_index;
-(* keep="true" *) reg [1:0] res_mode;
-(* keep="true" *) reg [3:0] fps_mode;
 reg osd_on;
 reg media_image_select,media_audio_select;
 wire [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count;
@@ -127,7 +139,7 @@ wire [1:0] status_index;
 wire [2:0] status_count;
 wire commit_req,commit_ack,vblank,visible;
 wire [1:0] commit_buffer,active_buffer;
-wire tx_overflow,video_overflow;
+
 wire memory_underflow,memory_overflow,memory_frame_invalid;
 (* async_reg="true" *) reg [1:0] memory_overflow_video;
 always @(posedge video_clk or posedge rst_video) begin
@@ -196,14 +208,9 @@ wire Sdr_init_done;
 wire Sdr_init_ref_vld;
 wire Sdr_busy;
 
-wire sd_card_clk;
-wire ext_mem_clk;
-wire ext_mem_clk_sft;
-wire video_clk;
-wire hdmi_5x_clk;
+
 
 wire hs;
-wire vs;
 wire de;
 
 wire [23:0] vout_data_raw;
@@ -270,9 +277,7 @@ wire video_pll_lock;
 wire rst_all;
 // Mode payload settles while all consumers are reset; each domain gets local
 // synchronized copies well before mode_ready releases its reset synchronizer.
-(* async_reg="true" *) reg [1:0] mode_vff,mode_sff,mode_mff;
-(* async_reg="true" *) reg [1:0] edid_good_vff;
-wire mode_video=mode_vff[1],mode_sd=mode_sff[1],mode_mem=mode_mff[1];
+
 // Metadata is sampled while consumers are held reset for 4096 boot cycles.
 // It needs no asynchronous reset pins: initialize synchronously and allow the
 // two-stage samples to settle before releasing the actual consumers.
@@ -289,8 +294,7 @@ end
 
 
 
-wire rst_sd,rst_mem,rst_video,rst_write;
-wire rst_controls;
+
 reset_sync reset_controls(.clk(sd_card_clk),.arst(rst_all),.rst(rst_controls));
 reset_sync reset_writer(.clk(ext_mem_clk),.arst(rst_all | !mode_ready | status_error),.rst(rst_write));
 // 10 ms after BOTH PLLs lock; frame heartbeat timeout is 2 seconds.

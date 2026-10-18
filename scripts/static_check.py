@@ -23,6 +23,21 @@ assert len(listed)==len(set(listed)), 'Duplicate design manifest entry'
 assert set(listed)==project(r/'video_improve.al'), 'Manifest differs from TD project'
 assert r/'src/modules/sd/sd_fat32.v' in listed, 'FAT32 remapper is not registered'
 assert '.FAT32_ENABLE(1)' in (r/'src/top.v').read_text(encoding='utf-8-sig'), 'Official top must use FAT32 files'
+# Width-sensitive/control nets must be declared before any use in the top.
+# Ignore comments when finding the first occurrence; this catches the actual
+# top connection as well as a future accidental one-bit implicit declaration.
+top_source=(r/'src/top.v').read_text(encoding='utf-8-sig')
+top_code=re.sub(r'/\*.*?\*/|//[^\n]*', '', top_source, flags=re.S)
+for signal,kind,width in [('res_mode','reg','1:0'),('mode_sd','wire',None),
+                          ('mode_mem','wire',None),('sd_card_clk','wire',None),
+                          ('rst_sd','wire',None),('rst_controls','wire',None),
+                          ('vs','wire',None)]:
+    first=re.search(r'\b'+signal+r'\b',top_code).start()
+    declaration=top_code[top_code.rfind(';',0,first)+1:top_code.index(';',first)]
+    assert re.search(r'\b'+kind+r'\b',declaration), f'{signal} used before declaration'
+    if width:
+        assert re.search(r'\[\s*1\s*:\s*0\s*\]',declaration), f'{signal} lost two-bit width'
+
 modules={}
 for p in listed:
     source=p.read_text(encoding='utf-8-sig')

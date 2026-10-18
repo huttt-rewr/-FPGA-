@@ -29,7 +29,7 @@ try {
  $files += @('../src/modules/input/*.v')
  $mergeTests += @('tb_ps2_keyboard','tb_ps2_controls')
  $mergeTests += @('tb_fat32_indexed','tb_indexed_player','tb_file_osd')
- $mergeTests += @('tb_video_mode_control','tb_mode_reload')
+ $mergeTests += @('tb_video_mode_control','tb_mode_reload','tb_mode_request_cdc')
  $mergeTests += @('tb_fps_control','tb_rate_player','tb_sd_native_integrated','tb_sd_highspeed','tb_sd_highspeed_player')
  $mergeTests += @('tb_caption_pipeline','tb_pixel_effects','tb_glass_osd','tb_audio_visualizer','tb_visual_pipeline','tb_shared_luma')
  $files += @('../src/modules/game/*.v')
