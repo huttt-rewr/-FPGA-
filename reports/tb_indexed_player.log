@@ -32,4 +32,4 @@
 # run -all 
 # ALL PASS tb_indexed_player: 12BMP/3WAV, exact scaled frames/PCM, next/prev/direct/busy selection, audio cancel/drain/reset
 # ** Note: $finish    : tb_indexed_player.v(89)
-#    Time: 252222240 ns  Iteration: 1  Instance: /tb_indexed_player
+#    Time: 185366500 ns  Iteration: 1  Instance: /tb_indexed_player

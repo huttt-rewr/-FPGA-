@@ -34,4 +34,4 @@
 # run -all 
 # ALL PASS tb_audio_sd_integration
 # ** Note: $finish    : tb_audio_sd_integration.v(53)
-#    Time: 63348965 ns  Iteration: 2  Instance: /tb_audio_sd_integration
+#    Time: 46548765 ns  Iteration: 2  Instance: /tb_audio_sd_integration

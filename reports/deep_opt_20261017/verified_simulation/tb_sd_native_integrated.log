@@ -1,0 +1,47 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_integrated.log -lib msim_work -c tb_sd_native_integrated 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 49.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(30): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_integrated.v(30): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_integrated(fast)
+# run -all 
+# ALL PASS tb_sd_native_integrated: formal native profile without force/real SD pins/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : tb_sd_native_integrated.v(66)
+#    Time: 62384540 ns  Iteration: 1  Instance: /tb_sd_native_integrated

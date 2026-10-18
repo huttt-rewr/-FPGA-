@@ -41,5 +41,5 @@
 # Loading work.tb_bmp_headers(fast)
 # run -all 
 # ALL PASS tb_bmp_headers: DIB, planes, offset and stale/truncated header rejection
-# ** Note: $finish    : tb_bmp_headers.v(50)
-#    Time: 63560 ns  Iteration: 1  Instance: /tb_bmp_headers
+# ** Note: $finish    : tb_bmp_headers.v(52)
+#    Time: 84560 ns  Iteration: 1  Instance: /tb_bmp_headers

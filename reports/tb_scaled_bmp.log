@@ -37,4 +37,4 @@
 # case 8: 17x13 -> 640x480, pixels=307200 errors=0
 # ALL PASS tb_scaled_bmp: 9 full frames, bilinear RGB reference, padding, extended offsets, scan, backpressure, abort/reload, truncated sector
 # ** Note: $finish    : tb_scaled_bmp.v(77)
-#    Time: 740073897 ns  Iteration: 0  Instance: /tb_scaled_bmp
+#    Time: 794271627 ns  Iteration: 0  Instance: /tb_scaled_bmp

@@ -32,4 +32,4 @@
 # run -all 
 # ALL PASS tb_mode_reload: real FAT/BMP/WAV reload across VGA-SVGA-VGA, exact pixels, mid-load abort, same file resume
 # ** Note: $finish    : tb_mode_reload.v(104)
-#    Time: 206920090 ns  Iteration: 1  Instance: /tb_mode_reload
+#    Time: 152128250 ns  Iteration: 1  Instance: /tb_mode_reload

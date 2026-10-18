@@ -1,0 +1,133 @@
+{
+  "confidence": "Routed",
+  "worst_by_check": {
+    "hold": {
+      "slack_ns": 0.021,
+      "check": "hold",
+      "start": "u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_hdmi_island_data_gen/U_audio_sample_packet_2_channel/u_w96_d1024_fifo/u_logic_ramfifo[2]__2_syn_4.clk",
+      "end": "u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_hdmi_island_data_gen/U_audio_sample_packet_2_channel/u_w96_d1024_fifo/u_logic_ramfifo_syn_614.addrb[5]"
+    },
+    "recovery": {
+      "slack_ns": -0.402,
+      "check": "recovery",
+      "start": "sd_card_bmp_m0/audio_stream_reset_reg_syn_5.clk",
+      "end": "audio_fifo/rreset/sync_ff_reg[1]_syn_4.sr"
+    },
+    "removal": {
+      "slack_ns": 0.022,
+      "check": "removal",
+      "start": "u_hdmi_1_4b_transmitter_core_wrapper/u0_reset_sync/O_sync_reset_reg_syn_72.clk",
+      "end": "u_hdmi_1_4b_transmitter_core_wrapper/u_hdmi_edid_wrapper/u_iic_master_wrapper/u_iic_transmitter_controller/S_wr_cnt_reg[1]_syn_4.sr"
+    },
+    "setup": {
+      "slack_ns": -0.401,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[2]_syn_7.a[0]"
+    }
+  },
+  "negative_reported_paths": [
+    {
+      "slack_ns": -0.401,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[2]_syn_7.a[0]"
+    },
+    {
+      "slack_ns": -0.36,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[0]_syn_7.a[1]"
+    },
+    {
+      "slack_ns": -0.294,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[19]_syn_4.a[0]"
+    },
+    {
+      "slack_ns": -0.294,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[19]_syn_4.a[1]"
+    },
+    {
+      "slack_ns": -0.286,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[4]_syn_28.a[1]"
+    },
+    {
+      "slack_ns": -0.286,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[5]_syn_7.a[1]"
+    },
+    {
+      "slack_ns": -0.267,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[5]_syn_17.c[1]"
+    },
+    {
+      "slack_ns": -0.262,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[3]_syn_7.a[1]"
+    },
+    {
+      "slack_ns": -0.245,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/ox_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_inside_reg_syn_25.a[1]"
+    },
+    {
+      "slack_ns": -0.226,
+      "check": "setup",
+      "start": "audio_index_reg[0]_syn_3.clk",
+      "end": "sd_card_bmp_m0/audio_target_reg[1]_syn_7.a[1]"
+    },
+    {
+      "slack_ns": -0.191,
+      "check": "setup",
+      "start": "audio_fifo/rgs1_reg[2]_syn_4.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/sector_room_q_reg_syn_5.a[0]"
+    },
+    {
+      "slack_ns": -0.173,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[3]_syn_4.a[0]"
+    },
+    {
+      "slack_ns": -0.173,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[3]_syn_4.a[1]"
+    },
+    {
+      "slack_ns": -0.028,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/half_cycles_reg[0]_syn_7.clk",
+      "end": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/controller/sd_init_done_reg_syn_63.mi[0]"
+    },
+    {
+      "slack_ns": -0.009,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[5]_syn_4.a[0]"
+    },
+    {
+      "slack_ns": -0.009,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[17]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[5]_syn_4.a[1]"
+    },
+    {
+      "slack_ns": -0.402,
+      "check": "recovery",
+      "start": "sd_card_bmp_m0/audio_stream_reset_reg_syn_5.clk",
+      "end": "audio_fifo/rreset/sync_ff_reg[1]_syn_4.sr"
+    }
+  ]
+}

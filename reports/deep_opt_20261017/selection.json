@@ -1,0 +1,15 @@
+{
+  "selected": "eleventh_build",
+  "reason": "Best fully routed result with zero total hold violation; other strategies failed DRC or worsened STA",
+  "not_timing_closed": true,
+  "new_bit_generated": false,
+  "subsequent_trials": {
+    "twelfth": "PHY-8023 routing conflict",
+    "thirteenth": {
+      "SWNS": -1.37,
+      "STNS": -43.511,
+      "HWNS": -0.234,
+      "HTNS": -0.526
+    }
+  }
+}
