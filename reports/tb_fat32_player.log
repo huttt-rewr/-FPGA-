@@ -52,4 +52,4 @@
 # run -all 
 # ALL PASS tb_fat32_player: real scheduler/two scaled fragmented BMP frames/exact PCM concurrent loops/commit
 # ** Note: $finish    : tb_fat32_player.v(75)
-#    Time: 53769590 ns  Iteration: 1  Instance: /tb_fat32_player
+#    Time: 53769840 ns  Iteration: 1  Instance: /tb_fat32_player

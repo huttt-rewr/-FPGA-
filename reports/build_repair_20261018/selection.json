@@ -1,0 +1,11 @@
+{
+  "selected": "build3",
+  "current_inputs_match_selected_build": true,
+  "rejected": {
+    "build2": "PHY-8023 routing conflicts; counter candidate reverted",
+    "pr1_trial": "same PHY-8023 conflicts with another place strategy",
+    "build4": "PHY-8023 FAT mux routing conflict; FAT candidate restored from exact backup"
+  },
+  "gate_note": "Selected legal route still has negative setup; no bitgen or board signoff",
+  "canonical_reports": "Restored exact build3 products; build4 failure evidence preserved separately"
+}

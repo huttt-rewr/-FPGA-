@@ -1,0 +1,18 @@
+{
+  "baseline": "f8272d50c10cb216dd286d70fcd8959b2bb6e065",
+  "changed_baseline_files": [
+    "src/top.v",
+    "src/modules/bmp/sd_card_bmp.v",
+    "src/modules/video/bmp_scale_loader.v",
+    "scripts/run_build.py",
+    "scripts/run_tests.ps1",
+    "scripts/static_check.py"
+  ],
+  "missing_baseline_files": [],
+  "status70_identical": true,
+  "status_indices_identical": true,
+  "hdmi_instances_identical": true,
+  "top_only_declaration_moves": true,
+  "official_ip_unchanged": true,
+  "constraints_unchanged": true
+}

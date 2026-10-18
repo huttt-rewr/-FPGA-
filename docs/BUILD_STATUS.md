@@ -1,5 +1,7 @@
 # 构建状态
 
+> **2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](../reports/build_repair_20261018/RESULT.md)和[技术说明](BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
+
 > **2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](../reports/deep_opt_20261017/RESULT.md)与[技术说明](DEEP_OPTIMIZATION_20261018.md)。
 
 
@@ -7,7 +9,7 @@
 
 > **2026-10-17 当前源码为OSD/波形实验版：75源/40IO静态检查、85项ModelSim通过；物理实现与时序未通过，未生成本轮新bit。** SW3/4增加原图/反色/Sobel/热成像，O统一开关状态OSD/玻璃/波形。操作、算法和失败路径见[本轮手册](OSD_AUDIO_VISUALIZER_20261017.md)。下文旧native50候选及其正时序只代表修改前版本，不能验收当前源码。
 
-## 本轮候选bit（尚未下载）
+## 历史：native50候选bit（尚未下载）
 
 [video_improve_native50_delivery.bit](../reports/keyboard_20261016/video_improve_native50_delivery.bit)，633116字节；SHA-256：`82f125e85700aaed1f270d7b9ca3e3229aa1e66b3a9d2d5be505425099d6dfa6`。
 

@@ -37,4 +37,4 @@
 # case 8: 17x13 -> 800x600, pixels=480000 errors=0
 # ALL PASS tb_scaled_svga: 9 full frames, bilinear RGB reference, padding, extended offsets, scan, backpressure, abort/reload, truncated sector
 # ** Note: $finish    : tb_scaled_svga.v(77)
-#    Time: 1033879027 ns  Iteration: 0  Instance: /tb_scaled_svga
+#    Time: 1033912687 ns  Iteration: 0  Instance: /tb_scaled_svga

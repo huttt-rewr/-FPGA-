@@ -8,31 +8,31 @@ IO Statistics
   #inout                    6
 
 Gate Statistics
-#Basic gates            22663
-  #and                   4041
+#Basic gates            22665
+  #and                   4039
   #nand                     0
-  #or                    1826
+  #or                    1828
   #nor                      0
   #xor                    218
   #xnor                     0
   #buf                      0
-  #not                   2019
+  #not                   2016
   #bufif1                  38
-  #MX21                  3109
+  #MX21                  3105
   #FADD                     0
-  #DFF                  11412
+  #DFF                  11421
   #LATCH                    0
-#MACRO_ADD                916
-#MACRO_EQ                 551
+#MACRO_ADD                920
+#MACRO_EQ                 553
 #MACRO_MULT                36
-#MACRO_MUX               6066
+#MACRO_MUX               6072
 #MACRO_OTHERS              57
 
 Report Hierarchy Area:
 +----------------------------------------------------------------------------------------------------------------------+
 |Instance                                   |Module                                            |gates  |seq    |macros |
 +----------------------------------------------------------------------------------------------------------------------+
-|top                                        |top                                               |11251  |11412  |1560   |
+|top                                        |top                                               |11244  |11421  |1566   |
 |  U3                                       |sdram                                             |104    |534    |9      |
 |    u2_ram                                 |sdr_as_ram                                        |104    |534    |9      |
 |      u1_init_ref                          |sdr_init_ref                                      |24     |96     |4      |
@@ -94,7 +94,7 @@ Report Hierarchy Area:
 |  fx                                       |audio_effects_stream                              |3      |52     |0      |
 |    fx                                     |audio_effects                                     |0      |50     |0      |
 |  fx_coordinates                           |video_coordinates                                 |11     |10     |1      |
-|  game                                     |snake_game                                        |1689   |165    |123    |
+|  game                                     |snake_game                                        |1688   |165    |123    |
 |    board_mem                              |snake_lut_ram                                     |12     |0      |24     |
 |    body_mem                               |snake_lut_ram                                     |13     |0      |24     |
 |    font                                   |osd_char_rom                                      |1358   |0      |0      |
@@ -104,7 +104,7 @@ Report Hierarchy Area:
 |  gamma                                    |picture_gamma                                     |0      |73     |3      |
 |  glass_coordinates                        |viewport_coordinates                              |28     |26     |8      |
 |  keyboard                                 |ps2_keyboard                                      |72     |56     |17     |
-|  keyboard_events                          |ps2_controls                                      |238    |103    |36     |
+|  keyboard_events                          |ps2_controls                                      |230    |103    |36     |
 |  media_cdc                                |cdc_snapshot                                      |3      |62     |0      |
 |  mode_control                             |video_mode_control                                |8      |24     |6      |
 |  mode_request_cdc                         |cdc_snapshot                                      |4      |12     |0      |
@@ -122,17 +122,17 @@ Report Hierarchy Area:
 |  reset_vga                                |reset_sync                                        |0      |3      |0      |
 |  reset_video                              |reset_sync                                        |0      |3      |0      |
 |  reset_writer                             |reset_sync                                        |0      |3      |0      |
-|  sd_card_bmp_m0                           |sd_card_bmp                                       |5152   |4698   |394    |
-|    bmp_read_m0                            |bmp_read                                          |850    |1426   |151    |
-|      scaling$loader                       |bmp_scale_loader                                  |680    |1009   |96     |
+|  sd_card_bmp_m0                           |sd_card_bmp                                       |5155   |4707   |400    |
+|    bmp_read_m0                            |bmp_read                                          |850    |1428   |153    |
+|      scaling$loader                       |bmp_scale_loader                                  |680    |1011   |98     |
 |        row_mix                            |rgb_lerp_pipeline                                 |0      |134    |12     |
 |        vmix                               |rgb_lerp_pipeline                                 |0      |134    |12     |
-|    filesystem$fat                         |sd_fat32                                          |2047   |1710   |99     |
+|    filesystem$fat                         |sd_fat32                                          |2051   |1716   |103    |
 |    rate_control$timer                     |fps_control                                       |64     |54     |8      |
-|    sd_card_top_m0                         |sd_card_top                                       |1335   |611    |63     |
-|      native_bus$transport                 |sd_card_top_native                                |1335   |611    |63     |
+|    sd_card_top_m0                         |sd_card_top                                       |1334   |611    |63     |
+|      native_bus$transport                 |sd_card_top_native                                |1334   |611    |63     |
 |        controller                         |sd_native_controller                              |652    |199    |31     |
-|        phy                                |sd_bus_phy                                        |682    |412    |32     |
+|        phy                                |sd_bus_phy                                        |681    |412    |32     |
 |    wav_enabled$arbiter                    |sd_read_arbiter                                   |54     |64     |4      |
 |    wav_enabled$wav                        |audio_wav                                         |585    |705    |56     |
 |  seg_decoder_m0                           |seg_decoder                                       |0      |0      |0      |
@@ -150,22 +150,22 @@ Report Hierarchy Area:
 |    u3_lane_lvds_8_1                       |lane_lvds_10_1                                    |0      |5      |1      |
 |  u_hdmi_1_4b_transmitter_core_wrapper     |hdmi_1_4b_transmitter_core_wrapper                |523    |1371   |233    |
 |    u0_reset_sync                          |hdmi_1_4b_tx_reset_sync                           |0      |2      |0      |
-|    u_hdmi_edid_wrapper                    |hdmi_edid_wrapper                                 |173    |202    |54     |
-|      u_hdmi_edid_read_controller          |hdmi_edid_read_controller                         |12     |28     |7      |
+|    u_hdmi_edid_wrapper                    |hdmi_edid_wrapper                                 |172    |202    |54     |
+|      u_hdmi_edid_read_controller          |hdmi_edid_read_controller                         |11     |28     |7      |
 |      u_iic_master_wrapper                 |iic_master_wrapper                                |161    |174    |47     |
 |        u_iic_bit_transmitter              |iic_bit_transmitter                               |69     |35     |14     |
 |        u_iic_receiver_controller          |iic_receiver_controller                           |5      |80     |5      |
 |          u_iic_w9_d1024_fifo              |iic_w9_d1024_fifo                                 |0      |0      |1      |
 |        u_iic_transmitter_controller       |iic_transmitter_controller                        |85     |59     |28     |
 |          u_iic_w11_d1024_fifo             |iic_w11_d1024_fifo                                |0      |0      |1      |
-|    u_hdmi_tx_controller_wrapper           |hdmi_tx_controller_wrapper                        |349    |1167   |179    |
+|    u_hdmi_tx_controller_wrapper           |hdmi_tx_controller_wrapper                        |350    |1167   |179    |
 |      u0_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |95     |161    |41     |
 |      u1_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |49     |109    |38     |
 |      u2_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |52     |109    |38     |
 |      u_hdmi_data_distribution             |hdmi_data_distribution                            |0      |43     |0      |
 |      u_hdmi_island_data_assemble          |hdmi_island_data_assemble                         |4      |417    |2      |
-|      u_hdmi_island_data_gen               |hdmi_island_data_gen                              |120    |247    |34     |
-|        U_audio_sample_packet_2_channel    |audio_sample_packet_2_channel                     |14     |132    |28     |
+|      u_hdmi_island_data_gen               |hdmi_island_data_gen                              |121    |247    |34     |
+|        U_audio_sample_packet_2_channel    |audio_sample_packet_2_channel                     |15     |132    |28     |
 |          u_w96_d1024_fifo                 |w96_d1024_fifo                                    |0      |0      |1      |
 |          u_BCH_32_24_encode               |BCH_32_24_encode                                  |0      |1      |0      |
 |          u_BCH_64_56_encode               |BCH_64_56_encode                                  |0      |8      |0      |
@@ -175,16 +175,16 @@ Report Hierarchy Area:
 |      u_hdmi_video_source                  |hdmi_video_source                                 |20     |38     |24     |
 |      u_video_axi_stream_receiver          |video_axi_stream_receiver                         |9      |3      |2      |
 |        u_w24_d1024_fifo                   |w24_d1024_fifo                                    |0      |0      |1      |
-|  u_hdmi_svga                              |hdmi_1_4b_transmitter_core_wrapper                |346    |1115   |156    |
+|  u_hdmi_svga                              |hdmi_1_4b_transmitter_core_wrapper                |345    |1115   |156    |
 |    u0_reset_sync                          |hdmi_1_4b_tx_reset_sync                           |0      |2      |0      |
-|    u_hdmi_tx_controller_wrapper           |hdmi_tx_controller_wrapper                        |345    |1113   |156    |
+|    u_hdmi_tx_controller_wrapper           |hdmi_tx_controller_wrapper                        |344    |1113   |156    |
 |      u0_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |95     |161    |41     |
 |      u1_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |49     |109    |38     |
 |      u2_hdmi_tmds_encode                  |hdmi_tmds_encode                                  |52     |109    |38     |
 |      u_hdmi_data_distribution             |hdmi_data_distribution                            |0      |43     |0      |
 |      u_hdmi_island_data_assemble          |hdmi_island_data_assemble                         |4      |415    |2      |
-|      u_hdmi_island_data_gen               |hdmi_island_data_gen                              |116    |195    |11     |
-|        U_audio_sample_packet_2_channel    |audio_sample_packet_2_channel                     |11     |81     |5      |
+|      u_hdmi_island_data_gen               |hdmi_island_data_gen                              |115    |195    |11     |
+|        U_audio_sample_packet_2_channel    |audio_sample_packet_2_channel                     |10     |81     |5      |
 |          u_w96_d1024_fifo                 |w96_d1024_fifo                                    |0      |0      |1      |
 |          u_BCH_32_24_encode               |BCH_32_24_encode                                  |0      |1      |0      |
 |          u_BCH_64_56_encode               |BCH_64_56_encode                                  |0      |7      |0      |
