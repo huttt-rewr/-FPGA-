@@ -39,6 +39,7 @@ module sd_fat32 #(
  GEOM_FIELDS=43'h40000000000,FAT_COMMIT=44'h80000000000,TABLE_READ=47'h100000000000,TABLE_HIGH=47'h200000000000,TABLE_LATCH=47'h400000000000,FAT_PROBE=48'h800000000000,CURSOR_APPLY=49'h1000000000000;
  reg [48:0] state;
  reg cursor_reusable;
+ reg dir_has_sector,dir_hop_limit;
  reg owner,mount_fat,bpb_at_partition,dir_ended,cancel_bmp;
  reg [31:0] physical_addr,partition_lba,partition_size,selected_lba;
  reg partition_found;reg [7:0] partition_type;
@@ -50,6 +51,18 @@ module sd_fat32 #(
  reg [7:0] spc_mask;
  reg geometry_bad,root_bad,fat_capacity_bad,boot_signature_ok,boot_super_ok,boot_partition_ok,geom_fields_bad;
  reg cmp_to,cmp_vol,cmp_lo,cmp_hi;
+ reg cmp_to_high,cmp_to_equal,cmp_to_low;
+ reg partition_less_high,partition_equal_high,partition_less_low;
+ // Partition BPB fields remain unchanged throughout the geometry sequence.
+ // Split unsigned comparisons at bit16; combine only registered predicates.
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin partition_less_high<=0;partition_equal_high<=0;partition_less_low<=0;end
+  else begin
+   partition_less_high<=partition_size[31:16]<total_sectors[31:16];
+   partition_equal_high<=partition_size[31:16]==total_sectors[31:16];
+   partition_less_low<=partition_size[15:0]<total_sectors[15:0];
+  end
+ end
  reg [15:0] bytes_per_sector,reserved_count,ext_flags,signature;
  // These fields are used only for zero/nonzero validation. Retain that
  // validation exactly, without storing 48 bits of otherwise unused values.
@@ -60,6 +73,16 @@ module sd_fat32 #(
  reg store_bmp,store_wav;reg [5:0] store_index;reg [31:0] store_cluster,store_size;
  localparam integer ROOT_HOP_BITS=(ROOT_CLUSTER_LIMIT<2)?1:$clog2(ROOT_CLUSTER_LIMIT+1);
  reg [31:0] dir_cluster;reg [ROOT_HOP_BITS-1:0] dir_hops;reg [7:0] dir_sector;
+ // Directory counters settle many cycles before DIR_CHECK (address + sector RX).
+ // Keep these comparisons away from the FAT-target and mount-error enables.
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin dir_has_sector<=0;dir_hop_limit<=0;end
+  else begin
+   dir_has_sector<=dir_sector<spc_mask;
+   dir_hop_limit<=dir_hops>=ROOT_CLUSTER_LIMIT-1 ||
+    (ROOT_CLUSTER_LIMIT>65525 && dir_hops>=data_clusters);
+  end
+ end
  reg [7:0] entry_first,entry_attr,ext0,ext1,ext2;
  reg [31:0] entry_cluster,entry_size;
  // 文件大小为32位字节数，文件内扇区/簇序号最多24位，避免冗余宽计数器。
@@ -219,7 +242,7 @@ module sd_fat32 #(
    data_sectors<=0;total_minus_one<=0;map_minus_two<=0;map_shifted<=0;map_base<=0;
    request_sectors<=0;spc_mask<=0;geometry_bad<=0;root_bad<=0;fat_capacity_bad<=0;
    boot_signature_ok<=0;boot_super_ok<=0;boot_partition_ok<=0;geom_fields_bad<=0;
-   cmp_to<=0;cmp_vol<=0;cmp_lo<=0;cmp_hi<=0;
+   cmp_to<=0;cmp_vol<=0;cmp_lo<=0;cmp_hi<=0;cmp_to_high<=0;cmp_to_equal<=0;cmp_to_low<=0;
    dir_cluster<=0;dir_sector<=0;dir_hops<=0;dir_ended<=0;
    entry_first<=0;entry_attr<=0;ext0<=0;ext1<=0;ext2<=0;entry_cluster<=0;entry_size<=0;
    cursor_valid<=0;cursor_file[0]<=0;cursor_file[1]<=0;request_rel<=0;request_size<=0;request_file<=0;
@@ -343,10 +366,17 @@ module sd_fat32 #(
     state[6]:begin
      data_sectors<=total_sectors-overhead;
      // 依赖GEOM2已寄存的overhead/volume_last，提前完成宽比较。
-     cmp_to<=total_sectors<=overhead;cmp_vol<=volume_last<partition_lba;
+     cmp_to_high<=total_sectors[31:16]<overhead[31:16];
+     cmp_to_equal<=total_sectors[31:16]==overhead[31:16];
+     cmp_to_low<=total_sectors[15:0]<=overhead[15:0];
+     cmp_vol<=volume_last<partition_lba;
      state<=GEOM4;
     end
-    state[27]:begin data_clusters<=relative_shifted;state<=GEOM5;end
+    state[27]:begin
+     data_clusters<=relative_shifted;
+     cmp_to<=cmp_to_high || (cmp_to_equal && cmp_to_low);
+     state<=GEOM5;
+    end
     state[28]:begin
      max_cluster<=data_clusters+1'b1;
      // data_clusters在上一拍GEOM4稳定，此处与加一并行。
@@ -355,7 +385,8 @@ module sd_fat32 #(
     end
     state[29]:begin
      geometry_bad<=cmp_to || cmp_vol || cmp_lo || cmp_hi ||
-       (bpb_at_partition && (partition_size<total_sectors || partition_size==0));
+       (bpb_at_partition && (partition_less_high ||
+        (partition_equal_high && partition_less_low) || partition_size==0));
      root_bad<=root_cluster<2 || root_cluster>max_cluster;
      fat_capacity_bad<=(fat_sectors<<7)<=max_cluster;
      state<=GEOM7;
@@ -377,8 +408,8 @@ module sd_fat32 #(
     end
     state[10]:begin
      if(dir_ended)begin mount_done<=1;state<=IDLE;end
-     else if(dir_sector<spc_mask)begin dir_sector<=dir_sector+1'b1;state<=DIR_ADDR;end
-     else if(dir_hops>=ROOT_CLUSTER_LIMIT-1 || (ROOT_CLUSTER_LIMIT>65525 && dir_hops>=data_clusters))begin state<=FAULT;mount_error_code<=4;end
+     else if(dir_has_sector)begin dir_sector<=dir_sector+1'b1;state<=DIR_ADDR;end
+     else if(dir_hop_limit)begin state<=FAULT;mount_error_code<=4;end
      else begin fat_target<=dir_cluster;mount_fat<=1;owner<=0;state<=FAT_ADDR;end
     end
     state[11]:begin fat_lba<=first_fat+(fat_target>>7);fat_entry<=fat_target[6:0];state<=FAT_CHECK;end

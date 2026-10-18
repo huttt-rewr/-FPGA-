@@ -14,7 +14,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  reg [9:0] ow,oh;
  // Explicit one-hot encoding avoids cascaded binary-state decoders in the
  // 100 MHz divider and pixel register enables. State transitions are unchanged.
- localparam [30:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
+ localparam [31:0] IDLE=24'h000001,CONFIG=24'h000002,DIVIDE=24'h000004,
   DIV_DONE=24'h000008,ROW=24'h000010,CHECK_ROWS=24'h000020,
   LINE_START=24'h000040,CACHE=24'h000080,FETCH=24'h000100,BYTE=24'h000200,
   PIXEL=24'h000400,LEFT_WAIT=24'h000800,LEFT_GET=24'h001000,
@@ -23,8 +23,11 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
   VWAIT1=24'h100000,VWAIT2=24'h200000,VWAIT3=24'h400000,CONFIG_CHECK=24'h800000,ROW_PROBE=25'h1000000,
   SIZE_APPLY=26'h2000000,
   SAMPLE_CHECK=31'h04000000,SAMPLE_WAIT1=31'h08000000,
-  SAMPLE_WAIT2=31'h10000000,SAMPLE_WAIT3=31'h20000000,SAMPLE_STORE=31'h40000000;
- reg [30:0] state;
+  SAMPLE_WAIT2=31'h10000000,SAMPLE_WAIT3=31'h20000000,SAMPLE_STORE=31'h40000000,
+  PIXEL_PROBE=32'h80000000;
+ reg [31:0] state;
+ reg pixel_inside;
+ reg sample_last,sample_endpoint;
  reg row0_hit,row1_hit;
  reg [11:0] w,h,load_y,tag0,tag1;
  // Compute the invariant row end once, instead of w -> subtract -> compare
@@ -65,7 +68,15 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  wire [10:0] sample_left=x_acc[26:16];
  wire [10:0] sample_right=(sample_left<last_source_x)?sample_left+1'b1:sample_left;
  wire [23:0] sample_a=(sample_left==load_x)?current_source:previous_source;
- rgb_lerp_pipeline row_mix(clk,rst,sample_a,current_source,x_acc[15:8],horizontal_result0);
+ reg [23:0] horizontal_a,horizontal_b;
+ reg [7:0] horizontal_fraction;
+ // Use the spare settling clock before SAMPLE_STORE to separate the tap mux
+ // from the signed subtract/DSP input. Existing horizontal wait count suffices.
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin horizontal_a<=0;horizontal_b<=0;horizontal_fraction<=0;end
+  else begin horizontal_a<=sample_a;horizontal_b<=current_source;horizontal_fraction<=x_acc[15:8];end
+ end
+ rgb_lerp_pipeline row_mix(clk,rst,horizontal_a,horizontal_b,horizontal_fraction,horizontal_result0);
  rgb_lerp_pipeline vmix(clk,rst,upper_row,lower_row,fy,vertical_result);
  wire [11:0] y1=(y0+1<h)?y0+1'b1:y0;
 
@@ -107,7 +118,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
    fy<=0;left0<=0;left1<=0;horizontal0<=0;horizontal1<=0;
    quotient<=0;denominator<=1;remainder<=0;div_count<=0;div_phase<=0;wide<=0;
    row_y0<=0;row_y1<=0;last_source_x<=0;
-   row_last_pixel<=0;frame_last_row<=0;advance_source_y<=0;source_y_endpoint<=0;
+   row_last_pixel<=0;frame_last_row<=0;advance_source_y<=0;source_y_endpoint<=0;pixel_inside<=0;sample_last<=0;sample_endpoint<=0;
   end else begin
    done<=0;error<=0;
    // Drive a next state on every clock. DIVIDE, FETCH and SEND may wait;
@@ -182,7 +193,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      // 100 MHz setup critical path after configuration was pipelined.
      row_y0<=y0;row_y1<=y1;
      if(oy>=pad_y && oy<=bottom_edge)state<=ROW_PROBE;
-     else state<=PIXEL;
+     else state<=PIXEL_PROBE;
     end
     state[24]:state<=CHECK_ROWS;
     state[5]: begin
@@ -190,7 +201,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       load_y<=row_y0;state<=LINE_START;
      end else if(!row1_hit)begin
       load_y<=row_y1;state<=LINE_START;
-     end else state<=PIXEL;
+     end else state<=PIXEL_PROBE;
     end
     state[6]: begin
      load_x<=0;load_sample<=0;x_acc<=0;channel<=0;state<=CACHE;
@@ -223,9 +234,15 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
       end
      endcase
     end
-    state[10]: begin
+    // Separate coordinate range tests from output-data/valid enables.
+    // Coordinates stay stable through this probe and the following PIXEL state.
+    state[31]:begin
+     pixel_inside<=inside_image;
      row_last_pixel<=ox==ow-1;frame_last_row<=oy==oh-1;
-     if(!inside_image)begin pixel<=0;pixel_valid<=1;state<=SEND;end
+     state<=PIXEL;
+    end
+    state[10]: begin
+     if(!pixel_inside)begin pixel<=0;pixel_valid<=1;state<=SEND;end
      else begin read_x<=ox-pad_x;state<=LEFT_WAIT;end
     end
     state[11]:state<=LEFT_GET;
@@ -261,7 +278,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
        end
       end
      end else begin
-      ox<=ox+1'b1;state<=PIXEL;
+      ox<=ox+1'b1;state<=PIXEL_PROBE;
 
      end
     end
@@ -272,17 +289,23 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      if(load_x>=sample_right)state<=SAMPLE_WAIT1;
      else begin load_x<=load_x+1'b1;state<=CACHE;end
     end
-    state[27]:state<=SAMPLE_WAIT2;
+    state[27]:begin
+     // Source-column count is stable throughout the horizontal lerp waits.
+     // Register terminal tests before they fan out to x_acc and cache enables.
+     sample_last<=load_sample==dw-1'b1;
+     sample_endpoint<=load_sample==dw-2'd2;
+     state<=SAMPLE_WAIT2;
+    end
     state[28]:state<=SAMPLE_WAIT3;
     state[29]:state<=SAMPLE_STORE;
     state[30]:begin
-     if(load_sample==dw-1'b1)begin
+     if(sample_last)begin
       if(load_y[0])begin tag1<=load_y;tags_valid[1]<=1;end
       else begin tag0<=load_y;tags_valid[0]<=1;end
       state<=ROW_PROBE;
      end else begin
       load_sample<=load_sample+1'b1;
-      if(load_sample==dw-2'd2)x_acc<=(w-28'd1)<<16;
+      if(sample_endpoint)x_acc<=(w-28'd1)<<16;
       else x_acc<=x_acc+x_step;
       state<=SAMPLE_CHECK;
      end

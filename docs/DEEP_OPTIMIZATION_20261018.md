@@ -76,14 +76,14 @@ python scripts/run_build.py
 
 | 源码位置 | 等价变化 |
 |---|---|
-| [src/modules/video/bmp_scale_loader.v:43](../src/modules/video/bmp_scale_loader.v#L43) | 两行2048个源像素 → 两行1024个水平插值结果 |
-| [src/modules/video/video_luma_window_bram.v:13](../src/modules/video/video_luma_window_bram.v#L13) | 异步LUT读行 → 下一列同步预取 |
+| [src/modules/video/bmp_scale_loader.v:46](../src/modules/video/bmp_scale_loader.v#L46) | 两行2048个源像素 → 两行1024个水平插值结果 |
+| [src/modules/video/video_luma_window_bram.v:5](../src/modules/video/video_luma_window_bram.v#L5) | 异步LUT读行 → 下一列同步预取 |
 | [src/modules/video/pixel_effects.v:10](../src/modules/video/pixel_effects.v#L10) | 77/150/29移位累加 → 同值DSP乘法 |
-| [src/modules/video/audio_visualizer.v:23](../src/modules/video/audio_visualizer.v#L23) | 8位PCM异步历史 → 7位精确绘制坐标同步历史 |
+| [src/modules/video/audio_visualizer.v:2](../src/modules/video/audio_visualizer.v#L2) | 8位PCM异步历史 → 7位精确绘制坐标同步历史 |
 | [src/modules/osd/status_osd.v:35](../src/modules/osd/status_osd.v#L35) | 重复除法取模 → shift/add-3 |
 | [src/modules/osd/caption_overlay.v:9](../src/modules/osd/caption_overlay.v#L9) | 39-col后移位选字 → 固定反接后直接选字 |
-| [src/modules/sd/sd_fat32.v:56](../src/modules/sd/sd_fat32.v#L56) | 保存48位检查字段 → 保存6个字节判零结果 |
-| [src/modules/bmp/bmp_read.v:167](../src/modules/bmp/bmp_read.v#L167) | 可变DIB加法阈值 → 已接受DIB类型的常量边界 |
+| [src/modules/sd/sd_fat32.v:69](../src/modules/sd/sd_fat32.v#L69) | 保存48位检查字段 → 保存6个字节判零结果 |
+| [src/modules/bmp/bmp_read.v:189](../src/modules/bmp/bmp_read.v#L189) | 可变DIB加法阈值 → 已接受DIB类型的常量边界 |
 | [src/modules/video/picture_gamma.v:9](../src/modules/video/picture_gamma.v#L9) | 10位曲线后运行时量化 → 8位预量化曲线 |
 | [src/modules/game/snake_game.v:205](../src/modules/game/snake_game.v#L205) | 每bank256格 → 每bank64格 |
 
@@ -108,3 +108,32 @@ char40 = reversed[index*8+:8];
 ```
 
 这些优化减少的是储存冗余和重复运算，不增加新的用户操作。KEY/SW、PS/2的用法见原操作说明，HDMI仍接HDMI_B。
+
+
+## 当前资源测量
+
+当前综合16,572 LUT（84.55%）、11,561 REG、58 BRAM（90.625%）、23 DSP；相对基线减少2,911 LUT和3 BRAM。布局布线修复后物理占用17,347 LUT（88.51%），仍超16660目标687个，不能宣称整机资源已达标。
+
+最终91项ModelSim和77源/40 IO静态检查通过。全局SWNS −0.402ns（recovery）、普通setup −0.401ns、HWNS +0.021ns。没有本轮新bit，上板未执行。具体端点和全部证据见[验收报告](../reports/deep_opt_20261017/RESULT.md)。
+
+
+## 真实布线报告驱动的控制路径拆分
+
+新增`PIXEL_PROBE`状态：原先`oy/ox`范围比较与`pixel_valid/pixel`使能串联；现在先寄存`pixel_inside`，下一拍输出黑边或开始读行缓存。每个输出像素增加一拍加载延迟，像素值、帧尺寸和SDRAM翻转不变；显示扫描时钟和HDMI链路延迟不变。不能将这个加载延迟说成显示帧率下降或提升。新增状态保持高有效复位。
+
+`sample_last/sample_endpoint`复用已有`SAMPLE_WAIT1`插值等待拍，提前计算`load_sample==dw-1/dw-2`；`SAMPLE_STORE`只读取布尔结果，使`dw`减法和比较不再串到高扇出`x_acc`时钟使能。缓存写入及RGB插值采样时序不变。
+
+FAT32的`dir_has_sector/dir_hop_limit`在目录计数器稳定期间提前寄存，`DIR_CHECK`直接读取；计数器更新后经过地址生成与完整扇区接收才消费结果。保留目录循环上限、碎片根目录、MBR、superfloppy及FAT16拒绝。SD PHY、命令栈和仲裁器没有修改。
+
+在第八轮实现中，原`oy → pixel_valid`已不再是最差路径，但其他路径成为瓶颈，整体SWNS为−1.972ns，不能只凭拆拍就宣称时序改善或收敛。后续数据以本轮验收报告为准。
+
+TD6.2.1的`phys_opt -post_route`在high、ultra、low及独立relocation/reroute试验中均发生内部“Abnormal Timing Path check”崩溃。正式脚本保留route后数据库与STA检查点，使用独立`fix_hold`，仍运行完整最终STA、check_design/check_timing；没有新增false path、没有降100MHz、没有更改模式时钟约束。保持修复能完成不代表每轮一定修到非负。
+
+
+### 宽比较与插值输入的补充拆分
+
+FAT32 `partition_size < total_sectors`拆成高16位“小于/相等”和低16位“小于”三个预判，再合并；`total_sectors <= overhead`也在GEOM3预判、GEOM4合并，GEOM6才使用。保留完整32位无符号范围，没有截断容量或删除分区检查。
+
+水平插值前新增`horizontal_a/b/fraction`寄存器，将11位采样位置选择与9位有符号差分输入隔开。现有插值等待拍有一拍余量，缓存仍在原`SAMPLE_STORE`写入，无须再延长等待。VGA/SVGA各9组源图逐像素参考均通过。
+
+验证过程中发现过一次ModelSim10.1c对模块内“先使用、后声明”不兼容，已将新增FAT逻辑移到相关信号声明之后。该次编译失败之后、专项未检查编译返回码而运行的旧模型结果已作废；后续专项严格检查编译退出码，完整回归由run_tests统一拒绝编译失败。最终只以`regression_split_geometry.log`和源码哈希审计为准。
