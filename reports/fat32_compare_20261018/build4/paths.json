@@ -1,0 +1,118 @@
+{
+  "status": "timing_failed",
+  "timing_ns": {
+    "SWNS": -0.592,
+    "STNS": -1.362,
+    "HWNS": 0.024,
+    "HTNS": 0.0
+  },
+  "confidence": "Routed",
+  "worst_by_check": {
+    "setup": {
+      "slack_ns": -0.592,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/request_rel_reg[22]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/stream_bad_reg_syn_207.a[0]"
+    },
+    "hold": {
+      "slack_ns": 0.024,
+      "check": "hold",
+      "start": "sd_card_bmp_m0/filesystem$fat/fat_entry_reg[2]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/ramread0_syn_7.addrb[7]"
+    },
+    "removal": {
+      "slack_ns": 0.027,
+      "check": "removal",
+      "start": "u_hdmi_1_4b_transmitter_core_wrapper/u_hdmi_tx_controller_wrapper/u2_hdmi_tmds_encode/add10_syn_240.clk",
+      "end": "u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_hdmi_island_data_assemble/S_CH1_D0_shift_reg[22]_syn_4.sr"
+    },
+    "recovery": {
+      "slack_ns": 0.161,
+      "check": "recovery",
+      "start": "reset_mem/sync_ff_reg[2]_syn_4.clk",
+      "end": "frame_read_write_m0/reader_clear_reg[1]_syn_4.sr"
+    }
+  },
+  "negative_reported_paths": [
+    {
+      "slack_ns": -0.592,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/request_rel_reg[22]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/stream_bad_reg_syn_207.a[0]"
+    },
+    {
+      "slack_ns": -0.327,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/target_index_reg[13]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/cursor_reusable_reg_syn_5.b[1]"
+    },
+    {
+      "slack_ns": -0.185,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[7]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/limited_reg_syn_8.d[1]"
+    },
+    {
+      "slack_ns": -0.075,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[7]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[1]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.071,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/y_acc_reg[16]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/pixel_reg[4]_syn_4.a[1]"
+    },
+    {
+      "slack_ns": -0.056,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[7]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[2]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.056,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[7]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[10]_syn_4.ce"
+    }
+  ],
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16585,
+      "reg": 11564,
+      "bram": 58,
+      "dsp": 23
+    },
+    "physical_area.txt": {
+      "lut": 17357,
+      "reg": 11668,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "critical_warnings": [
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "files_sha256": {
+    "build_manifest.json": "f55c7a2eba905d59c73b1c3a8ffd3d8542c4c739d49d81ac2f0bbd3a78107a05",
+    "gate_area.txt": "a6b448a067068b64cbed3be3513841f4c4dd3d55392d40c8f8d2155cedd5f12b",
+    "implementation.log": "ea809cf3f66f54134feba850567647c88247cb209ce04b80318dd0fb1443c01d",
+    "io.txt": "39465f450cb741d03939502852f4e37bab32127b9a1e7d7f8b9f140808932007",
+    "physical_area.txt": "c0cf077f87c60e231b6e24aa3b38b5226630bc56f18de1a9d22cb1e9aca9a095",
+    "prior_opt_timing_paths20.txt": "d29ab78990580924a6da3270197201db8410c90578874add2ee591a95f7d65e7",
+    "prior_opt_timing_status.txt": "ed0fa5a468603216558911699f7d75282ad6fa6f1b585896e052852dc898ee73",
+    "routed_timing_paths20.txt": "084893a0bb8732d9ce885e31325c267545734716e20bb3a1f264f9022d39fe43",
+    "synthesis.log": "5607f033dc48f8856c4f0e64d0e3ea3c9cf67fc92560e897bb310d257a7be138",
+    "timing_status.txt": "83792ffcd7f4d573ce100eabfd2003f15f1830000b1161c17f8111f117008183",
+    "timing_summary.txt": "630a6052c83eba5efa209815f3e3486f767c4b2483e7805b8bb8c69426460d6c",
+    "video_improve_gate.db": "6cb5ae14772835ae4d5d04c72cc20d6a303072907cd09a26b28b4fba93365f3a",
+    "video_improve_prior_opt.db": "208f40b685a4ff834401a5037f3728b5e78bca6f0171902477b009130846c393",
+    "video_improve_routed.db": "a3d7da962bd8a75a4402b051095f713eb4526717d8314104de16d60ea4faa78d"
+  }
+}

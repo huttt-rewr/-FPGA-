@@ -1,5 +1,7 @@
 # HDMI 图片与 WAV 播放器用户手册
 
+> **2026-10-18 FAT32 比较器验证：94 项回归通过，内部 STA 仍失败，未生成本轮 bit。** 最终 SWNS -0.592ns、STNS -1.362ns、HWNS +0.024ns、HTNS +0.000ns。全部功能及操作保留；内部 removal 不是 HDMI 管脚 hold，未达到整体 +0.5ns。[本轮报告](../reports/fat32_compare_20261018/RESULT.md)；以下数值属于各冻结历史版本。
+
 > **2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](../reports/build_repair_20261018/RESULT.md)和[技术说明](BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
 
 > **2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](../reports/deep_opt_20261017/RESULT.md)与[技术说明](DEEP_OPTIMIZATION_20261018.md)。

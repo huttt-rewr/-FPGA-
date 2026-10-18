@@ -8,31 +8,31 @@ IO Statistics
   #inout                    6
 
 Gate Statistics
-#Basic gates            22665
-  #and                   4039
+#Basic gates            22663
+  #and                   4040
   #nand                     0
-  #or                    1828
+  #or                    1826
   #nor                      0
   #xor                    218
   #xnor                     0
   #buf                      0
-  #not                   2016
+  #not                   2018
   #bufif1                  38
-  #MX21                  3105
+  #MX21                  3108
   #FADD                     0
-  #DFF                  11421
+  #DFF                  11415
   #LATCH                    0
-#MACRO_ADD                920
-#MACRO_EQ                 553
+#MACRO_ADD                918
+#MACRO_EQ                 551
 #MACRO_MULT                36
-#MACRO_MUX               6072
+#MACRO_MUX               6070
 #MACRO_OTHERS              57
 
 Report Hierarchy Area:
 +----------------------------------------------------------------------------------------------------------------------+
 |Instance                                   |Module                                            |gates  |seq    |macros |
 +----------------------------------------------------------------------------------------------------------------------+
-|top                                        |top                                               |11244  |11421  |1566   |
+|top                                        |top                                               |11248  |11415  |1562   |
 |  U3                                       |sdram                                             |104    |534    |9      |
 |    u2_ram                                 |sdr_as_ram                                        |104    |534    |9      |
 |      u1_init_ref                          |sdr_init_ref                                      |24     |96     |4      |
@@ -104,7 +104,7 @@ Report Hierarchy Area:
 |  gamma                                    |picture_gamma                                     |0      |73     |3      |
 |  glass_coordinates                        |viewport_coordinates                              |28     |26     |8      |
 |  keyboard                                 |ps2_keyboard                                      |72     |56     |17     |
-|  keyboard_events                          |ps2_controls                                      |230    |103    |36     |
+|  keyboard_events                          |ps2_controls                                      |235    |103    |36     |
 |  media_cdc                                |cdc_snapshot                                      |3      |62     |0      |
 |  mode_control                             |video_mode_control                                |8      |24     |6      |
 |  mode_request_cdc                         |cdc_snapshot                                      |4      |12     |0      |
@@ -122,17 +122,17 @@ Report Hierarchy Area:
 |  reset_vga                                |reset_sync                                        |0      |3      |0      |
 |  reset_video                              |reset_sync                                        |0      |3      |0      |
 |  reset_writer                             |reset_sync                                        |0      |3      |0      |
-|  sd_card_bmp_m0                           |sd_card_bmp                                       |5155   |4707   |400    |
+|  sd_card_bmp_m0                           |sd_card_bmp                                       |5153   |4701   |396    |
 |    bmp_read_m0                            |bmp_read                                          |850    |1428   |153    |
 |      scaling$loader                       |bmp_scale_loader                                  |680    |1011   |98     |
 |        row_mix                            |rgb_lerp_pipeline                                 |0      |134    |12     |
 |        vmix                               |rgb_lerp_pipeline                                 |0      |134    |12     |
-|    filesystem$fat                         |sd_fat32                                          |2051   |1716   |103    |
+|    filesystem$fat                         |sd_fat32                                          |2048   |1710   |99     |
 |    rate_control$timer                     |fps_control                                       |64     |54     |8      |
-|    sd_card_top_m0                         |sd_card_top                                       |1334   |611    |63     |
-|      native_bus$transport                 |sd_card_top_native                                |1334   |611    |63     |
+|    sd_card_top_m0                         |sd_card_top                                       |1335   |611    |63     |
+|      native_bus$transport                 |sd_card_top_native                                |1335   |611    |63     |
 |        controller                         |sd_native_controller                              |652    |199    |31     |
-|        phy                                |sd_bus_phy                                        |681    |412    |32     |
+|        phy                                |sd_bus_phy                                        |682    |412    |32     |
 |    wav_enabled$arbiter                    |sd_read_arbiter                                   |54     |64     |4      |
 |    wav_enabled$wav                        |audio_wav                                         |585    |705    |56     |
 |  seg_decoder_m0                           |seg_decoder                                       |0      |0      |0      |
@@ -148,10 +148,10 @@ Report Hierarchy Area:
 |    u1_lane_lvds_8_1                       |lane_lvds_10_1                                    |0      |12     |1      |
 |    u2_lane_lvds_8_1                       |lane_lvds_10_1                                    |0      |12     |1      |
 |    u3_lane_lvds_8_1                       |lane_lvds_10_1                                    |0      |5      |1      |
-|  u_hdmi_1_4b_transmitter_core_wrapper     |hdmi_1_4b_transmitter_core_wrapper                |523    |1371   |233    |
+|  u_hdmi_1_4b_transmitter_core_wrapper     |hdmi_1_4b_transmitter_core_wrapper                |524    |1371   |233    |
 |    u0_reset_sync                          |hdmi_1_4b_tx_reset_sync                           |0      |2      |0      |
-|    u_hdmi_edid_wrapper                    |hdmi_edid_wrapper                                 |172    |202    |54     |
-|      u_hdmi_edid_read_controller          |hdmi_edid_read_controller                         |11     |28     |7      |
+|    u_hdmi_edid_wrapper                    |hdmi_edid_wrapper                                 |173    |202    |54     |
+|      u_hdmi_edid_read_controller          |hdmi_edid_read_controller                         |12     |28     |7      |
 |      u_iic_master_wrapper                 |iic_master_wrapper                                |161    |174    |47     |
 |        u_iic_bit_transmitter              |iic_bit_transmitter                               |69     |35     |14     |
 |        u_iic_receiver_controller          |iic_receiver_controller                           |5      |80     |5      |

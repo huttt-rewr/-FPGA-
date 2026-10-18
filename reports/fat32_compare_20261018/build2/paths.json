@@ -1,0 +1,130 @@
+{
+  "status": "timing_failed",
+  "timing_ns": {
+    "SWNS": -0.936,
+    "STNS": -2.005,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "confidence": "Routed",
+  "worst_by_check": {
+    "setup": {
+      "slack_ns": -0.936,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/next_cluster_reg[13]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/cluster_ok_reg_syn_95.a[0]"
+    },
+    "hold": {
+      "slack_ns": 0.021,
+      "check": "hold",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_sample_reg[8]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread2_syn_26.addra[12]"
+    },
+    "removal": {
+      "slack_ns": 0.038,
+      "check": "removal",
+      "start": "sd_card_bmp_m0/rst_bmp_reg_syn_30.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/bmp_grant_reg_syn_5.sr"
+    },
+    "recovery": {
+      "slack_ns": -0.163,
+      "check": "recovery",
+      "start": "supervisor/reset_request_reg_syn_20.clk",
+      "end": "reset_mem/sync_ff_reg[2]_syn_4.sr"
+    }
+  },
+  "negative_reported_paths": [
+    {
+      "slack_ns": -0.936,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/next_cluster_reg[13]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/cluster_ok_reg_syn_95.a[0]"
+    },
+    {
+      "slack_ns": -0.266,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/half_cycles_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/crc2_reg[12]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.257,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/wav_enabled$wav/padded_size_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/wav_enabled$wav/bounds_ok_reg_syn_5.a[1]"
+    },
+    {
+      "slack_ns": -0.154,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[0]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[19]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.154,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[0]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[23]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.055,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/last_cycle_reg[0]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/limited_reg_syn_8.d[1]"
+    },
+    {
+      "slack_ns": -0.01,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/half_cycles_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/crc_bad_reg_syn_29.ce"
+    },
+    {
+      "slack_ns": -0.01,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/half_cycles_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/crc0_reg[4]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.163,
+      "check": "recovery",
+      "start": "supervisor/reset_request_reg_syn_20.clk",
+      "end": "reset_mem/sync_ff_reg[2]_syn_4.sr"
+    }
+  ],
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16608,
+      "reg": 11564,
+      "bram": 58,
+      "dsp": 23
+    },
+    "physical_area.txt": {
+      "lut": 17314,
+      "reg": 11661,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "critical_warnings": [
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "files_sha256": {
+    "build_manifest.json": "532a4b65c9885f8768e4aef830cc42ee605eacd9576af20ad5177d74881d5910",
+    "gate_area.txt": "e1f957b964fb735575f964f92b9db7313d7e3ace321a39397a3a5aa4865eafce",
+    "implementation.log": "feb9b450eadf56dc8a838af2c10776f6eacf9a792ac40deb290199609e581d1b",
+    "io.txt": "39465f450cb741d03939502852f4e37bab32127b9a1e7d7f8b9f140808932007",
+    "physical_area.txt": "701a5f050d8898ef3e226a83cb717005d6516ba831091b690a8591ab6116adf3",
+    "prior_opt_timing_paths20.txt": "25de6d87d6b0039928d4335d7e72f07ca45a48b40b0d2750c397d17002e27927",
+    "prior_opt_timing_status.txt": "dbb9139e170629dd66baa6424f2220e59ab277546ee3d7a8719adcd651d4fb94",
+    "routed_timing_paths20.txt": "3d14046261ec8fd6b89ac891242381334f9e253aabe256cb5fbdb5517985bee6",
+    "synthesis.log": "71f87e775ac8c041c685492fe7a9a93dea6f88f503ecce56eeaa3979af0b00f8",
+    "timing_status.txt": "99857d18e877063f6463b084fac7abef5f3ee702482b87786452f8fc39e5287c",
+    "timing_summary.txt": "262e66d2eefff62851f9713055db270d71030f96cab94b99863004c9c56ec590",
+    "video_improve_gate.db": "c9ef997eefe8b9e8cae79fe7d7bc38e9182145429966188292a44fdff3d0cec2",
+    "video_improve_prior_opt.db": "b7c7f78a97098b48284e1f88e7804fb34ee484927de5ab73756eb880b4ca5ac5",
+    "video_improve_routed.db": "ead603a6aaa7edcdcd98488b9bb51de35babcf930e0a23cc3d12291759f2fbcf"
+  }
+}

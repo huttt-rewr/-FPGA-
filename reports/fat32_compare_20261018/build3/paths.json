@@ -1,0 +1,22 @@
+{
+  "status": "no_fresh_routed_report",
+  "error": "implement.tcl failed; see implementation.log: ['PHY-8023 ERROR: Location: (x11y25_local1), nets: sd_card_bmp_m0/bmp_read_m0/scaling$loader/rst_dup_13 debug_instrumentation$diagnostics/video_cdc/held[4]']",
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16628,
+      "reg": 11564,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "warning": "Failed implementation has no final routed STA. Never reuse earlier timing.",
+  "files_sha256": {
+    "build_manifest.json": "de358bb9b595f3bbfdeff4faba6349c5764128d7d50aad9f0112e560f29cc9ba",
+    "gate_area.txt": "374d4fc52d344291d794ab9dc0e7b00a7bb7a287c50d4725b28a58754a9d0ffd",
+    "implementation.log": "ce0f841f026477c76bcd5159a1ea5632a6cdc71cc3813f57fc863b36cf951aab",
+    "regression.log": "88ec4189c804fbe07be8de325ed756c039d4a46b720a8a5916d7f2482e7553ff",
+    "sd_fat32.v": "07527c918fc4c0eb5933b44e37e046e84e2072da4b7989cb2ee5ed8e946d3662",
+    "synthesis.log": "34f4fe39f085e00edc6ff601a371a1cc417ddaff6e4b6592b8b9e8ae1b0fd977",
+    "tb_fat32_compare.v": "e73f0cde34464a57030faf463b59e651e203399f3fede4f2273d3c97fd817173"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "selected": "restored_a5d76ca_rtl",
+  "reason": "Both legal candidates worsened setup; candidate3 has PHY-8023. Preserve the better legal baseline and all new boundary tests.",
+  "initial_user_edit_preserved": "initial/sd_fat32.v and commit a772d06",
+  "rtl_sha256": "2da8fdbe84137c7e44b7e648fcf9be81469be8b6e978f6721b8ad6be4c79d6d4"
+}

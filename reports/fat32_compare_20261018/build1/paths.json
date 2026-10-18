@@ -1,0 +1,166 @@
+{
+  "status": "timing_failed",
+  "timing_ns": {
+    "SWNS": -0.743,
+    "STNS": -5.002,
+    "HWNS": -0.128,
+    "HTNS": -0.157
+  },
+  "confidence": "Routed",
+  "worst_by_check": {
+    "setup": {
+      "slack_ns": -0.743,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/img_found_count_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[3]_syn_13.a[1]"
+    },
+    "hold": {
+      "slack_ns": -0.128,
+      "check": "hold",
+      "start": "status_cdc/held_reg[2]_syn_4.clk",
+      "end": "status_cdc/dst_data_reg[0]_syn_4.mi[0]"
+    },
+    "removal": {
+      "slack_ns": 0.031,
+      "check": "removal",
+      "start": "u_video_rgb_to_axis_640x480/add0_syn_75.clk",
+      "end": "u_hdmi_1_4b_transmitter_core_wrapper/u_hdmi_edid_wrapper/u_iic_master_wrapper/u_iic_transmitter_controller/S_wr_data_length_reg[2]_syn_4.sr"
+    },
+    "recovery": {
+      "slack_ns": 0.744,
+      "check": "recovery",
+      "start": "sd_card_bmp_m0/status_error_reg_syn_80.clk",
+      "end": "reset_writer/sync_ff_reg[0]_syn_4.sr"
+    }
+  },
+  "negative_reported_paths": [
+    {
+      "slack_ns": -0.743,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/img_found_count_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[3]_syn_13.a[1]"
+    },
+    {
+      "slack_ns": -0.703,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/img_found_count_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[5]_syn_13.a[1]"
+    },
+    {
+      "slack_ns": -0.562,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[4]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[5]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.514,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/next_cluster_reg[13]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/cluster_ok_reg_syn_96.b[1]"
+    },
+    {
+      "slack_ns": -0.49,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[4]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[4]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.425,
+      "check": "setup",
+      "start": "keyboard_events/pending_count_reg[14]_syn_4.clk",
+      "end": "keyboard_events/audio_pending_reg_syn_70.b[0]"
+    },
+    {
+      "slack_ns": -0.409,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[12]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[19]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.375,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/data_clusters_reg[12]_syn_4.clk",
+      "end": "sd_card_bmp_m0/filesystem$fat/stream_bad_reg_syn_211.c[1]"
+    },
+    {
+      "slack_ns": -0.217,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[12]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[16]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.217,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[12]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[22]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.164,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[4]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[7]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.129,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/img_found_count_reg[1]_syn_7.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[4]_syn_31.a[1]"
+    },
+    {
+      "slack_ns": -0.054,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[12]_syn_4.clk",
+      "end": "sd_card_bmp_m0/rate_control$timer/elapsed_reg[15]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.128,
+      "check": "hold",
+      "start": "status_cdc/held_reg[2]_syn_4.clk",
+      "end": "status_cdc/dst_data_reg[0]_syn_4.mi[0]"
+    },
+    {
+      "slack_ns": -0.029,
+      "check": "hold",
+      "start": "status_cdc/held_reg[2]_syn_4.clk",
+      "end": "status_cdc/dst_data_reg[0]_syn_4.mi[0]"
+    }
+  ],
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16628,
+      "reg": 11564,
+      "bram": 58,
+      "dsp": 23
+    },
+    "physical_area.txt": {
+      "lut": 17426,
+      "reg": 11665,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "critical_warnings": [
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "OPT-6001 CRITICAL-WARNING: Abort timing optimization due to too bad SWNS.",
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "files_sha256": {
+    "build_manifest.json": "4fe14eb850978f3357cc301e84f363210b867f34e0d30c4715fdcb1f393f27f7",
+    "gate_area.txt": "3224670006c45029126008cb37d4ebdd80697e485ecec134fc01897a8210c3f4",
+    "implementation.log": "e6dcd3e1581ce9bc9ede4bbfe48620b3f55c833dd1e9a0777b9faf8aefa9b935",
+    "io.txt": "39465f450cb741d03939502852f4e37bab32127b9a1e7d7f8b9f140808932007",
+    "physical_area.txt": "1400c05ec75bd0f4187a08d17c772fcbe57c28a1c946e820fcc47bbbffabc016",
+    "prior_opt_timing_paths20.txt": "9b3c088cdbe1e777dddc37ef3bac58b9262447edd4631e3c95ad624f60c6acd0",
+    "prior_opt_timing_status.txt": "b36935923c7ed6de56bda3aaf14c32e5cd34cdbf69e2b19db561da493798e96d",
+    "routed_timing_paths20.txt": "866539e1f34688e7ed4dfc008839c5de21447db8c527ca5f2a7eb56dbcc0b8d4",
+    "synthesis.log": "1f57c140a73f6048463bdd490d43cf12e75ffa102ada6eb2fb5764e83fed9260",
+    "timing_status.txt": "6a84c387cdced9da6ff6dd3f1d578ce046a62b8a22cec478eb196f3f73c87d5b",
+    "timing_summary.txt": "3f7a3e84a2a57f0107820c18caf3773c202bbb6cb223022eafe79ed36df6f888",
+    "video_improve_gate.db": "ba23cb1dff5cb8ad07556c42680c2bcf1c8c61d0cda283aef2e1b4e9e28bf9e7",
+    "video_improve_prior_opt.db": "4a7ef58e0d948b91ca66f683df66ab983c1fcdbe839f6f917dc91527746896c1",
+    "video_improve_routed.db": "8e61bf8f0e5a0b8cd65dd198090f4851975ed6a8015b5c1536b1bbb02463463d"
+  }
+}
