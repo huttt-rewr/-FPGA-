@@ -431,7 +431,10 @@ module sd_fat32 #(
     state[15]:state<=FAT_GET;
     state[16]:begin next_cluster<=fat_q & 32'h0fffffff;state<=FAT_VALIDATE;end
     state[38]:begin
-     cluster_ok<=next_cluster>=2 && next_cluster<=max_cluster && next_cluster<32'h0ffffff0;
+     cluster_ok<=next_cluster>=2 &&
+      (next_cluster[31:16]<max_cluster[31:16] ||
+       (next_cluster[31:16]==max_cluster[31:16] && next_cluster[15:0]<=max_cluster[15:0])) &&
+      next_cluster<32'h0ffffff0;
      cluster_eoc<=next_cluster>=32'h0ffffff8;cluster_self<=next_cluster==fat_target;
      state<=FAT_EVAL;
     end

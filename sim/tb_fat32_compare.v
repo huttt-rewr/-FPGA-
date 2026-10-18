@@ -7,6 +7,7 @@ module tb_fat32_compare;
  wire br,ar;
  integer errors=0,cases=0,i,j,k;
  reg [31:0] sizes[0:9],rels[0:9];
+ reg [31:0] clusters[0:13];
  reg [31:0] random_size,random_rel;
  reg [32:0] sectors;
  reg expected;
@@ -23,6 +24,19 @@ module tb_fat32_compare;
   begin if(ok!==1'b1)begin errors=errors+1;
    $display("FAILED FAT32 compare case=%0d size=%h rel=%h %0s",cases,random_size,random_rel,msg);
   end end
+ endtask
+ task run_cluster;
+  input [31:0] candidate,maximum;
+  begin
+   @(negedge clk);dut.state=dut.FAT_VALIDATE;
+   dut.next_cluster=candidate;dut.max_cluster=maximum;
+   expected=candidate>=2 && candidate<=maximum && candidate<32'h0ffffff0;
+   @(posedge clk);#1;
+   if(dut.cluster_ok!==expected)begin errors=errors+1;
+    $display("FAILED FAT32 cluster next=%h max=%h actual=%b expected=%b",candidate,maximum,dut.cluster_ok,expected);
+   end
+   cases=cases+1;
+  end
  endtask
  task run_case;
   input [31:0] size_bytes,relative_sector;
@@ -75,6 +89,18 @@ module tb_fat32_compare;
    sectors=({1'b0,random_size}+33'd511)>>9;
    run_case(random_size,sectors[31:0],0);
    if(sectors!=0)run_case(random_size,sectors[31:0]-1'b1,7);
+  end
+  clusters[0]=0;clusters[1]=1;clusters[2]=2;clusters[3]=32'h0000ffff;
+  clusters[4]=32'h00010000;clusters[5]=32'h00ffffff;clusters[6]=32'h01000000;
+  clusters[7]=32'h0fffffef;clusters[8]=32'h0ffffff0;clusters[9]=32'h0ffffff8;
+  clusters[10]=32'h0fffffff;clusters[11]=32'h10000000;
+  clusters[12]=32'h80000000;clusters[13]=32'hffffffff;
+  for(i=0;i<14;i=i+1)for(j=0;j<14;j=j+1)run_cluster(clusters[i],clusters[j]);
+  for(i=0;i<512;i=i+1)begin
+   random_size=$random & 32'h0fffffff;random_rel=$random;
+   run_cluster(random_size,random_rel);
+   run_cluster(random_size,random_size);
+   run_cluster(random_size,random_size-1'b1);
   end
   if(errors==0)$display("tb_fat32_compare ALL PASS (%0d real-DUT cases)",cases);
   else $display("FAILED tb_fat32_compare errors=%0d",errors);
