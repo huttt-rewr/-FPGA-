@@ -70,7 +70,15 @@ def main():
         record['implementation_warnings'] = run(args.td, 'implement.tcl', 'implementation.log', 'IMPLEMENTATION_COMPLETED',
             ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt', 'io.txt',
              'video_improve_prior_opt.db', 'prior_opt_timing_status.txt',
-             'prior_opt_timing_paths20.txt', 'routed_timing_paths20.txt'])
+             'prior_opt_timing_paths20.txt', 'routed_timing_paths20.txt',
+             'rebound_placed_timing_status.txt', 'rebound_placed_timing_paths20.txt'])
+        # A physically remapped mux can silently lose its alternative clocks.
+        # Check refreshed placement and final routing, before trusting metrics.
+        for report_name in ('rebound_placed_timing_paths20.txt', 'routed_timing_paths20.txt'):
+            clock_section = (REPORTS / report_name).read_text().split('Clock Summary', 1)[1].split('Notes', 1)[0]
+            if not all(re.search(r'\b' + name + r'\b', clock_section)
+                       for name in ('vga_pixel', 'svga_pixel', 'vga_serial', 'svga_serial')):
+                raise RuntimeError(f'Mode clock missing in {report_name}')
         if sources != snapshot():
             raise RuntimeError('Build inputs changed while TD was running')
         text = (REPORTS / 'timing_status.txt').read_text()
