@@ -7,7 +7,7 @@ module tb_shared_luma;
  wire [9:0] rx,ry,x,y;wire fv,fd,rv,rd,sv,sd;wire [23:0] fr,ref_rgb,shared_rgb;
  wire [11:0] sum;wire [7:0] lum;wire good,sobel;
  video_coordinates raw(clk,rst,vs,de,rx,ry);
- pixel_effects #(.DEPTH(800)) p(clk,rst,vs,de,rx,rgb,mode,fv,fd,fr,sum,lum,good,sobel);
+ pixel_effects #(.DEPTH(800),.BRAM_WINDOW(1)) p(clk,rst,vs,de,rx,rgb,mode,fv,fd,fr,sum,lum,good,sobel);
  viewport_coordinates logical(clk,rst,fv,fd,expanded,x,y,,);
  glass_osd reference_path(clk,rst,fv,fd,x,y,fr,8'd0,1'b1,rv,rd,ref_rgb,12'd0,8'd0,1'b0,1'b0);
  glass_osd #(.SHARED_LUMA(1)) shared_path(clk,rst,fv,fd,x,y,fr,8'd0,1'b1,sv,sd,shared_rgb,sum,lum,good,sobel);

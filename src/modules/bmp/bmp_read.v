@@ -182,8 +182,12 @@ always @(posedge clk or posedge rst) begin
         header_dimensions_ok <= (ENABLE_SCALING ? (width>=1 && width<=1920 && height>=1 && height<=1080) :
                                 (width == {16'd0,bmp_width} && height == {16'd0,bmp_height})) &&
                                 (ENABLE_SCALING || ((bmp_width == 640) && (bmp_height == 480)));
+        // Accepted DIB lengths are exactly 40/108/124. Compare against their
+        // constant ends rather than a 32-bit add feeding a 32-bit comparator.
+        // header_format_ok independently rejects every other DIB length.
         header_offset_ok <= (pixel_offset >= 54) && (pixel_offset <= 4096) &&
-                            (pixel_offset >= dib_size + 32'd14);
+                            ((dib_size==40) || ((dib_size==108) && pixel_offset>=122) ||
+                             ((dib_size==124) && pixel_offset>=138));
         header_length_ok <= (file_len == expected_file_len);
         header_match <= header_format_ok && header_dimensions_ok && header_offset_ok && header_length_ok;
     end

@@ -197,21 +197,21 @@ module snake_frame_control #(parameter integer FRAMES_PER_TICK=6)(
  end
 endmodule
 
-// Compile-time bank geometry; no runtime division or BRAM inference.
+// 64-cell banks map compactly to EG4S20 LUT RAM; no BRAM or division.
 module snake_lut_ram #(parameter WIDTH=1,DEPTH=768,AW=$clog2(DEPTH))(
  input clk,we,input [AW-1:0] wa,ra,rb,input [WIDTH-1:0] wd,
  output [WIDTH-1:0] qa,qb
 );
- localparam BANKS=(DEPTH+255)>>8;
+ localparam BANKS=(DEPTH+63)>>6;
  wire [WIDTH-1:0] bank_a[0:BANKS-1],bank_b[0:BANKS-1];
  genvar b;
  generate for(b=0;b<BANKS;b=b+1)begin:bank
-  localparam LEN=((DEPTH-b*256)<256)?DEPTH-b*256:256;
+  localparam LEN=((DEPTH-b*64)<64)?DEPTH-b*64:64;
   localparam BW=(LEN<2)?1:$clog2(LEN);
   (* ram_style="dram" *) reg [WIDTH-1:0] ram[0:LEN-1];
-  always @(posedge clk)if(we && (wa>>8)==b)ram[wa[BW-1:0]]<=wd;
+  always @(posedge clk)if(we && (wa>>6)==b)ram[wa[BW-1:0]]<=wd;
   assign bank_a[b]=ram[ra[BW-1:0]];
   assign bank_b[b]=ram[rb[BW-1:0]];
  end endgenerate
- assign qa=bank_a[ra>>8];assign qb=bank_b[rb>>8];
+ assign qa=bank_a[ra>>6];assign qb=bank_b[rb>>6];
 endmodule

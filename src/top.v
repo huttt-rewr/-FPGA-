@@ -745,7 +745,7 @@ wire fx_vs,fx_de,glass_vs,glass_de,wave_vs,wave_de;
 wire [23:0] fx_rgb,glass_rgb,wave_rgb;
 wire [11:0] fx_luma_sum;wire [7:0] fx_luma;wire fx_window_valid,fx_sobel;
 video_coordinates fx_coordinates(video_clk,rst_video,transition_vs,transition_de,fx_x,fx_y);
-pixel_effects #(.DEPTH(800),.EDGE_TH(8'd80)) pixel_filter(
+pixel_effects #(.DEPTH(800),.EDGE_TH(8'd80),.BRAM_WINDOW(1)) pixel_filter(
  .clk(video_clk),.rst(rst_video),.vs(transition_vs),.de(transition_de),.x(fx_x),.rgb(transition_rgb),
  .mode_sel(video_effect),.out_vs(fx_vs),.out_de(fx_de),.out_rgb(fx_rgb),
  .out_luma_sum(fx_luma_sum),.out_luma(fx_luma),.out_window_valid(fx_window_valid),.out_sobel(fx_sobel));
@@ -754,7 +754,7 @@ glass_osd #(.SHARED_LUMA(1)) frosted_panel(.clk(video_clk),.rst(rst_video),.vs(f
  .rgb(fx_rgb),.ascii_char(8'd0),.osd_enable(video_osd),.out_vs(glass_vs),.out_de(glass_de),.out_rgb(glass_rgb),
  .shared_sum(fx_luma_sum),.shared_luma(fx_luma),.shared_valid(fx_window_valid),.shared_sobel(fx_sobel));
 viewport_coordinates waveform_coordinates(video_clk,rst_video,glass_vs,glass_de,mode_video,wave_x,wave_y,,);
-audio_visualizer waveform(.clk(video_clk),.rst(rst_video),.vs(glass_vs),.de(glass_de),.x(wave_x),.y(wave_y),
+audio_visualizer #(.BRAM_HISTORY(1)) waveform(.clk(video_clk),.rst(rst_video),.vs(glass_vs),.de(glass_de),.x(wave_x),.y(wave_y),
  .rgb(glass_rgb),.audio_valid(audio_valid),.audio_left(audio_left),.enable(video_osd),
  .out_vs(wave_vs),.out_de(wave_de),.out_rgb(wave_rgb));
 caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(wave_vs),.de(wave_de),

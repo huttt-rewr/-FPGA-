@@ -1,13 +1,13 @@
 // All modes have three registers of latency; causal Sobel centre (x-1,y-1).
-module pixel_effects #(parameter DEPTH=1024,parameter [7:0] EDGE_TH=80)(
+(* dsp_style="yes" *) module pixel_effects #(parameter DEPTH=1024,parameter [7:0] EDGE_TH=80,parameter BRAM_WINDOW=0)(
  input clk,rst,vs,de,input [9:0] x,input [23:0] rgb,input [1:0] mode_sel,
  output reg out_vs,out_de,output reg [23:0] out_rgb,
  output reg [11:0] out_luma_sum,output reg [7:0] out_luma,
  output reg out_window_valid,out_sobel);
  function [15:0] weighted_luma;
-  input [23:0] p;reg [15:0] r,g,b,v;
-  begin r={8'd0,p[23:16]};g={8'd0,p[15:8]};b={8'd0,p[7:0]};
-   v=(r<<6)+(r<<3)+(r<<2)+r+(g<<7)+(g<<4)+(g<<2)+(g<<1)+(b<<4)+(b<<3)+(b<<2)+b;weighted_luma=v;end
+  input [23:0] p;reg [15:0] v;
+  begin
+   v=p[23:16]*8'd77+p[15:8]*8'd150+p[7:0]*8'd29;weighted_luma=v;end
  endfunction
  function [23:0] heat;
   input [7:0] a;
@@ -22,8 +22,13 @@ module pixel_effects #(parameter DEPTH=1024,parameter [7:0] EDGE_TH=80)(
  wire [15:0] heat_weighted=weighted_luma(heat(raw_gray));
  wire [7:0] stored_gray;
  wire [7:0] gray,t0,t1,t2,m0,m1,m2,b0,b1,b2;wire good;
- video_luma_window #(.DEPTH(DEPTH),.EXTERNAL_LUMA(1)) window(clk,rst,vs,de,x,rgb,
-  gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good,stored_gray);
+ generate if(BRAM_WINDOW)begin:bram_window
+  video_luma_window_bram #(.DEPTH(DEPTH)) window(clk,rst,vs,de,x,stored_gray,
+   gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good);
+ end else begin:lut_window
+  video_luma_window #(.DEPTH(DEPTH),.EXTERNAL_LUMA(1)) window(clk,rst,vs,de,x,rgb,
+   gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good,stored_gray);
+ end endgenerate
  reg [10:0] xp1,xn1,yp1,yn1;reg [11:0] mag2;
  reg [23:0] rgb1,rgb2;reg [7:0] gray1,gray2,stored1,stored2;
  reg vs1,vs2,de1,de2,w1,w2,vs_last;reg [1:0] mode1,mode2,frame_mode;

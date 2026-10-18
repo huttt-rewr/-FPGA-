@@ -6,6 +6,14 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     input enable,input scroll_enable,input [1:0] slogan_select,
     input [1:0] transition_mode,
     output reg out_vs,output reg out_de,output reg [23:0] out_rgb,input mode_800);
+    function [7:0] char40;
+        input [319:0] text;input [5:0] index;
+        reg [319:0] reversed;integer k;
+        begin
+            for(k=0;k<40;k=k+1)reversed[k*8+:8]=text[(39-k)*8+:8];
+            char40=reversed[index*8+:8];
+        end
+    endfunction
     wire [9:0] x,y;
     viewport_coordinates coords(clk,rst,vs,de,(ADAPTIVE && mode_800),x,y,,);
     reg vs_d,enabled,scrolling;
@@ -99,7 +107,7 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
         endcase
     end
     wire [9:0] select_x=PIPELINED?tx1:text_x;
-    wire [7:0] moving_char=(select_x<640)?(slogan >> ((39-select_x[9:4])*8)):8'h20;
+    wire [7:0] moving_char=(select_x<640)?char40(slogan,select_x[9:4]):8'h20;
     wire [9:0] glyph_clock_x=xx-10'd448;
     generate if(PIPELINED)begin:font_pipeline
       always @(posedge clk or posedge rst)begin

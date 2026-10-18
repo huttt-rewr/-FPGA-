@@ -46,6 +46,15 @@ module fat32_fixture(input clk,rst,input integer mode,
     if(seek_result!=0 || got!=512)begin $display("FAILED FAT32 SD model seek/read LBA=%0d got=%0d",addr,got);$finish;end
     if(mode==2 && addr==0)sector[511]=0;
     if(mode==3 && addr==0)sector[13]=3;
+    // A nonzero byte in ANY half of these FAT32-reserved fields must still
+    // reject FAT12/16/incompatible BPB data after zero-flag compression.
+    if(mode>=20 && mode<=25 && addr==0)begin
+     case(mode)
+      20:sector[17]=1;21:sector[18]=8'h80;
+      22:sector[22]=1;23:sector[23]=8'h80;
+      24:sector[42]=1;25:sector[43]=8'h80;
+     endcase
+    end
     if((mode==5 || mode==6) && addr==32)begin
      sector[8]=(mode==5)?8'hf7:8'hff;sector[9]=8'hff;sector[10]=8'hff;sector[11]=8'h0f;
     end
@@ -97,6 +106,12 @@ module tb_fat32_mount;
   reset_card(5);check(failed && code==3,"bad root cluster rejected");
   reset_card(6);check(mounted && !failed && count==1 && !found,"directory EOC without terminator is legal");
   reset_card(11);check(failed && code==4,"cyclic root traversal is bounded");
+  for(i=20;i<=25;i=i+1)begin
+   reset_card(i);check(failed && code==1 && !mounted,"nonzero FAT16/root/version field byte rejected");
+  end
+  // A rejected BPB must not make the compact flags sticky after reinit.
+  @(negedge clk);init_done=0;mode=0;repeat(6)@(negedge clk);init_done=1;
+  wait(mounted || failed);check(mounted && !failed && count==4,"invalid BPB flags replaced on SD remount");
   reset_card(1);
   @(negedge clk);init_done=0;mode=0;repeat(6)@(negedge clk);init_done=1;
   wait(mounted || failed);check(mounted && !failed && count==4 && found,"SD reinit remount MBR to superfloppy without global reset");

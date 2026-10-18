@@ -9,7 +9,7 @@ import_device eagle_s20.db -package EG4S20BG256
 source reports/design_sources.tcl
 read_adc src/constraints/pin.adc
 read_sdc src/constraints/timing.sdc
-# Exact video effects use LUT line RAM; prefer compact mapping and packing.
+# Prefer compact mapping/packing for the remaining LUT RAM and arithmetic.
 set_param gate map_mode area_prior
 set_param gate pack_effort high
 optimize_rtl

@@ -5,6 +5,8 @@ cd $root
 import_device eagle_s20.db -package EG4S20BG256
 import_db reports/video_improve_routed.db
 update_timing -mode final
+source scripts/adaptive_clocks.tcl
+update_timing -mode final
 report_timing_status -file reports/bitgen_timing_status.txt
 set fh [open reports/bitgen_timing_status.txt r]
 set timing [read $fh]

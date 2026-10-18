@@ -1,12 +1,14 @@
 set root [file normalize [file join [file dirname [info script]] ..]]
 cd $root
 import_device eagle_s20.db -package EG4S20BG256
+set_param flow qor_monitor off
 import_db reports/video_improve_gate.db
 update_timing
 source scripts/adaptive_clocks.tcl
 
 # Prefer LUT pairs: avoid wasting slice sites beside distributed line RAM.
 set_param place pack_mode more_lut_pair
+set_param place pr_strategy 2
 place
 # Physical mapping rebuilds mux clock pins. Rebind the same existing mode
 # clocks before timing-driven routing as well as before final STA.
@@ -31,6 +33,7 @@ update_timing -mode final
 report_area -io_info -file reports/physical_area.txt
 report_timing_status -file reports/timing_status.txt
 report_timing_summary -file reports/timing_summary.txt
+report_timing_summary -file reports/routed_timing_paths20.txt -ep_num 20 -path_num 1
 report_io -file reports/io.txt -verbose
 check_design
 check_timing

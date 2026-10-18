@@ -10,6 +10,14 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
     input [6:0] file_image_index,file_image_count,file_audio_index,file_audio_count,
     input file_table_truncated,input [3:0] slide_rate_mode,input slide_rate_limited,input [1:0] requested_res_mode);
     wire expanded=ADAPTIVE && mode_800;
+    function [7:0] char40;
+        input [319:0] text;input [5:0] index;
+        reg [319:0] reversed;integer k;
+        begin
+            for(k=0;k<40;k=k+1)reversed[k*8+:8]=text[(39-k)*8+:8];
+            char40=reversed[index*8+:8];
+        end
+    endfunction
     wire [9:0] x,y,raw_x,raw_y;
     viewport_coordinates coords(clk,rst,vs,de,expanded,x,y,raw_x,raw_y);
     assign pixel_x=raw_x;assign pixel_y=raw_y;
@@ -22,13 +30,26 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
     // Resolution metadata is stable for a frame. Register decimal conversion
     // separately so source-width division is not on the per-pixel glyph path.
     reg [3:0] w0,w1,w2,w3,h0,h1,h2,h3;
+    // Shift/add-3 conversion has exact 0..4095 coverage without constant
+    // divider/modulo networks repeated for each decimal digit.
+    function [15:0] bcd12;
+        input [11:0] binary;integer bit_index,digit;reg [15:0] bcd;
+        begin
+            bcd=0;
+            for(bit_index=11;bit_index>=0;bit_index=bit_index-1)begin
+                for(digit=0;digit<4;digit=digit+1)
+                    if(bcd[digit*4+:4]>=5)bcd[digit*4+:4]=bcd[digit*4+:4]+4'd3;
+                bcd={bcd[14:0],binary[bit_index]};
+            end
+            bcd12=bcd;
+        end
+    endfunction
+    wire [15:0] width_decimal=bcd12(source_width),height_decimal=bcd12(source_height);
     always @(posedge clk or posedge rst)begin
         if(rst)begin w0<=0;w1<=0;w2<=0;w3<=0;h0<=0;h1<=0;h2<=0;h3<=0;end
         else begin
-            w0<=source_width/1000;w1<=(source_width/100)%10;
-            w2<=(source_width/10)%10;w3<=source_width%10;
-            h0<=source_height/1000;h1<=(source_height/100)%10;
-            h2<=(source_height/10)%10;h3<=source_height%10;
+            {w0,w1,w2,w3}<=width_decimal;
+            {h0,h1,h2,h3}<=height_decimal;
         end
     end
     reg [7:0] contrast_tens,contrast_units;
@@ -47,7 +68,7 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
             2:line_text="VOL:08/16 MUTE:Y TEST AUDIO             ";
             3:line_text="K1:NEXT K2:PLAY SW:CAP/SCROLL/FX        ";
         endcase
-        ascii=(col<40)?(line_text >> ((39-col)*8)):8'h20;
+        ascii=(col<40)?char40(line_text,col):8'h20;
         if(row==1) begin
             if(col==5) ascii="O";
             if(col==6) ascii=auto_play?"N":"F";
@@ -66,7 +87,7 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
             if(row==0)line_text="SRC:0000X0000 ->640X480 FIT BILINEAR    ";
             if(row==2)line_text="BRI:+00 CON:1.00 MODE:PLAY              ";
             if(row==3)line_text=(edit_mode==0)?"K3:MODE K1:NEXT K2:AUTO                 ":"K3:MODE K1:MINUS K2:PLUS                ";
-            if(row!=1)ascii=(col<40)?(line_text >> ((39-col)*8)):8'h20;
+            if(row!=1)ascii=(col<40)?char40(line_text,col):8'h20;
             if(row==0)begin
                 case(col)
                     16:if(expanded)ascii="8";
@@ -130,7 +151,7 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
         board_ascii=ascii;
         if(FILE_UI && row==1)begin
             menu_text="PLAY:OFF IMG:00/00 AUD:00/00 LOAD:-     ";
-            board_ascii=(col<40)?(menu_text >> ((39-col)*8)):8'h20;
+            board_ascii=(col<40)?char40(menu_text,col):8'h20;
             case(col)
                 5:board_ascii="O";6:board_ascii=auto_play?"N":"F";7:board_ascii=auto_play?" ":"F";
                 13:board_ascii=it;14:board_ascii=iu;16:board_ascii=ct;17:board_ascii=cu;
@@ -194,7 +215,7 @@ module status_osd #(parameter ENHANCED_UI=0,parameter ADAPTIVE=0,parameter PIPEL
                     6:menu_text="MENU >VOLUME UP:08                      ";
                     default:menu_text="MENU >PLAY / PAUSE                      ";
                 endcase
-                board_ascii=(col<40)?(menu_text >> ((39-col)*8)):8'h20;
+                board_ascii=(col<40)?char40(menu_text,col):8'h20;
                 if(row==2 && menu_item==1)begin
                     if(col==12)board_ascii="O";
                     if(col==13)board_ascii=gamma_enable?"N":"F";

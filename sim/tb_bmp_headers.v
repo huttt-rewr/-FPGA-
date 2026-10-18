@@ -37,6 +37,8 @@ initial begin
  check_scan(40,1,54,512,1);check_scan(108,1,122,512,1);check_scan(124,1,138,512,1);
  check_scan(12,1,54,512,0);check_scan(0,1,54,512,0);check_scan(64,1,78,512,0);
  check_scan(32'hffffffff,1,54,512,0);check_scan(40,0,54,512,0);check_scan(40,2,54,512,0);
+ check_scan(108,1,121,512,0);check_scan(124,1,137,512,0);
+ check_scan(40,1,4096,512,1);check_scan(40,1,4097,512,0);
  check_scan(124,1,54,512,0);check_scan(40,1,54,34,0);
  check_scan(40,1,54,512,1);
  // No reset: a truncated subsequent load must not reuse the previous valid header.

@@ -50,7 +50,10 @@ module sd_fat32 #(
  reg [7:0] spc_mask;
  reg geometry_bad,root_bad,fat_capacity_bad,boot_signature_ok,boot_super_ok,boot_partition_ok,geom_fields_bad;
  reg cmp_to,cmp_vol,cmp_lo,cmp_hi;
- reg [15:0] bytes_per_sector,reserved_count,root_entries,fat16_size,ext_flags,fs_version,signature;
+ reg [15:0] bytes_per_sector,reserved_count,ext_flags,signature;
+ // These fields are used only for zero/nonzero validation. Retain that
+ // validation exactly, without storing 48 bits of otherwise unused values.
+ reg [1:0] root_entries_nonzero,fat16_nonzero,version_nonzero;
  reg [7:0] spc,num_fats;reg [2:0] spc_shift;
  reg [31:0] fat_area;reg [9:0] byte_count;
  reg [31:0] image_cluster[0:MAX_BMP-1],image_size[0:MAX_BMP-1],wav_cluster;
@@ -81,6 +84,11 @@ module sd_fat32 #(
   end
  end
  assign aud_idle=state[18] && !aud_req;
+ // Directory and playback states never overlap; share address/shift hardware.
+ wire [7:0] within_cluster=state[33]?dir_sector:(request_rel[7:0] & spc_mask);
+ wire [31:0] cluster_sector_address=map_base+{24'd0,within_cluster};
+ wire [31:0] relative_shift_input=state[27]?data_sectors:request_rel;
+ wire [31:0] relative_shifted=relative_shift_input>>spc_shift;
  reg [31:0] fat_target,fat_tag[0:1],fat_lba,fat_word,fat_q,next_cluster;
  reg [1:0] fat_valid;reg [6:0] fat_entry;reg [1:0] gap_count;
  (* ram_style="bram" *) reg [31:0] fat_cache[0:255];
@@ -203,8 +211,8 @@ module sd_fat32 #(
    truncate_event<=0;cancel_aud<=0;
    store_bmp<=0;store_wav<=0;truncate_event<=0;store_index<=0;store_cluster<=0;store_size<=0;
    owner<=0;mount_fat<=0;bpb_at_partition<=0;
-   signature<=0;bytes_per_sector<=0;reserved_count<=0;root_entries<=0;fat16_size<=0;
-   total_sectors<=0;fat_sectors<=0;root_cluster<=0;spc<=0;num_fats<=0;ext_flags<=0;fs_version<=0;
+   signature<=0;bytes_per_sector<=0;reserved_count<=0;root_entries_nonzero<=0;fat16_nonzero<=0;
+   total_sectors<=0;fat_sectors<=0;root_cluster<=0;spc<=0;num_fats<=0;ext_flags<=0;version_nonzero<=0;
    partition_lba<=0;partition_size<=0;selected_lba<=0;partition_found<=0;
    partition_type<=0;partition_candidate<=0;partition_length<=0;physical_addr<=0;spc_shift<=0;
    first_fat<=0;first_data<=0;fat_area<=0;overhead<=0;data_clusters<=0;max_cluster<=0;volume_last<=0;
@@ -240,14 +248,14 @@ module sd_fat32 #(
      case(meta_index)
       11:bytes_per_sector[7:0]<=meta_data;12:bytes_per_sector[15:8]<=meta_data;
       13:spc<=meta_data;14:reserved_count[7:0]<=meta_data;15:reserved_count[15:8]<=meta_data;
-      16:num_fats<=meta_data;17:root_entries[7:0]<=meta_data;18:root_entries[15:8]<=meta_data;
-      22:fat16_size[7:0]<=meta_data;23:fat16_size[15:8]<=meta_data;
+      16:num_fats<=meta_data;17:root_entries_nonzero[0]<=|meta_data;18:root_entries_nonzero[1]<=|meta_data;
+      22:fat16_nonzero[0]<=|meta_data;23:fat16_nonzero[1]<=|meta_data;
       32:total_sectors[7:0]<=meta_data;33:total_sectors[15:8]<=meta_data;
       34:total_sectors[23:16]<=meta_data;35:total_sectors[31:24]<=meta_data;
       36:fat_sectors[7:0]<=meta_data;37:fat_sectors[15:8]<=meta_data;
       38:fat_sectors[23:16]<=meta_data;39:fat_sectors[31:24]<=meta_data;
       40:ext_flags[7:0]<=meta_data;41:ext_flags[15:8]<=meta_data;
-      42:fs_version[7:0]<=meta_data;43:fs_version[15:8]<=meta_data;
+      42:version_nonzero[0]<=|meta_data;43:version_nonzero[1]<=|meta_data;
       44:root_cluster[7:0]<=meta_data;45:root_cluster[15:8]<=meta_data;
       46:root_cluster[23:16]<=meta_data;47:root_cluster[31:24]<=meta_data;
       510:signature[7:0]<=meta_data;511:signature[15:8]<=meta_data;default:;
@@ -311,7 +319,7 @@ module sd_fat32 #(
     state[42]:begin
      // 先寄存字段合法性，避免宽比较串到几何寄存器的写使能。
      geom_fields_bad<=!spc_ok || reserved_count==0 || (num_fats!=1 && num_fats!=2) || fat_sectors==0 || fat_sectors[31:24]!=0 ||
-        root_entries!=0 || fat16_size!=0 || fs_version!=0 ||
+        (|root_entries_nonzero) || (|fat16_nonzero) || (|version_nonzero) ||
         (ext_flags[7] && ext_flags[3:0]>=num_fats);
      state<=GEOM1;
     end
@@ -338,7 +346,7 @@ module sd_fat32 #(
      cmp_to<=total_sectors<=overhead;cmp_vol<=volume_last<partition_lba;
      state<=GEOM4;
     end
-    state[27]:begin data_clusters<=data_sectors>>spc_shift;state<=GEOM5;end
+    state[27]:begin data_clusters<=relative_shifted;state<=GEOM5;end
     state[28]:begin
      max_cluster<=data_clusters+1'b1;
      // data_clusters在上一拍GEOM4稳定，此处与加一并行。
@@ -362,7 +370,7 @@ module sd_fat32 #(
     state[7]:begin map_minus_two<=dir_cluster-2;state<=DIR_SHIFT;end
     state[31]:begin map_shifted<=map_minus_two<<spc_shift;state<=DIR_BASE;end
     state[32]:begin map_base<=first_data+map_shifted;state<=DIR_FINISH;end
-    state[33]:begin physical_addr<=map_base+dir_sector;state<=DIR_REQ;end
+    state[33]:begin physical_addr<=cluster_sector_address;state<=DIR_REQ;end
     state[8]:begin dir_ended<=0;state<=DIR_RX;end
     state[9]:if(disk_error || disk_end)begin
      if(disk_error || !sector_length_ok)begin state<=FAULT;mount_error_code<=2;end else state<=META_DRAIN;
@@ -417,11 +425,12 @@ module sd_fat32 #(
     state[46]:state<=STREAM_INIT; // two synchronous descriptor words
     state[19]:begin
      request_size<=INDEXED?descriptor[31:0]:(owner?wav_size:image_size[request_file[1:0]]);
-     target_index<=request_rel>>spc_shift;
+     target_index<=relative_shifted;
      state<=STREAM_LIMIT;
     end
     state[34]:begin
-     request_sectors<=({1'b0,request_size}+33'd511)>>9;
+     // ceil(bytes/512), retaining the carry for sizes near 4 GiB.
+     request_sectors<={10'd0,request_size[31:9]}+(|request_size[8:0]);
      // 先寄存目标簇序号，再比较游标，不串接可变移位与宽比较器。
      cursor_reusable<=cursor_valid[owner] && (cursor_file[owner]==request_file) && cursor_index[owner]<=target_index;
      state<=CURSOR_APPLY;
@@ -452,7 +461,7 @@ module sd_fat32 #(
     end
     state[35]:begin map_shifted<=map_minus_two<<spc_shift;state<=STREAM_BASE;end
     state[36]:begin map_base<=first_data+map_shifted;state<=STREAM_FINISH;end
-    state[37]:begin physical_addr<=map_base+(request_rel & {24'd0,spc_mask});state<=STREAM_REQ;end
+    state[37]:begin physical_addr<=cluster_sector_address;state<=STREAM_REQ;end
     state[22]:begin state<=STREAM_RX;end
     state[23]:if(disk_error || disk_end)begin
      if(disk_error || !sector_length_ok)cursor_valid[owner]<=0;

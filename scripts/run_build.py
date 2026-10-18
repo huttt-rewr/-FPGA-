@@ -38,7 +38,7 @@ def run(td, script, log, marker, products):
         result = subprocess.run([td, (ROOT / 'scripts' / script).as_posix()], cwd=ROOT,
                                 stdout=output, stderr=subprocess.STDOUT, timeout=1800)
     text = (REPORTS / log).read_text(encoding='utf-8', errors='replace')
-    errors = re.findall(r'^.*(?:\bERROR\s*:|\bFATAL\b|invalid command name|couldn.t read file|can.t read .*no such variable).*$', text, re.M | re.I)
+    errors = re.findall(r'^.*(?:\bERROR\s*:|\bFATAL\b|Oops!\s*coredump|invalid command name|couldn.t read file|can.t read .*no such variable).*$', text, re.M | re.I)
     if result.returncode or marker not in text or errors:
         raise RuntimeError(f'{script} failed; see {log}: {errors[:3]}')
     if any(not (REPORTS / p).is_file() or not (REPORTS / p).stat().st_size for p in products):

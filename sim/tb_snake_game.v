@@ -12,10 +12,19 @@ module tb_snake_game;
   .game_enable(en),.dir_req(dir),.tick(tick),.out_vs(ov),.out_de(od),.out_rgb(pixel),.score(score),.game_over(over));
  function board_at;
   input integer address;
-  begin case(address>>8)
-   0:board_at=dut.board_mem.bank[0].ram[address&255];
-   1:board_at=dut.board_mem.bank[1].ram[address&255];
-   2:board_at=dut.board_mem.bank[2].ram[address&255];
+  begin case(address>>6)
+   0:board_at=dut.board_mem.bank[0].ram[address&63];
+   1:board_at=dut.board_mem.bank[1].ram[address&63];
+   2:board_at=dut.board_mem.bank[2].ram[address&63];
+   3:board_at=dut.board_mem.bank[3].ram[address&63];
+   4:board_at=dut.board_mem.bank[4].ram[address&63];
+   5:board_at=dut.board_mem.bank[5].ram[address&63];
+   6:board_at=dut.board_mem.bank[6].ram[address&63];
+   7:board_at=dut.board_mem.bank[7].ram[address&63];
+   8:board_at=dut.board_mem.bank[8].ram[address&63];
+   9:board_at=dut.board_mem.bank[9].ram[address&63];
+   10:board_at=dut.board_mem.bank[10].ram[address&63];
+   11:board_at=dut.board_mem.bank[11].ram[address&63];
    default:board_at=1'bx;
   endcase end
  endfunction

@@ -61,9 +61,9 @@ module glass_osd #(parameter DEPTH=1024,parameter SHARED_LUMA=0,parameter [9:0] 
   begin v=$signed({2'd0,c})+delta;corrected=v[9]?8'd0:(v[8]?8'd255:v[7:0]);end
  endfunction
  wire signed [8:0] luma_delta=$signed({1'b0,blur3})-$signed({1'b0,gray3});
- function [15:0] times153;input [7:0] c;reg [15:0] v;begin v={8'd0,c};times153=(v<<7)+(v<<4)+(v<<3)+v;end endfunction
+ (* dsp_style="yes" *) function [15:0] times153;input [7:0] c;reg [15:0] v;begin v={8'd0,c};times153=c*8'd153;end endfunction
  function [7:0] darken;input [7:0] c;reg [15:0] p;begin p=times153(c);darken=p[15:8];end endfunction
- function [7:0] blend;input [7:0] a,b;reg [15:0] v,w;begin w={8'd0,b};v=times153(a)+(w<<7)-(w<<5)+(w<<3)-w;blend=v[15:8];end endfunction
+ function [7:0] blend;input [7:0] a,b;reg [15:0] v,w;begin w={8'd0,b};v=times153(a)+b*8'd103;blend=v[15:8];end endfunction
  wire [23:0] mixed={blend(dark5[23:16],rgb5[23:16]),blend(dark5[15:8],rgb5[15:8]),blend(dark5[7:0],rgb5[7:0])};
  always @(posedge clk or posedge rst)begin
   if(rst)begin
