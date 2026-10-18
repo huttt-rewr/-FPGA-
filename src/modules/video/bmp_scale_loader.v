@@ -71,10 +71,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
  wire [23:0] lower_row=y0[0]?horizontal0:horizontal1;
  wire [23:0] horizontal_result0,vertical_result;
  wire [10:0] sample_left=x_acc[26:16];
- // Compare against the unclamped left coordinate to avoid an increment,
- // endpoint mux and second comparator in the source-column count enable.
- wire taps_ready=(load_x>sample_left) ||
-                  (sample_left>=last_source_x && load_x==sample_left);
+ wire [10:0] sample_right=(sample_left<last_source_x)?sample_left+1'b1:sample_left;
  wire [23:0] sample_a=(sample_left==load_x)?current_source:previous_source;
  reg [23:0] horizontal_a,horizontal_b;
  reg [7:0] horizontal_fraction;
@@ -109,13 +106,6 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
   end
   else if(state[9])byte_address<=byte_address+1'b1;
  end
- // Keep the narrow counter enable local; the main case also updates many
- // unrelated parser/pixel controls and otherwise absorbs this comparison.
- always @(posedge clk or posedge rst)begin
-  if(rst)load_x<=0;
-  else if(state[6])load_x<=0;
-  else if(state[26] && !taps_ready)load_x<=load_x+1'b1;
- end
  // Synchronous RAM reads; memories deliberately have no reset.
  always @(posedge clk) begin
   if(state[8] && sector_valid && cache_count<512) sector_mem[cache_count[8:0]]<=sector_data;
@@ -132,7 +122,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
    ow<=640;oh<=480;state<=IDLE;sector_read<=0;sector_address<=0;pixel<=0;pixel_valid<=0;
    done<=0;error<=0;busy<=0;w<=0;h<=0;stride<=0;offset<=0;base<=0;
    cache_sector<=0;cache_valid<=0;cache_count<=0;
-   tags_valid<=0;tag0<=0;tag1<=0;load_y<=0;read_x<=0;load_sample<=0;current_source<=0;previous_source<=0;
+   tags_valid<=0;tag0<=0;tag1<=0;load_y<=0;load_x<=0;read_x<=0;load_sample<=0;current_source<=0;previous_source<=0;
    channel<=0;blue<=0;green<=0;dw<=0;dh<=0;pad_x<=0;pad_y<=0;
    ox<=0;oy<=0;x_acc<=0;y_acc<=0;x_step<=0;y_step<=0;
    fy<=0;left0<=0;left1<=0;horizontal0<=0;horizontal1<=0;
@@ -224,7 +214,7 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
      end else state<=PIXEL_PROBE;
     end
     state[6]: begin
-     load_sample<=0;x_acc<=0;channel<=0;state<=BYTE_ADDR_HI;
+     load_x<=0;load_sample<=0;x_acc<=0;channel<=0;state<=BYTE_ADDR_HI;
     end
     state[7]: begin
      if(cache_valid && cache_sector==byte_address[31:9])state<=BYTE;
@@ -306,8 +296,8 @@ module bmp_scale_loader #(parameter ADAPTIVE=0)(
     // Load source pixels only until both taps for the next output column exist.
     // Upscaling can emit several samples from the same source-pixel pair.
     state[26]:begin
-     if(taps_ready)state<=SAMPLE_WAIT1;
-     else state<=CACHE;
+     if(load_x>=sample_right)state<=SAMPLE_WAIT1;
+     else begin load_x<=load_x+1'b1;state<=CACHE;end
     end
     state[27]:begin
      // Source-column count is stable throughout the horizontal lerp waits.
