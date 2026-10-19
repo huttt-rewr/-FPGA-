@@ -1,0 +1,61 @@
+# vsim -do {run -all; quit -f} -l ../reports/timing_close_20261018/cursor_tb_fat32_compare.log -lib msim_work -c tb_fat32_compare 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 43, found 22.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_end'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_end'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_compare(fast)
+# run -all 
+# tb_fat32_compare ALL PASS (4074 real-DUT cases)
+# ** Note: $finish    : tb_fat32_compare.v(111)
+#    Time: 87616 ns  Iteration: 0  Instance: /tb_fat32_compare

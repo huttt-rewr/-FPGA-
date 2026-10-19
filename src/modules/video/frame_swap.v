@@ -3,7 +3,7 @@
 module frame_swap #(parameter ENABLE_EFFECTS=0,parameter ADAPTIVE=0)(input clk,input rst,input vblank,input request_toggle,
     input [1:0] requested_buffer,output reg ack_toggle,
     output reg [1:0] active_buffer,output reg display_valid,
-    input [1:0] transition_mode,output reg [1:0] effect_mode,
+    input [1:0] transition_mode,output reg [2:0] effect_mode,
     output reg [5:0] fade_level,output reg [9:0] slide_offset,
     output wire transition_busy,input mode_800);
     wire [9:0] slide_step=(ADAPTIVE && mode_800)?25:20;
@@ -12,7 +12,8 @@ module frame_swap #(parameter ENABLE_EFFECTS=0,parameter ADAPTIVE=0)(input clk,i
     localparam IDLE=2'd0,OUT=2'd1,SWITCH=2'd2,IN=2'd3;
     reg [1:0] state,pending_buffer;
     reg pending_toggle;
-    reg alternate_slide;
+    // Slot 3 cycles fade, slide, wipe, iris, checker. Captured once per request.
+    reg [2:0] rotation_effect;
     assign transition_busy=(state!=IDLE);
     always @(posedge clk or posedge rst) begin
         if(rst) begin
@@ -20,7 +21,7 @@ module frame_swap #(parameter ENABLE_EFFECTS=0,parameter ADAPTIVE=0)(input clk,i
             ack_toggle<=0;active_buffer<=0;display_valid<=0;
             state<=IDLE;pending_buffer<=0;pending_toggle<=0;
             effect_mode<=0;fade_level<=32;slide_offset<=0;
-            alternate_slide<=0;
+            rotation_effect<=3'd1;
         end else begin
             req_ff<={req_ff[1:0],request_toggle};
             buf_ff1<=requested_buffer;buf_ff2<=buf_ff1;
@@ -33,8 +34,9 @@ module frame_swap #(parameter ENABLE_EFFECTS=0,parameter ADAPTIVE=0)(input clk,i
                         end else begin
                             // Capture mode, payload and transaction identity once.
                             pending_buffer<=buf_ff2;pending_toggle<=req_ff[2];
-                            effect_mode<=(transition_mode==3)?(alternate_slide?2'd2:2'd1):transition_mode;
-                            if(transition_mode==3) alternate_slide<=~alternate_slide;
+                            effect_mode<=(transition_mode==3)?rotation_effect:{1'b0,transition_mode};
+                            if(transition_mode==3)
+                                rotation_effect<=(rotation_effect==5)?3'd1:rotation_effect+1'b1;
                             state<=OUT;
                             fade_level<=31;slide_offset<=slide_step;
                         end

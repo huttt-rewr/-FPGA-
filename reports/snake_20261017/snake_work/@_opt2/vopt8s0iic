@@ -1,0 +1,226 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+Vb4XKWfk><MPEZ4=DQa:z;1
+04 13 4 work tb_snake_game fast 0
+=1-bcfce7e1723c-6ad38ff8-2e9-c1e4
+Z1 o-quiet -auto_acc_if_foreign -work reports/snake_20261017/snake_work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+V<1SG^>a8ATl0H5zdmY0I=0
+04 17 4 work tb_snake_controls fast 0
+=1-bcfce7e1723c-6ad38ffc-e0-c640
+R1
+n@_opt1
+R2
+R3
+T_opt2
+VeN`9deUk7lF_1^ajhS>[f0
+04 17 4 work tb_snake_pipeline fast 0
+=1-bcfce7e1723c-6ad38fff-196-bf00
+R1
+n@_opt2
+R2
+vcdc_snapshot
+IhmUgU0Ez^0<:0L7hGEYA;1
+V_Yo14;e_9K<ocG@dZH9Re1
+R3
+w1790587830
+8src/modules/common/cdc_snapshot.v
+Fsrc/modules/common/cdc_snapshot.v
+L0 3
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792249846.443000
+Z6 !s107 sim/tb_snake_pipeline.v|sim/tb_snake_controls.v|sim/tb_snake_game.v|src/modules/game/snake_game.v|src/modules/input/ps2_controls.v|src/modules/osd/osd_char_rom.v|src/modules/video/video_coordinates.v|src/modules/common/cdc_snapshot.v|
+Z7 !s90 -work|reports/snake_20261017/snake_work|src/modules/common/cdc_snapshot.v|src/modules/video/video_coordinates.v|src/modules/osd/osd_char_rom.v|src/modules/input/ps2_controls.v|src/modules/game/snake_game.v|sim/tb_snake_game.v|sim/tb_snake_controls.v|sim/tb_snake_pipeline.v|
+Z8 o-work reports/snake_20261017/snake_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 X@e7[IkMz_>GTO6Vmm<]63
+!s85 0
+vosd_char_rom
+IKBhEXACX]Dgn<:H9Eb8Q@3
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R3
+w1790409879
+8src/modules/osd/osd_char_rom.v
+Fsrc/modules/osd/osd_char_rom.v
+L0 14
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 j?k9bF?Y:VzJH>@He^8783
+!s85 0
+vps2_controls
+I=R=2Nkg]aERi[3nJ1ld`61
+VDI_gVhjWN0M;fkh=;zk9j3
+R3
+w1792247822
+8src/modules/input/ps2_controls.v
+Fsrc/modules/input/ps2_controls.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 PTZ5<gSWI4g[jhB2C2@=T1
+!s85 0
+vsnake_frame_control
+IcbBGgdR9?[B[cj13Ueb4C0
+V;BcbY0QfJGTfM=kzD7Rb=3
+R3
+Z9 w1792249724
+Z10 8src/modules/game/snake_game.v
+Z11 Fsrc/modules/game/snake_game.v
+L0 171
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 1=JbeLNToi@zgI<HONiI^2
+!s85 0
+vsnake_game
+I>Hf4?j0Uca:0DBRhDkh>m0
+VlFz>Q^1FRC:b2h:QLX7j60
+R3
+R9
+R10
+R11
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 I9YLaL9__B6Sb27X:W@ZZ0
+!s85 0
+vsnake_lut_ram
+IQV:oEkK`6QNHKe8fPVQB71
+VhP:zQb9`8H9iz2OW9z40<2
+R3
+R9
+R10
+R11
+L0 197
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 c7NIbRilSEJedNc9461880
+!s85 0
+vtb_snake_controls
+I?6MZ]Bd4ETmzJo0[@7J`20
+VJlzS6G6XP1DW1ZgUnIYRo1
+R3
+w1792249571
+8sim/tb_snake_controls.v
+Fsim/tb_snake_controls.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 2@b^><i?=MVULHe=27SV:1
+!s85 0
+vtb_snake_game
+ID^557BMiWA9UAJz2=bOhO0
+VcRCiYc=S>DX;4V8VbQzZ32
+R3
+R9
+8sim/tb_snake_game.v
+Fsim/tb_snake_game.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 cLgAI0GT[V8[V@1k7`K]P1
+!s85 0
+vtb_snake_pipeline
+I@;c99nRQ[EHQXRkfdbdET3
+VdCm=kE?8a?e[PbB]nR0CK3
+R3
+w1792248372
+8sim/tb_snake_pipeline.v
+Fsim/tb_snake_pipeline.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 0Cj>;Na_fRgMTFi16UXFk0
+!s85 0
+vvideo_coordinates
+Ih1OVXco1gfFOWM1O?PcA[0
+Vd30A[z2mOgG5AJ76zA;ZC3
+R3
+Z12 w1791648393
+Z13 8src/modules/video/video_coordinates.v
+Z14 Fsrc/modules/video/video_coordinates.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 YU]bG5aof:c=Ven>DCb7K0
+!s85 0
+vviewport_coordinates
+IJzgV;YghRCZRi41Q^F5k^1
+V50z[NI;67@9<bHHc3Y=L>1
+R3
+R12
+R13
+R14
+L0 22
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 XE1zSOR1194R21e?F?acH2
+!s85 0

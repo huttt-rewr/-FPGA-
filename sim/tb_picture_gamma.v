@@ -2,10 +2,10 @@
 module tb_picture_gamma;
  reg clk=0,rst=1,vs=1,de=0,en=0;always #5 clk=~clk;
  reg [9:0] x=0;reg [23:0] rgb=0;
- wire ov,od;wire [9:0] ox;wire [23:0] result;
+ wire ov,od;wire [9:0] ox,oy;wire [23:0] result;
  integer i,j,seen=0,errors=0;
  reg [35:0] expected=0,previous=0;
- picture_gamma dut(clk,rst,vs,de,x,rgb,en,ov,od,ox,result);
+ picture_gamma dut(clk,rst,vs,de,x,rgb,en,ov,od,ox,result,10'd0,oy);
  function [7:0] reference;
   input [7:0] n;real r;integer ten,eight;
   begin

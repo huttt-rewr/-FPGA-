@@ -28,4 +28,4 @@
 # run -all 
 # ALL PASS tb_rate_player: real FAT/scaler/player, guarded target cadence, full frames, pause during load, no backlog
 # ** Note: $finish    : tb_rate_player.v(90)
-#    Time: 69640490 ns  Iteration: 1  Instance: /tb_rate_player
+#    Time: 69640760 ns  Iteration: 1  Instance: /tb_rate_player

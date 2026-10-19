@@ -1,0 +1,38 @@
+standard
+***Report Model: picture_gamma Device: EG4S20BG256***
+
+IO Statistics
+#IO                        75   out of    188   39.89%
+  #input                   39
+  #output                  36
+  #inout                    0
+
+LUT Statistics
+#Total_luts                24
+  #lut4                     0
+  #lut5                    24
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                       48   out of  19600    0.24%
+#reg                        0   out of  19600    0.00%
+#bram                       3   out of     64    4.69%
+  #bram9k                   3
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                       75   out of    188   39.89%
+  #ireg                    37
+  #oreg                    36
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++---------------------------------------------------------------------+
+|Instance |Module        |lut     |ripple  |seq     |bram    |dsp     |
++---------------------------------------------------------------------+
+|top      |picture_gamma |36      |12      |73      |3       |0       |
++---------------------------------------------------------------------+

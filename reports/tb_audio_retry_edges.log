@@ -44,4 +44,4 @@
 # run -all 
 # ALL PASS tb_audio_retry_edges
 # ** Note: $finish    : tb_audio_retry_edges.v(20)
-#    Time: 206 ns  Iteration: 0  Instance: /tb_audio_retry_edges
+#    Time: 216 ns  Iteration: 0  Instance: /tb_audio_retry_edges

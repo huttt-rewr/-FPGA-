@@ -14,4 +14,4 @@
 # run -all 
 # ALL PASS tb_audio_retry
 # ** Note: $finish    : tb_audio_retry.v(107)
-#    Time: 201050 ns  Iteration: 1  Instance: /tb_audio_retry
+#    Time: 201230 ns  Iteration: 1  Instance: /tb_audio_retry

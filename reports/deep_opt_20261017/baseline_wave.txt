@@ -1,0 +1,38 @@
+standard
+***Report Model: audio_visualizer Device: EG4S20BG256***
+
+IO Statistics
+#IO                        84   out of    188   44.68%
+  #input                   58
+  #output                  26
+  #inout                    0
+
+LUT Statistics
+#Total_luts               212
+  #lut4                   181
+  #lut5                    31
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      470   out of  19600    2.40%
+#reg                       44   out of  19600    0.22%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                       84   out of    188   44.68%
+  #ireg                    37
+  #oreg                    26
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++------------------------------------------------------------------------+
+|Instance |Module           |lut     |ripple  |seq     |bram    |dsp     |
++------------------------------------------------------------------------+
+|top      |audio_visualizer |437     |33      |107     |0       |0       |
++------------------------------------------------------------------------+

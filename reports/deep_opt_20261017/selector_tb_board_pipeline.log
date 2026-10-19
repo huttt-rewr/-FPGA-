@@ -1,0 +1,43 @@
+# vsim -do {run -all; quit -f} -l ../reports/deep_opt_20261017/selector_tb_board_pipeline.log -lib msim_work -c tb_board_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 30.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_pipeline(fast)
+# run -all 
+# ALL PASS tb_board_pipeline: six full frames, both modes, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines
+# ** Note: $finish    : tb_board_pipeline.v(79)
+#    Time: 34070480 ns  Iteration: 1  Instance: /tb_board_pipeline

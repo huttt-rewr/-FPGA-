@@ -1,0 +1,193 @@
+{
+  "confidence": "Routed",
+  "worst_by_check": {
+    "setup": {
+      "slack_ns": -1.576,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[5]_syn_4.ce"
+    },
+    "hold": {
+      "slack_ns": 0.021,
+      "check": "hold",
+      "start": "frame_read_write_m0/write_buf/wr_addr_reg[1]_syn_4.clk",
+      "end": "frame_read_write_m0/write_buf/ram_inst/ramread0_syn_25.addra[5]"
+    },
+    "removal": {
+      "slack_ns": 0.027,
+      "check": "removal",
+      "start": "u_hdmi_1_4b_transmitter_core_wrapper/u0_reset_sync/O_sync_reset_reg_syn_72.clk",
+      "end": "u_hdmi_1_4b_transmitter_core_wrapper/u_hdmi_tx_controller_wrapper/u_hdmi_island_data_gen/O_BCH_block_0_reg[36]_syn_4.sr"
+    },
+    "recovery": {
+      "slack_ns": -0.962,
+      "check": "recovery",
+      "start": "supervisor/reset_request_reg_syn_20.clk",
+      "end": "reset_writer/sync_ff_reg[2]_syn_4.sr"
+    }
+  },
+  "negative_reported_paths": [
+    {
+      "slack_ns": -1.576,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[5]_syn_4.ce"
+    },
+    {
+      "slack_ns": -1.303,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[0]_syn_15.b[0]"
+    },
+    {
+      "slack_ns": -1.159,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[0]_syn_15.b[1]"
+    },
+    {
+      "slack_ns": -1.021,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "audio_error_cdc/ack_ff_reg[2]_syn_4.a[0]"
+    },
+    {
+      "slack_ns": -0.796,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/write_done_seen_reg_syn_10.a[1]"
+    },
+    {
+      "slack_ns": -0.7,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[3]_syn_17.b[1]"
+    },
+    {
+      "slack_ns": -0.478,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[4]_syn_36.b[1]"
+    },
+    {
+      "slack_ns": -0.476,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/error_reg_syn_5.a[0]"
+    },
+    {
+      "slack_ns": -0.384,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[19]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_valid_reg_syn_11.a[1]"
+    },
+    {
+      "slack_ns": -0.38,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[1]_syn_15.c[1]"
+    },
+    {
+      "slack_ns": -0.369,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[19]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[3]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.364,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/source_done_seen_reg_syn_8.a[1]"
+    },
+    {
+      "slack_ns": -0.353,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/wide_reg_syn_32.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/quotient_reg[12]_syn_4.a[1]"
+    },
+    {
+      "slack_ns": -0.325,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[27]_syn_4.d[0]"
+    },
+    {
+      "slack_ns": -0.291,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[10]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.247,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/pending_buf_idx_reg[0]_syn_7.a[1]"
+    },
+    {
+      "slack_ns": -0.205,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[19]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[4]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.205,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_sector_reg[19]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/cache_count_reg[5]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.172,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/filesystem$fat/mount_done_reg_syn_11.clk",
+      "end": "sd_card_bmp_m0/load_idx_reg[2]_syn_17.b[1]"
+    },
+    {
+      "slack_ns": -0.164,
+      "check": "setup",
+      "start": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[1]_syn_4.clk",
+      "end": "sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_x_reg[9]_syn_4.ce"
+    },
+    {
+      "slack_ns": -0.962,
+      "check": "recovery",
+      "start": "supervisor/reset_request_reg_syn_20.clk",
+      "end": "reset_writer/sync_ff_reg[2]_syn_4.sr"
+    }
+  ],
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16645,
+      "reg": 11563,
+      "bram": 58,
+      "dsp": 23
+    },
+    "physical_area.txt": {
+      "lut": 17365,
+      "reg": 11660,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "row_address_paths": [],
+  "warnings": [
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "files_sha256": {
+    "build_manifest.json": "9eeb42f9347d9ab594d8f63124e3491b343c1ddb541e975d3d11367baf605dfb",
+    "gate_area.txt": "56f9c79b78852d9e96bac6de4844b77707619fe85b5ed58935e5626bf1d18600",
+    "implementation.log": "c1328a0dcb523cefa7fbe21a0f609cbb815d87ff22c4f83830858aa9a6a501e0",
+    "io.txt": "39465f450cb741d03939502852f4e37bab32127b9a1e7d7f8b9f140808932007",
+    "physical_area.txt": "b8301ff3dc2405ab429b8b19f150bff0cd5612510082a257262ec324c9586d9d",
+    "prior_opt_timing_paths20.txt": "11539d7a2f574fcf038e2a7abab173f700ba4c4cae57bf646726f04075f1ad9e",
+    "prior_opt_timing_status.txt": "8c8be34b5649e90b3db23e30f7158a7cee0dcd57be9479f2c58ae10f49553700",
+    "routed_timing_paths20.txt": "6650ec1c8b8c64a5c3b632159d3c7308c0a851676b97eef4faca5a9f739c794b",
+    "synthesis.log": "c3668189f58080c9041d4623bb012fe24c32916f3b92d1d80dea9e5ae5e213b4",
+    "timing_status.txt": "70068a05a6076a507f72f5bc591e867bf63e07d433cf2aa92da05602f13dc8ec",
+    "timing_summary.txt": "43d24fb9dd9b385e5a19c4fb41b5dc444ec11b97298eac74198389384e55dfbe",
+    "video_improve_gate.db": "0bfaf7e699b8307f8ce5e986798332af63cadc827d6aec8bb14df19c496dda1d",
+    "video_improve_prior_opt.db": "314b76f68af1d4fa58572f7c4bd25e8554cb25019c5c4483faa1fb2dee4878c7",
+    "video_improve_routed.db": "f8f752e0a23f161e8e20beeefd67c2b67bf363a7a219c992b9088ca0bb209c11"
+  }
+}

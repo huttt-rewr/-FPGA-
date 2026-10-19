@@ -1,0 +1,39 @@
+standard
+***Report Model: caption_overlay Device: EG4S20BG256***
+
+IO Statistics
+#IO                        61   out of    188   32.45%
+  #input                   35
+  #output                  26
+  #inout                    0
+
+LUT Statistics
+#Total_luts               565
+  #lut4                   292
+  #lut5                   273
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      621   out of  19600    3.17%
+#reg                      207   out of  19600    1.06%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                       61   out of    188   32.45%
+  #ireg                    32
+  #oreg                    26
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++----------------------------------------------------------------------------+
+|Instance |Module               |lut     |ripple  |seq     |bram    |dsp     |
++----------------------------------------------------------------------------+
+|top      |caption_overlay      |593     |28      |265     |0       |0       |
+|  coords |viewport_coordinates |43      |12      |26      |0       |0       |
++----------------------------------------------------------------------------+

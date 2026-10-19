@@ -18,4 +18,4 @@
 # run -all 
 # ALL PASS tb_audio_wav
 # ** Note: $finish    : tb_audio_wav.v(52)
-#    Time: 82190 ns  Iteration: 1  Instance: /tb_audio_wav
+#    Time: 82310 ns  Iteration: 1  Instance: /tb_audio_wav

@@ -6,13 +6,13 @@ module tb_svga_pipeline;
  reg captions_on=0;
  wire [9:0] px,py;wire ev,ed,cv,cd,user,valid,last,overflow;
  wire [23:0] ec,cc,oc,data,adjusted;
- wire ov,od;wire av,ad;wire [9:0] ax;
+ wire ov,od;wire av,ad;wire [9:0] ax,ay;
  integer x,y,f,received=0,line_pixels=0,pause_cycles=0,errors=0;
  integer rx,ry,rf,sx,k,v;
  reg [23:0] expected;
  video_coordinates coords(clk,rst,vs,de,px,py);
- picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,adjusted);
- transition_pixels fx(clk,rst,av,ad,ax,adjusted,mode,level,offset,ev,ed,ec);
+ picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,adjusted,py,ay);
+ transition_pixels fx(clk,rst,av,ad,ax,adjusted,{1'b0,mode},level,offset,ev,ed,ec,ay,1'b1);
  caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,captions_on,1'b1,2'd0,mode,cv,cd,cc,1'b1);
  status_osd #(.ADAPTIVE(1),.ENHANCED_UI(1),.PIPELINED(1)) panel(.out_vs(ov),.out_de(od),.mode_800(1'b1),.clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(captions_on),
   .auto_play(1'b1),.image_index(2'd1),.image_count(3'd4),.volume(5'd8),

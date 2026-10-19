@@ -1,0 +1,39 @@
+standard
+***Report Model: pixel_effects Device: EG4S20BG256***
+
+IO Statistics
+#IO                        88   out of    188   46.81%
+  #input                   40
+  #output                  48
+  #inout                    0
+
+LUT Statistics
+#Total_luts               795
+  #lut4                   525
+  #lut5                   270
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     2233   out of  19600   11.39%
+#reg                      207   out of  19600    1.06%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        3   out of     29   10.34%
+#pad                       88   out of    188   46.81%
+  #ireg                    28
+  #oreg                    48
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++-------------------------------------------------------------------------+
+|Instance |Module            |lut     |ripple  |seq     |bram    |dsp     |
++-------------------------------------------------------------------------+
+|top      |pixel_effects     |2114    |119     |283     |0       |3       |
+|  window |video_luma_window |1834    |0       |50      |0       |0       |
++-------------------------------------------------------------------------+

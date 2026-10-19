@@ -1,0 +1,41 @@
+standard
+***Report Model: bmp_scale_loader Device: EG4S20BG256***
+
+IO Statistics
+#IO                       163   out of    188   86.70%
+  #input                  102
+  #output                  61
+  #inout                    0
+
+LUT Statistics
+#Total_luts               795
+  #lut4                   681
+  #lut5                   114
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     1269   out of  19600    6.47%
+#reg                      833   out of  19600    4.25%
+#bram                      13   out of     64   20.31%
+  #bram9k                  13
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                       10   out of     29   34.48%
+#pad                      163   out of    188   86.70%
+  #ireg                    88
+  #oreg                    61
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++-------------------------------------------------------------------------+
+|Instance |Module            |lut     |ripple  |seq     |bram    |dsp     |
++-------------------------------------------------------------------------+
+|top      |bmp_scale_loader  |1032    |237     |982     |13      |10      |
+|  hmix0  |rgb_lerp_pipeline |30      |30      |72      |0       |2       |
+|  hmix1  |rgb_lerp_pipeline |30      |30      |72      |0       |1       |
+|  vmix   |rgb_lerp_pipeline |54      |30      |72      |0       |2       |
++-------------------------------------------------------------------------+

@@ -1,0 +1,35 @@
+# vsim -do {run -all; quit -f} -l ../reports/deep_opt_20261017/shared_tb_indexed_player.log -lib msim_work -c tb_indexed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 52.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_indexed_player(fast)
+# run -all 
+# ALL PASS tb_indexed_player: 12BMP/3WAV, exact scaled frames/PCM, next/prev/direct/busy selection, audio cancel/drain/reset
+# ** Note: $finish    : tb_indexed_player.v(89)
+#    Time: 160795870 ns  Iteration: 1  Instance: /tb_indexed_player

@@ -40,4 +40,4 @@
 # run -all 
 # ALL PASS tb_sd_highspeed_player: formal CMD6/50MHz with14ns delayed card, no force/real SD pins/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
 # ** Note: $finish    : tb_sd_highspeed_player.v(66)
-#    Time: 61407790 ns  Iteration: 1  Instance: /tb_sd_highspeed_player
+#    Time: 61414730 ns  Iteration: 1  Instance: /tb_sd_highspeed_player

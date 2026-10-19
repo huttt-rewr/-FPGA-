@@ -16,6 +16,6 @@
 # //
 # Loading work.tb_switch_controls(fast)
 # run -all 
-# ALL PASS tb_switch_controls: contact bounce, 16 states, stable holds, reset, CDC, alternating transitions, busy mode capture
-# ** Note: $finish    : tb_switch_controls.v(65)
-#    Time: 64232 ns  Iteration: 1  Instance: /tb_switch_controls
+# ALL PASS tb_switch_controls: contact bounce, 16 states, stable holds, reset, CDC, five-effect transitions, busy mode capture
+# ** Note: $finish    : tb_switch_controls.v(70)
+#    Time: 101192 ns  Iteration: 1  Instance: /tb_switch_controls

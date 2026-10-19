@@ -1,0 +1,7 @@
+分拍缩放与FAT控制路径并绕过TD后布线优化器崩溃
+
+预判像素范围、缓存末列和目录边界；隔离水平tap选择与DSP差分，分段比较32位FAT容量，保持全部功能及原接口。
+
+静态77源/40 IO和91项ModelSim通过。综合16572 LUT/58 BRAM；合法布线后17347 LUT，SWNS -0.402ns（recovery）、最差setup -0.401ns、HWNS +0.021ns。整机时序及85%物理LUT目标尚未通过，无新bit，不声明上板或+0.5ns。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

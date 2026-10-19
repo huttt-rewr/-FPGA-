@@ -1,0 +1,9 @@
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,6 @@
+ # EG4S20 HDMI 图片与 WAV 播放器
++
++> **2026-10-19 上板验收准备：已生成匹配当前源码的候选 bit，尚未下载或完成实板验收。** 635,444字节；生成前后SWNS +0.044ns、HWNS +0.024ns、STNS/HTNS均0，原80源/101项回归基线不变。已准备7份BMP、1份WAV和四项实板记录；**按本次任务书，四项实板通过前不进入新转场/变焦、FFT、raw视频。** 见 [逐步验收教程](docs/BOARD_ACCEPTANCE_640_20261019.md)、[本次准备结果](reports/board_accept_20261019/RESULT.md)、[候选bit](reports/board_accept_20261019/candidate/hdmi_640_plain_800_audio.bit)。默认640无HDMI音频，实际800保留图声。
+ 
+ > **2026-10-19 本轮：640 加密实例已替换为明文 TMDS 纯视频核，800 保留原 HDMI 图声；独立 EDID 协商保留。** 静态检查80源/40IO、101项ModelSim及综合/布局布线/内部STA通过。物理LUT 15,785、BRAM 41；SWNS +0.044ns、HWNS +0.024ns，STNS/HTNS均0。资源降低但setup裕量较上一版减少；未达到整体+0.5ns。**默认640不发送HDMI音频，听WAV需R切到实际800×600；EDID回退640也无声。** 未生成本轮bit、未上板，外部IO和既有物理警告仍待核对。详见 [本轮说明](docs/HDMI_SELFWRITE_640_20261019.md) 与 [实际报告](reports/hdmi_selfwrite_20261019/RESULT.md)。
+ 

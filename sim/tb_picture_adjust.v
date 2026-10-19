@@ -2,11 +2,11 @@
 module tb_picture_adjust;
  reg clk=0,rst=1,vs=1,de=1;always #5 clk=~clk;
  reg [23:0] rgb=0;reg signed [7:0] b=0;reg [3:0] c=4;reg [9:0] x=0;
- wire ov,od;wire [9:0] ox;wire [23:0] result;
+ wire ov,od;wire [9:0] ox,oy;wire [23:0] result;
  integer i,j,k,v,errors=0,seen=0;
  reg [23:0] want0=0,want1=0;reg vd0=0,vd1=0,vv0=0,vv1=0;
  reg [9:0] xx0=0,xx1=0;
- picture_adjust dut(clk,rst,vs,de,x,rgb,b,c,ov,od,ox,result);
+ picture_adjust dut(clk,rst,vs,de,x,rgb,b,c,ov,od,ox,result,10'd0,oy);
  function [7:0] refchannel;input integer n,bright,contrast;integer z;begin
   z=((n-128)*contrast+2)>>>2;z=z+128+bright;refchannel=z<0?0:(z>255?255:z);
  end endfunction

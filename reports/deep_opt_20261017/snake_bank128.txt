@@ -1,0 +1,40 @@
+standard
+***Report Model: snake_game Device: EG4S20BG256***
+
+IO Statistics
+#IO                        87   out of    188   46.28%
+  #input                   52
+  #output                  35
+  #inout                    0
+
+LUT Statistics
+#Total_luts               762
+  #lut4                   602
+  #lut5                   160
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     1396   out of  19600    7.12%
+#reg                      137   out of  19600    0.70%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                       87   out of    188   46.28%
+  #ireg                     4
+  #oreg                    34
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++------------------------------------------------------------------------+
+|Instance    |Module        |lut     |ripple  |seq     |bram    |dsp     |
++------------------------------------------------------------------------+
+|top         |snake_game    |1367    |29      |175     |0       |0       |
+|  board_mem |snake_lut_ram |408     |0       |0       |0       |0       |
+|  body_mem  |snake_lut_ram |354     |0       |0       |0       |0       |
++------------------------------------------------------------------------+

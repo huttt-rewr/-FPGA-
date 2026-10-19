@@ -1,4 +1,4 @@
-﻿param([string]$ModelSim='J:\win64')
+param([string]$ModelSim='J:\win64')
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 Push-Location (Join-Path $root 'sim')
@@ -43,6 +43,7 @@ try {
  $mergeTests += @('tb_audio_rx_boundary')
  $files += @('../src/modules/hdmi/tmds_encoder.v','../src/modules/hdmi/hdmi_tmds_vga.v','../src/modules/hdmi/edid_i2c.v')
  $mergeTests += @('tb_tmds_encoder','tb_hdmi_tmds_vga','tb_edid_i2c')
+ $mergeTests += @('tb_transition_effects')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }

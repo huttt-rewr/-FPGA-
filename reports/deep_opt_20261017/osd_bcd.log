@@ -1,0 +1,89 @@
+# vsim -do {run -all; quit -f} -l reports/deep_opt_20261017/osd_bcd.log -lib sim/msim_work -c tb_osd_bcd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 7.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_y'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_x'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'result'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'edid_ok'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'error'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'busy'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'mute'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'volume'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'image_count'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'image_index'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'auto_play'.
+# 
+# ** Warning: sim/tb_osd_bcd.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'enable'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_osd_bcd(fast)
+# run -all 
+# ALL PASS tb_osd_bcd: all 4096 widths/heights, one register latency and asynchronous reset
+# ** Note: $finish    : sim/tb_osd_bcd.v(33)
+#    Time: 40991 ns  Iteration: 0  Instance: /tb_osd_bcd

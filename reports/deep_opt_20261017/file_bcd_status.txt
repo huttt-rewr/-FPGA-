@@ -1,0 +1,39 @@
+standard
+***Report Model: status_osd Device: EG4S20BG256***
+
+IO Statistics
+#IO                       180   out of    188   95.74%
+  #input                  134
+  #output                  46
+  #inout                    0
+
+LUT Statistics
+#Total_luts               833
+  #lut4                   532
+  #lut5                   301
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      883   out of  19600    4.51%
+#reg                      119   out of  19600    0.61%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                      180   out of    188   95.74%
+  #ireg                    30
+  #oreg                    21
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++----------------------------------------------------------------------------+
+|Instance |Module               |lut     |ripple  |seq     |bram    |dsp     |
++----------------------------------------------------------------------------+
+|top      |status_osd           |858     |25      |170     |0       |0       |
+|  coords |viewport_coordinates |63      |12      |46      |0       |0       |
++----------------------------------------------------------------------------+

@@ -1,0 +1,37 @@
+{
+  "status": "failed",
+  "timing_ns": null,
+  "error": "implement.tcl failed; see implementation.log: ['PHY-8023 ERROR: Location: (x12y38_n1beg2), nets: sd_card_bmp_m0/bmp_read_m0/scaling$loader/denominator_b8[9] sd_card_bmp_m0/bmp_read_m0/scaling$loader/w[1]', \"RUN-8102 ERROR: Incremental route failed. Please check if the resources used in your design exceed the device resource limitations. You can try using 'report_area' in console to check the resource utilization of the device. Or try check gate report and timing constraints. And you can try modifying the design or changing the strategy of syn, place or route, and rerunning it.\", 'PHY-8023 ERROR: Location: (x12y38_n1beg2), nets: sd_card_bmp_m0/bmp_read_m0/scaling$loader/denominator_b8[9] sd_card_bmp_m0/bmp_read_m0/scaling$loader/w[1]']",
+  "resources": {
+    "gate_area.txt": {
+      "lut": 16585,
+      "reg": 11564,
+      "bram": 58,
+      "dsp": 23
+    }
+  },
+  "worst_by_check": {},
+  "negative_reported_paths": [],
+  "critical_warnings": [
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file."
+  ],
+  "coredump": false,
+  "files_sha256": {
+    "bmp_scale_loader.v": "dbb2f3a8ceb6acd22e3059d97c3091ac12a4de30bf3c2bc49aa8b68ad3b1caca",
+    "build_manifest.json": "5dbecaf3f2556afd039c6f8189afb68a2d39ae5b17f693373cdbe305ce88dbc4",
+    "fps_control.v": "6935d7f9b16c67d41fdda824b0c73d595208cf02f9ebf5c4c123fa600a895714",
+    "gate_area.txt": "a6b448a067068b64cbed3be3513841f4c4dd3d55392d40c8f8d2155cedd5f12b",
+    "implementation.log": "7675f8c8ae2fa9c4093b7c5d28d1ed10919f6ccdba0d9cd85f06322003131dd2",
+    "rtl_area.txt": "89a06070b4706772562b3339077ad81fbe85c398fdfd334db74dfa5c7dd1cd86",
+    "sd_card_bmp.v": "f63e33458961498b3034fa4603a74ef37ecf2f1df6cf1c8297d499d1bbc3aeaa",
+    "sd_fat32.v": "2da8fdbe84137c7e44b7e648fcf9be81469be8b6e978f6721b8ad6be4c79d6d4",
+    "synthesis.log": "97728139c47b52799cbd54b468962f6d2eb6f8c7570e9265c08ea96706f6f703"
+  }
+}

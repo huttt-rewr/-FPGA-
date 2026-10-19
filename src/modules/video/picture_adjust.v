@@ -2,10 +2,11 @@
 // contrast=2..8 means 0.50..2.00. Signed round-to-nearest, ties toward +infinity.
 module picture_adjust(input clk,input rst,input vs,input de,input [9:0] x,
  input [23:0] rgb,input signed [7:0] brightness,input [3:0] contrast,
- output reg out_vs,output reg out_de,output reg [9:0] out_x,output reg [23:0] out_rgb);
+ output reg out_vs,output reg out_de,output reg [9:0] out_x,output reg [23:0] out_rgb,
+ input [9:0] y,output reg [9:0] out_y);
  reg signed [13:0] pr,pg,pb;
  reg signed [7:0] b;
- reg v,d;reg [9:0] px;
+ reg v,d;reg [9:0] px,py;
  function [7:0] clamp;
   input signed [13:0] product;input signed [7:0] bright;
   reg signed [15:0] sum;
@@ -15,13 +16,13 @@ module picture_adjust(input clk,input rst,input vs,input de,input [9:0] x,
   end
  endfunction
  always @(posedge clk or posedge rst)begin
-  if(rst)begin pr<=0;pg<=0;pb<=0;b<=0;v<=0;d<=0;px<=0;out_vs<=0;out_de<=0;out_x<=0;out_rgb<=0;end
+  if(rst)begin pr<=0;pg<=0;pb<=0;b<=0;v<=0;d<=0;px<=0;py<=0;out_vs<=0;out_de<=0;out_x<=0;out_y<=0;out_rgb<=0;end
   else begin
    pr<=($signed({1'b0,rgb[23:16]})-9'sd128)*$signed({1'b0,contrast});
    pg<=($signed({1'b0,rgb[15:8]})-9'sd128)*$signed({1'b0,contrast});
    pb<=($signed({1'b0,rgb[7:0]})-9'sd128)*$signed({1'b0,contrast});
-   b<=brightness;v<=vs;d<=de;px<=x;
-   out_vs<=v;out_de<=d;out_x<=px;
+   b<=brightness;v<=vs;d<=de;px<=x;py<=y;
+   out_vs<=v;out_de<=d;out_x<=px;out_y<=py;
    out_rgb<=d?{clamp(pr,b),clamp(pg,b),clamp(pb,b)}:24'd0;
   end
  end

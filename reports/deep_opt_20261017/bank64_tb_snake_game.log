@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l ../reports/deep_opt_20261017/bank64_tb_snake_game.log -lib msim_work -c tb_snake_game 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_snake_game(fast)
+# run -all 
+# ALL PASS tb_snake_game: rendering, latency, reverse, grow, food, walls, self/tail collision, ring wrap, reset
+# ** Note: $finish    : E:/fpga/sim/tb_snake_game.v(117)
+#    Time: 3153086 ns  Iteration: 0  Instance: /tb_snake_game

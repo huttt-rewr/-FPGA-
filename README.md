@@ -90,7 +90,7 @@ R由永久启动时钟域控制：停消费者→各域复位→专用全局时�
 | `src/constraints/` | 唯一pin.adc与timing.sdc；外部IO预算仍需板级资料 |
 | `scripts/design_files.txt` | 正式源清单，两TD入口/CLI构建保持一致 |
 | `sim/`、`scripts/run_tests.ps1` | ModelSim激励和全量执行；镜像脚本只写电脑普通文件 |
-| `reports/`、`backups/`、`legacy/` | 构建/实验冻结证据、修改前备份、未启用历史参考源 |
+| `reports/`、`legacy/` | 构建/实验冻结证据、未启用历史参考源 |
 
 表中模块相对`src/modules/`；更完整逐源索引见[源文件地图](docs/SOURCE_MAP.md)。外部尚未登记的像素特效/玻璃OSD实验不属于本轮正式管线。
 

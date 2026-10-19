@@ -7,7 +7,7 @@ module tb_switch_controls;
  wire captions,scrolling;wire [1:0] mode;
  wire [3:0] video;
  reg blank=0,req=0;reg [1:0] requested=0;
- wire ack,visible,busy;wire [1:0] active,effect;
+ wire ack,visible,busy;wire [1:0] active;wire [2:0] effect;
  wire [5:0] level;wire [9:0] offset;
  integer errors=0,i,j;
  switch_controls #(.DEBOUNCE_CYCLES(5)) dut(clk,rst,sw,captions,scrolling,mode);
@@ -28,7 +28,7 @@ module tb_switch_controls;
   @(negedge pclk);requested=active==0?1:0;req=~req;
   repeat(7) @(negedge pclk);frame;
  end endtask
- task finish_animation;input [1:0] kind;begin
+ task finish_animation;input [2:0] kind;begin
   check(busy && effect==kind,"captured effect");
   for(j=0;j<64;j=j+1)begin
    if(j<63)check(busy && ack!=req && effect==kind,"transaction owns buffers and mode");
@@ -53,14 +53,19 @@ module tb_switch_controls;
   change;check(visible && !busy && ack==req,"first image bypasses any transition");
   change;finish_animation(1);
   change;finish_animation(2);
+  change;finish_animation(3);
+  change;finish_animation(4);
+  change;finish_animation(5);
+  change;finish_animation(1);
+  change;finish_animation(2);
   // Changing switches halfway through an animation cannot change the captured mode.
   change;sw=15;settle;
-  check(video==0 && busy && effect==1,"mode changed for next transaction only");
-  finish_animation(1);
+  check(video==0 && busy && effect==3,"mode changed for next transaction only");
+  finish_animation(3);
   change;check(!busy && ack==req,"subsequent image uses new cut mode");
   sw=4'b1000;settle;change;finish_animation(1);
   sw=4'b0100;settle;change;finish_animation(2);
-  if(errors==0)$display("ALL PASS tb_switch_controls: contact bounce, 16 states, stable holds, reset, CDC, alternating transitions, busy mode capture");
+  if(errors==0)$display("ALL PASS tb_switch_controls: contact bounce, 16 states, stable holds, reset, CDC, five-effect transitions, busy mode capture");
   else $display("FAILED tb_switch_controls %0d",errors);
   $finish;
  end

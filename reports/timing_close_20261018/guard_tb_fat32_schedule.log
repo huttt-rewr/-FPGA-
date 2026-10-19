@@ -1,0 +1,89 @@
+# vsim -do {run -all; quit -f} -l reports/timing_close_20261018/guard_tb_fat32_schedule.log -lib reports/timing_close_20261018/guard_work -c tb_fat32_schedule 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 43, found 26.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'reference'.  Expected 43, found 26.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: sim/tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_schedule(fast)
+# run -all 
+# ALL PASS tb_fat32_schedule: 1152 requests, original reference, cursor ownership, unchanged state/handshake cycles and range predicates retained across FAT hops
+# ** Note: $finish    : sim/tb_fat32_schedule.v(102)
+#    Time: 92196 ns  Iteration: 0  Instance: /tb_fat32_schedule

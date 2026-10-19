@@ -1,0 +1,29 @@
+# vsim -do {run -all; quit -f} -l ../reports/deep_opt_20261017/shared_tb_fat32_stream.log -lib msim_work -c tb_fat32_stream 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_stream(fast)
+# run -all 
+# ALL PASS tb_fat32_stream: exact fragmented bytes/BMP/WAV/bounds/loops/cache/bad cluster/SD errors/abort
+# ** Note: $finish    : tb_fat32_stream.v(93)
+#    Time: 1001230 ns  Iteration: 1  Instance: /tb_fat32_stream

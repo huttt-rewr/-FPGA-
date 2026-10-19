@@ -14,16 +14,16 @@
 
 | 项 | 值 |
 |---|---|
-| 当前 HEAD | `f32e7c9`（其上 `ffc8584` 完成 640 替换） |
+| 当前 HEAD | `d2b13e3`（收窄 SD 初始化 attempts 计数器至 12 位，消除 100MHz 关键路径时序违例） |
 | 明文新文件 | [hdmi_tmds_vga.v](src/modules/hdmi/hdmi_tmds_vga.v)、[tmds_encoder.v](src/modules/hdmi/tmds_encoder.v)、[edid_i2c.v](src/modules/hdmi/edid_i2c.v)（已登记进 `reports/design_sources.tcl`） |
 | 640 集成 | [top.v:569-578](src/top.v#L569)：`u_hdmi_640`(video-only) + `u_edid_i2c`(boot_clk) |
 | 800 集成 | [top.v:580-625](src/top.v#L580)：`u_hdmi_svga` 保留图声，`I_acr_cts=40000` |
-| 资源 | **LUT 15785/19600 (80.54%)、BRAM 41/64 (64.06%)、DSP 23/29、REG 10158** |
-| 时序 | **SWNS +0.044ns、STNS 0、HWNS +0.024、HTNS 0**；0 违例，10480 endpoints，43315 paths |
+| 资源 | **LUT 15794/19600 (80.58%)、BRAM 41/64 (64.06%)、DSP 23/29、REG 10158** |
+| 时序 | **SWNS +0.105ns、STNS 0、HWNS +0.020、HTNS 0**；0 违例，10480 endpoints，43315 paths |
 | 回归 | **101 项 ModelSim 全过**（含新增 640 明文核/EDID 相关） |
 
 **关键结论**：删 640 核释放了 **17 BRAM + ~1555 LUT**，资源天花板已解除（BRAM 剩 23、LUT 80.5%）。
-但**时序余量反而从 +0.131 收窄到 +0.044**——再次证明"逻辑更浅 ≠ 时序更好"，后面 Part C 要格外守门禁。
+但**时序余量一度从 +0.131 收窄到 +0.044**，经 `d2b13e3` 收窄 attempts 计数器后回到 **+0.105**——再次证明"逻辑更浅 ≠ 时序更好"，后面 Part C 要格外守门禁。
 
 ---
 
@@ -80,11 +80,11 @@
 | 资源 | 当前 | Part A-b 变焦 | Part B FFT | Part C 视频 | 加完 |
 |---|---|---|---|---|---|
 | BRAM | 41/64 | +~6 | +~3-6 | 0（走 SDRAM） | ~50-53 ✅ |
-| LUT | 15785 | +400-600 | +~500-800 | +少量 | ~16.7-17.2k ✅ |
+| LUT | 15794 | +400-600 | +~500-800 | +少量 | ~16.7-17.2k ✅ |
 | DSP | 23/29 | +1-2 | +1-2 | 0 | ~25-27 ⚠️ 紧 |
 
 - BRAM 不再是问题（剩 23）；LUT 充足；**DSP 只剩 6 个、A+b 要 2-4 个，是新的紧约束**——蝶形和插值优先复用，别额外开乘法器。
-- 时序 SWNS +0.044（薄）：A/B 慢速域不影响；**C 必须逐级重跑 STA，劣化即降帧率/回退**。
+- 时序 SWNS +0.105：A/B 慢速域不影响；**C 必须逐级重跑 STA，劣化即降帧率/回退**。
 
 ### 3.2 时序安全三条硬规矩（三样共用）
 
@@ -124,7 +124,7 @@
 
 1. `python scripts/static_check.py` → **ALL PASS**（新增源文件须登记，端口/引脚/源数一致）。
 2. 对应新增 ModelSim 单测 → **ALL PASS**（A：`tb_transition_effects`/`tb_video_zoom`；B：`tb_audio_spectrum`；C：`tb_video_raw`）。
-3. `python scripts/run_build.py` → 综合/布线通过；**记录 SWNS/STNS，必须不劣于 +0.044 基线**；无新增 CRITICAL、无 coredump。
+3. `python scripts/run_build.py` → 综合/布线通过；**记录 SWNS/STNS，必须不劣于 +0.105 基线**；无新增 CRITICAL、无 coredump。
 4. `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_tests.ps1` 全量回归 → **ALL PASS**。
 
 **统一验收硬线**：static_check + 全量回归 ALL PASS + SWNS/STNS 不劣化 + 无新增 CRITICAL；

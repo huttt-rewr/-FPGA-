@@ -7,7 +7,7 @@ module tb_transition_pixels;
  integer errors=0,received=0,xx,yy,step,kind,row=0;
  reg pv=0,pd=0;reg [23:0] expected_prev=0,current;
  integer c,src_x,value;
- transition_pixels dut(clk,rst,vs,de,x,rgb,mode,level,offset,ov,od,color);
+ transition_pixels dut(clk,rst,vs,de,x,rgb,{1'b0,mode},level,offset,ov,od,color,10'd0,1'b0);
  function [23:0] sample;input integer px,py;reg [7:0] r,g,b;begin
   r=px*7+py*31;g=px*3+py*59;b=px+py*97;sample={r,g,b};
  end endfunction

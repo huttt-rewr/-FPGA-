@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l ../reports/deep_opt_20261017/bram_tb_audio_visualizer.log -lib msim_work -c tb_audio_visualizer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_visualizer(fast)
+# run -all 
+# ALL PASS tb_audio_visualizer: signed extremes, circular order, two pixels/sample, frozen frame despite live audio, enabled/disabled pass and two-stage alignment
+# ** Note: $finish    : tb_audio_visualizer.v(56)
+#    Time: 21546 ns  Iteration: 0  Instance: /tb_audio_visualizer

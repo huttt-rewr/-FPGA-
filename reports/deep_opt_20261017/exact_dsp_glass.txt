@@ -1,0 +1,38 @@
+standard
+***Report Model: glass_osd Device: EG4S20BG256***
+
+IO Statistics
+#IO                       105   out of    188   55.85%
+  #input                   79
+  #output                  26
+  #inout                    0
+
+LUT Statistics
+#Total_luts               486
+  #lut4                   334
+  #lut5                   152
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                     1058   out of  19600    5.40%
+#reg                      195   out of  19600    0.99%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        5   out of     29   17.24%
+#pad                      105   out of    188   55.85%
+  #ireg                    48
+  #oreg                    26
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++-----------------------------------------------------------------+
+|Instance |Module    |lut     |ripple  |seq     |bram    |dsp     |
++-----------------------------------------------------------------+
+|top      |glass_osd |964     |94      |269     |0       |5       |
++-----------------------------------------------------------------+

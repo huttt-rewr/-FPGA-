@@ -79,7 +79,7 @@ wire audio_pcm_valid;
 reg [3:0] frame_audio_error_code;
 reg frame_audio_underflow;
 wire gamma_vs,gamma_de;
-wire [9:0] gamma_x;
+wire [9:0] gamma_x,gamma_y;
 wire [23:0] gamma_rgb;
 wire mode_800,mode_done,mode_fallback,edid_mode_800;
 wire boot_clk,rst_boot;
@@ -109,7 +109,7 @@ wire [11:0] image_width,image_height;
 wire [3:0] contrast;
 wire [1:0] edit_mode;
 wire adjusted_vs,adjusted_de;
-wire [9:0] adjusted_x;
+wire [9:0] adjusted_x,adjusted_y;
 wire [4:0] volume;
 wire mute,osd_enable,test_pattern;
 wire kb_next,kb_prev,kb_toggle,kb_vol_up,kb_vol_dn,kb_mute,kb_osd,kb_res,kb_fps;
@@ -154,7 +154,7 @@ wire [23:0] game_rgb;wire [7:0] game_score;
 wire kb_game_on,kb_held_up,kb_held_down,kb_held_left,kb_held_right;
 wire [4:0] game_controls_video;wire [1:0] game_dir;
 wire [9:0] game_x,game_y;
-wire [1:0] running_effect;
+wire [2:0] running_effect;
 wire [5:0] fade_level;
 wire [9:0] slide_offset;
 wire transition_busy;
@@ -698,14 +698,14 @@ frame_swap #(.ENABLE_EFFECTS(1),.ADAPTIVE(1)) swap(.mode_800(mode_video),.clk(vi
  .slide_offset(slide_offset),.transition_busy(transition_busy));
 video_coordinates source_coordinates(video_clk,rst_video,vs,de,pixel_x,pixel_y);
 assign source_rgb=video_pattern ? {pixel_x[7:0],pixel_y[7:0],8'h80} : vout_data;
-picture_adjust enhance(.clk(video_clk),.rst(rst_video),.vs(vs),.de(de),.x(pixel_x),
+picture_adjust enhance(.clk(video_clk),.rst(rst_video),.vs(vs),.de(de),.x(pixel_x),.y(pixel_y),
  .rgb(source_rgb),.brightness(frame_brightness),.contrast(frame_contrast),
- .out_vs(adjusted_vs),.out_de(adjusted_de),.out_x(adjusted_x),.out_rgb(enhanced_rgb));
+ .out_vs(adjusted_vs),.out_de(adjusted_de),.out_x(adjusted_x),.out_y(adjusted_y),.out_rgb(enhanced_rgb));
 picture_gamma gamma(.clk(video_clk),.rst(rst_video),.vs(adjusted_vs),.de(adjusted_de),
- .x(adjusted_x),.rgb(enhanced_rgb),.enable(frame_ui[4]),
- .out_vs(gamma_vs),.out_de(gamma_de),.out_x(gamma_x),.out_rgb(gamma_rgb));
+ .x(adjusted_x),.y(adjusted_y),.rgb(enhanced_rgb),.enable(frame_ui[4]),
+ .out_vs(gamma_vs),.out_de(gamma_de),.out_x(gamma_x),.out_y(gamma_y),.out_rgb(gamma_rgb));
 transition_pixels effects(.clk(video_clk),.rst(rst_video),.vs(gamma_vs),.de(gamma_de),
- .x(gamma_x),.rgb(gamma_rgb),.effect_mode(running_effect),
+ .x(gamma_x),.y(gamma_y),.mode_800(mode_video),.rgb(gamma_rgb),.effect_mode(running_effect),
  .fade_level(fade_level),.slide_offset(slide_offset),
  .out_vs(transition_vs),.out_de(transition_de),.out_rgb(transition_rgb));
 // Physical coordinates for line RAM, logical viewport for adaptive UI panels.

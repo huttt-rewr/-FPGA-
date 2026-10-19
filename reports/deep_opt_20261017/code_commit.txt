@@ -1,0 +1,5 @@
+等价压缩图片和视频缓存及显示运算，91项回归通过
+
+保留1920源图、双线性、全部界面和HDMI音频；综合降至16616 LUT、58 BRAM。物理STA仍待TD路由崩溃排查，未生成新bit。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

@@ -1,0 +1,69 @@
+diff --git a/src/modules/sd/sd_fat32.v b/src/modules/sd/sd_fat32.v
+index f782716..ba294b4 100644
+--- a/src/modules/sd/sd_fat32.v
++++ b/src/modules/sd/sd_fat32.v
+@@ -38,7 +38,9 @@ module sd_fat32 #(
+  STREAM_CHECK=41'h10000000000,BOOT_DECIDE=42'h20000000000,
+  GEOM_FIELDS=43'h40000000000,FAT_COMMIT=44'h80000000000,TABLE_READ=47'h100000000000,TABLE_HIGH=47'h200000000000,TABLE_LATCH=47'h400000000000,FAT_PROBE=48'h800000000000,CURSOR_APPLY=49'h1000000000000;
+  reg [48:0] state;
+- reg cursor_reusable;
++ reg cursor_file_valid;
++ reg request_past_high,request_equal_high,request_past_low;
++ reg cursor_less_high,cursor_equal_high,cursor_le_low;
+  reg dir_has_sector,dir_hop_limit;
+  reg owner,mount_fat,bpb_at_partition,dir_ended,cancel_bmp;
+  reg [31:0] physical_addr,partition_lba,partition_size,selected_lba;
+@@ -91,6 +93,22 @@ module sd_fat32 #(
+  reg [31:0] request_rel,request_size,working_cluster;
+  reg [23:0] target_index,working_index;
+  reg [5:0] request_file;
++ // Operands settle before CURSOR_APPLY/STREAM_CHECK. Compare the 33-bit
++ // sector limit in 17/16-bit parts and the 24-bit cursor in 12/12-bit parts,
++ // using existing preparation clocks rather than adding SD wait cycles.
++ always @(posedge clk or posedge rst)begin
++  if(rst)begin
++   request_past_high<=0;request_equal_high<=0;request_past_low<=0;
++   cursor_less_high<=0;cursor_equal_high<=0;cursor_le_low<=0;
++  end else begin
++   request_past_high<={1'b0,request_rel[31:16]}>request_sectors[32:16];
++   request_equal_high<={1'b0,request_rel[31:16]}==request_sectors[32:16];
++   request_past_low<=request_rel[15:0]>=request_sectors[15:0];
++   cursor_less_high<=cursor_index[owner][23:12]<target_index[23:12];
++   cursor_equal_high<=cursor_index[owner][23:12]==target_index[23:12];
++   cursor_le_low<=cursor_index[owner][11:0]<=target_index[11:0];
++  end
++ end
+  reg cancel_aud;
+  wire cancel_audio=INDEXED && (cancel_aud || aud_abort);
+  wire [63:0] descriptor;
+@@ -230,7 +248,7 @@ module sd_fat32 #(
+  // synthesis translate_on
+  always @(posedge clk or posedge rst)begin
+   if(rst)begin
+-   cursor_reusable<=0;cache_hit<=0;state<=WAIT_INIT;mount_done<=0;mount_error<=0;mount_error_code<=0;
++   cursor_file_valid<=0;cache_hit<=0;state<=WAIT_INIT;mount_done<=0;mount_error<=0;mount_error_code<=0;
+    truncate_event<=0;cancel_aud<=0;
+    store_bmp<=0;store_wav<=0;truncate_event<=0;store_index<=0;store_cluster<=0;store_size<=0;
+    owner<=0;mount_fat<=0;bpb_at_partition<=0;
+@@ -463,18 +481,18 @@ module sd_fat32 #(
+      // ceil(bytes/512), retaining the carry for sizes near 4 GiB.
+      request_sectors<={10'd0,request_size[31:9]}+(|request_size[8:0]);
+      // 先寄存目标簇序号，再比较游标，不串接可变移位与宽比较器。
+-     cursor_reusable<=cursor_valid[owner] && (cursor_file[owner]==request_file) && cursor_index[owner]<=target_index;
++     cursor_file_valid<=cursor_valid[owner] && (cursor_file[owner]==request_file);
+      state<=CURSOR_APPLY;
+     end
+     state[48]:begin
+-     if(cursor_reusable)begin
++     if(cursor_file_valid && (cursor_less_high || (cursor_equal_high && cursor_le_low)))begin
+       working_cluster<=cursor_cluster[owner];working_index<=cursor_index[owner];
+      end else begin working_cluster<=INDEXED?descriptor[63:32]:(owner?wav_cluster:image_cluster[request_file[1:0]]);working_index<=0;end
+      state<=STREAM_CHECK;
+     end
+     state[40]:begin
+      stream_bad<=(owner && !wav_found) || (!owner && request_file>=bmp_count) || request_size==0 ||
+-        {1'b0,request_rel}>=request_sectors || target_index>=data_clusters ||
++        request_past_high || (request_equal_high && request_past_low) || target_index>=data_clusters ||
+         working_cluster<2 || working_cluster>max_cluster;
+      state<=STREAM_PREP;
+     end

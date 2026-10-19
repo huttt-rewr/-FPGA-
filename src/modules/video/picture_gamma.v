@@ -5,7 +5,8 @@
 // Two registers keep RGB/VS/DE/X aligned in both bypass and enabled operation.
 module picture_gamma(input clk,input rst,input vs,input de,input [9:0] x,
  input [23:0] rgb,input enable,
- output reg out_vs,output reg out_de,output reg [9:0] out_x,output reg [23:0] out_rgb);
+ output reg out_vs,output reg out_de,output reg [9:0] out_x,output reg [23:0] out_rgb,
+ input [9:0] y,output reg [9:0] out_y);
  function [7:0] curve;
   input [7:0] value;
   begin
@@ -273,15 +274,15 @@ module picture_gamma(input clk,input rst,input vs,input de,input [9:0] x,
  reg [7:0] r,g,b;
  reg [23:0] bypass;
  reg enabled,v,d;
- reg [9:0] px;
+ reg [9:0] px,py;
  always @(posedge clk or posedge rst)begin
   if(rst)begin
-   r<=0;g<=0;b<=0;bypass<=0;enabled<=0;v<=0;d<=0;px<=0;
-   out_vs<=0;out_de<=0;out_x<=0;out_rgb<=0;
+   r<=0;g<=0;b<=0;bypass<=0;enabled<=0;v<=0;d<=0;px<=0;py<=0;
+   out_vs<=0;out_de<=0;out_x<=0;out_y<=0;out_rgb<=0;
   end else begin
    r<=curve(rgb[23:16]);g<=curve(rgb[15:8]);b<=curve(rgb[7:0]);
-   bypass<=rgb;enabled<=enable;v<=vs;d<=de;px<=x;
-   out_vs<=v;out_de<=d;out_x<=px;
+   bypass<=rgb;enabled<=enable;v<=vs;d<=de;px<=x;py<=y;
+   out_vs<=v;out_de<=d;out_x<=px;out_y<=py;
    out_rgb<=d?(enabled?{r,g,b}:bypass):24'd0;
   end
  end

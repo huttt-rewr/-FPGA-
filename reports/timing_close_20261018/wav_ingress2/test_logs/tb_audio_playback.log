@@ -1,0 +1,25 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_playback.log -lib msim_work -c tb_audio_playback 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 15, found 14.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 15, found 14.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_playback(fast)
+# run -all 
+# ALL PASS tb_audio_playback
+# ** Note: $finish    : tb_audio_playback.v(45)
+#    Time: 4925050 ns  Iteration: 2  Instance: /tb_audio_playback

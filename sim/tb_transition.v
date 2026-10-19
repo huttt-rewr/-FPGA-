@@ -2,7 +2,7 @@
 module tb_transition;
  reg clk=0,rst=1,vblank=0,req=0;always #5 clk=~clk;
  reg [1:0] requested=0,mode=1;
- wire ack,visible,busy;wire [1:0] active,effect;wire [5:0] level;wire [9:0] offset;
+ wire ack,visible,busy;wire [1:0] active;wire [2:0] effect;wire [5:0] level;wire [9:0] offset;
  integer errors=0,i;
  frame_swap #(.ENABLE_EFFECTS(1)) swap(.clk(clk),.rst(rst),.vblank(vblank),
   .request_toggle(req),.requested_buffer(requested),.ack_toggle(ack),
@@ -18,7 +18,7 @@ module tb_transition;
  task change;input [1:0] b;begin
   @(negedge clk);requested=b;req=~req;repeat(7)@(negedge clk);
  end endtask
- reg prev_ack;reg [1:0] prev_active,prev_effect;reg [5:0] prev_level;reg [9:0] prev_offset;
+ reg prev_ack;reg [1:0] prev_active;reg [2:0] prev_effect;reg [5:0] prev_level;reg [9:0] prev_offset;
  always @(posedge clk) begin
   if(!rst && !vblank)begin
    prev_ack=ack;prev_active=active;prev_effect=effect;prev_level=level;prev_offset=offset;

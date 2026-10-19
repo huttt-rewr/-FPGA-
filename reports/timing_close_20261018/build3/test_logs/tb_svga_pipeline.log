@@ -1,0 +1,63 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_pipeline.log -lib msim_work -c tb_svga_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 20.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_pipeline(fast)
+# run -all 
+# ALL PASS tb_svga_pipeline: 3 complete frames, RGB alignment, 800 continuous pixels, legal HDMI stalls, layered overlay
+# ** Note: $finish    : tb_svga_pipeline.v(65)
+#    Time: 20088040 ns  Iteration: 1  Instance: /tb_svga_pipeline

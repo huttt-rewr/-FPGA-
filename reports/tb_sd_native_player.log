@@ -57,4 +57,4 @@
 # run -all 
 # ALL PASS tb_sd_native_player: 4-bit physical transport/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
 # ** Note: $finish    : tb_sd_native_player.v(80)
-#    Time: 55485700 ns  Iteration: 1  Instance: /tb_sd_native_player
+#    Time: 55487780 ns  Iteration: 1  Instance: /tb_sd_native_player

@@ -1,0 +1,146 @@
+Slack               : -1.972ns
+Begin Point         : sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.clk (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })
+End Point           : sd_card_bmp_m0/bmp_read_m0/scaling$loader/x_acc_reg[1]_syn_4.ce (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 10.000ns { sys_pll_m0/pll_inst.clkc[0] rising@10.000ns - sys_pll_m0/pll_inst.clkc[0] rising@0.000ns }
+Data Path Delay     : 11.692ns (cell 3.202ns (27%), net 8.490ns (73%))
+Clock Skew          : 0.064ns
+Logic Level         : 7 ( LUT5=2  LUT2=2  ADDER=2  LUT4=1 )
+Max Fanout          : 14
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                R7                  0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x020y071            1.660          1.660          pin: clk_syn_2.di
+net (fo=2)          x000y071            0.000          1.660          net: clk_dup_1,  E:/fpga/src/top.v(8)
+                                                                      pin: sys_pll_m0/pll_inst.refclk
+PLL                 x000y071            2.515          4.175          pin: sys_pll_m0/pll_inst.clkc[0]
+net (fo=1)                              0.000          4.175          net: sys_pll_m0/clk0_buf,  E:/fpga/src/ip/pll/sys_pll.v(43)
+                                                                      pin: sys_pll_m0/bufg_feedback.clki
+GCLK                x001y070z2          0.000          4.175          pin: sys_pll_m0/bufg_feedback.clko
+net (fo=3128)                           2.276          6.451          net: sd_card_clk,  E:/fpga/src/top.v(58)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.clk
+launch edge                             0.000    r     6.451               
+--------------------------------------------------------------------  ---------------
+clk2q               x023y029z3          0.146    r     6.597          pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.q[0]
+net (fo=5)                              1.639          8.236          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw[5],  E:/fpga/src/modules/video/bmp_scale_loader.v(48)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_86.a[0]
+ADDER               x019y021z1          0.706    f     8.942       1  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_86.fco
+net (fo=1)                              0.000          8.942          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_60,  E:/fpga/src/modules/video/bmp_scale_loader.v(175)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_89.fci
+ADDER               x019y022z0          0.355    f     9.297       2  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_89.f[1]
+net (fo=3)                              1.522         10.819          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/denominator_b8[8],  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_35.a[1]
+LUT5                x025y026z3          0.424    f    11.243       3  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_35.f[1]
+net (fo=1)                              0.720         11.963          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_6,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_46.b[1]
+LUT5                x020y027z3          0.431    f    12.394       4  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_46.f[1]
+net (fo=2)                              0.867         13.261          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_8,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_41.a[1]
+LUT2                x027y031z2          0.424    f    13.685       5  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_41.f[1]
+net (fo=2)                              0.695         14.380          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_sample_b1_n,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[11]_syn_4.d[0]
+LUT2                x022y032z0          0.205    r    14.585       6  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[11]_syn_4.f[0]
+net (fo=3)                              0.673         15.258          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sel14_syn_3079,  E:/fpga/src/modules/video/bmp_scale_loader.v(123)
+                                                                      pin: status_cdc/dst_data_reg[52]_syn_4.a[0]
+LUT4                x018y035z2          0.424    f    15.682       7  pin: status_cdc/dst_data_reg[52]_syn_4.f[0]
+net (fo=14)                             2.374         18.056          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sel17_syn_2[0],  E:/fpga/src/modules/video/bmp_scale_loader.v(123)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/x_acc_reg[1]_syn_4.ce
+reg                 x012y031z1          0.087    r    18.143               
+--------------------------------------------------------------------  ---------------
+Arrival                                               18.143               
+
+source latency                          0.000          0.000               
+port                R7                  0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x020y071            1.493          1.493          pin: clk_syn_2.di
+net (fo=2)          x000y071            0.000          1.493          net: clk_dup_1,  E:/fpga/src/top.v(8)
+                                                                      pin: sys_pll_m0/pll_inst.refclk
+PLL                 x000y071            2.515          4.008          pin: sys_pll_m0/pll_inst.clkc[0]
+net (fo=1)                              0.000          4.008          net: sys_pll_m0/clk0_buf,  E:/fpga/src/ip/pll/sys_pll.v(43)
+                                                                      pin: sys_pll_m0/bufg_feedback.clki
+GCLK                x001y070z2          0.000          4.008          pin: sys_pll_m0/bufg_feedback.clko
+net (fo=3128)                           2.045          6.053          net: sd_card_clk,  E:/fpga/src/top.v(58)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/x_acc_reg[1]_syn_4.clk
+capture edge                           10.000    r    16.053               
+--------------------------------------------------------------------  ---------------
+setup                                  -0.116         15.937               
+clock uncertainty                      -0.100         15.837               
+clock pessimism                         0.334         16.171               
+--------------------------------------------------------------------  ---------------
+Required                                              16.171               
+--------------------------------------------------------------------  ---------------
+Slack                                                 -1.972               
+
+Slack               : -1.935ns
+Begin Point         : sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.clk (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })
+End Point           : sd_card_bmp_m0/bmp_read_m0/scaling$loader/x_acc_reg[4]_syn_4.ce (rising edge triggered by clock sys_pll_m0/pll_inst.clkc[0]  { rise@0.000000ns  fall@5.000000ns  period=10.000000 })
+Check Type          : setup
+Process             : slow
+Budget              : 10.000ns { sys_pll_m0/pll_inst.clkc[0] rising@10.000ns - sys_pll_m0/pll_inst.clkc[0] rising@0.000ns }
+Data Path Delay     : 11.655ns (cell 3.202ns (27%), net 8.453ns (73%))
+Clock Skew          : 0.064ns
+Logic Level         : 7 ( LUT5=2  LUT2=2  ADDER=2  LUT4=1 )
+Max Fanout          : 14
+Clock Uncertainty   : 0.100ns (sdc uncertainty: 0.000ns, default uncertainty: 0.100ns)
+
+Delay Type          Location             Incr           Path   Level  Netlist Info
+--------------------------------------------------------------------  ---------------
+source latency                          0.000          0.000               
+port                R7                  0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x020y071            1.660          1.660          pin: clk_syn_2.di
+net (fo=2)          x000y071            0.000          1.660          net: clk_dup_1,  E:/fpga/src/top.v(8)
+                                                                      pin: sys_pll_m0/pll_inst.refclk
+PLL                 x000y071            2.515          4.175          pin: sys_pll_m0/pll_inst.clkc[0]
+net (fo=1)                              0.000          4.175          net: sys_pll_m0/clk0_buf,  E:/fpga/src/ip/pll/sys_pll.v(43)
+                                                                      pin: sys_pll_m0/bufg_feedback.clki
+GCLK                x001y070z2          0.000          4.175          pin: sys_pll_m0/bufg_feedback.clko
+net (fo=3128)                           2.276          6.451          net: sd_card_clk,  E:/fpga/src/top.v(58)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.clk
+launch edge                             0.000    r     6.451               
+--------------------------------------------------------------------  ---------------
+clk2q               x023y029z3          0.146    r     6.597          pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw_reg[5]_syn_4.q[0]
+net (fo=5)                              1.639          8.236          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/dw[5],  E:/fpga/src/modules/video/bmp_scale_loader.v(48)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_86.a[0]
+ADDER               x019y021z1          0.706    f     8.942       1  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_86.fco
+net (fo=1)                              0.000          8.942          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_60,  E:/fpga/src/modules/video/bmp_scale_loader.v(175)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_89.fci
+ADDER               x019y022z0          0.355    f     9.297       2  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sub12_syn_89.f[1]
+net (fo=3)                              1.522         10.819          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/denominator_b8[8],  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_35.a[1]
+LUT5                x025y026z3          0.424    f    11.243       3  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_35.f[1]
+net (fo=1)                              0.720         11.963          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_6,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_46.b[1]
+LUT5                x020y027z3          0.431    f    12.394       4  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_46.f[1]
+net (fo=2)                              0.867         13.261          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_8,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_41.a[1]
+LUT2                x027y031z2          0.424    f    13.685       5  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_b[24]_syn_41.f[1]
+net (fo=2)                              0.695         14.380          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/load_sample_b1_n,  NOFILE(0)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[11]_syn_4.d[0]
+LUT2                x022y032z0          0.205    r    14.585       6  pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/state_reg[11]_syn_4.f[0]
+net (fo=3)                              0.673         15.258          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sel14_syn_3079,  E:/fpga/src/modules/video/bmp_scale_loader.v(123)
+                                                                      pin: status_cdc/dst_data_reg[52]_syn_4.a[0]
+LUT4                x018y035z2          0.424    f    15.682       7  pin: status_cdc/dst_data_reg[52]_syn_4.f[0]
+net (fo=14)                             2.337         18.019          net: sd_card_bmp_m0/bmp_read_m0/scaling$loader/sel17_syn_2[0],  E:/fpga/src/modules/video/bmp_scale_loader.v(123)
+                                                                      pin: sd_card_bmp_m0/bmp_read_m0/scaling$loader/x_acc_reg[4]_syn_4.ce
+reg                 x012y032z2          0.087    r    18.106               
+--------------------------------------------------------------------  ---------------
+Arrival                                               18.106               
+
+source latency                          0.000          0.000               
+port                R7                  0.000          0.000          pin: clk
+hierarchy                               0.000          0.000          pin: clk_syn_2.ipad
+PAD                 x020y071            1.493          1.493          pin: clk_syn_2.di
+net (fo=2)          x000y071            0.000          1.493          net: clk_dup_1,  E:/fpga/src/top.v(8)
+                                                                      pin: sys_pll_m0/pll_inst.refclk
+PLL                 x000y071            2.515          4.008          pin: sys_pll_m0/pll_inst.clkc[0]
+net (fo=1)                              0.000          4.008          net: sys_pll_m0/clk0_buf,  E:/fpga/src/ip/pll/sys_pll.v(43)
+                                                                      pin: sys_pll_m0/bufg_feedback.clki
+GCLK                x001y070z2          0.000          4.008          pin: sys_pll_m0/bufg_feedback.clko
+net (fo=3128)                           2.045          6.053          net: sd_card_clk,  E:/fpga/src/top.v(58)
+                                                                      pin: sd_card_bmp_m0/bmp_read_

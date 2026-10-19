@@ -1,0 +1,84 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VHhCXWFhHmP5^2IXIB=FI`0
+04 16 4 work tb_fat32_compare fast 0
+=1-bcfce7e1723c-6ad4c9f3-3c2-b8f8
+o-quiet -auto_acc_if_foreign -work reports/timing_close_20261018/guard_work
+n@_opt
+OL;O;10.1c;51
+vsd_fat32
+ICek6kRLde0l7bUP>eTgW`2
+VW6ES5ci7M_g?k@`;EdZ>42
+Z1 dE:\fpga
+w1792330168
+8reports/timing_close_20261018/fat_guard_partition_candidate.v
+Freports/timing_close_20261018/fat_guard_partition_candidate.v
+L0 3
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792330225.754000
+Z4 !s107 sim/tb_fat32_schedule.v|sim/tb_fat32_compare.v|reports/timing_close_20261018/fat_guard_partition_candidate.v|
+Z5 !s90 -work|reports/timing_close_20261018/guard_work|reports/timing_close_20261018/fat_guard_partition_candidate.v|sim/tb_fat32_compare.v|sim/tb_fat32_schedule.v|
+Z6 o-work reports/timing_close_20261018/guard_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 WMR2A2H3PPTkBzk;?JE582
+!s85 0
+vsd_fat32_reference
+IZXC]oC:S3Hb19<m6NCgJX2
+VAH@hWz_[Rg9^Q3f@HSF1i0
+R1
+Z7 w1792326501
+Z8 8sim/tb_fat32_schedule.v
+Z9 Fsim/tb_fat32_schedule.v
+L0 109
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 8im@?@oIV<A^W07[HbUFQ0
+!s85 0
+vtb_fat32_compare
+I9zYUMDaY<bI>f4WCX7jVJ1
+Vk;PPafCY>M]E?ClX`BJ?j0
+R1
+w1792329364
+8sim/tb_fat32_compare.v
+Fsim/tb_fat32_compare.v
+L0 4
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 nOXkM>m3ffRz38OH=nYDk0
+!s85 0
+vtb_fat32_schedule
+I:Y39K<2_7U`enC?6`5EO32
+VDcU`nal<a_A^9:j^[lQcK1
+R1
+R7
+R8
+R9
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 =b?UW8UjQjNL<17>CS>1e0
+!s85 0

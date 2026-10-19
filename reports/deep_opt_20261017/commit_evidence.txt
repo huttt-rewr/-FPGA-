@@ -1,0 +1,7 @@
+同步深度优化验收文档并冻结91项回归及真实布线证据
+
+区分综合16572与物理17347 LUT，明确58块BRAM为90.625%。记录全局SWNS -0.402ns为复位recovery，普通setup -0.401ns，HWNS +0.021ns；物理85%资源和STA未通过，无新bit或实板通过声明。
+
+绑定全部输入与最终报告SHA，保留后续失败候选、91项日志及保护范围审计，更新README、用户手册与构建状态。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

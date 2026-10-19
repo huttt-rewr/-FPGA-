@@ -1,0 +1,108 @@
+// All modes have three registers of latency; causal Sobel centre (x-1,y-1).
+module pixel_effects #(parameter DEPTH=800,parameter [7:0] EDGE_TH=80,parameter BRAM_WINDOW=1)(
+ input clk,rst,vs,de,input [9:0] x,input [23:0] rgb,input [1:0] mode_sel,
+ output reg out_vs,out_de,output reg [23:0] out_rgb,
+ output reg [11:0] out_luma_sum,output reg [7:0] out_luma,
+ output reg out_window_valid,out_sobel);
+ function [15:0] weighted_luma;
+  input [23:0] p;reg [15:0] r,g,b,v;
+  begin r={8'd0,p[23:16]};g={8'd0,p[15:8]};b={8'd0,p[7:0]};
+   v=(r<<6)+(r<<3)+(r<<2)+r+(g<<7)+(g<<4)+(g<<2)+(g<<1)+(b<<4)+(b<<3)+(b<<2)+b;weighted_luma=v;end
+ endfunction
+ function [23:0] heat;
+  input [7:0] a;
+  begin case(a[7:6])
+   0:heat={8'd0,a[5:0],2'b00,8'hff};1:heat={8'd0,8'hff,(8'hff-{a[5:0],2'b00})};
+   2:heat={a[5:0],2'b00,8'hff,8'd0};3:heat={8'hff,(8'hff-{a[5:0],2'b00}),8'd0};endcase end
+ endfunction
+ wire [15:0] raw_weighted=weighted_luma(rgb);
+ wire [7:0] raw_gray=raw_weighted[15:8];
+ // Exact complement: floor((255*256-S)/256), including fractional borrow.
+ wire [7:0] inverted_gray=(8'd255-raw_gray)-(|raw_weighted[7:0]);
+ wire [15:0] heat_weighted=weighted_luma(heat(raw_gray));
+ wire [7:0] stored_gray;
+ wire [7:0] gray,t0,t1,t2,m0,m1,m2,b0,b1,b2;wire good;
+ generate if(BRAM_WINDOW)begin:bram_window
+  video_luma_window_bram #(.DEPTH(DEPTH)) window(clk,rst,vs,de,x,stored_gray,
+   gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good);
+ end else begin:lut_window
+  video_luma_window #(.DEPTH(DEPTH),.EXTERNAL_LUMA(1)) window(clk,rst,vs,de,x,rgb,
+   gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,good,stored_gray);
+ end endgenerate
+ reg [10:0] xp1,xn1,yp1,yn1;reg [11:0] mag2;
+ reg [23:0] rgb1,rgb2;reg [7:0] gray1,gray2,stored1,stored2;
+ reg vs1,vs2,de1,de2,w1,w2,vs_last;reg [1:0] mode1,mode2,frame_mode;
+ assign stored_gray=(frame_mode==1)?inverted_gray:(frame_mode==3)?heat_weighted[15:8]:raw_gray;
+ reg [9:0] sumt1,summ1,sumb1;reg [11:0] sum2;
+ wire [10:0] xp={3'd0,t2}+{2'd0,m2,1'b0}+{3'd0,b2},xn={3'd0,t0}+{2'd0,m0,1'b0}+{3'd0,b0};
+ wire [10:0] yp={3'd0,b0}+{2'd0,b1,1'b0}+{3'd0,b2},yn={3'd0,t0}+{2'd0,t1,1'b0}+{3'd0,t2};
+ wire [10:0] ax=(xp1>=xn1)?xp1-xn1:xn1-xp1,ay=(yp1>=yn1)?yp1-yn1:yn1-yp1;
+ reg [23:0] thermal;
+ always @*case(gray2[7:6])
+  0:thermal={8'd0,gray2[5:0],2'b00,8'hff};
+  1:thermal={8'd0,8'hff,(8'hff-{gray2[5:0],2'b00})};
+  2:thermal={gray2[5:0],2'b00,8'hff,8'd0};
+  3:thermal={8'hff,(8'hff-{gray2[5:0],2'b00}),8'd0};
+ endcase
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin
+   frame_mode<=0;vs_last<=1;mode1<=0;mode2<=0;xp1<=0;xn1<=0;yp1<=0;yn1<=0;mag2<=0;
+   sumt1<=0;summ1<=0;sumb1<=0;sum2<=0;out_luma_sum<=0;out_luma<=0;out_window_valid<=0;out_sobel<=0;
+   rgb1<=0;rgb2<=0;gray1<=0;gray2<=0;stored1<=0;stored2<=0;vs1<=0;vs2<=0;de1<=0;de2<=0;w1<=0;w2<=0;out_vs<=0;out_de<=0;out_rgb<=0;
+  end else begin
+   vs_last<=vs;if(vs_last && !vs)frame_mode<=mode_sel;
+   xp1<=xp;xn1<=xn;yp1<=yp;yn1<=yn;mag2<={1'b0,ax}+{1'b0,ay};
+   sumt1<={2'd0,t0}+{2'd0,t1}+{2'd0,t2};summ1<={2'd0,m0}+{2'd0,m1}+{2'd0,m2};sumb1<={2'd0,b0}+{2'd0,b1}+{2'd0,b2};
+   sum2<={2'd0,sumt1}+{2'd0,summ1}+{2'd0,sumb1};out_luma_sum<=sum2;
+   out_window_valid<=w2;out_sobel<=mode2==2;
+   rgb1<=rgb;rgb2<=rgb1;gray1<=raw_gray;gray2<=gray1;stored1<=stored_gray;stored2<=stored1;vs1<=vs;vs2<=vs1;de1<=de;de2<=de1;w1<=good;w2<=w1;
+   mode1<=frame_mode;mode2<=mode1;out_vs<=vs2;out_de<=de2;
+   if(!de2)out_rgb<=0;
+   else case(mode2)
+    0:out_rgb<=rgb2;1:out_rgb<=~rgb2;
+    2:out_rgb<=(w2 && mag2>{4'd0,EDGE_TH})?24'hffffff:24'd0;
+    3:out_rgb<=thermal;
+   endcase
+   out_luma<=(mode2==2)?((w2 && mag2>{4'd0,EDGE_TH})?8'hff:8'd0):stored2;
+  end
+ end
+endmodule
+
+// TD ram_style="dram" means LUT distributed RAM, never SDRAM/BRAM.
+// No RAM reset/initialization. Mask the first two rows/columns EVERY frame.
+module video_luma_window #(parameter DEPTH=800,parameter EXTERNAL_LUMA=0)(
+ input clk,rst,vs,de,input [9:0] x,input [23:0] rgb,
+ output [7:0] gray,t0,t1,t2,m0,m1,m2,b0,b1,b2,output valid,input [7:0] external_luma);
+ wire [15:0] r={8'd0,rgb[23:16]},g={8'd0,rgb[15:8]},b={8'd0,rgb[7:0]};
+ wire [15:0] weighted=(r<<6)+(r<<3)+(r<<2)+r+(g<<7)+(g<<4)+(g<<2)+(g<<1)+(b<<4)+(b<<3)+(b<<2)+b;
+ assign gray=EXTERNAL_LUMA?external_luma:weighted[15:8];
+ // Split the last partial bank explicitly: TD otherwise rounds 800 to 1024.
+ localparam BANKS=(DEPTH+255)/256;
+ wire [7:0] bank1[0:BANKS-1],bank2[0:BANKS-1];
+ wire ok=x<DEPTH;
+ genvar bank;
+ generate for(bank=0;bank<BANKS;bank=bank+1)begin:line_bank
+  localparam LEN=((DEPTH-bank*256)<256)?(DEPTH-bank*256):256;
+  localparam AW=(LEN<2)?1:$clog2(LEN);
+  (* ram_style="dram" *) reg [7:0] row1[0:LEN-1];
+  (* ram_style="dram" *) reg [7:0] row2[0:LEN-1];
+  wire [AW-1:0] address=x[AW-1:0];
+  assign bank1[bank]=row1[address];assign bank2[bank]=row2[address];
+  always @(posedge clk)if(!rst && vs && de && ok && x[9:8]==bank)begin
+   row1[address]<=gray;row2[address]<=bank1[bank];
+  end
+ end endgenerate
+ wire [7:0] p1=ok?bank1[x[9:8]]:8'd0,p2=ok?bank2[x[9:8]]:8'd0;
+ reg [7:0] ta,tb,ma,mb,ba,bb;reg de_last;reg [1:0] rows;
+ assign t0=tb;assign t1=ta;assign t2=p2;assign m0=mb;assign m1=ma;assign m2=p1;
+ assign b0=bb;assign b1=ba;assign b2=gray;
+ assign valid=de && vs && ok && rows==2 && x>=2;
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin ta<=0;tb<=0;ma<=0;mb<=0;ba<=0;bb<=0;rows<=0;de_last<=0;end
+  else begin
+   de_last<=de;if(!vs)rows<=0;else if(de_last && !de && rows!=2)rows<=rows+1'b1;
+   if(!de || !vs)begin ta<=0;tb<=0;ma<=0;mb<=0;ba<=0;bb<=0;end
+   else begin ta<=p2;tb<=(x==0)?8'd0:ta;ma<=p1;mb<=(x==0)?8'd0:ma;ba<=gray;bb<=(x==0)?8'd0:ba;end
+  end
+ end
+endmodule

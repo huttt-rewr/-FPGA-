@@ -5,16 +5,16 @@ module tb_board_pipeline;
  reg clk=0,rst=1,vs=1,de=0,ready=1,mode=0,en=0,overlay=0;
  always #5 clk=~clk;
  reg [23:0] rgb=0;reg [1:0] effect=0;reg [9:0] offset=0;
- wire [9:0] px,py,ax,gx;
+ wire [9:0] px,py,ax,ay,gx,gy;
  wire av,ad,gv,gd,ev,ed,cv,cd,ov,od,user,valid,last,overflow;
  wire [23:0] ac,gc,ec,cc,oc,data;
  integer m,f,x,y,i,k,v,width,height,frame_pixels,received=0,line_pixels=0,pauses=0,errors=0;
  integer rx,ry,rf,sx;reg [23:0] expected;
  reg [7:0] reference_gamma[0:255];real normalized;integer ten;
  video_coordinates coords(clk,rst,vs,de,px,py);
- picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,ac);
- picture_gamma gamma(clk,rst,av,ad,ax,ac,en,gv,gd,gx,gc);
- transition_pixels fx(clk,rst,gv,gd,gx,gc,effect,6'd16,offset,ev,ed,ec);
+ picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,ac,py,ay);
+ picture_gamma gamma(clk,rst,av,ad,ax,ac,en,gv,gd,gx,gc,ay,gy);
+ transition_pixels fx(clk,rst,gv,gd,gx,gc,{1'b0,effect},6'd16,offset,ev,ed,ec,gy,mode);
  caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode);
  status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1)) panel(
   .clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(overlay),
