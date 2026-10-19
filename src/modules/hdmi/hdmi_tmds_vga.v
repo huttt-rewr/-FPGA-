@@ -30,7 +30,8 @@ module hdmi_tmds_vga(
             end
         end
     end
-    tmds_encoder blue (.clk(clk),.rst(rst),.de(pixel_de),.control({vs,hs}),.data(rgb[7:0]),.symbol(ch0));
+    // Internal HS/VS are active-low; DVI control is active-high, so invert.
+    tmds_encoder blue (.clk(clk),.rst(rst),.de(pixel_de),.control({!vs,!hs}),.data(rgb[7:0]),.symbol(ch0));
     tmds_encoder green(.clk(clk),.rst(rst),.de(pixel_de),.control(2'b00),.data(rgb[15:8]),.symbol(ch1));
     tmds_encoder red  (.clk(clk),.rst(rst),.de(pixel_de),.control(2'b00),.data(rgb[23:16]),.symbol(ch2));
     // Five ones, five zeros. Binary 0000011111 is 0x01f, NOT 0x03f.

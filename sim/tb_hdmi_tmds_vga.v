@@ -64,7 +64,7 @@ module tb_hdmi_tmds_vga;
             end
             if(dut.frame_start)frames=frames+1;
             if(dut.pixel_de)pixels=pixels+1;
-            reference(dut.pixel_de,{in_vs,(dut.locked?in_hs:dut.hs)},in_rgb[7:0],rd0,e0);
+            reference(dut.pixel_de,{!in_vs,(dut.locked?!in_hs:!dut.hs)},in_rgb[7:0],rd0,e0);
             reference(dut.pixel_de,0,in_rgb[15:8],rd1,e1);
             reference(dut.pixel_de,0,in_rgb[23:16],rd2,e2);
             #1;
