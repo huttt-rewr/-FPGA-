@@ -60,7 +60,11 @@ module tb_fat32_compare;
    @(posedge clk);#1;
    check(dut.request_sectors===sectors,"ceil(bytes/512), including carry into bit23");
    check(dut.request_sectors[32:24]===9'd0,"upper sector bits are zero");
-   @(negedge clk);dut.state=dut.STREAM_CHECK;
+   // Execute the real CURSOR_APPLY state instead of forcing STREAM_CHECK.
+   // Restore the chosen cluster boundary after the cursor is applied.
+   @(posedge clk);#1;
+   @(negedge clk);
+   dut.working_cluster=(guard==4)?0:(guard==5)?1:(guard==6)?102:2;
    expected=(dut.owner && !dut.wav_found) || (!dut.owner && dut.request_file>=dut.bmp_count) ||
     size_bytes==0 || {1'b0,relative_sector}>=sectors || dut.target_index>=dut.data_clusters ||
     dut.working_cluster<2 || dut.working_cluster>dut.max_cluster;

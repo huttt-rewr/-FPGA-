@@ -52,6 +52,22 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
   if(rst)format_bad<=0;
   else format_bad<=format!=1 || channels!=1 || rate!=48000 || byte_rate!=96000 || align!=2 || bits!=16;
  end
+ // Register the complete sector response at the WAV consumer boundary.
+ // FAT32 owner/state/abort qualification ends here instead of feeding the
+ // parser FSM and byte-counter enables through a long high-fanout net.
+ // Keep data, valid, end and error on the same cycle, including last+end.
+ // Abort/reset and SD loss flush the entire bundle before another request.
+ reg [7:0] rx_data;
+ reg rx_valid,rx_end,rx_error;
+ always @(posedge clk or posedge rst)begin
+  if(rst)begin rx_data<=0;rx_valid<=0;rx_end<=0;rx_error<=0;end
+  else begin
+   rx_data<=data;
+   rx_valid<=sd_init_done && data_valid;
+   rx_end<=sd_init_done && sector_end;
+   rx_error<=sd_init_done && read_error;
+  end
+ end
  reg resume_space;
  reg last_pcm_byte,sector_last_byte;
  reg sector_room_q;
@@ -74,7 +90,7 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
  assign addr=FILESYSTEM?cache_tag:START_SECTOR+cache_tag;
  // 同步RAM端口；ENSURE/WAIT_BYTE留出读延迟。
  always @(posedge clk)begin
-  if(state[2] && data_valid && count<512)sector_mem[count[8:0]]<=data;
+  if(state[2] && rx_valid && count<512)sector_mem[count[8:0]]<=rx_data;
   q<=sector_mem[position[8:0]];
  end
  always @(posedge clk or posedge rst)begin
@@ -117,10 +133,10 @@ module audio_wav #(parameter [31:0] START_SECTOR=131072,parameter FILESYSTEM=0,
      else begin cache_tag<=position[31:9];cache_valid<=0;count<=0;state<=FETCH;end
     end
     state[2]:begin
-     if(data_valid && count<513)count<=count+1'b1;
-     if(read_error || !sd_init_done)begin error_code<=2;ready<=0;state<=FAILED;end
-     else if(sector_end)begin
-      if(count+data_valid!=512)begin error_code<=3;ready<=0;state<=FAILED;end
+     if(rx_valid && count<513)count<=count+1'b1;
+     if(rx_error || !sd_init_done)begin error_code<=2;ready<=0;state<=FAILED;end
+     else if(rx_end)begin
+      if(count+rx_valid!=512)begin error_code<=3;ready<=0;state<=FAILED;end
       else begin cache_valid<=1;state<=WAIT_BYTE;end
      end
     end

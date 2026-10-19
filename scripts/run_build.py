@@ -71,7 +71,15 @@ def main():
             ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt', 'io.txt',
              'video_improve_prior_opt.db', 'prior_opt_timing_status.txt',
              'prior_opt_timing_paths20.txt', 'routed_timing_paths20.txt',
-             'rebound_placed_timing_status.txt', 'rebound_placed_timing_paths20.txt'])
+             'rebound_placed_timing_status.txt', 'rebound_placed_timing_paths20.txt', 'video_improve_hold_input.db'])
+        # TD's in-session hold pass can leave short status-bus paths. An
+        # independent reload/reroute pass fixes physical delays without
+        # touching the RTL or relaxing timing. Archive the pre-cleanup reports.
+        if not (REPORTS / 'video_improve_hold_input.db').is_file():
+            raise RuntimeError('Missing routed hold-cleanup checkpoint')
+        record['hold_finalization_warnings'] = run(args.td, 'finalize_hold.tcl', 'hold_finalization.log', 'HOLD_FINALIZATION_COMPLETED',
+            ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt',
+             'routed_timing_paths20.txt', 'io.txt'])
         # A physically remapped mux can silently lose its alternative clocks.
         # Check refreshed placement and final routing, before trusting metrics.
         for report_name in ('rebound_placed_timing_paths20.txt', 'routed_timing_paths20.txt'):

@@ -37,6 +37,10 @@ try {
  $mergeTests += @('tb_bram_window','tb_osd_bcd','tb_bram_waveform')
  $mergeTests += @('tb_scaler_row_address')
  $mergeTests += @('tb_fat32_compare')
+ $mergeTests += @('tb_fps_equivalence')
+ $mergeTests += @('tb_fat32_schedule')
+ $mergeTests += @('tb_image_index_equivalence')
+ $mergeTests += @('tb_audio_rx_boundary')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
