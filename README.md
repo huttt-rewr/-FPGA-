@@ -1,10 +1,12 @@
 # EG4S20 HDMI 图片与 WAV 播放器
 
-> **2026-10-18 FAT32 比较器验证：94 项回归通过，内部 STA 仍失败，未生成本轮 bit。** 最终 SWNS -0.592ns、STNS -1.362ns、HWNS +0.024ns、HTNS +0.000ns。全部功能及操作保留；内部 removal 不是 HDMI 管脚 hold，未达到整体 +0.5ns。[本轮报告](reports/fat32_compare_20261018/RESULT.md)；以下数值属于各冻结历史版本。
+> **2026-10-19 当前时序优化：98项ModelSim全通过，综合/布局布线及内部STA通过。** SWNS +0.131ns、STNS 0.000ns、HWNS +0.022ns、HTNS 0.000ns。WAV接收寄存级与独立会话增量布线/hold修复已落地；100MHz、全部功能、KEY/SW、官方IP和70位状态布局保留。未生成本轮新bit、未上板；外部IO与既有物理警告仍待核对，未达到整体+0.5ns。[本轮原始结果](reports/timing_close_20261018/RESULT.md)。此前各段数值只属于各自冻结历史版本。
 
-> **2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](reports/build_repair_20261018/RESULT.md)和[技术说明](docs/BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
+> **历史：2026-10-18 FAT32 比较器验证：94 项回归通过，内部 STA 仍失败，未生成本轮 bit。** 最终 SWNS -0.592ns、STNS -1.362ns、HWNS +0.024ns、HTNS +0.000ns。全部功能及操作保留；内部 removal 不是 HDMI 管脚 hold，未达到整体 +0.5ns。[本轮报告](reports/fat32_compare_20261018/RESULT.md)；以下数值属于各冻结历史版本。
 
-> **2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](reports/deep_opt_20261017/RESULT.md)与[技术说明](docs/DEEP_OPTIMIZATION_20261018.md)。
+> **历史：2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](reports/build_repair_20261018/RESULT.md)和[技术说明](docs/BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
+
+> **历史：2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](reports/deep_opt_20261017/RESULT.md)与[技术说明](docs/DEEP_OPTIMIZATION_20261018.md)。
 
 
 > 2026-10-17 贪吃蛇增量：G 进入/退出，方向键移动，退出后再进入重开。游戏期间方向键暂停翻图/调音量功能；KEY/SW 保留原功能。操作与资源/验收限制见 [贪吃蛇手册](docs/SNAKE_GAME_20261017.md)。当前仍为物理验收未完成的实验源码，旧 bit 不包含游戏。
@@ -22,7 +24,7 @@
 - [完整接线教程](docs/CONNECTION_AND_USAGE.md)、[用户手册](docs/USER_GUIDE.md)、[FAT32复制文件](docs/FAT32_USAGE_20261015.md)。
 - [多文件索引原理](docs/MEDIA_INDEX_20261016.md)、[本轮限制与后续工作](docs/KEYBOARD_REMAINING_20261016.md)。
 
-显示器接 **HDMI_B（HDMIB）**；HDMI_A不用。PS/2 CLK=M16、DATA=K16是官方例程的FPGA封装映射；普通USB键盘不能直接接这两个信号。SD正式接口为 **原生四位SD，CMD6自动协商25/50MHz**，主控制100MHz。支持并确认切换成功才升50MHz；不支持/busy留在四位25MHz。80项逻辑回归及内部STA通过；卡模型吞吐22.34MB/s不是实体卡实测。仍用原TF卡槽，六线映射和10kΩ上拉已核对。
+显示器接 **HDMI_B（HDMIB）**；HDMI_A不用。PS/2 CLK=M16、DATA=K16是官方例程的FPGA封装映射；普通USB键盘不能直接接这两个信号。SD正式接口为 **原生四位SD，CMD6自动协商25/50MHz**，主控制100MHz。支持并确认切换成功才升50MHz；不支持/busy留在四位25MHz。该历史检查点80项逻辑回归及内部STA通过；当前98项与STA见页首；卡模型吞吐22.34MB/s不是实体卡实测。仍用原TF卡槽，六线映射和10kΩ上拉已核对。
 
 ## 现在能做什么
 

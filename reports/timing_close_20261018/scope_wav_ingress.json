@@ -1,0 +1,9 @@
+{
+  "base": "d34c488",
+  "changed_production_rtl": [
+    "src/modules/audio/audio_wav.v"
+  ],
+  "official_ip_top_pin_constraints_fat32_bmp_sd_stack_unchanged": true,
+  "main_clock_100MHz_unchanged": true,
+  "status_source_70bit_unchanged": true
+}

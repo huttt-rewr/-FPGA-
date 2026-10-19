@@ -1,0 +1,55 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_player.log -lib msim_work -c tb_fat32_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 43.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_player(fast)
+# run -all 
+# ALL PASS tb_fat32_player: real scheduler/two scaled fragmented BMP frames/exact PCM concurrent loops/commit
+# ** Note: $finish    : tb_fat32_player.v(75)
+#    Time: 53769840 ns  Iteration: 1  Instance: /tb_fat32_player

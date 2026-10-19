@@ -1,10 +1,12 @@
 # 构建状态
 
-> **2026-10-18 FAT32 比较器验证：94 项回归通过，内部 STA 仍失败，未生成本轮 bit。** 最终 SWNS -0.592ns、STNS -1.362ns、HWNS +0.024ns、HTNS +0.000ns。全部功能及操作保留；内部 removal 不是 HDMI 管脚 hold，未达到整体 +0.5ns。[本轮报告](../reports/fat32_compare_20261018/RESULT.md)；以下数值属于各冻结历史版本。
+> **2026-10-19 当前时序优化：98项ModelSim全通过，综合/布局布线及内部STA通过。** SWNS +0.131ns、STNS 0.000ns、HWNS +0.022ns、HTNS 0.000ns。WAV接收寄存级与独立会话增量布线/hold修复已落地；100MHz、全部功能、KEY/SW、官方IP和70位状态布局保留。未生成本轮新bit、未上板；外部IO与既有物理警告仍待核对，未达到整体+0.5ns。[本轮原始结果](../reports/timing_close_20261018/RESULT.md)。此前各段数值只属于各自冻结历史版本。
 
-> **2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](../reports/build_repair_20261018/RESULT.md)和[技术说明](BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
+> **历史：2026-10-18 FAT32 比较器验证：94 项回归通过，内部 STA 仍失败，未生成本轮 bit。** 最终 SWNS -0.592ns、STNS -1.362ns、HWNS +0.024ns、HTNS +0.000ns。全部功能及操作保留；内部 removal 不是 HDMI 管脚 hold，未达到整体 +0.5ns。[本轮报告](../reports/fat32_compare_20261018/RESULT.md)；以下数值属于各冻结历史版本。
 
-> **2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](../reports/deep_opt_20261017/RESULT.md)与[技术说明](DEEP_OPTIMIZATION_20261018.md)。
+> **历史：2026-10-18 构建修复：93项回归通过，STA仍未通过，无本轮新bit。** 前向声明修复、行地址拆拍和报告归档保护已落实。当前SWNS -0.592ns、HWNS +0.024ns；SDRAM物理警告仍待解决。全部功能和KEY/SW操作保留，未达到整体+0.5ns。见[实际报告](../reports/build_repair_20261018/RESULT.md)和[技术说明](BUILD_REPAIR_20261018.md)；下文较早数值只适用于各自冻结的历史版本。
+
+> **历史：2026-10-18 深度优化：91项回归通过，整机验收未完成，无本轮新bit。** 综合16,572 LUT，物理17,347 LUT（88.51%，仍超85%目标）；58 BRAM（90.625%）。SWNS −0.402ns（复位recovery），普通setup −0.401ns，HWNS +0.021ns。77源/40 IO静态检查通过。全部功能和原操作保留；旧bit不能验收当前源码。详见[本轮验收](../reports/deep_opt_20261017/RESULT.md)与[技术说明](DEEP_OPTIMIZATION_20261018.md)。
 
 
 > 2026-10-17 最新贪吃蛇实验源码：静态检查 76 源/40 IO ALL PASS，完整 ModelSim 88 项 ALL PASS；游戏独立综合 1,386 LUT、0 BRAM/0 DSP。整机综合 19,483 LUT、11,676 REG、61 BRAM、17 DSP；布局 PHY-9009：5,252 MSlice 超过 4,900，因此无当前布线/STA、新 physical_area 或新 bit。历史时序和 native50 bit 不包含此次游戏。详见 [本次验收](../reports/snake_20261017/RESULT.md) 与 [游戏手册](SNAKE_GAME_20261017.md)。
@@ -19,7 +21,7 @@
 
 仅为内部STA通过的实板待验候选，未物理下载、未写卡、未实测出图/出声/吞吐、未签核SD/HDMI外部IO。历史bit不含本轮功能。内部removal不是HDMI管脚hold，未达到整体+0.5ns。
 
-## 当前交付：键盘、多文件、R/F与四位SD 25/50MHz
+## 历史：键盘、多文件、R/F与四位SD 25/50MHz检查点
 
 正式源码完成键盘控制、64文件索引、R安全重启切模式、F目标换图频率，以及六线原生四位SD。CMD6查询/切换的64字节状态通过四路CRC、功能选择和busy检查后，等待八个SD时钟，再在完整周期边界启用50MHz；不支持/忙时保持25MHz，状态损坏或协商超时则重新初始化并禁用本轮高速尝试。普通CMD6选择High Speed，与ACMD6设置四位宽度不同。
 
