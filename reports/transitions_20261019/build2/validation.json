@@ -1,0 +1,38 @@
+{
+  "baseline_head": "d2b13e3631399c625a2399ac82e7df1cb2fd0208",
+  "changed_inputs": [
+    "scripts/run_tests.ps1",
+    "sim/tb_board_pipeline.v",
+    "sim/tb_effects_pipeline.v",
+    "sim/tb_picture_adjust.v",
+    "sim/tb_picture_gamma.v",
+    "sim/tb_svga_pipeline.v",
+    "sim/tb_switch_controls.v",
+    "sim/tb_transition.v",
+    "sim/tb_transition_pixels.v",
+    "src/modules/video/frame_swap.v",
+    "src/modules/video/picture_adjust.v",
+    "src/modules/video/picture_gamma.v",
+    "src/modules/video/transition_pixels.v",
+    "src/top.v"
+  ],
+  "new_test": "sim/tb_transition_effects.v",
+  "unique_tests": 102,
+  "status70_identical": true,
+  "unplanned_input_changes": [],
+  "timing_ns": {
+    "SWNS": 0.116,
+    "STNS": 0.0,
+    "HWNS": 0.03,
+    "HTNS": 0.0
+  },
+  "new_critical_warnings": [],
+  "existing_critical_warnings": [
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file."
+  ],
+  "board_verified": false,
+  "zoom_implemented": false,
+  "fft_implemented": false
+}

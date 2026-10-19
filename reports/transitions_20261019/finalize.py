@@ -1,0 +1,56 @@
+from pathlib import Path
+import json, re, shutil
+
+root=Path(__file__).resolve().parents[2]
+task=Path(__file__).resolve().parent
+v=json.loads((task/'validation.json').read_text())
+tests=sorted(set(re.findall(r"'(tb_\w+)'",(root/'scripts/run_tests.ps1').read_text())))
+test_dir=task/'build2'/'regression'
+test_dir.mkdir(parents=True,exist_ok=True)
+for tb in tests:
+    shutil.copy2(root/'reports'/(tb+'.log'),test_dir/(tb+'.log'))
+shutil.copy2(task/'regression3.log',test_dir/'console.log')
+shutil.copy2(task/'validation.json',task/'build2'/'validation.json')
+summary='''# 转场扩充阶段一验收（2026-10-19）
+
+本次附件要求按转场、二维 Ken-Burns、FFT 顺序实施。**转场的软件及内部STA门禁通过；变焦/FFT未实现，实板验收未完成。**
+
+## 已实现
+
+- 外部两位转场控制不扩宽；slot 0/1/2 保留，slot 3 为淡入淡出→滑动→擦除→圆形→棋盘五效果轮播。
+- 内部效果号三位；Y 经调色/伽马各两拍对齐；转场维持两拍。
+- 圆形端点全遮挡，棋盘使用单调覆盖；保持完整黑场交接和缓冲区握手。
+- 将圆形幅值按有效画面收窄到九位，两路平方合计新增一个DSP，不增加BRAM。
+
+## 真实验证
+
+| 项目 | 修改前实际报告 | 最终第二轮 |
+|---|---:|---:|
+| SWNS | +0.105ns | +0.116ns |
+| STNS | 0.000ns | 0.000ns |
+| HWNS | +0.020ns | +0.030ns |
+| HTNS | 0.000ns | 0.000ns |
+| LUT | 15794 | 15896 |
+| BRAM9K | 41/64 | 41/64 |
+| DSP | 23/29 | 24/29 |
+
+静态检查80源/40IO通过；102项ModelSim全部通过（包括原101项），覆盖VGA/SVGA、33级进度、完整端点画面、遮罩边界、坐标对齐、五效果回绕和忙时锁定。
+
+`build2/reports/` 冻结最终综合、布局布线、hold修复、STA、资源和绑定源码哈希的构建清单；`build2/regression/` 冻结全部102项日志。`validation.json` 核对70位状态拼接未变、SD/FAT32/BMP/WAV/SDRAM/IP/引脚/时钟约束均未改动、无新增CRITICAL与coredump。保留原PHY-7002两条SDRAM位置告警和PHY-5079局部时钟告警。HWNS是内部STA汇总，不能当成HDMI管脚hold；未达到整体+0.5ns。
+
+第一次布线出现PHY-8023资源争用，证据位于`build1_failed/`，不计为通过。收窄后重跑完整综合/布局布线/独立hold修复与全部回归才得到上表结果。
+
+## 未完成与需要解决的约束冲突
+
+1. **二维变焦未实现。** 同速流在800模式输出599行时，1.5倍放大需要源399行，两行缓存已覆盖它。简单滚动历史跨度为VGA161行/SVGA201行；提前丢弃裁剪区外行后仍需保留108/134整行，超过片上余量。前者不是所有架构的存储下限。`check_zoom_storage.py` 和 `zoom_storage.json` 可复现。正确方案需允许调整SDRAM源行取数与行缓存调度，不能在“不碰SDRAM、两行缓存”的硬限制下照附件实现。
+2. **FFT未开始。** 附件明确要求变焦过门禁后才能进入FFT，本轮没有跳步。
+3. **无新bit、无下载、无实板观察。** 640仍为明文纯视频，实际800保留原内嵌音频。旧上板验收包bit不匹配本轮源码。
+
+## 使用与资料
+
+SW第3/4路同时ON，等待约0.1秒，PLAY下KEY1换图或KEY2自动轮播；首图直接显示，后续五次换图看到五种效果。KEY/SW详细说明和后级反色/热成像对遮罩颜色的影响见`docs/TRANSITIONS_ZOOM_FFT_20261019.md`。
+
+基线HEAD为d2b13e3，源码备份在before/。验证期间工作区新增用户检查点0f3dcc8（提交信息we）；未改写该提交，交付审计仍逐字节对照任务开始时的备份，而不是仅依赖当前git diff。
+'''
+(task/'RESULT.md').write_text(summary,encoding='utf-8')
+print('Archived',len(tests),'regression logs and final result')
