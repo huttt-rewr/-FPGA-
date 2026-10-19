@@ -44,7 +44,11 @@ module sd_native_controller #(
  reg [6:0] boot_clocks;
  reg [15:0] rca;
  reg block_addressed;
- reg [31:0] init_timer,pause_timer,attempts;
+ reg [31:0] init_timer,pause_timer;
+ // attempts only counts 0..INIT_ATTEMPT_LIMIT-1 (4095) before the FSM moves to
+ // S_ERR, so 12 bits suffice.  Keeping it 32-bit made `attempts>=4095` a 32-bit
+ // comparator (~3 LUT levels) on the 100MHz critical path for zero reason.
+ reg [11:0] attempts;
  reg init_expired;
  reg data_finished,request_released;
  always @(posedge clk or posedge rst)begin
