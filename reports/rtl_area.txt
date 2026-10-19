@@ -8,31 +8,31 @@ IO Statistics
   #inout                    6
 
 Gate Statistics
-#Basic gates            22361
-  #and                   4463
+#Basic gates            22358
+  #and                   4461
   #nand                     0
   #or                    2316
   #nor                      0
   #xor                    230
   #xnor                     0
   #buf                      0
-  #not                   1942
+  #not                   1940
   #bufif1                  39
-  #MX21                  3107
+  #MX21                  3108
   #FADD                     0
   #DFF                  10264
   #LATCH                    0
 #MACRO_ADD                869
 #MACRO_EQ                 495
 #MACRO_MULT                38
-#MACRO_MUX               5520
+#MACRO_MUX               5518
 #MACRO_OTHERS              53
 
 Report Hierarchy Area:
 +----------------------------------------------------------------------------------------------------------------------+
 |Instance                                   |Module                                            |gates  |seq    |macros |
 +----------------------------------------------------------------------------------------------------------------------+
-|top                                        |top                                               |12097  |10264  |1455   |
+|top                                        |top                                               |12094  |10264  |1455   |
 |  U3                                       |sdram                                             |104    |534    |9      |
 |    u2_ram                                 |sdr_as_ram                                        |104    |534    |9      |
 |      u1_init_ref                          |sdr_init_ref                                      |24     |96     |4      |
@@ -94,17 +94,17 @@ Report Hierarchy Area:
 |  fx                                       |audio_effects_stream                              |3      |52     |0      |
 |    fx                                     |audio_effects                                     |0      |50     |0      |
 |  fx_coordinates                           |video_coordinates                                 |11     |10     |1      |
-|  game                                     |snake_game                                        |1696   |165    |123    |
+|  game                                     |snake_game                                        |1687   |165    |123    |
 |    board_mem                              |snake_lut_ram                                     |12     |0      |24     |
 |    body_mem                               |snake_lut_ram                                     |13     |0      |24     |
-|    font                                   |osd_char_rom                                      |1366   |0      |0      |
+|    font                                   |osd_char_rom                                      |1357   |0      |0      |
 |  game_clock                               |snake_frame_control                               |18     |8      |2      |
 |  game_control_cdc                         |cdc_snapshot                                      |5      |18     |0      |
 |  game_coordinates                         |viewport_coordinates                              |31     |26     |8      |
 |  gamma                                    |picture_gamma                                     |0      |93     |3      |
 |  glass_coordinates                        |viewport_coordinates                              |28     |26     |8      |
 |  keyboard                                 |ps2_keyboard                                      |72     |56     |17     |
-|  keyboard_events                          |ps2_controls                                      |233    |103    |36     |
+|  keyboard_events                          |ps2_controls                                      |238    |103    |36     |
 |  media_cdc                                |cdc_snapshot                                      |3      |62     |0      |
 |  mode_control                             |video_mode_control                                |8      |24     |6      |
 |  mode_request_cdc                         |cdc_snapshot                                      |4      |12     |0      |
@@ -122,16 +122,16 @@ Report Hierarchy Area:
 |  reset_vga                                |reset_sync                                        |0      |3      |0      |
 |  reset_video                              |reset_sync                                        |0      |3      |0      |
 |  reset_writer                             |reset_sync                                        |0      |3      |0      |
-|  sd_card_bmp_m0                           |sd_card_bmp                                       |5134   |4692   |396    |
+|  sd_card_bmp_m0                           |sd_card_bmp                                       |5135   |4692   |396    |
 |    bmp_read_m0                            |bmp_read                                          |850    |1428   |153    |
 |      scaling$loader                       |bmp_scale_loader                                  |680    |1011   |98     |
 |        row_mix                            |rgb_lerp_pipeline                                 |0      |134    |12     |
 |        vmix                               |rgb_lerp_pipeline                                 |0      |134    |12     |
 |    filesystem$fat                         |sd_fat32                                          |2048   |1710   |99     |
 |    rate_control$timer                     |fps_control                                       |64     |54     |8      |
-|    sd_card_top_m0                         |sd_card_top                                       |1313   |591    |63     |
-|      native_bus$transport                 |sd_card_top_native                                |1313   |591    |63     |
-|        controller                         |sd_native_controller                              |631    |179    |31     |
+|    sd_card_top_m0                         |sd_card_top                                       |1314   |591    |63     |
+|      native_bus$transport                 |sd_card_top_native                                |1314   |591    |63     |
+|        controller                         |sd_native_controller                              |632    |179    |31     |
 |        phy                                |sd_bus_phy                                        |681    |412    |32     |
 |    wav_enabled$arbiter                    |sd_read_arbiter                                   |54     |64     |4      |
 |    wav_enabled$wav                        |audio_wav                                         |588    |716    |56     |

@@ -1,0 +1,10 @@
+收窄圆形转场距离运算并通过102项回归与布线时序门禁
+
+将有效画面的圆心距离收窄到9位，两路平方由TD合并映射，新增DSP从2降为1。
+保留原切换/淡入/滑动和五效果轮播，70位状态总线、SD/音频/SDRAM/IP均未改动。
+相对任务起始d2b13e3，静态检查80源40IO、102项ModelSim全部通过。
+完整综合/布局布线/独立hold修复后SWNS +0.116ns、HWNS +0.030ns，TNS均0，
+守住+0.105ns基线；无新增CRITICAL，无coredump。首轮失败布线单独保留。
+未生成新bit或下载；二维变焦因两行缓存约束冲突未实现，FFT按顺序未启动。
+
+Co-Authored-By: Claude Code <noreply@anthropic.com>

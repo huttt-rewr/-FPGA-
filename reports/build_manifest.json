@@ -1,6 +1,6 @@
 {
-  "started_utc": "2026-10-19T11:34:03.413033+00:00",
-  "status": "failed",
+  "started_utc": "2026-10-19T12:03:11.152730+00:00",
+  "status": "completed",
   "td": "J:/Anlogic/td.6.2.1/bin/td_commands_prompt.exe",
   "sources": {
     "scripts/adaptive_clocks.tcl": "ce604729330dd42824c095fac9d6612b4390b1a70b711b470d61e8df27ad6c0f",
@@ -224,7 +224,7 @@
     "src/modules/video/picture_adjust.v": "069e07753519c9052c9a261330aa7c5b48fce08d0766aab2fbb02eb5d8f45005",
     "src/modules/video/picture_gamma.v": "e8e1772045dfab293ba7535796b4087519143e9c290d9bbcb7dda5bdec1dc565",
     "src/modules/video/pixel_effects.v": "f945035a15b34809c4dafac446784077e874bbef280549f332efa0076d3e2a78",
-    "src/modules/video/transition_pixels.v": "76ca67c79cccf9797ea25376cf5997799836ee413d5bf511ec7d623ad40bcc60",
+    "src/modules/video/transition_pixels.v": "96ba926d103ef5552c15d2555250cfcd55e3f041f327aecf0478979a00b6b066",
     "src/modules/video/video_coordinates.v": "9fa292eb6191f650982dfd2176d1130cc23f100ac628029295dc42dff55e3aab",
     "src/modules/video/video_define.v": "77748966850a8f5af0d77f2cdb08006088ba5e1a31b98391fba6cc61c5247da2",
     "src/modules/video/video_delay.v": "0f071dbb580ae06570fc5f8151f90d34ff0f3a4837c85441908257983575bc86",
@@ -304,6 +304,41 @@
     "SYN-5011 WARNING: Undriven pin: model \"top\" / inst \"U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[9]\" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin \"clk\"",
     "SYN-5025 WARNING: Using 0 for all undriven pins and nets"
   ],
-  "error": "implement.tcl failed; see implementation.log: ['PHY-8023 ERROR: Location: (x5y60_n2beg3), nets: sd_card_bmp_m0/filesystem$fat/fat_sectors[6] sd_card_bmp_m0/filesystem$fat/fat_sectors[2]', \"RUN-8102 ERROR: Incremental route failed. Please check if the resources used in your design exceed the device resource limitations. You can try using 'report_area' in console to check the resource utilization of the device. Or try check gate report and timing constraints. And you can try modifying the design or changing the strategy of syn, place or route, and rerunning it.\", 'PHY-8023 ERROR: Location: (x5y60_n2beg3), nets: sd_card_bmp_m0/filesystem$fat/fat_sectors[6] sd_card_bmp_m0/filesystem$fat/fat_sectors[2]']",
-  "finished_utc": "2026-10-19T11:40:25.593078+00:00"
+  "implementation_warnings": [
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (12, 12) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-7002 CRITICAL-WARNING: Instance U3/sdram location (164, 288) is not honored. Cell's initial location is not legal at the beginning of ECO placement, and will be moved during placement. Please verify user location constraints through the adc file.",
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "hold_finalization_warnings": [
+    "PHY-5079 CRITICAL-WARNING: Marked 1 clock net(s) utilize the local routing resources. Please check log message and the sinks of clock nets."
+  ],
+  "timing_ns": {
+    "SWNS": 0.116,
+    "STNS": 0.0,
+    "HWNS": 0.03,
+    "HTNS": 0.0
+  },
+  "board_signoff": false,
+  "hold_margin_0_5ns_met": false,
+  "products": {
+    "bitgen_timing_status.txt": "dae604d7e13aa4c45f8eb023469abababfcc14e0981eba365bfd9dca584f1167",
+    "gate_area.txt": "dd8eef282ec00e373715d68e7fe12a865352bdb478e9a0af94cf376e2541aa8a",
+    "io.txt": "39465f450cb741d03939502852f4e37bab32127b9a1e7d7f8b9f140808932007",
+    "physical_area.txt": "0307d22a6b146a58b12437b2cf9793fbc2e4f41b06a3f62838aceb1262332eec",
+    "placed_timing_paths20.txt": "e1f51b367f3f80198b2eaa6c87a70f4fc28592efb20910bc63fb63066324ba8a",
+    "prior_opt_timing_paths20.txt": "4cc93bafebc0890fff01377dfdc16a0a3de590fa65c66b954f190e28df2ae0e3",
+    "prior_opt_timing_status.txt": "3743c96c0c13e92cd10a74a4922f495a62696a31f089cbb3a2bfd046aa363520",
+    "rebound_placed_timing_paths20.txt": "457dd6ea685f905839952cc51448bf0d0a612b216e78c60f82600d873695431b",
+    "rebound_placed_timing_status.txt": "7506058a3cd5988833ae4484ea2f3d817b4130fa771601f992a4c25ed39dd623",
+    "routed_timing_paths20.txt": "5dae7893d7fe3993f52101f5dbad1dd839d63be6f8b7c8e0b120cf83bf610292",
+    "rtl_area.txt": "81c20d8748e5d8ed9b772f9084eec68f14e4fed6a5ed1480783d6731699d158d",
+    "synthesis_ram_reference.txt": "690e0ba15c6b57f0bfa8aae8f87efd40d0919167733ce6f5c04be8db36768be5",
+    "timing_status.txt": "2fec95948d9f21884f5fbb83284cbf214307ccc5529aa94988de624b7b1ff061",
+    "timing_summary.txt": "621e9cce360dd162e431f2bbd5ce400e1811ff9e917ba3afdb979736937e0ab3",
+    "video_improve_gate.db": "7bd351ae2abeb1a0e088edd36af1bf58a5f38d4db74fe6a56fcc37f631d39cd4",
+    "video_improve_hold_input.db": "4943ac7b7549fc66e5e9865c4c7a6e04a89eda41301c244ec0c121f6855a8e7a",
+    "video_improve_prior_opt.db": "5e4e9d1e2ed5d16154ec069b110565a6b314da5921381cdac3806303fe3c1d5f",
+    "video_improve_routed.db": "a3e3134663057cd9032f27ba5c45ed90fd355a001a0e27b80a8783c118017d9c"
+  },
+  "finished_utc": "2026-10-19T12:08:27.977036+00:00"
 }
