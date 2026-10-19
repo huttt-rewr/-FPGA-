@@ -551,7 +551,7 @@ startup_pulse #(
 // ===================== HDMI 1.4b 发射 =====================
 wire [9:0] vga_ch0,vga_ch1,vga_ch2,vga_clk;
 wire [9:0] svga_ch0,svga_ch1,svga_ch2,svga_clk;
-wire vga_ready,svga_ready;
+wire svga_ready;
 wire unused_ddc_sda;
 wire rst_vga,rst_svga;
 // Mode bits are settled before rst_video releases. Use local synchronized
@@ -560,56 +560,21 @@ wire rst_vga,rst_svga;
 // both HDMI cores must remain reset throughout every runtime clock switch.
 reset_sync reset_vga(.clk(video_clk),.arst(rst_all | mode_video | (mode_done && rst_video)),.rst(rst_vga));
 reset_sync reset_svga(.clk(video_clk),.arst(rst_video | !mode_video),.rst(rst_svga));
-assign axis_s_ready=mode_video?svga_ready:vga_ready;
+assign axis_s_ready=mode_video?svga_ready:1'b1;
 assign tmds_ch0_data=mode_video?svga_ch0:vga_ch0;
 assign tmds_ch1_data=mode_video?svga_ch1:vga_ch1;
 assign tmds_ch2_data=mode_video?svga_ch2:vga_ch2;
 assign tmds_clk_data=mode_video?svga_clk:vga_clk;
-hdmi_1_4b_transmitter_core_wrapper #(
-    .DEVICE                 ( "EG"       ),
-    .HTOTAL                 ( 800        ),
-    .HSA                    ( 96         ),
-    .HFP                    ( 16         ),
-    .HBP                    ( 48         ),
-    .HACTIVE                ( 640        ),
-    .VTOTAL                 ( 525        ),
-    .VSA                    ( 2          ),
-    .VFP                    ( 10         ),
-    .VBP                    ( 33         ),
-    .VACTIVE                ( 480        ),
-    .VIDEO_VIC              ( 1          ),
-    .VIDEO_TPG              ( "Disable"  ),
-    .VIDEO_FORMAT           ( "RGB"      ),
-    .AUDIO_SAMPLE_RATE      ( "48K"      ),
-    .IIC_SCL_DIV            ( 250        )
-) u_hdmi_1_4b_transmitter_core_wrapper(
-    .I_pixel_clk        (video_clk),
-    .I_rst              (rst_vga),
-    .I_edid_read_trig   (edid_trig),
-    .O_edid_read_valid  (edid_valid),
-    .O_edid_read_data   (edid_data),
-
-    .I_axis_s_user      (axis_s_user),
-    .I_axis_s_valid     (axis_s_valid),
-    .I_axis_s_last      (axis_s_last),
-    .I_axis_s_data      (axis_s_data),
-    .O_axis_s_ready     (vga_ready),
-
-    .I_audio_valid      (audio_valid),
-    .I_audio_left_data  (audio_left),
-    .I_audio_right_data (audio_right),
-    .I_acr_valid        (audio_valid),
-    .I_acr_cts          (20'd25000),
-    .I_acr_n            (20'd6144),
-
-    .O_video_locked     (),
-    .O_ddc_scl          (HDMI_DDC_SCL),
-    .IO_ddc_sda         (HDMI_DDC_SDA),
-
-    .O_ch0_tmds_data    (vga_ch0),
-    .O_ch1_tmds_data    (vga_ch1),
-    .O_ch2_tmds_data    (vga_ch2),
-    .O_clk_tmds_data    (vga_clk)
+// Video-only VGA consumes the final composited pixel stream directly.
+hdmi_tmds_vga u_hdmi_640(
+    .clk(video_clk),.rst(rst_vga),.vs(game_vs),.de(game_de),.rgb(game_rgb),
+    .ch0(vga_ch0),.ch1(vga_ch1),.ch2(vga_ch2),.clk_ch(vga_clk)
+);
+// EDID runs on the permanent boot clock and survives runtime mode changes.
+edid_i2c u_edid_i2c(
+    .clk(boot_clk),.rst(rst_boot),.start(edid_trig),
+    .scl(HDMI_DDC_SCL),.sda(HDMI_DDC_SDA),
+    .valid(edid_valid),.data(edid_data),.busy(),.done(),.error()
 );
 
 hdmi_1_4b_transmitter_core_wrapper #(

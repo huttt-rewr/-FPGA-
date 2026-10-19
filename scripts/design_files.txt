@@ -75,3 +75,6 @@ src/modules/video/glass_osd.v
 src/modules/video/audio_visualizer.v
 src/modules/game/snake_game.v
 src/modules/video/video_luma_window_bram.v
+src/modules/hdmi/tmds_encoder.v
+src/modules/hdmi/hdmi_tmds_vga.v
+src/modules/hdmi/edid_i2c.v
