@@ -8,7 +8,10 @@
 |---|---|
 | [src/modules/hdmi/hdmi_phy_wrapper.v](../src/modules/hdmi/hdmi_phy_wrapper.v) | 把HDMI核10bit并行通道送入串行器与差分输出包装。 |
 | [src/modules/hdmi/lane_lvds_10_1.v](../src/modules/hdmi/lane_lvds_10_1.v) | 使用器件ODDR将10bit通道按像素/5倍时钟序列化。 |
-| [src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v](../src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v) | 必要官方加密HDMI编码、控制包、EDID和内嵌音频IP。 |
+| [src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v](../src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v) | 800×600必要官方HDMI视频/内嵌音频IP；640实例已替换，文件仍必须保留。 |
+| [src/modules/hdmi/tmds_encoder.v](../src/modules/hdmi/tmds_encoder.v) | 标准TMDS转换与运行差分平衡；每像素一个10bit码，无BRAM。 |
+| [src/modules/hdmi/hdmi_tmds_vga.v](../src/modules/hdmi/hdmi_tmds_vga.v) | 640纯视频，恢复HS相位，直接编码最终game像素流；无HDMI音频。 |
+| [src/modules/hdmi/edid_i2c.v](../src/modules/hdmi/edid_i2c.v) | 启动域DDC随机读128字节，ACK/NACK/STOP，接原EDID解析器。 |
 | [src/modules/bmp/bmp_read.v](../src/modules/bmp/bmp_read.v) | BMP头/尺寸/行填充校验及相对扇区、缩放调度；不把坏图提交显示。 |
 | [src/modules/video/color_bar.v](../src/modules/video/color_bar.v) | 旧固定VGA彩条/时序参考，正式自适应光栅替代其活动时序。 |
 | [src/modules/memory/frame_fifo_read.v](../src/modules/memory/frame_fifo_read.v) | SDRAM读突发、实际返回计数、显示FIFO库存与欠载帧恢复。 |

@@ -1,0 +1,29 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_ps2_controls.log -lib msim_work -c tb_ps2_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 20.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_right'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_left'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_down'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_up'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'game_enable'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_ps2_controls(fast)
+# run -all 
+# ALL PASS tb_ps2_controls: Set2 mapping, break/typematic policy, A+digit/Esc/timeout, shared KEY/keyboard audio registers
+# ** Note: $finish    : tb_ps2_controls.v(73)
+#    Time: 10190 ns  Iteration: 1  Instance: /tb_ps2_controls
