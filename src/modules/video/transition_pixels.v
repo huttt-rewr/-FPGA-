@@ -19,12 +19,14 @@ module transition_pixels(input clk,input rst,input vs,input de,
     // 0 bypass, 1 fade, 2 translated slide, 3 wipe, 4 circular iris, 5 checker.
     wire [9:0] cx=mode_800?10'd400:10'd320;
     wire [9:0] cy=mode_800?10'd300:10'd240;
-    wire [9:0] dx=(x>=cx)?x-cx:cx-x;
-    wire [9:0] dy=(y>=cy)?y-cy:cy-y;
-    wire [19:0] dx_square=dx*dx,dy_square=dy*dy;
-    wire [20:0] distance_square={1'b0,dx_square}+{1'b0,dy_square};
+    // Active VGA/SVGA pixels are at most 400/300 pixels from the center.
+    // Nine-bit magnitudes retain every visible pixel and avoid unused high bits.
+    wire [8:0] dx=(x>=cx)?x-cx:cx-x;
+    wire [8:0] dy=(y>=cy)?y-cy:cy-y;
+    wire [17:0] dx_square=dx*dx,dy_square=dy*dy;
+    wire [18:0] distance_square={1'b0,dx_square}+{1'b0,dy_square};
     wire iris_cover=(fade_level==0) ||
-                    ((fade_level<32) && distance_square>{3'd0,radius_square(fade_level,mode_800)});
+                    ((fade_level<32) && distance_square>{1'b0,radius_square(fade_level,mode_800)});
     // A checker appears halfway through; each 32-pixel tile fills monotonically.
     // Changing only checker frequency would leave half the frame exposed at handoff.
     wire [5:0] progress=6'd32-fade_level;
