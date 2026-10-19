@@ -1,0 +1,29 @@
+{
+  "archive": "board_acceptance_640.zip",
+  "bytes": 448431,
+  "sha256": "e94ff9b8ba792049333bdc9fbd8a90f618092ff7f122df4bffc59af1e5b13243",
+  "board_test": "pending",
+  "part2_started": false,
+  "files": {
+    "PACKAGE_README.md": "db8299fd0b81defbe267b597d94e4a9c3fbabfec01580e3edacfcf6a819173bc",
+    "BOARD_RESULTS.md": "1387cc8932c766579be3ce9eaa83628844adfabbd37fc86a9d3d964a57087be7",
+    "STATUS.json": "729d4774cd70b7ed921ca2c9c87d2cb9675227703835480e2daa123bf7e4d628",
+    "media_manifest.json": "aaeffcfca5d016705094f382e837c75c7e26d8ce2cd55f1da6750bd16d417110",
+    "media_preview.png": "f315cd380fbfee18214a802936d6a64d47c6d48b27ba9832dfd993a034e6a3fb",
+    "sd_files/BLUE.bmp": "79a153a6601a7f59379e556a3db05fdbf41f97848c451010305cafbd74339bb6",
+    "sd_files/GREEN.bmp": "f3215df07e5d55bfcee02257ae3677ae33a68bb9d68a1a044c8023b9eb69ee9f",
+    "sd_files/GRID640.bmp": "2f652bdcee7f1b002b19797ddcb09bf82255ac4909784ed3e02f65cc8e185a15",
+    "sd_files/GRID800.bmp": "2181670abb6a23d5d8195b0cee1d7296d976ef512bcee89cb022a6a09dcf5562",
+    "sd_files/PORTRAIT.bmp": "7e450a1b481d83ae986ea55a4dfa45a5eba29e68d5df99868ac516456f134780",
+    "sd_files/RED.bmp": "671bcadcfdeda2639266ef9113070219b8f27da15125f904a4c40791cb785c1e",
+    "sd_files/SMALL.bmp": "90f2b02897a9e0c0e8bb07592b6b9c29e2ffd5e4fa4806468b0af1d6e7493e93",
+    "sd_files/TONE.wav": "9a3a01138323a11f76a65c634a0c252fa78db773995d35a1c8e33398dc19f90e",
+    "candidate/after_bit_timing_paths.txt": "bfc2a53c04aa915274754dd685ecad6d080149c42c80d241951d24bfcd2dc274",
+    "candidate/after_bit_timing_status.txt": "1c9f3445c3252dbcfd674ce2de86d4c16df864802f479057425a3a47c760af6b",
+    "candidate/before_bit_timing_paths.txt": "d8efbb9857791432c9036cffbf8e61eeed4b1fe4392fa64cd2a257acaf109783",
+    "candidate/before_bit_timing_status.txt": "1c9f3445c3252dbcfd674ce2de86d4c16df864802f479057425a3a47c760af6b",
+    "candidate/bitgen.log": "d3892736114a4b8989959372cdecb244db9d4f7a76f86a8d261ab8b391096a9c",
+    "candidate/hdmi_640_plain_800_audio.bit": "c4981724248155ccba2226994ec3d1a9d7a6a118175ec2f7c48d6bf89c22646d",
+    "candidate/manifest.json": "cb5990564755fbdea5377c1013a6e9f4bbe0dab3f764242c1118abf0fa4f60e2"
+  }
+}

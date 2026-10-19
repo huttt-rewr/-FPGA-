@@ -1,0 +1,96 @@
+{
+  "format": "ordinary_files_for_FAT32_root",
+  "device_writes": false,
+  "image_order": "FAT directory entry order; never infer index from filename",
+  "files": [
+    {
+      "name": "RED.bmp",
+      "role": "pure_red",
+      "width": 640,
+      "height": 480,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 921654,
+      "sha256": "671bcadcfdeda2639266ef9113070219b8f27da15125f904a4c40791cb785c1e"
+    },
+    {
+      "name": "GREEN.bmp",
+      "role": "pure_green",
+      "width": 640,
+      "height": 480,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 921654,
+      "sha256": "f3215df07e5d55bfcee02257ae3677ae33a68bb9d68a1a044c8023b9eb69ee9f"
+    },
+    {
+      "name": "BLUE.bmp",
+      "role": "pure_blue",
+      "width": 640,
+      "height": 480,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 921654,
+      "sha256": "79a153a6601a7f59379e556a3db05fdbf41f97848c451010305cafbd74339bb6"
+    },
+    {
+      "name": "GRID640.bmp",
+      "role": "geometry_scale",
+      "width": 640,
+      "height": 480,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 921654,
+      "sha256": "2f652bdcee7f1b002b19797ddcb09bf82255ac4909784ed3e02f65cc8e185a15"
+    },
+    {
+      "name": "GRID800.bmp",
+      "role": "geometry_scale",
+      "width": 800,
+      "height": 600,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 1440054,
+      "sha256": "2181670abb6a23d5d8195b0cee1d7296d976ef512bcee89cb022a6a09dcf5562"
+    },
+    {
+      "name": "SMALL.bmp",
+      "role": "geometry_scale",
+      "width": 320,
+      "height": 240,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 230454,
+      "sha256": "90f2b02897a9e0c0e8bb07592b6b9c29e2ffd5e4fa4806468b0af1d6e7493e93"
+    },
+    {
+      "name": "PORTRAIT.bmp",
+      "role": "geometry_scale",
+      "width": 360,
+      "height": 640,
+      "bits": 24,
+      "dib_size": 40,
+      "pixel_offset": 54,
+      "bytes": 691254,
+      "sha256": "7e450a1b481d83ae986ea55a4dfa45a5eba29e68d5df99868ac516456f134780"
+    },
+    {
+      "name": "TONE.wav",
+      "role": "440Hz 2s / silence 1s / 880Hz 2s / silence 1s",
+      "bytes": 576044,
+      "data_offset": 44,
+      "pcm_bytes": 576000,
+      "seconds": 6.0,
+      "rate": 48000,
+      "channels": 1,
+      "bits": 16,
+      "sha256": "9a3a01138323a11f76a65c634a0c252fa78db773995d35a1c8e33398dc19f90e"
+    }
+  ]
+}

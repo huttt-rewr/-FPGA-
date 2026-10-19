@@ -1,0 +1,14 @@
+{
+  "stage": "part1_board_acceptance_pending",
+  "desktop_preparation": "complete",
+  "checks": {
+    "vga_image_and_overlays": "pending",
+    "svga_image_and_audio": "pending",
+    "edid_supported_800": "pending",
+    "edid_vga_only_fallback": "pending",
+    "runtime_switch_and_reset": "pending"
+  },
+  "part2_started": false,
+  "board_signoff": false,
+  "reason": "Task requires all four physical checks before Part 2; no physical observations are available in this session."
+}

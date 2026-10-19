@@ -1,5 +1,7 @@
 # 构建状态
 
+> **2026-10-19 上板验收准备：已生成匹配当前源码的候选 bit，尚未下载或完成实板验收。** 635,444字节；生成前后SWNS +0.044ns、HWNS +0.024ns、STNS/HTNS均0，原80源/101项回归基线不变。已准备7份BMP、1份WAV和四项实板记录；**按本次任务书，四项实板通过前不进入新转场/变焦、FFT、raw视频。** 见 [逐步验收教程](BOARD_ACCEPTANCE_640_20261019.md)、[本次准备结果](../reports/board_accept_20261019/RESULT.md)、[候选bit](../reports/board_accept_20261019/candidate/hdmi_640_plain_800_audio.bit)。默认640无HDMI音频，实际800保留图声。
+
 > **2026-10-19 本轮：640 加密实例已替换为明文 TMDS 纯视频核，800 保留原 HDMI 图声；独立 EDID 协商保留。** 静态检查80源/40IO、101项ModelSim及综合/布局布线/内部STA通过。物理LUT 15,785、BRAM 41；SWNS +0.044ns、HWNS +0.024ns，STNS/HTNS均0。资源降低但setup裕量较上一版减少；未达到整体+0.5ns。**默认640不发送HDMI音频，听WAV需R切到实际800×600；EDID回退640也无声。** 未生成本轮bit、未上板，外部IO和既有物理警告仍待核对。详见 [本轮说明](HDMI_SELFWRITE_640_20261019.md) 与 [实际报告](../reports/hdmi_selfwrite_20261019/RESULT.md)。
 
 > **历史：2026-10-19 替换640核前的时序优化：98项ModelSim全通过，综合/布局布线及内部STA通过。** SWNS +0.131ns、STNS 0.000ns、HWNS +0.022ns、HTNS 0.000ns。WAV接收寄存级与独立会话增量布线/hold修复已落地；100MHz、全部功能、KEY/SW、官方IP和70位状态布局保留。未生成本轮新bit、未上板；外部IO与既有物理警告仍待核对，未达到整体+0.5ns。[本轮原始结果](../reports/timing_close_20261018/RESULT.md)。此前各段数值只属于各自冻结历史版本。

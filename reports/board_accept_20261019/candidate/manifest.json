@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-10-19T08:51:03.408417+00:00",
+  "source_commit": "f32e7c90d465575e0713829526becc14117a793f",
+  "device": "EG4S20BG256",
+  "speed_reported": "NA",
+  "source_build_manifest_sha256": "585df83c690a7bcb89fc0dcbd190cd786062a17b8c4d045c63741a78695f832f",
+  "database_sha256": "7a29118ed4f6ef99f466b83c1764736b7ec278716f0103f0190524a7be93b0ef",
+  "script_sha256": "e64e7343c0141d7441e9d18d39bb3ca7c93e8db8999e4f2ea408fb2548822146",
+  "bitstream": "hdmi_640_plain_800_audio.bit",
+  "bytes": 635444,
+  "sha256": "c4981724248155ccba2226994ec3d1a9d7a6a118175ec2f7c48d6bf89c22646d",
+  "timing_ns": {
+    "SWNS": 0.044,
+    "STNS": 0.0,
+    "HWNS": 0.024,
+    "HTNS": 0.0
+  },
+  "regression_count": 101,
+  "vga_sync_control": "{vs,hs}; negative HS/VS",
+  "vga_next_h_on_frame_start": 1,
+  "board_test": "pending",
+  "board_signoff": false,
+  "programmed_board": false,
+  "programmed_flash": false,
+  "wrote_sd_card": false,
+  "part2_allowed": false,
+  "evidence": {
+    "after_bit_timing_paths.txt": "bfc2a53c04aa915274754dd685ecad6d080149c42c80d241951d24bfcd2dc274",
+    "after_bit_timing_status.txt": "1c9f3445c3252dbcfd674ce2de86d4c16df864802f479057425a3a47c760af6b",
+    "before_bit_timing_paths.txt": "d8efbb9857791432c9036cffbf8e61eeed4b1fe4392fa64cd2a257acaf109783",
+    "before_bit_timing_status.txt": "1c9f3445c3252dbcfd674ce2de86d4c16df864802f479057425a3a47c760af6b",
+    "bitgen.log": "d3892736114a4b8989959372cdecb244db9d4f7a76f86a8d261ab8b391096a9c",
+    "hdmi_640_plain_800_audio.bit": "c4981724248155ccba2226994ec3d1a9d7a6a118175ec2f7c48d6bf89c22646d"
+  }
+}
