@@ -44,6 +44,7 @@ try {
  $files += @('../src/modules/hdmi/tmds_encoder.v','../src/modules/hdmi/hdmi_tmds_vga.v','../src/modules/hdmi/edid_i2c.v')
  $mergeTests += @('tb_tmds_encoder','tb_hdmi_tmds_vga','tb_edid_i2c')
  $mergeTests += @('tb_transition_effects')
+ $mergeTests += @('tb_remote_uart')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }

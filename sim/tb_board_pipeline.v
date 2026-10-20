@@ -15,7 +15,7 @@ module tb_board_pipeline;
  picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,ac,py,ay);
  picture_gamma gamma(clk,rst,av,ad,ax,ac,en,gv,gd,gx,gc,ay,gy);
  transition_pixels fx(clk,rst,gv,gd,gx,gc,{1'b0,effect},6'd16,offset,ev,ed,ec,gy,mode);
- caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode);
+ caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode,8'd0,24'd0,1'b0);
  status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1)) panel(
   .clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(overlay),
   .auto_play(1'b0),.image_index(2'd0),.image_count(3'd4),.volume(5'd8),.mute(1'b1),

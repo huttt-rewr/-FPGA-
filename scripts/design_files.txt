@@ -78,3 +78,5 @@ src/modules/video/video_luma_window_bram.v
 src/modules/hdmi/tmds_encoder.v
 src/modules/hdmi/hdmi_tmds_vga.v
 src/modules/hdmi/edid_i2c.v
+src/modules/control/time_cmd.v
+src/modules/control/remote_controls.v

@@ -104,6 +104,11 @@ always @(posedge sd_card_clk or posedge rst_sd) begin
     else video_overflow_sd <= {video_overflow_sd[0],video_overflow};
 end
 wire cmd_next,cmd_prev,cmd_toggle;
+wire pc_next,pc_prev,pc_toggle;
+wire [23:0] remote_time_bcd;
+wire [7:0] remote_time_seq;
+wire remote_time_set;
+wire [32:0] time_video;
 wire pixel_write_ready;
 wire [11:0] image_width,image_height;
 wire [3:0] contrast;
@@ -640,13 +645,15 @@ hdmi_phy_wrapper #(
     .O_tmds_clk_p       (HDMI_CLK_P)
 );
 
-// PS/2 and physical KEY/SW share the existing control consumers. Legacy UART
-// and IR sources remain disabled; no duplicate playback or audio state.
-assign uart_tx_pin=1'b1;
-assign tx_overflow=1'b0;
-assign cmd_next=board_next || kb_next;
-assign cmd_prev=kb_prev;
-assign cmd_toggle=board_toggle || kb_toggle;
+// Physical keys, keyboard and remote commands share the same playback consumer.
+assign cmd_next=board_next || kb_next || pc_next;
+assign cmd_prev=kb_prev || pc_prev;
+assign cmd_toggle=board_toggle || kb_toggle || pc_toggle;
+remote_controls remote(.clk(sd_card_clk),.rst(rst_controls),.rx(uart_rx_pin),
+ .tx(uart_tx_pin),.overflow(tx_overflow),.next_pulse(pc_next),.prev_pulse(pc_prev),.toggle_pulse(pc_toggle),
+ .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set));
+cdc_snapshot #(.WIDTH(33)) time_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data({remote_time_set,remote_time_seq,remote_time_bcd}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(time_video));
 assign osd_enable=osd_on;
 assign test_pattern=1'b0;
 // Cycle the three built-in slogans with the displayed image index.
@@ -727,6 +734,7 @@ audio_visualizer #(.BRAM_HISTORY(1)) waveform(.clk(video_clk),.rst(rst_video),.v
  .rgb(glass_rgb),.audio_valid(audio_valid),.audio_left(audio_left),.enable(video_osd),
  .out_vs(wave_vs),.out_de(wave_de),.out_rgb(wave_rgb));
 caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(wave_vs),.de(wave_de),
+ .time_set(time_video[32]),.time_seq(time_video[31:24]),.time_bcd(time_video[23:0]),
  .rgb(wave_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));

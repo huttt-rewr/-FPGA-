@@ -5,7 +5,8 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input scroll_enable,input [1:0] slogan_select,
     input [1:0] transition_mode,
-    output reg out_vs,output reg out_de,output reg [23:0] out_rgb,input mode_800);
+    output reg out_vs,output reg out_de,output reg [23:0] out_rgb,input mode_800,
+    input [7:0] time_seq,input [23:0] time_bcd,input time_set);
     function [7:0] char40;
         input [319:0] text;input [5:0] index;
         reg [319:0] reversed;integer k;
@@ -22,15 +23,23 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     reg [25:0] second_count;
     reg [3:0] sec_units,sec_tens,min_units,min_tens,hour_units,hour_tens;
     reg [23:0] displayed_time;
+    reg [7:0] last_seq;
+    reg wall_clock,displayed_wall;
+    wire load_time=(time_set===1'b1) && (!wall_clock || time_seq!=last_seq);
     reg [9:0] scroll_x;
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             vs_d<=1;enabled<=0;scrolling<=1;selected<=0;selected_mode<=1;
             second_count<=0;sec_units<=0;sec_tens<=0;min_units<=0;min_tens<=0;
-            hour_units<=0;hour_tens<=0;displayed_time<=0;scroll_x<=0;
+            hour_units<=0;hour_tens<=0;displayed_time<=0;scroll_x<=0;last_seq<=0;wall_clock<=0;displayed_wall<=0;
         end else begin
             vs_d<=vs;
-            if(second_count==((ADAPTIVE && mode_800)?40000000:CLK_HZ)-1) begin
+            if(load_time)begin
+                last_seq<=time_seq;wall_clock<=1;second_count<=0;
+                sec_units<=time_bcd[3:0];sec_tens<=time_bcd[7:4];
+                min_units<=time_bcd[11:8];min_tens<=time_bcd[15:12];
+                hour_units<=time_bcd[19:16];hour_tens<=time_bcd[23:20];
+            end else if(second_count==((ADAPTIVE && mode_800)?40000000:CLK_HZ)-1) begin
                 second_count<=0;
                 if(sec_units!=9) sec_units<=sec_units+1'b1;
                 else begin
@@ -44,7 +53,8 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
                             if(min_tens!=5) min_tens<=min_tens+1'b1;
                             else begin
                                 min_tens<=0;
-                                if(hour_units!=9) hour_units<=hour_units+1'b1;
+                                if(wall_clock && hour_tens==2 && hour_units==3)begin hour_units<=0;hour_tens<=0;end
+                                else if(hour_units!=9) hour_units<=hour_units+1'b1;
                                 else begin
                                     hour_units<=0;
                                     hour_tens<=(hour_tens==9)?0:hour_tens+1'b1;
@@ -57,7 +67,8 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
             if(frame_start) begin
                 enabled<=enable;scrolling<=scroll_enable;
                 selected<=slogan_select;selected_mode<=transition_mode;
-                displayed_time<={hour_tens,hour_units,min_tens,min_units,sec_tens,sec_units};
+                displayed_time<=load_time?time_bcd:{hour_tens,hour_units,min_tens,min_units,sec_tens,sec_units};
+                displayed_wall<=wall_clock || load_time;
                 if(selected!=slogan_select) scroll_x<=0;
                 else if(enable && scroll_enable) scroll_x<=(scroll_x==639)?0:scroll_x+1'b1;
             end
@@ -96,7 +107,7 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     reg [7:0] clock_char;
     always @* begin
         case(clock_x[7:4])
-            0:clock_char="U";1:clock_char="P";2:clock_char=" ";
+            0:clock_char=displayed_wall?"B":"U";1:clock_char=displayed_wall?"J":"P";2:clock_char=" ";
             3:clock_char="0"+displayed_time[23:20];
             4:clock_char="0"+displayed_time[19:16];5:clock_char=":";
             6:clock_char="0"+displayed_time[15:12];

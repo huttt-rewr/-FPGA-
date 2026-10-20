@@ -13,7 +13,7 @@ module tb_effects_pipeline;
  video_coordinates coords(clk,rst,vs,de,px,py);
  picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,adjusted,py,ay);
  transition_pixels fx(clk,rst,av,ad,ax,adjusted,{1'b0,mode},level,offset,ev,ed,ec,ay,1'b0);
- caption_overlay captions(clk,rst,ev,ed,ec,captions_on,1'b1,2'd0,mode,cv,cd,cc);
+ caption_overlay captions(clk,rst,ev,ed,ec,captions_on,1'b1,2'd0,mode,cv,cd,cc,1'b0,8'd0,24'd0,1'b0);
  status_osd #(.ENHANCED_UI(1),.PIPELINED(1)) panel(.out_vs(ov),.out_de(od),.clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(captions_on),
   .auto_play(1'b1),.image_index(2'd1),.image_count(3'd4),.volume(5'd8),
   .mute(1'b1),.busy(1'b0),.error(1'b0),.edid_ok(1'b1),.result(oc),.pixel_x(),.pixel_y());

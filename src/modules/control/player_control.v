@@ -1,5 +1,5 @@
 // Commands in SD clock domain. Lowercase ASCII, one byte per command.
-module player_control(input clk,input rst,input [7:0] uart_data,input uart_valid,
+module player_control #(parameter PC_COMMANDS=0)(input clk,input rst,input [7:0] uart_data,input uart_valid,
     input [7:0] ir_command,input ir_valid,
     output reg next_pulse,output reg prev_pulse,output reg toggle_pulse,
     output reg [4:0] volume,output reg mute,output reg osd_enable,
@@ -12,7 +12,7 @@ module player_control(input clk,input rst,input [7:0] uart_data,input uart_valid
         cmd=uart_valid ? uart_data : 0;
         if(!uart_valid && ir_valid) begin
             case(ir_command)
-                8'h15:cmd="p";8'h40:cmd="n";8'h44:cmd="b";
+                8'h15:cmd=PC_COMMANDS?"p":"b";8'h40:cmd="n";8'h44:cmd=PC_COMMANDS?"b":"p";
                 8'h46:cmd="+";8'h16:cmd="-";8'h45:cmd="m";8'h47:cmd="o";
                 default:cmd=0;
             endcase
@@ -30,8 +30,8 @@ module player_control(input clk,input rst,input [7:0] uart_data,input uart_valid
                 reply_valid<=uart_valid;reply<="K";
                 case(cmd)
                     "n":next_pulse<=1;
-                    "b":prev_pulse<=1;
-                    "p":toggle_pulse<=1;
+                    "b":if(PC_COMMANDS)toggle_pulse<=1;else prev_pulse<=1;
+                    "p":if(PC_COMMANDS)prev_pulse<=1;else toggle_pulse<=1;
                     "+":if(volume<16) volume<=volume+1'b1;
                     "-":if(volume>0) volume<=volume-1'b1;
                     "m":mute<=~mute;

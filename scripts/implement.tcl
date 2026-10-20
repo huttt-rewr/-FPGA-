@@ -13,6 +13,7 @@ update_timing
 # Prefer LUT pairs: avoid wasting slice sites beside distributed line RAM.
 set_param place pack_mode more_lut_pair
 set_param place pr_strategy 1
+set_param place seed 25
 place
 # The registered SDC survives timer rebuilds. Refresh before reporting and
 # optimizing, without adding duplicate generated-clock definitions.
@@ -21,6 +22,8 @@ report_timing_status -file reports/rebound_placed_timing_status.txt
 report_timing_summary -file reports/rebound_placed_timing_paths20.txt -ep_num 20 -path_num 1
 # Use the last legal flow. The directed replication experiment caused
 # routing conflicts; the WAV receive register now cuts that path in RTL.
+# Documented router effort for congested local connections.
+set_param route effort routability
 route
 update_timing -mode final
 # Preserve routed diagnostics before hold repair.
