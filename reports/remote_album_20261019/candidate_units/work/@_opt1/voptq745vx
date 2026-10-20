@@ -1,0 +1,254 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VnUga26PO1^OOf2gPN8iPz1
+04 15 4 work tb_auto_enhance fast 0
+=1-bcfce7e1723c-6ad75e8c-183-f3dc
+Z1 o-quiet -auto_acc_if_foreign -work ../work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+VbzQMhmhzAahDI7]<f^d@@1
+04 14 4 work tb_album_timer fast 0
+=1-bcfce7e1723c-6ad75e90-b6-da08
+R1
+n@_opt1
+R2
+vauto_enhance
+IelNcM@2V`I89O@oFVfaJN1
+V9L0_]9gN9TK^MbY;B4C1R0
+R3
+Z4 w1792499337
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance.v
+L0 3
+Z5 OL;L;10.1c;51
+r1
+31
+Z6 !s108 1792499337.934000
+Z7 !s107 E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_zh_overlay.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_auto_enhance.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_timer.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_clock.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\control\slideshow_timer.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_overlay.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_font_rom.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\osd_char_rom.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\caption_overlay.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\video_coordinates.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance_scale.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance.v|
+Z8 !s90 -work|E:\fpga\reports\remote_album_20261019\candidate_units\work|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance_scale.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\video_coordinates.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\caption_overlay.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\osd_char_rom.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_font_rom.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_overlay.v|E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\control\slideshow_timer.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_clock.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_timer.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_auto_enhance.v|E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_zh_overlay.v|
+Z9 o-work {E:\fpga\reports\remote_album_20261019\candidate_units\work} -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 294JQKLnT8_3^[A2DPdeJ3
+!i10b 1
+!s85 0
+vauto_enhance_scale
+I1>a0@dLlOf@PW5k2l27872
+V2:;^hWUnOPVcda:VljWUj1
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance_scale.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\auto_enhance_scale.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 O;hmClWai`Z4RP^]`;:Sa1
+!i10b 1
+!s85 0
+vcaption_overlay
+IkJ<mjXnjhPIRW[zbR?8dE2
+VHO`>`jmJKBb<=3Y[h`in60
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\caption_overlay.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\caption_overlay.v
+L0 4
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 Q8YfEFAzkNO>NUbJH<YJU1
+!i10b 1
+!s85 0
+vosd_char_rom
+I<Z8[Qm:KHOA5n<W=SEj7z2
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R3
+w1790409879
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\osd_char_rom.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\osd_char_rom.v
+L0 14
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 afh6>F]PVIEdhj3W70:M_3
+!i10b 1
+!s85 0
+vslideshow_timer
+I18X7K;`@be=JQ5gC_Y9QA0
+V<R_O`GIfD]D=8=UXABiRE3
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\control\slideshow_timer.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\control\slideshow_timer.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 Vne;Y=z:7`[dagVe8TUi]2
+!i10b 1
+!s85 0
+vtb_album_clock
+IGC]Ccik>]fY4aUWeX?8jX3
+VVWToMZ6fRBc<45:1h3>hC3
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_clock.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_clock.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 @n]hUcOM3dzUG;U0c[Rb40
+!i10b 1
+!s85 0
+vtb_album_timer
+IRgA1iU[jC?NP_`7D<AWD?1
+VO5zK4;=86hQZ9<6?1]c_Y0
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_timer.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_album_timer.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 ?VG]1abm0^AV[ZJclfAZN0
+!i10b 1
+!s85 0
+vtb_auto_enhance
+IF2L;QYF]4dz`^R>O>`V>K2
+VkKTz@FhXP^fQHbO=BL5L60
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_auto_enhance.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_auto_enhance.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 ljh8h5eM6lWj`1o6AlU9S1
+!i10b 1
+!s85 0
+vtb_zh_overlay
+Iiz[]3kjICkDdHHJ15k5Vn2
+VB9_5gjcDKo2[mA2VS:X:52
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_zh_overlay.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\sim\tb_zh_overlay.v
+L0 2
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 X<ff``EhoYQmV3?`68z]H0
+!i10b 1
+!s85 0
+vvideo_coordinates
+IPQ6]TE=S_`3ldK0XSh<el0
+Vd30A[z2mOgG5AJ76zA;ZC3
+R3
+Z10 w1791648393
+Z11 8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\video_coordinates.v
+Z12 FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\video\video_coordinates.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 2O;1iT=<c;H;RB5i0FfI21
+!i10b 1
+!s85 0
+vviewport_coordinates
+IdB]O2oD8?hO`I1EWMfIYZ0
+V50z[NI;67@9<bHHc3Y=L>1
+R3
+R10
+R11
+R12
+L0 22
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 ?;<1`lSIJRd:GmUY:B=QT1
+!i10b 1
+!s85 0
+vzh_font_rom
+IzHCRijoUi?YCWZ4_PT=fE3
+VJ_Ng=LzYKUY1fc@Lc`@ck2
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_font_rom.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_font_rom.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 bbF=WaRBILVX9PfH?oKI:3
+!i10b 1
+!s85 0
+vzh_overlay
+Ii7nXX0BTT^68;G_b6kaIl3
+V6nU`z[3kGAYC<kB_2=4712
+R3
+R4
+8E:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_overlay.v
+FE:\fpga\reports\remote_album_20261019\candidate_units\src\modules\osd\zh_overlay.v
+L0 3
+R5
+r1
+31
+R6
+R7
+R8
+R9
+!s100 Bk][?flUm<CcI`G_jJ3?h2
+!i10b 1
+!s85 0

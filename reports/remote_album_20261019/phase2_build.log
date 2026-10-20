@@ -1,0 +1,5 @@
+ALL PASS static_check: 82 sources, 40 IO bits, unique pins, matching TD entries/refresh headers
+Running synth.tcl
+Running implement.tcl
+Running finalize_hold.tcl
+{"SWNS": 0.142, "STNS": 0.0, "HWNS": 0.024, "HTNS": 0.0}

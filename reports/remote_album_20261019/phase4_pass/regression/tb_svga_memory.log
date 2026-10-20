@@ -1,0 +1,37 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_memory.log -lib msim_work -c tb_svga_memory 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 45, found 42.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'debug_read_status'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mem_status'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'rd_frame_invalid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_memory(fast)
+# run -all 
+# ALL PASS tb_svga_memory: 480000 continuous display reads plus 64000 background writes, flipped addresses, bounded six-cycle SDRAM model
+# ** Note: $finish    : tb_svga_memory.v(64)
+#    Time: 16552528 ns  Iteration: 1  Instance: /tb_svga_memory

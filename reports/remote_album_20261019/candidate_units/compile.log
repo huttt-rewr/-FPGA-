@@ -1,0 +1,21 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module auto_enhance
+-- Compiling module auto_enhance_scale
+-- Compiling module video_coordinates
+-- Compiling module viewport_coordinates
+-- Compiling module caption_overlay
+-- Compiling module osd_char_rom
+-- Compiling module zh_font_rom
+-- Compiling module zh_overlay
+-- Compiling module slideshow_timer
+-- Compiling module tb_album_clock
+-- Compiling module tb_album_timer
+-- Compiling module tb_auto_enhance
+-- Compiling module tb_zh_overlay
+
+Top level modules:
+	video_coordinates
+	tb_album_clock
+	tb_album_timer
+	tb_auto_enhance
+	tb_zh_overlay

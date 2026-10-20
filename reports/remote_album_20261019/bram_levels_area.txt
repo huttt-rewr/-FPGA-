@@ -1,0 +1,41 @@
+standard
+***Report Model: auto_enhance Device: EG4S20BG256***
+
+IO Statistics
+#IO                        95   out of    188   50.53%
+  #input                   49
+  #output                  46
+  #inout                    0
+
+LUT Statistics
+#Total_luts               115
+  #lut4                    88
+  #lut5                    27
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      307   out of  19600    1.57%
+#reg                      251   out of  19600    1.28%
+#bram                       3   out of     64    4.69%
+  #bram9k                   3
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        3   out of     29   10.34%
+#pad                       95   out of    188   50.53%
+  #ireg                    47
+  #oreg                    46
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++--------------------------------------------------------------------------+
+|Instance |Module             |lut     |ripple  |seq     |bram    |dsp     |
++--------------------------------------------------------------------------+
+|top      |auto_enhance       |211     |96      |344     |3       |3       |
+|  bscale |auto_enhance_scale |0       |0       |0       |1       |0       |
+|  gscale |auto_enhance_scale |0       |0       |0       |1       |0       |
+|  rscale |auto_enhance_scale |0       |0       |0       |1       |0       |
++--------------------------------------------------------------------------+

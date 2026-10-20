@@ -1,0 +1,210 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+Vcf9]oW1OP]mzL8CdA]ioz1
+04 12 4 work tb_remote_ir fast 0
+=1-bcfce7e1723c-6ad7555e-374-d1dc
+o-quiet -auto_acc_if_foreign -work reports/remote_album_20261019/ir_smoke_work
+n@_opt
+OL;O;10.1c;51
+vfps_control
+IHaV0_W2zLJHP:g:o50DOE2
+VAn[Se<Z`R=iM]_BG`J;W;0
+Z1 dE:\fpga
+w1792325175
+8src/modules/control/fps_control.v
+Fsrc/modules/control/fps_control.v
+L0 4
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792496988.498000
+Z4 !s107 sim/tb_remote_ir.v|src/modules/control/uart_tx_queue.v|src/modules/control/uart_tx.v|src/modules/control/uart_rx.v|src/modules/control/time_cmd.v|src/modules/control/switch_controls.v|src/modules/control/remote_controls.v|src/modules/control/player_control.v|src/modules/control/picture_controls.v|src/modules/control/ir_nec_rx.v|src/modules/control/fps_control.v|
+Z5 !s90 -work|reports/remote_album_20261019/ir_smoke_work|src/modules/control/fps_control.v|src/modules/control/ir_nec_rx.v|src/modules/control/picture_controls.v|src/modules/control/player_control.v|src/modules/control/remote_controls.v|src/modules/control/switch_controls.v|src/modules/control/time_cmd.v|src/modules/control/uart_rx.v|src/modules/control/uart_tx.v|src/modules/control/uart_tx_queue.v|sim/tb_remote_ir.v|
+Z6 o-work reports/remote_album_20261019/ir_smoke_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 Ih6NUe^Nog03g6I=3<[lQ2
+!s85 0
+vir_nec_rx
+IhV2<8]Hn>9K^g@LnH3RRE1
+V^m4j3P7z0^34V8fC;Udml3
+R1
+Z7 w1791462972
+8src/modules/control/ir_nec_rx.v
+Fsrc/modules/control/ir_nec_rx.v
+L0 16
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 HcT`;3aQReifk]e@VYzjX3
+!s85 0
+vpicture_controls
+IWzhTm2VLU@3IK>_Va5Xkk2
+V0UKN1Oa@4J0FH:fkC[i?10
+R1
+w1792168808
+8src/modules/control/picture_controls.v
+Fsrc/modules/control/picture_controls.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 MVWd:3Qhog`A=H1EiF[GT1
+!s85 0
+vplayer_control
+I1I<1=[m]fJIKB8M44MIMZ3
+V;3Y0zhGC>fRf=zI14l0013
+R1
+Z8 w1792417144
+8src/modules/control/player_control.v
+Fsrc/modules/control/player_control.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 _WPYj:?OLeYS^74<VQ;I;2
+!s85 0
+vremote_controls
+IZ73k^KPf931O9ee1R>Y651
+VfgEKd@J>YC0JSF^DJ1RP01
+R1
+Z9 w1792496905
+8src/modules/control/remote_controls.v
+Fsrc/modules/control/remote_controls.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 >j4GZLRVK:dg^]jDPYAXG3
+!s85 0
+vswitch_controls
+I0g_VhhIPF9[AM39MdFX^=2
+VXOnJUA@^PB`Cia1Qz1;Ff0
+R1
+w1791526104
+8src/modules/control/switch_controls.v
+Fsrc/modules/control/switch_controls.v
+L0 4
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 >4RIE=GF3[L>4Jl1DLDod2
+!s85 0
+vtb_remote_ir
+ICRNz`4FW[jR:kDWXBcXh13
+Vb>J46[hXWoU1iC9B6Q7QW3
+R1
+R9
+8sim/tb_remote_ir.v
+Fsim/tb_remote_ir.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 X;LEd`NcR?b9:8YSL=n8M2
+!s85 0
+vtime_cmd
+Ic]WLV<=RzF?VXmDdlEW=[1
+VMPciWA`Faf;n9NmRWGg1>2
+R1
+R8
+8src/modules/control/time_cmd.v
+Fsrc/modules/control/time_cmd.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 e=:h0ceU@]R<mCQ3[1O?l2
+!s85 0
+vuart_rx
+IOF1QQgEcgE_W55=_>L_7K2
+VLhzRX@iWR_F]j>^5fG71k3
+R1
+R7
+8src/modules/control/uart_rx.v
+Fsrc/modules/control/uart_rx.v
+L0 11
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 363QYY;_:T9<9TDac_>922
+!s85 0
+vuart_tx
+IeK7cjFT2<3l]AgzjohfnA0
+VCUbLP?`JIVQOaz3JV5Tmg2
+R1
+w1790587830
+8src/modules/control/uart_tx.v
+Fsrc/modules/control/uart_tx.v
+L0 1
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 j1DDNKcNbQ7KK`bmnXXI`3
+!s85 0
+vuart_tx_queue
+IeYB4X]<d@g9C@VP7QO2ZP0
+VCNhKB9j`EDIQ4zE0<30[@2
+R1
+w1790931525
+8src/modules/control/uart_tx_queue.v
+Fsrc/modules/control/uart_tx_queue.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 =Z1]ecKlJ@mmgQll[^FRI3
+!s85 0

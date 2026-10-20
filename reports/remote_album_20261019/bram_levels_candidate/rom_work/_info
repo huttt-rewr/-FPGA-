@@ -1,0 +1,110 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga\reports\remote_album_20261019\bram_levels_candidate
+T_opt
+Vea^OO_boPEfliNPOf:6MF1
+04 15 4 work tb_auto_enhance fast 0
+=1-bcfce7e1723c-6ad780d9-258-112bc
+o-quiet -auto_acc_if_foreign -work rom_work
+n@_opt
+Z1 OL;O;10.1c;51
+Z2 dE:\fpga\reports\remote_album_20261019\bram_levels_candidate
+T_opt1
+VcU;nR;joB:mm2V<Y:MAl^1
+04 6 4 work tb_cdc fast 0
+=1-bcfce7e1723c-6ad7864d-19f-7784
+o-quiet -auto_acc_if_foreign -work reports/remote_album_20261019/bram_levels_candidate/rom_work
+n@_opt1
+R1
+vauto_enhance
+IV2;YE7ZJ`IN_D5J_=9<Kj0
+V9L0_]9gN9TK^MbY;B4C1R0
+R2
+Z3 w1792508118
+8auto_enhance.v
+Fauto_enhance.v
+L0 5
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792508119.064000
+Z6 !s107 E:\fpga\sim\tb_auto_enhance.v|auto_enhance_scale.v|auto_enhance.v|
+Z7 !s90 -work|rom_work|auto_enhance.v|auto_enhance_scale.v|E:\fpga\sim\tb_auto_enhance.v|
+Z8 o-work rom_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 i3Bh:`ZndWJec4aE3MD2n3
+!i10b 1
+!s85 0
+vauto_enhance_scale
+II@BUVQLoA<i;m8V;X2SEV2
+VEV09eYRb<PFNAXM:[2@nd1
+R2
+R3
+8auto_enhance_scale.v
+Fauto_enhance_scale.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!s100 k0DOI=mXejkWmLB;9iDa`2
+!i10b 1
+!s85 0
+vcdc_snapshot
+I4WL[Tc<A9>c^Ga:eA2hkP1
+VU8kc2KcDY?Z53L71bGSQN2
+Z9 dE:\fpga
+Z10 w1792509509
+8src/modules/common/cdc_snapshot.v
+Fsrc/modules/common/cdc_snapshot.v
+L0 3
+R4
+r1
+31
+Z11 !s108 1792509515.145000
+Z12 !s107 sim/tb_cdc.v|src/modules/common/cdc_snapshot.v|
+Z13 !s90 -work|reports/remote_album_20261019/bram_levels_candidate/rom_work|src/modules/common/cdc_snapshot.v|sim/tb_cdc.v|
+Z14 o-work reports/remote_album_20261019/bram_levels_candidate/rom_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 DWdZJWiIFQcMX[@^O1n]@1
+!s85 0
+vtb_auto_enhance
+I^^8SN:nYW<j^Eci5_RD7N1
+VkKTz@FhXP^fQHbO=BL5L60
+R2
+w1792499406
+8E:\fpga\sim\tb_auto_enhance.v
+FE:\fpga\sim\tb_auto_enhance.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!s100 7kdNoFTzQb6E:O>QS2=o]2
+!i10b 1
+!s85 0
+vtb_cdc
+IJ]_lk:gHmlCn_LCbW3eKK3
+V_C2_3m>76nbHMJW3^1VS61
+R9
+R10
+8sim/tb_cdc.v
+Fsim/tb_cdc.v
+L0 2
+R4
+r1
+31
+R11
+R12
+R13
+R14
+!i10b 1
+!s100 Fm8[V3N?bW^UE`ERQk9^l3
+!s85 0

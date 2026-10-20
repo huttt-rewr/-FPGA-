@@ -1,0 +1,33 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_crc.log -lib msim_work -c tb_sd_crc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 18.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'spi_data_in'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'clk_div'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'nCS_ctrl'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req_ack'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data_rd'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_data'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_crc(fast)
+# run -all 
+# ALL PASS tb_sd_crc: valid block, flipped payload bit rejected, next valid block recovers
+# ** Note: $finish    : tb_sd_crc.v(49)
+#    Time: 62440 ns  Iteration: 1  Instance: /tb_sd_crc

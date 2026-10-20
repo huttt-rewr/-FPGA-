@@ -1,0 +1,1084 @@
+============================================================
+   Tang Dynasty, V6.2.168116
+   Copyright (c) 2012-2025 Anlogic Inc.
+   Executable = J:/Anlogic/td.6.2.1/bin/td_commands_prompt.exe
+   Built at =   16:32:07 Jun 12 2025
+   Run by =     xiewe
+   Run Date =   Tue Oct 20 20:39:32 2026
+
+   Run on =     лиф╫гролсЦ
+============================================================
+RUN-1002 : start command "import_device eagle_s20.db -package EG4S20BG256"
+RUN-1001 : Using default speed grade: NA
+ARC-1001 : Device Initialization.
+ARC-1001 : ------------------------------------------------------------------
+ARC-1001 :            OPTION            |          IO          |   SETTING   
+ARC-1001 : ------------------------------------------------------------------
+ARC-1001 :   cso_b/cclk/mosi/miso/dout  |  T3/R11/T10/P10/S11  |    gpio    
+ARC-1001 :             done             |         P13          |    gpio    
+ARC-1001 :           program_b          |          T2          |  dedicate  
+ARC-1001 :        tdi/tms/tck/tdo       |   C12/A15/C14/E14    |  dedicate  
+ARC-1001 : ------------------------------------------------------------------
+ARC-1004 : Device setting, marked 5 dedicate IOs in total.
+RUN-1002 : start command "read_verilog -file E:/fpga/src/modules/hdmi/hdmi_phy_wrapper.v E:/fpga/src/modules/hdmi/lane_lvds_10_1.v E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v E:/fpga/src/modules/bmp/bmp_read.v E:/fpga/src/modules/video/color_bar.v E:/fpga/src/modules/memory/frame_fifo_read.v E:/fpga/src/modules/memory/frame_fifo_write.v E:/fpga/src/modules/memory/frame_read_write.v E:/fpga/src/modules/bmp/sd_card_bmp.v E:/fpga/src/modules/video/video_timing_data.v E:/fpga/src/modules/video/video_delay.v E:/fpga/src/modules/sd/sd_card_cmd.v E:/fpga/src/modules/sd/sd_card_sec_read_write.v E:/fpga/src/modules/sd/sd_card_top.v E:/fpga/src/modules/sd/spi_master.v E:/fpga/src/modules/memory/sdram.v E:/fpga/src/modules/display/seg_decoder.v E:/fpga/src/modules/display/seg_scan.v E:/fpga/src/ip/sdram/sdr_as_ram.enc.v E:/fpga/src/ip/sdram/sdr_init_ref.enc.v E:/fpga/src/ip/sdram/sdr_wrrd.enc.v E:/fpga/src/ip/pll/sys_pll.v E:/fpga/src/ip/pll/video_pll.v E:/fpga/src/ip/fifo/afifo_16_32_256.v E:/fpga/src/ip/fifo/afifo_32_16_256.v E:/fpga/src/modules/common/startup_pulse.v E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v E:/fpga/src/modules/audio/audio_test_source.v E:/fpga/src/modules/common/cdc_snapshot.v E:/fpga/src/modules/common/reset_sync.v E:/fpga/src/modules/control/ir_nec_rx.v E:/fpga/src/modules/control/player_control.v E:/fpga/src/modules/control/uart_rx.v E:/fpga/src/modules/control/uart_tx.v E:/fpga/src/modules/optional/ycbcr_to_rgb.v E:/fpga/src/modules/osd/osd_char_rom.v E:/fpga/src/modules/osd/status_osd.v E:/fpga/src/top.v E:/fpga/src/modules/video/edid_base_check.v E:/fpga/src/modules/video/frame_swap.v E:/fpga/src/modules/video/video_enhance.v E:/fpga/src/modules/optional/video_mode_table.v E:/fpga/src/modules/optional/video_scaler.v E:/fpga/src/modules/control/uart_tx_queue.v E:/fpga/src/modules/video/video_coordinates.v E:/fpga/src/modules/video/transition_pixels.v E:/fpga/src/modules/osd/caption_overlay.v E:/fpga/src/modules/control/switch_controls.v E:/fpga/src/modules/video/bmp_scale_loader.v E:/fpga/src/modules/control/picture_controls.v E:/fpga/src/modules/video/picture_adjust.v E:/fpga/src/modules/video/edid_display_mode.v E:/fpga/src/modules/video/adaptive_video_clock.v E:/fpga/src/modules/video/adaptive_raster.v E:/fpga/src/modules/common/board_supervisor.v E:/fpga/src/modules/common/board_debug.v E:/fpga/src/modules/video/picture_gamma.v E:/fpga/src/modules/sd/sd_read_arbiter.v E:/fpga/src/modules/audio/audio_wav.v E:/fpga/src/modules/audio/audio_async_fifo.v E:/fpga/src/modules/audio/audio_playback.v E:/fpga/src/modules/audio/audio_effects.v E:/fpga/src/modules/sd/sd_fat32.v E:/fpga/src/modules/input/ps2_keyboard.v E:/fpga/src/modules/input/ps2_controls.v E:/fpga/src/modules/audio/audio_effects_stream.v E:/fpga/src/modules/audio/audio_fifo_room.v E:/fpga/src/modules/video/video_mode_control.v E:/fpga/src/modules/control/fps_control.v E:/fpga/src/modules/sd/native/sd_bus_phy.v E:/fpga/src/modules/sd/native/sd_native_controller.v E:/fpga/src/modules/sd/native/sd_card_top_native.v E:/fpga/src/modules/video/pixel_effects.v E:/fpga/src/modules/video/glass_osd.v E:/fpga/src/modules/video/audio_visualizer.v E:/fpga/src/modules/game/snake_game.v E:/fpga/src/modules/video/video_luma_window_bram.v E:/fpga/src/modules/hdmi/tmds_encoder.v E:/fpga/src/modules/hdmi/hdmi_tmds_vga.v E:/fpga/src/modules/hdmi/edid_i2c.v E:/fpga/src/modules/control/time_cmd.v E:/fpga/src/modules/control/remote_controls.v E:/fpga/src/modules/video/auto_enhance.v E:/fpga/src/modules/video/auto_enhance_scale.v -top top"
+HDL-1007 : analyze verilog file E:/fpga/src/modules/hdmi/hdmi_phy_wrapper.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/hdmi/lane_lvds_10_1.v
+HDL-1007 : analyze verilog file E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v
+Copyright (c) 1998-2019 The OpenSSL Project.  All rights reserved.
+This product includes software developed by the OpenSSL Project
+for use in the OpenSSL Toolkit (http://www.openssl.org/)
+Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+All rights reserved.
+This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2614)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2716)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2724)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(4936)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(5989)
+HDL-1007 : back to file 'E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(77)
+HDL-1007 : analyze verilog file E:/fpga/src/modules/bmp/bmp_read.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/color_bar.v
+HDL-1007 : analyze included file E:/fpga/src/modules/video/video_define.v in E:/fpga/src/modules/video/color_bar.v(2)
+HDL-1007 : back to file 'E:/fpga/src/modules/video/color_bar.v' in E:/fpga/src/modules/video/color_bar.v(2)
+HDL-1007 : analyze verilog file E:/fpga/src/modules/memory/frame_fifo_read.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/memory/frame_fifo_write.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/memory/frame_read_write.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/bmp/sd_card_bmp.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_timing_data.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_delay.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/sd_card_cmd.v
+HDL-5370 WARNING: parameter 'S_IDLE' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(31)
+HDL-5370 WARNING: parameter 'S_WAIT' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(32)
+HDL-5370 WARNING: parameter 'S_INIT' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(33)
+HDL-5370 WARNING: parameter 'S_CMD_PRE' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(34)
+HDL-5370 WARNING: parameter 'S_CMD' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(35)
+HDL-5370 WARNING: parameter 'S_CMD_DATA' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(36)
+HDL-5370 WARNING: parameter 'S_READ_WAIT' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(37)
+HDL-5370 WARNING: parameter 'S_READ' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(38)
+HDL-5370 WARNING: parameter 'S_READ_ACK' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(39)
+HDL-5370 WARNING: parameter 'S_WRITE_TOKEN' becomes localparam in 'sd_card_cmd' with formal parameter declaration list in E:/fpga/src/modules/sd/sd_card_cmd.v(40)
+HDL-5370 Similar messages will be suppressed.
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/sd_card_sec_read_write.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/sd_card_top.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/spi_master.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/memory/sdram.v
+HDL-1007 : analyze included file E:/fpga/src/modules/memory/global_def.v in E:/fpga/src/modules/memory/sdram.v(10)
+HDL-1007 : back to file 'E:/fpga/src/modules/memory/sdram.v' in E:/fpga/src/modules/memory/sdram.v(10)
+HDL-1007 : analyze verilog file E:/fpga/src/modules/display/seg_decoder.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/display/seg_scan.v
+HDL-1007 : analyze verilog file E:/fpga/src/ip/sdram/sdr_as_ram.enc.v
+HDL-1007 : analyze included file E:/fpga/src/ip/sdram/global_def.v in E:/fpga/src/ip/sdram/sdr_as_ram.enc.v(10)
+HDL-1007 : back to file 'E:/fpga/src/ip/sdram/sdr_as_ram.enc.v' in E:/fpga/src/ip/sdram/sdr_as_ram.enc.v(10)
+HDL-1007 : back to file 'E:/fpga/src/ip/sdram/sdr_as_ram.enc.v' in E:/fpga/src/ip/sdram/sdr_as_ram.enc.v(45)
+HDL-1007 : analyze verilog file E:/fpga/src/ip/sdram/sdr_init_ref.enc.v
+HDL-1007 : analyze included file E:/fpga/src/ip/sdram/global_def.v in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(11)
+HDL-1007 : back to file 'E:/fpga/src/ip/sdram/sdr_init_ref.enc.v' in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(11)
+HDL-1007 : undeclared symbol '**', assumed default net type '**' in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(57)
+HDL-1007 : back to file 'E:/fpga/src/ip/sdram/sdr_init_ref.enc.v' in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(149)
+HDL-5007 WARNING: concatenation with an unsized literal will be treated as 32 bits in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(47)
+HDL-1007 : analyze verilog file E:/fpga/src/ip/sdram/sdr_wrrd.enc.v
+HDL-5007 WARNING: concatenation with an unsized literal will be treated as 32 bits in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(283)
+HDL-1007 : back to file 'E:/fpga/src/ip/sdram/sdr_wrrd.enc.v' in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(19)
+HDL-1007 : analyze verilog file E:/fpga/src/ip/pll/sys_pll.v
+HDL-1007 : undeclared symbol 'open', assumed default net type 'wire' in E:/fpga/src/ip/pll/sys_pll.v(88)
+HDL-1007 : analyze verilog file E:/fpga/src/ip/pll/video_pll.v
+HDL-1007 : undeclared symbol 'open', assumed default net type 'wire' in E:/fpga/src/ip/pll/video_pll.v(80)
+HDL-1007 : analyze verilog file E:/fpga/src/ip/fifo/afifo_16_32_256.v
+HDL-1007 : analyze verilog file E:/fpga/src/ip/fifo/afifo_32_16_256.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/common/startup_pulse.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_test_source.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/common/cdc_snapshot.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/common/reset_sync.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/ir_nec_rx.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/player_control.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/uart_rx.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/uart_tx.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/optional/ycbcr_to_rgb.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/osd/osd_char_rom.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/osd/status_osd.v
+HDL-1007 : analyze verilog file E:/fpga/src/top.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/edid_base_check.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/frame_swap.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_enhance.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/optional/video_mode_table.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/optional/video_scaler.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/uart_tx_queue.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_coordinates.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/transition_pixels.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/osd/caption_overlay.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/switch_controls.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/bmp_scale_loader.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/picture_controls.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/picture_adjust.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/edid_display_mode.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/adaptive_video_clock.v
+HDL-1007 : undeclared symbol 'open', assumed default net type 'wire' in E:/fpga/src/modules/video/adaptive_video_clock.v(19)
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/adaptive_raster.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/common/board_supervisor.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/common/board_debug.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/picture_gamma.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/sd_read_arbiter.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_wav.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_async_fifo.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_playback.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_effects.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/sd_fat32.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/input/ps2_keyboard.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/input/ps2_controls.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_effects_stream.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/audio/audio_fifo_room.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_mode_control.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/fps_control.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/native/sd_bus_phy.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/native/sd_native_controller.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/sd/native/sd_card_top_native.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/pixel_effects.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/glass_osd.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/audio_visualizer.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/game/snake_game.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/video_luma_window_bram.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/hdmi/tmds_encoder.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/hdmi/hdmi_tmds_vga.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/hdmi/edid_i2c.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/time_cmd.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/control/remote_controls.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/auto_enhance.v
+HDL-1007 : analyze verilog file E:/fpga/src/modules/video/auto_enhance_scale.v
+HDL-1007 : elaborate module top in E:/fpga/src/top.v(2)
+HDL-1007 : elaborate module audio_fifo_room in E:/fpga/src/modules/audio/audio_fifo_room.v(4)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=2) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module video_mode_control in E:/fpga/src/modules/video/video_mode_control.v(3)
+HDL-1007 : elaborate module reset_sync in E:/fpga/src/modules/common/reset_sync.v(1)
+HDL-1007 : elaborate module board_supervisor in E:/fpga/src/modules/common/board_supervisor.v(3)
+HDL-1007 : elaborate module sys_pll in E:/fpga/src/ip/pll/sys_pll.v(27)
+HDL-1007 : elaborate module EG_LOGIC_BUFG in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(5)
+HDL-1007 : elaborate module EG_PHY_PLL(FIN="50.000000",FBCLK_DIV=20,CLKC0_DIV=10,CLKC1_DIV=25,CLKC2_DIV=25,CLKC0_ENABLE="ENABLE",CLKC1_ENABLE="ENABLE",CLKC2_ENABLE="ENABLE",FEEDBK_MODE="NOCOMP",STDBY_ENABLE="DISABLE",CLKC0_CPHASE=9,CLKC1_CPHASE=24,CLKC2_CPHASE=12,GMC_GAIN=4,ICP_CURRENT=29,KVCO=4,LPF_CAPACITOR=1,LPF_RESISTOR=2,SYNC_ENABLE="DISABLE") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(889)
+HDL-5317 WARNING: input port 'fbclk' is not connected on this instance in E:/fpga/src/ip/pll/sys_pll.v(78)
+HDL-1007 : elaborate module adaptive_video_clock in E:/fpga/src/modules/video/adaptive_video_clock.v(5)
+HDL-1007 : elaborate module EG_PHY_PLL(FIN="50.000000",FBCLK_DIV=20,CLKC0_DIV=40,CLKC1_DIV=8,CLKC2_DIV=25,CLKC3_DIV=5,CLKC0_ENABLE="ENABLE",CLKC1_ENABLE="ENABLE",CLKC2_ENABLE="ENABLE",CLKC3_ENABLE="ENABLE",FEEDBK_MODE="NOCOMP",STDBY_ENABLE="DISABLE",CLKC0_CPHASE=39,CLKC1_CPHASE=7,CLKC2_CPHASE=24,CLKC3_CPHASE=4,GMC_GAIN=2,ICP_CURRENT=9,KVCO=2,LPF_CAPACITOR=1,LPF_RESISTOR=8,SYNC_ENABLE="DISABLE") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(889)
+HDL-1007 : elaborate module EG_LOGIC_BUFGMUX in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(20)
+HDL-5317 WARNING: input port 'fbclk' is not connected on this instance in E:/fpga/src/modules/video/adaptive_video_clock.v(15)
+HDL-1007 : elaborate module sd_card_bmp(NATIVE_4BIT=1,NATIVE_HIGH_SPEED=1,RATE_CONTROLS=1,INDEXED=1,ADAPTIVE=1,ENABLE_SCALING=1,ENABLE_AUDIO=1,FAT32_ENABLE=1) in E:/fpga/src/modules/bmp/sd_card_bmp.v(2)
+HDL-1007 : elaborate module sd_fat32(INDEXED=1) in E:/fpga/src/modules/sd/sd_fat32.v(3)
+HDL-1007 : extracting RAM for identifier 'fat_cache' in E:/fpga/src/modules/sd/sd_fat32.v(117)
+HDL-1007 : extracting RAM for identifier 'entries' in E:/fpga/src/modules/sd/sd_fat32.v(122)
+HDL-5007 WARNING: synthesis - simulation differences may occur when using parallel_case directive in E:/fpga/src/modules/sd/sd_fat32.v(321)
+HDL-1007 : elaborate module sd_read_arbiter in E:/fpga/src/modules/sd/sd_read_arbiter.v(3)
+HDL-1007 : elaborate module audio_wav(START_SECTOR=32'b0100000000000000000,FILESYSTEM=1) in E:/fpga/src/modules/audio/audio_wav.v(3)
+HDL-1007 : extracting RAM for identifier 'sector_mem' in E:/fpga/src/modules/audio/audio_wav.v(31)
+HDL-5007 WARNING: synthesis - simulation differences may occur when using parallel_case directive in E:/fpga/src/modules/audio/audio_wav.v(113)
+HDL-1007 : elaborate module fps_control in E:/fpga/src/modules/control/fps_control.v(4)
+HDL-1007 : elaborate module key_press_debounce(DEBOUNCE_MS=50) in E:/fpga/src/modules/bmp/sd_card_bmp.v(640)
+HDL-1007 : elaborate module bmp_read(ADAPTIVE=1,ENABLE_SCALING=1,SHARED_SD=1'b1,FILESYSTEM=1) in E:/fpga/src/modules/bmp/bmp_read.v(1)
+HDL-1007 : elaborate module bmp_scale_loader(ADAPTIVE=1) in E:/fpga/src/modules/video/bmp_scale_loader.v(6)
+HDL-1007 : extracting RAM for identifier 'sector_mem' in E:/fpga/src/modules/video/bmp_scale_loader.v(50)
+HDL-1007 : extracting RAM for identifier 'row0' in E:/fpga/src/modules/video/bmp_scale_loader.v(51)
+HDL-1007 : extracting RAM for identifier 'row1' in E:/fpga/src/modules/video/bmp_scale_loader.v(51)
+HDL-1007 : elaborate module rgb_lerp_pipeline in E:/fpga/src/modules/video/bmp_scale_loader.v(331)
+HDL-5007 WARNING: synthesis - simulation differences may occur when using parallel_case directive in E:/fpga/src/modules/video/bmp_scale_loader.v(142)
+HDL-1007 : elaborate module sd_card_top(NATIVE_4BIT=1,NATIVE_HIGH_SPEED=1) in E:/fpga/src/modules/sd/sd_card_top.v(2)
+HDL-1007 : elaborate module sd_card_top_native(ENABLE_HIGH_SPEED=1) in E:/fpga/src/modules/sd/native/sd_card_top_native.v(4)
+HDL-1007 : elaborate module sd_bus_phy in E:/fpga/src/modules/sd/native/sd_bus_phy.v(5)
+HDL-1007 : elaborate module sd_native_controller(ENABLE_HIGH_SPEED=1) in E:/fpga/src/modules/sd/native/sd_native_controller.v(2)
+HDL-1007 : elaborate module seg_decoder in E:/fpga/src/modules/display/seg_decoder.v(1)
+HDL-1007 : elaborate module cdc_snapshot in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module board_debug in E:/fpga/src/modules/common/board_debug.v(4)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=35) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=20) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module seg_scan(CLK_FREQ=100000000) in E:/fpga/src/modules/display/seg_scan.v(1)
+HDL-1007 : elaborate module video_timing_data(ADAPTIVE=1) in E:/fpga/src/modules/video/video_timing_data.v(1)
+HDL-1007 : elaborate module adaptive_raster in E:/fpga/src/modules/video/adaptive_raster.v(3)
+HDL-1007 : elaborate module video_delay in E:/fpga/src/modules/video/video_delay.v(1)
+HDL-1007 : elaborate module frame_read_write(BURST_SIZE=64,ADAPTIVE=1) in E:/fpga/src/modules/memory/frame_read_write.v(2)
+HDL-1007 : port 'doa' remains unconnected for this instance in E:/fpga/src/ip/fifo/afifo_16_32_256.v(226)
+HDL-1007 : port 'dib' remains unconnected for this instance in E:/fpga/src/ip/fifo/afifo_16_32_256.v(226)
+HDL-1007 : elaborate module wfifo_32_32_512 in E:/fpga/src/ip/fifo/afifo_16_32_256.v(13)
+HDL-1007 : elaborate module fifo_cross_domain_addr_process_al_wfifo_32_32_512 in E:/fpga/src/ip/fifo/afifo_16_32_256.v(250)
+HDL-1007 : elaborate module ram_infer_wfifo_32_32_512(ADDRWIDTH_A=9,DATAWIDTH_B=32,ADDRWIDTH_B=9) in E:/fpga/src/ip/fifo/afifo_16_32_256.v(333)
+HDL-1007 : extracting RAM for identifier 'memory' in E:/fpga/src/ip/fifo/afifo_16_32_256.v(398)
+HDL-5317 WARNING: input port 'dib[31]' is not connected on this instance in E:/fpga/src/ip/fifo/afifo_16_32_256.v(231)
+HDL-1007 : elaborate module frame_fifo_write(BURST_SIZE=64,ADAPTIVE=1) in E:/fpga/src/modules/memory/frame_fifo_write.v(2)
+HDL-1007 : port 'doa' remains unconnected for this instance in E:/fpga/src/ip/fifo/afifo_32_16_256.v(226)
+HDL-1007 : port 'dib' remains unconnected for this instance in E:/fpga/src/ip/fifo/afifo_32_16_256.v(226)
+HDL-1007 : elaborate module rfifo_32_32_512 in E:/fpga/src/ip/fifo/afifo_32_16_256.v(13)
+HDL-1007 : elaborate module fifo_cross_domain_addr_process_al_rfifo_32_32_512 in E:/fpga/src/ip/fifo/afifo_32_16_256.v(250)
+HDL-1007 : elaborate module ram_infer_rfifo_32_32_512(ADDRWIDTH_A=9,DATAWIDTH_B=32,ADDRWIDTH_B=9) in E:/fpga/src/ip/fifo/afifo_32_16_256.v(333)
+HDL-1007 : extracting RAM for identifier 'memory' in E:/fpga/src/ip/fifo/afifo_32_16_256.v(398)
+HDL-5317 WARNING: input port 'dib[31]' is not connected on this instance in E:/fpga/src/ip/fifo/afifo_32_16_256.v(231)
+HDL-1007 : elaborate module frame_fifo_read(BURST_SIZE=64) in E:/fpga/src/modules/memory/frame_fifo_read.v(2)
+HDL-1007 : elaborate module sdram in E:/fpga/src/modules/memory/sdram.v(12)
+HDL-1007 : elaborate module sdr_as_ram(self_refresh_open=1'b1) in E:/fpga/src/ip/sdram/sdr_as_ram.enc.v(12)
+HDL-5007 WARNING: concatenation with an unsized literal will be treated as 32 bits in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(47)
+HDL-1007 : elaborate module sdr_init_ref(self_refresh_open=1'b1) in E:/fpga/src/ip/sdram/sdr_init_ref.enc.v(13)
+HDL-5007 WARNING: concatenation with an unsized literal will be treated as 32 bits in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(283)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(3)
+HDL-5317 WARNING: input port '**' is not connected on this instance in E:/fpga/src/ip/sdram/sdr_as_ram.enc.v(17)
+HDL-1007 : elaborate module EG_PHY_SDRAM_2M_32 in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(683)
+HDL-1007 : elaborate module video_rgb_to_axis_640x480(ADAPTIVE=1) in E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v(3)
+HDL-1007 : extracting RAM for identifier 'queue' in E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v(10)
+HDL-1007 : elaborate module startup_pulse in E:/fpga/src/modules/common/startup_pulse.v(2)
+HDL-1007 : elaborate module hdmi_tmds_vga in E:/fpga/src/modules/hdmi/hdmi_tmds_vga.v(4)
+HDL-1007 : elaborate module tmds_encoder in E:/fpga/src/modules/hdmi/tmds_encoder.v(4)
+HDL-1007 : elaborate module edid_i2c in E:/fpga/src/modules/hdmi/edid_i2c.v(7)
+HDL-1007 : elaborate module hdmi_1_4b_transmitter_core_wrapper(HTOTAL=1056,HSA=128,HFP=40,HBP=88,HACTIVE=800,VTOTAL=628,VSA=4,VFP=1,VBP=23,VACTIVE=600,VIDEO_TPG="Disable",VIDEO_VIC=0,IIC_SCL_DIV=400) in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(91)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(137)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(208)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(285)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(396)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(803)
+HDL-1007 : elaborate module EG_LOGIC_RAMFIFO(DATA_WIDTH=11,ADDR_WIDTH=10,IMPLEMENT="9K") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(750)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(1338)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(1480)
+HDL-1007 : elaborate module EG_LOGIC_RAMFIFO(DATA_WIDTH=9,ADDR_WIDTH=10,IMPLEMENT="9K") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(750)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2012)
+HDL-1007 : port '**' remains unconnected for this instance in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2733)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2403)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2842)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(2939)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3138)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3177)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3511)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3666)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3730)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3860)
+HDL-5007 WARNING: actual bit length ** differs from formal bit length *** for port '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3307)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3949)
+HDL-5007 WARNING: actual bit length ** differs from formal bit length *** for port '**' in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(3318)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(4034)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(4127)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(4285)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(4586)
+HDL-1007 : elaborate module EG_LOGIC_RAMFIFO(DATA_WIDTH=96,ADDR_WIDTH=10,IMPLEMENT="9K") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(750)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(5534)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(5657)
+HDL-1007 : elaborate module EG_LOGIC_RAMFIFO(DATA_WIDTH=24,ADDR_WIDTH=10,IMPLEMENT="9K") in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(750)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6273)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6501)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6575)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6924)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6994)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6994)
+HDL-1007 : elaborate module ** in E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v(6994)
+HDL-1007 : elaborate module hdmi_phy_wrapper in E:/fpga/src/modules/hdmi/hdmi_phy_wrapper.v(3)
+HDL-1007 : elaborate module lane_lvds_10_1 in E:/fpga/src/modules/hdmi/lane_lvds_10_1.v(4)
+HDL-1007 : elaborate module EG_LOGIC_ODDR in J:\Anlogic\td.6.2.1\arch/eagle_macro.v(66)
+HDL-1007 : elaborate module remote_controls(IR_ENABLED=1) in E:/fpga/src/modules/control/remote_controls.v(2)
+HDL-1007 : elaborate module ir_nec_rx in E:/fpga/src/modules/control/ir_nec_rx.v(16)
+HDL-1007 : elaborate module uart_rx in E:/fpga/src/modules/control/uart_rx.v(11)
+HDL-1007 : elaborate module time_cmd in E:/fpga/src/modules/control/time_cmd.v(2)
+HDL-1007 : elaborate module player_control(PC_COMMANDS=1) in E:/fpga/src/modules/control/player_control.v(2)
+HDL-1007 : elaborate module uart_tx_queue in E:/fpga/src/modules/control/uart_tx_queue.v(2)
+HDL-1007 : extracting RAM for identifier 'queue' in E:/fpga/src/modules/control/uart_tx_queue.v(5)
+HDL-1007 : elaborate module uart_tx in E:/fpga/src/modules/control/uart_tx.v(1)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=33) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module ps2_keyboard in E:/fpga/src/modules/input/ps2_keyboard.v(4)
+HDL-1007 : elaborate module ps2_controls in E:/fpga/src/modules/input/ps2_controls.v(4)
+HDL-1007 : elaborate module picture_controls(BOARD_MENU=1,AUDIO_MENU=1,KEYBOARD_CONTROLS=1,AUDIO_MUTE_DEFAULT=0) in E:/fpga/src/modules/control/picture_controls.v(3)
+HDL-1007 : elaborate module switch_controls in E:/fpga/src/modules/control/switch_controls.v(4)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=70) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=7) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=29) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module frame_swap(ENABLE_EFFECTS=1,ADAPTIVE=1) in E:/fpga/src/modules/video/frame_swap.v(3)
+HDL-1007 : elaborate module video_coordinates in E:/fpga/src/modules/video/video_coordinates.v(3)
+HDL-1007 : elaborate module picture_adjust in E:/fpga/src/modules/video/picture_adjust.v(3)
+HDL-1007 : elaborate module picture_gamma in E:/fpga/src/modules/video/picture_gamma.v(6)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=1) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module auto_enhance in E:/fpga/src/modules/video/auto_enhance.v(3)
+HDL-1007 : elaborate module auto_enhance_scale in E:/fpga/src/modules/video/auto_enhance_scale.v(2)
+HDL-1007 : elaborate module transition_pixels in E:/fpga/src/modules/video/transition_pixels.v(5)
+HDL-1007 : extracting RAM for identifier 'line_mem' in E:/fpga/src/modules/video/transition_pixels.v(10)
+HDL-1007 : elaborate module pixel_effects(DEPTH=800,EDGE_TH=8'b01010000,BRAM_WINDOW=1) in E:/fpga/src/modules/video/pixel_effects.v(2)
+HDL-1007 : elaborate module video_luma_window_bram in E:/fpga/src/modules/video/video_luma_window_bram.v(5)
+HDL-1007 : extracting RAM for identifier 'row1' in E:/fpga/src/modules/video/video_luma_window_bram.v(9)
+HDL-1007 : extracting RAM for identifier 'row2' in E:/fpga/src/modules/video/video_luma_window_bram.v(10)
+HDL-1007 : elaborate module viewport_coordinates in E:/fpga/src/modules/video/video_coordinates.v(22)
+HDL-1007 : elaborate module glass_osd(SHARED_LUMA=1) in E:/fpga/src/modules/video/glass_osd.v(2)
+HDL-1007 : extracting RAM for identifier 'row1' in E:/fpga/src/modules/video/glass_osd.v(20)
+HDL-1007 : extracting RAM for identifier 'row2' in E:/fpga/src/modules/video/glass_osd.v(21)
+HDL-1007 : elaborate module osd_char_rom in E:/fpga/src/modules/osd/osd_char_rom.v(14)
+HDL-1007 : elaborate module glass_title_row in E:/fpga/src/modules/video/glass_osd.v(92)
+HDL-1007 : elaborate module audio_visualizer(BRAM_HISTORY=1) in E:/fpga/src/modules/video/audio_visualizer.v(2)
+HDL-1007 : extracting RAM for identifier 'hist' in E:/fpga/src/modules/video/audio_visualizer.v(28)
+HDL-1007 : elaborate module caption_overlay(ADAPTIVE=1,PIPELINED=1) in E:/fpga/src/modules/osd/caption_overlay.v(4)
+HDL-1007 : elaborate module status_osd(ENHANCED_UI=1,ADAPTIVE=1,PIPELINED=1,BOARD_UI=1,AUDIO_UI=1,AUDIO_DIAGNOSTICS=1,FILE_UI=1,RATE_UI=1) in E:/fpga/src/modules/osd/status_osd.v(2)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=5) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module snake_frame_control in E:/fpga/src/modules/game/snake_game.v(175)
+HDL-1007 : elaborate module snake_game in E:/fpga/src/modules/game/snake_game.v(3)
+HDL-1007 : elaborate module snake_lut_ram in E:/fpga/src/modules/game/snake_game.v(201)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : elaborate module snake_lut_ram(WIDTH=2) in E:/fpga/src/modules/game/snake_game.v(201)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : extracting RAM for identifier 'ram' in E:/fpga/src/modules/game/snake_game.v(211)
+HDL-1007 : elaborate module cdc_snapshot(WIDTH=4) in E:/fpga/src/modules/common/cdc_snapshot.v(3)
+HDL-1007 : elaborate module audio_error_history in E:/fpga/src/modules/audio/audio_playback.v(96)
+HDL-1007 : elaborate module audio_async_fifo in E:/fpga/src/modules/audio/audio_async_fifo.v(3)
+HDL-1007 : extracting RAM for identifier 'memory' in E:/fpga/src/modules/audio/audio_async_fifo.v(8)
+HDL-1007 : elaborate module audio_playback(ADAPTIVE=1) in E:/fpga/src/modules/audio/audio_playback.v(3)
+HDL-1007 : elaborate module audio_effects_stream in E:/fpga/src/modules/audio/audio_effects_stream.v(3)
+HDL-1007 : elaborate module audio_effects in E:/fpga/src/modules/audio/audio_effects.v(5)
+HDL-1007 : elaborate module edid_display_mode in E:/fpga/src/modules/video/edid_display_mode.v(4)
+HDL-5001 WARNING: Contains anonymous inst(s) and/or net(s) that have not been renamed
+HDL-5001 WARNING: Contains anonymous inst(s) and/or net(s) that have not been renamed
+HDL-5001 WARNING: Contains anonymous inst(s) and/or net(s) that have not been renamed
+HDL-5001 WARNING: Contains anonymous inst(s) and/or net(s) that have not been renamed
+HDL-1200 : Current top model is top
+HDL-1100 : Inferred 41 RAMs.
+RUN-1003 : finish command "read_verilog -file E:/fpga/src/modules/hdmi/hdmi_phy_wrapper.v E:/fpga/src/modules/hdmi/lane_lvds_10_1.v E:/fpga/src/ip/hdmi/hdmi_1_4b_transmitter_core_wrapper.enc.v E:/fpga/src/modules/bmp/bmp_read.v E:/fpga/src/modules/video/color_bar.v E:/fpga/src/modules/memory/frame_fifo_read.v E:/fpga/src/modules/memory/frame_fifo_write.v E:/fpga/src/modules/memory/frame_read_write.v E:/fpga/src/modules/bmp/sd_card_bmp.v E:/fpga/src/modules/video/video_timing_data.v E:/fpga/src/modules/video/video_delay.v E:/fpga/src/modules/sd/sd_card_cmd.v E:/fpga/src/modules/sd/sd_card_sec_read_write.v E:/fpga/src/modules/sd/sd_card_top.v E:/fpga/src/modules/sd/spi_master.v E:/fpga/src/modules/memory/sdram.v E:/fpga/src/modules/display/seg_decoder.v E:/fpga/src/modules/display/seg_scan.v E:/fpga/src/ip/sdram/sdr_as_ram.enc.v E:/fpga/src/ip/sdram/sdr_init_ref.enc.v E:/fpga/src/ip/sdram/sdr_wrrd.enc.v E:/fpga/src/ip/pll/sys_pll.v E:/fpga/src/ip/pll/video_pll.v E:/fpga/src/ip/fifo/afifo_16_32_256.v E:/fpga/src/ip/fifo/afifo_32_16_256.v E:/fpga/src/modules/common/startup_pulse.v E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v E:/fpga/src/modules/audio/audio_test_source.v E:/fpga/src/modules/common/cdc_snapshot.v E:/fpga/src/modules/common/reset_sync.v E:/fpga/src/modules/control/ir_nec_rx.v E:/fpga/src/modules/control/player_control.v E:/fpga/src/modules/control/uart_rx.v E:/fpga/src/modules/control/uart_tx.v E:/fpga/src/modules/optional/ycbcr_to_rgb.v E:/fpga/src/modules/osd/osd_char_rom.v E:/fpga/src/modules/osd/status_osd.v E:/fpga/src/top.v E:/fpga/src/modules/video/edid_base_check.v E:/fpga/src/modules/video/frame_swap.v E:/fpga/src/modules/video/video_enhance.v E:/fpga/src/modules/optional/video_mode_table.v E:/fpga/src/modules/optional/video_scaler.v E:/fpga/src/modules/control/uart_tx_queue.v E:/fpga/src/modules/video/video_coordinates.v E:/fpga/src/modules/video/transition_pixels.v E:/fpga/src/modules/osd/caption_overlay.v E:/fpga/src/modules/control/switch_controls.v E:/fpga/src/modules/video/bmp_scale_loader.v E:/fpga/src/modules/control/picture_controls.v E:/fpga/src/modules/video/picture_adjust.v E:/fpga/src/modules/video/edid_display_mode.v E:/fpga/src/modules/video/adaptive_video_clock.v E:/fpga/src/modules/video/adaptive_raster.v E:/fpga/src/modules/common/board_supervisor.v E:/fpga/src/modules/common/board_debug.v E:/fpga/src/modules/video/picture_gamma.v E:/fpga/src/modules/sd/sd_read_arbiter.v E:/fpga/src/modules/audio/audio_wav.v E:/fpga/src/modules/audio/audio_async_fifo.v E:/fpga/src/modules/audio/audio_playback.v E:/fpga/src/modules/audio/audio_effects.v E:/fpga/src/modules/sd/sd_fat32.v E:/fpga/src/modules/input/ps2_keyboard.v E:/fpga/src/modules/input/ps2_controls.v E:/fpga/src/modules/audio/audio_effects_stream.v E:/fpga/src/modules/audio/audio_fifo_room.v E:/fpga/src/modules/video/video_mode_control.v E:/fpga/src/modules/control/fps_control.v E:/fpga/src/modules/sd/native/sd_bus_phy.v E:/fpga/src/modules/sd/native/sd_native_controller.v E:/fpga/src/modules/sd/native/sd_card_top_native.v E:/fpga/src/modules/video/pixel_effects.v E:/fpga/src/modules/video/glass_osd.v E:/fpga/src/modules/video/audio_visualizer.v E:/fpga/src/modules/game/snake_game.v E:/fpga/src/modules/video/video_luma_window_bram.v E:/fpga/src/modules/hdmi/tmds_encoder.v E:/fpga/src/modules/hdmi/hdmi_tmds_vga.v E:/fpga/src/modules/hdmi/edid_i2c.v E:/fpga/src/modules/control/time_cmd.v E:/fpga/src/modules/control/remote_controls.v E:/fpga/src/modules/video/auto_enhance.v E:/fpga/src/modules/video/auto_enhance_scale.v -top top" in  1.488883s wall, 1.296875s user + 0.109375s system = 1.406250s CPU (94.5%)
+
+RUN-1004 : used memory is 381 MB, reserved memory is 370 MB, peak memory is 381 MB
+RUN-1002 : start command "read_adc src/constraints/pin.adc"
+RUN-1002 : start command "set_pin_assignment  HDMI_DDC_SCL   LOCATION = P2; IOSTANDARD = LVCMOS33;DRIVESTRENGTH = 8; PULLTYPE = PULLUP;"
+RUN-1002 : start command "set_pin_assignment  HDMI_DDC_SDA   LOCATION = R2; IOSTANDARD = LVCMOS33;DRIVESTRENGTH = 8; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  HDMI_CLK_P   LOCATION = C3; IOSTANDARD = LVDS33_E; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  HDMI_D0_P   LOCATION = G5; IOSTANDARD = LVDS33_E; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  HDMI_D1_P   LOCATION = F1; IOSTANDARD = LVDS33_E; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  HDMI_D2_P   LOCATION = E1; IOSTANDARD = LVDS33_E; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  clk   LOCATION = R7; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  key1   LOCATION = B2; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  key2   LOCATION = C1; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  rst_n   LOCATION = A2; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  seg_data[0]   LOCATION = C15; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[1]   LOCATION = C16; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[2]   LOCATION = B6; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[3]   LOCATION = A5; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[4]   LOCATION = B5; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[5]   LOCATION = A8; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[6]   LOCATION = A7; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_data[7]   LOCATION = A6; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[0]   LOCATION = E12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[1]   LOCATION = E10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[2]   LOCATION = C13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[3]   LOCATION = F10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[4]   LOCATION = E11; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  seg_sel[5]   LOCATION = D11; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  uart_rx_pin   LOCATION = F12; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  uart_tx_pin   LOCATION = D12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  ir_rx_pin   LOCATION = D14; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  sw[0]   LOCATION = C8; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  sw[1]   LOCATION = C7; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  sw[2]   LOCATION = C6; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  sw[3]   LOCATION = C5; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  key3   LOCATION = B1; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  ps2_clk   LOCATION = M16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  ps2_data   LOCATION = K16; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  SD_CLK   LOCATION = A14; IOSTANDARD = LVCMOS33; PULLTYPE = NONE; "
+RUN-1002 : start command "set_pin_assignment  SD_CMD   LOCATION = A13; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  SD_DAT0   LOCATION = B14; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  SD_DAT1   LOCATION = B15; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  SD_DAT2   LOCATION = A11; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1002 : start command "set_pin_assignment  SD_DAT3   LOCATION = A12; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; "
+RUN-1001 : Starting of IO setups legality check.
+RUN-1001 : Starting of IO vref setups legality check.
+RUN-1002 : start command "read_sdc src/constraints/timing.sdc"
+RUN-1002 : start command "set_param gate map_mode area_prior"
+RUN-1002 : start command "set_param gate opt_area high"
+RUN-1002 : start command "set_param gate pack_effort high"
+RUN-1002 : start command "optimize_rtl"
+RUN-1001 : Open license file J:/Anlogic/td.6.2.1/license/Anlogic.lic
+SYN-1001 : Stage 1 | Optimize RTL
+SYN-1001 : Stage 1.1 | Check Design Sanity
+SYN-1001 : End Stage 1.1 | Check Design Sanity; Time: 0.012769s wall, 0.015625s user + 0.000000s system = 0.015625s CPU (122.4%); Memory(MB): used = 381, reserved = 370, peak = 381;
+
+SYN-1079 : finish stage Check Design Sanity. Total instances: 51804, Total nets: 122184.
+
+SYN-1001 : Stage 1.2 | Initialize Design
+SYN-1001 : End Stage 1.2 | Initialize Design; Time: 2.087723s wall, 2.078125s user + 0.015625s system = 2.093750s CPU (100.3%); Memory(MB): used = 381, reserved = 370, peak = 381;
+
+SYN-1079 : finish stage Initialize Design. Total instances: 12364, Total nets: 73727.
+
+SYN-1001 : Stage 1.3 | Flatten Module
+SYN-1011 : Flatten model top
+SYN-1050 : Instances selected by 'keep_hierarchy':
+RUN-1001 : --------------------------------------------------------------------------------------------------
+RUN-1001 :           instance           |  keep_hierarchy  |    down_module    |         file(line)          
+RUN-1001 : --------------------------------------------------------------------------------------------------
+RUN-1001 :  frame_read_write_m0/wri...  |       true       |  wfifo_32_32_512  | E:/fpga/src/modules/mem...  
+RUN-1001 :  frame_read_write_m0/rea...  |       true       |  rfifo_32_32_512  | E:/fpga/src/modules/mem...  
+RUN-1001 : --------------------------------------------------------------------------------------------------
+SYN-1001 : End Stage 1.3 | Flatten Module; Time: 0.577171s wall, 0.578125s user + 0.000000s system = 0.578125s CPU (100.2%); Memory(MB): used = 386, reserved = 374, peak = 386;
+
+SYN-1079 : finish stage Flatten Module. Total instances: 17224, Total nets: 71181.
+
+SYN-1001 : Stage 1.4 | Uniform Instance
+SYN-5013 WARNING: Undriven net: model "top" / net "U3/u2_ram/u2_wrrd/Sdr_init_ref_ba[1]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0)
+		the net's pin: pin "i1[1]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0)
+SYN-5013 WARNING: Undriven net: model "top" / net "U3/u2_ram/u2_wrrd/Sdr_init_ref_ba[0]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0)
+		the net's pin: pin "i1[0]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0)
+SYN-5025 WARNING: Using 0 for all undriven pins and nets
+SYN-1001 : End Stage 1.4 | Uniform Instance; Time: 0.115497s wall, 0.109375s user + 0.000000s system = 0.109375s CPU (94.7%); Memory(MB): used = 357, reserved = 356, peak = 386;
+
+SYN-1079 : finish stage Uniform Instance. Total instances: 15233, Total nets: 69154.
+
+SYN-1001 : Stage 1.5 | Optimize Design
+SYN-1066 : Inferred FSM for state register 'U3/u2_ram/u2_wrrd/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                  0000              001
+                  0001              010
+                  0010              100
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'U3/u2_ram/u2_wrrd/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'frame_read_write_m0/frame_fifo_read_m0/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                  0000           000001
+                  0001           000010
+                  0010           000100
+                  0011           001000
+                  0100           010000
+                  0101           100000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'frame_read_write_m0/frame_fifo_read_m0/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'frame_read_write_m0/frame_fifo_write_m0/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                  0000           000001
+                  0001           000010
+                  0010           000100
+                  0011           001000
+                  0100           010000
+                  0101           100000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'frame_read_write_m0/frame_fifo_write_m0/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'mode_control/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                   000            00001
+                   001            00010
+                   010            00100
+                   011            01000
+                   100            10000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'mode_control/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'remote/infrared$decoder/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                    00              001
+                    01              010
+                    10              100
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'remote/infrared$decoder/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/bmp_read_m0/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                   000            00001
+                   010            00010
+                   011            00100
+                   101            01000
+                   001            10000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/bmp_read_m0/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/bmp_read_m0/scaling$loader/channel_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                    00              001
+                    01              010
+                    10              100
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/bmp_read_m0/scaling$loader/channel_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/bmp_read_m0/scaling$loader/div_phase_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                    00              001
+                    01              010
+                    10              100
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/bmp_read_m0/scaling$loader/div_phase_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/controller/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                  0000      00000000001
+                  0001      00000000010
+                  0010      00000000100
+                  1000      00000001000
+                  1001      00000010000
+                  1010      00000100000
+                  0110      00001000000
+                  0111      00010000000
+                  0101      00100000000
+                  0100      01000000000
+                  0011      10000000000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/controller/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/cstate_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                   000         00000001
+                   001         00000010
+                   010         00000100
+                   011         00001000
+                   100         00010000
+                   101         00100000
+                   110         01000000
+                   111         10000000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/cstate_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/dstate_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                   000           000001
+                   001           000010
+                   010           000100
+                   011           001000
+                   100           010000
+                   101           100000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'sd_card_bmp_m0/sd_card_top_m0/native_bus$transport/phy/dstate_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'swap/state_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                    00             0001
+                    01             0010
+                    10             0100
+                    11             1000
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'swap/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'u_edid_i2c/command_byte_reg' in module 'top'
+--------------------------------------------
+     Previous Encoding     New Encoding
+--------------------------------------------
+                    00              001
+                    01              010
+                    10              100
+--------------------------------------------
+SYN-1067 : encoded FSM with state register 'u_edid_i2c/command_byte_reg' using encoding 'one_hot' in model 'top'
+SYN-1066 : Inferred FSM for state register 'u_edid_i2c/state_reg' in module 'top'
+------------------------------------------------------------
+     Previous Encoding                     New Encoding
+------------------------------------------------------------
+                 00000     0000000000000000000000000001
+                 00001     0000000000000000000000000010
+                 00010     0000000000000000000000000100
+                 00011     0000000000000000000000001000
+                 00100     0000000000000000000000010000
+                 00101     0000000000000000000000100000
+                 00110     0000000000000000000001000000
+                 00111     0000000000000000000010000000
+                 01000     0000000000000000000100000000
+                 01001     0000000000000000001000000000
+                 01010     0000000000000000010000000000
+                 01011     0000000000000000100000000000
+                 10000     0000000000000001000000000000
+                 10001     0000000000000010000000000000
+                 10010     0000000000000100000000000000
+                 10011     0000000000001000000000000000
+                 10100     0000000000010000000000000000
+                 10101     0000000000100000000000000000
+                 10110     0000000001000000000000000000
+                 10111     0000000010000000000000000000
+                 01100     0000000100000000000000000000
+                 11000     0000001000000000000000000000
+                 01101     0000010000000000000000000000
+                 11001     0000100000000000000000000000
+                 01110     0001000000000000000000000000
+                 11010     0010000000000000000000000000
+                 01111     0100000000000000000000000000
+                 11011     1000000000000000000000000000
+------------------------------------------------------------
+SYN-1067 : encoded FSM with state register 'u_edid_i2c/state_reg' using encoding 'one_hot' in model 'top'
+SYN-1057 : Inferred 14 FSM(s)
+SYN-1001 : Optimize 2 less-than instances
+SYN-1001 : Optimize 4 less-than instances
+SYN-1032 : 65370/1820 useful/useless nets, 13465/195 useful/useless insts
+SYN-1001 : Bypass 3 mux instances
+SYN-1021 : Optimized 13 onehot mux instances.
+SYN-1068 : Optimized 29 binary mux instances.
+SYN-1019 : Optimized 9 mux instances.
+SYN-1021 : Optimized 19 onehot mux instances.
+SYN-1021 : Optimized 2 onehot mux instances.
+SYN-1021 : Optimized 5 onehot mux instances.
+SYN-1001 : Optimize 90 less-than instances
+SYN-1016 : Merged 5270 instances.
+SYN-1025 : Merged 34 RAM ports.
+SYN-1026 : Infer Logic BRAM(audio_fifo/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 24	 write mode: NORMAL
+	 port b size: 1024 x 24	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(effects/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 24	 write mode: NORMAL
+	 port b size: 1024 x 24	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 512 x 32	 write mode: NORMAL
+	 port b size: 512 x 32	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(frame_read_write_m0/write_buf/ram_inst/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 512 x 32	 write mode: NORMAL
+	 port b size: 512 x 32	 write mode: READBEFOREWRITE
+SYN-1027 : Infer Logic DRAM(frosted_panel/ramread0_syn_4) read 512x1, write 512x1
+SYN-1027 : Infer Logic DRAM(frosted_panel/ramread1_syn_4) read 512x1, write 512x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread0_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread1_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread10_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread12_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread14_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread16_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread18_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread2_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread20_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread4_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread6_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/board_mem/ramread8_syn_4) read 64x1, write 64x1
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread0_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread1_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread10_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread12_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread14_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread16_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread18_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread2_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread20_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread4_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread6_syn_4) read 64x2, write 64x2
+SYN-1027 : Infer Logic DRAM(game/body_mem/ramread8_syn_4) read 64x2, write 64x2
+SYN-1026 : Infer Logic BRAM(pixel_filter/bram_window$window/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 8	 write mode: NORMAL
+	 port b size: 1024 x 8	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(pixel_filter/bram_window$window/ramread1_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 8	 write mode: NORMAL
+	 port b size: 1024 x 8	 write mode: READBEFOREWRITE
+SYN-1027 : Infer Logic DRAM(remote/replies/ramread0_syn_4) read 16x8, write 16x8
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 512 x 8	 write mode: NORMAL
+	 port b size: 512 x 8	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread1_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 24	 write mode: NORMAL
+	 port b size: 1024 x 24	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread2_syn_4)
+	 port mode: single dual port
+	 port a size: 1024 x 24	 write mode: NORMAL
+	 port b size: 1024 x 24	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/filesystem$fat/ramread0_syn_5)
+	 port mode: single dual port
+	 port a size: 256 x 28	 write mode: NORMAL
+	 port b size: 256 x 28	 write mode: READBEFOREWRITE
+SYN-1025 : Merged 1 RAM ports.
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/filesystem$fat/ramread1_syn_86)
+	 port mode: single dual port
+	 port a size: 256 x 32	 write mode: NORMAL
+	 port b size: 256 x 32	 write mode: READBEFOREWRITE
+SYN-1026 : Infer Logic BRAM(sd_card_bmp_m0/wav_enabled$wav/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 512 x 8	 write mode: NORMAL
+	 port b size: 512 x 8	 write mode: READBEFOREWRITE
+SYN-1027 : Infer Logic DRAM(u_video_rgb_to_axis_640x480/ramread0_syn_4) read 64x26, write 64x26
+SYN-1026 : Infer Logic BRAM(waveform/ramread0_syn_4)
+	 port mode: single dual port
+	 port a size: 256 x 7	 write mode: NORMAL
+	 port b size: 256 x 7	 write mode: READBEFOREWRITE
+SYN-1023 : Infer 28 Logic DRAMs, 13 Logic BRAMs.
+SYN-1035 : Inferred 3 ROM(s)
+SYN-1016 : Merged 3321 instances.
+SYN-1001 : End Stage 1.5 | Optimize Design; Time: 10.984813s wall, 10.187500s user + 0.265625s system = 10.453125s CPU (95.2%); Memory(MB): used = 782, reserved = 768, peak = 782;
+
+SYN-1079 : finish stage Optimize Design. Total instances: 31580, Total nets: 36733.
+
+SYN-1001 : Stage 1.6 | Optimize Iteratively
+SYN-1018 : Transformed 1 mux instances.
+SYN-1019 : Optimized 7 mux instances.
+SYN-1021 : Optimized 505 onehot mux instances.
+SYN-1014 : Optimize round 1
+SYN-1044 : Optimized 214 inv instances.
+SYN-1017 : Remove 78 const input seq instances
+SYN-1018 : Transformed 2 mux instances.
+SYN-1019 : Optimized 80 mux instances.
+SYN-1020 : Optimized 1464 distributor mux.
+SYN-1001 : Optimize 120 less-than instances
+SYN-1019 : Optimized 551 mux instances.
+SYN-2595 : bram inst: audio_fifo/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: effects/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: frame_read_write_m0/write_buf/ram_inst/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: pixel_filter/bram_window$window/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: pixel_filter/bram_window$window/ramread1_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread1_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread2_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/filesystem$fat/ramread0_syn_5 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/filesystem$fat/ramread1_syn_86 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: sd_card_bmp_m0/wav_enabled$wav/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2595 : bram inst: waveform/ramread0_syn_4 is set to PDPW/SP from DP for resource saving
+SYN-2593 : bram inst: audio_fifo/ramread0_syn_4 will be optimized to a new one with A-width 16 due to unused data out
+SYN-2593 : bram inst: frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4 will be optimized to a new one with A-width 24 due to unused data out
+SYN-1016 : Merged 7210 instances.
+SYN-1015 : Optimize round 1, 88353 better
+SYN-1014 : Optimize round 2
+SYN-1044 : Optimized 52 inv instances.
+SYN-1017 : Remove 12 const input seq instances
+SYN-1019 : Optimized 116 mux instances.
+SYN-1020 : Optimized 14 distributor mux.
+SYN-1019 : Optimized 264 mux instances.
+SYN-1016 : Merged 84 instances.
+SYN-1015 : Optimize round 2, 741 better
+SYN-5011 WARNING: Undriven pin: model "top" / inst "audio_fifo/ramread0_syn_4" in E:/fpga/src/modules/audio/audio_async_fifo.v(23) / pin "bea[0]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "audio_fifo/ramread0_syn_4" in E:/fpga/src/modules/audio/audio_async_fifo.v(23) / pin "beb[0]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4" in E:/fpga/src/ip/fifo/afifo_32_16_256.v(822) / pin "bea[0]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4" in E:/fpga/src/ip/fifo/afifo_32_16_256.v(822) / pin "beb[0]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[7]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[6]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[5]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[4]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[3]"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "gamma/mux0_syn_1" in E:/fpga/src/modules/video/picture_gamma.v(13) / pin "addrb[2]"
+SYN-5011 Similar messages will be suppressed.
+SYN-5025 WARNING: Using 0 for all undriven pins and nets
+SYN-3010 : Optimized 256 DFF(s)
+SYN-1014 : Optimize round 1
+SYN-1017 : Remove 2 const input seq instances
+SYN-1020 : Optimized 186 distributor mux.
+SYN-1019 : Optimized 10 mux instances.
+SYN-1016 : Merged 768 instances.
+SYN-1015 : Optimize round 1, 1066 better
+SYN-1014 : Optimize round 2
+SYN-1044 : Optimized 1 inv instances.
+SYN-1019 : Optimized 6 mux instances.
+SYN-1020 : Optimized 80 distributor mux.
+SYN-1019 : Optimized 1 mux instances.
+SYN-1016 : Merged 224 instances.
+SYN-1015 : Optimize round 2, 318 better
+SYN-1014 : Optimize round 3
+SYN-1019 : Optimized 1 mux instances.
+SYN-1015 : Optimize round 3, 1 better
+SYN-1014 : Optimize round 4
+SYN-1015 : Optimize round 4, 0 better
+SYN-1001 : End Stage 1.6 | Optimize Iteratively; Time: 19.416419s wall, 18.687500s user + 0.312500s system = 19.000000s CPU (97.9%); Memory(MB): used = 686, reserved = 681, peak = 782;
+
+SYN-1079 : finish stage Optimize Iteratively. Total instances: 31978, Total nets: 36908.
+
+SYN-1001 : Stage 1.7 | Check Design
+SYN-1001 : End Stage 1.7 | Check Design; Time: 0.008459s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 686, reserved = 681, peak = 782;
+
+SYN-1079 : finish stage Check Design. Total instances: 31978, Total nets: 36908.
+
+SYN-1001 : End Stage 1 | Optimize RTL; Time: 33.205285s wall, 31.656250s user + 0.593750s system = 32.250000s CPU (97.1%); Memory(MB): used = 686, reserved = 681, peak = 782;
+
+SYN-1079 : finish stage Optimize RTL. Total instances: 31978, Total nets: 36908.
+
+RUN-1003 : finish command "optimize_rtl" in  33.216209s wall, 31.656250s user + 0.593750s system = 32.250000s CPU (97.1%)
+
+RUN-1004 : used memory is 686 MB, reserved memory is 681 MB, peak memory is 782 MB
+RUN-1002 : start command "report_area -file reports/rtl_area.txt"
+RUN-1001 : standard
+***Report Model: top Device: EG4S20BG256***
+
+IO Statistics
+#IO                        40
+  #input                   13
+  #output                  21
+  #inout                    6
+
+Gate Statistics
+#Basic gates            23552
+  #and                   4542
+  #nand                     0
+  #or                    2338
+  #nor                      0
+  #xor                    234
+  #xnor                     0
+  #buf                      0
+  #not                   2048
+  #bufif1                  39
+  #MX21                  3279
+  #FADD                     0
+  #DFF                  11072
+  #LATCH                    0
+#MACRO_ADD                922
+#MACRO_EQ                 528
+#MACRO_MULT                41
+#MACRO_MUX               5904
+#MACRO_OTHERS              54
+
+RUN-1002 : start command "optimize_gate"
+RUN-1001 : Open license file J:/Anlogic/td.6.2.1/license/Anlogic.lic
+SYN-1001 : Stage 2 | Optimize Gate
+SYN-1001 : Stage 2.1 | Map Reg
+SYN-1001 : End Stage 2.1 | Map Reg; Time: 0.792971s wall, 0.765625s user + 0.015625s system = 0.781250s CPU (98.5%); Memory(MB): used = 683, reserved = 678, peak = 782;
+
+SYN-1079 : finish stage Map Reg. Total instances: 31978, Total nets: 36908.
+
+SYN-1001 : Stage 2.2 | Map IO
+SYN-2002 : EG_PHY_SDRAM_2M_32 instance U3/sdram.
+SYN-2001 : Map 95 IOs to PADs of model 'top'
+SYN-1001 : End Stage 2.2 | Map IO; Time: 0.432810s wall, 0.406250s user + 0.000000s system = 0.406250s CPU (93.9%); Memory(MB): used = 685, reserved = 679, peak = 782;
+
+SYN-1001 : Stage 2.3 | Map Macro
+RUN-1002 : start command "update_pll_param -module top"
+SYN-6577 WARNING: The clock signal "U3/u2_ram/SDRAM_CLK" is added with the synthetic instruction (keep/mark_debug/dont_touch/max_fanout), which may create additional logic on this net
+SYN-2501 : Processed 0 LOGIC_BUF instances.
+SYN-2501 : 2 BUFGMUX to CSB
+SYN-2501 : 2 BUFG to GCLK
+SYN-2541 : Logic Ram FIFO "u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_hdmi_island_data_gen/U_audio_sample_packet_2_channel/u_w96_d1024_fifo/u_logic_ramfifo"
+SYN-2541 : Logic Ram FIFO "u_hdmi_svga/u_hdmi_tx_controller_wrapper/u_video_axi_stream_receiver/u_w24_d1024_fifo/u_logic_ramfifo"
+SYN-6562 WARNING: The init value of "audio_fifo/ramread0_syn_4(E:/fpga/src/modules/audio/audio_async_fifo.v(23))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "effects/ramread0_syn_4(E:/fpga/src/modules/video/transition_pixels.v(16))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "frame_read_write_m0/read_buf/ram_inst/ramread0_syn_4(E:/fpga/src/ip/fifo/afifo_32_16_256.v(822))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "frame_read_write_m0/write_buf/ram_inst/ramread0_syn_4(E:/fpga/src/ip/fifo/afifo_16_32_256.v(822))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread0_syn_4(E:/fpga/src/modules/video/bmp_scale_loader.v(112))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread1_syn_4(E:/fpga/src/modules/video/bmp_scale_loader.v(117))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/bmp_read_m0/scaling$loader/ramread2_syn_4(E:/fpga/src/modules/video/bmp_scale_loader.v(117))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/filesystem$fat/ramread0_syn_5(E:/fpga/src/modules/sd/sd_fat32.v(214))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/filesystem$fat/ramread1_syn_86(E:/fpga/src/modules/sd/sd_fat32.v(130))" will be ignored since gate eram_init is set to off
+SYN-6562 WARNING: The init value of "sd_card_bmp_m0/wav_enabled$wav/ramread0_syn_4(E:/fpga/src/modules/audio/audio_wav.v(94))" will be ignored since gate eram_init is set to off
+SYN-6562 Similar messages will be suppressed.
+SYN-2571 : Map 41 macro multiplier
+SYN-2571 : Optimize after map_dsp, round 1
+SYN-1016 : Merged 200 instances.
+SYN-2571 : Optimize after map_dsp, round 1, 200 better
+SYN-2571 : Optimize after map_dsp, round 2
+SYN-2571 : Optimize after map_dsp, round 2, 0 better
+SYN-1001 : Throwback 706 control mux instances
+SYN-1001 : Generate 92 bigger adders
+SYN-1001 : Optimize 148 adders
+SYN-1001 : Convert 12 adder
+SYN-1001 : Optimize 6 less-than instances
+SYN-2501 : Optimize round 1
+SYN-1016 : Merged 1286 instances.
+SYN-2501 : Optimize round 1, 4975 better
+SYN-2501 : Optimize round 2
+SYN-2501 : Optimize round 2, 0 better
+SYN-2501 : Optimize round 1
+SYN-1016 : Merged 1 instances.
+SYN-2501 : Optimize round 1, 3 better
+SYN-2501 : Optimize round 2
+SYN-2501 : Optimize round 2, 0 better
+SYN-2501 : Map 849 macro adder(s)
+SYN-2501 : Inferred 24 ROM instances
+SYN-1019 : Optimized 2354 mux instances.
+SYN-1016 : Merged 3766 instances.
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[0]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[1]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[2]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[3]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[4]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[5]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[6]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[7]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[8]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 WARNING: Undriven pin: model "top" / inst "U3/u2_ram/u2_wrrd/Sdr_rd_dout_reg[9]" in E:/fpga/src/ip/sdram/sdr_wrrd.enc.v(0) / pin "clk"
+SYN-5011 Similar messages will be suppressed.
+SYN-5025 WARNING: Using 0 for all undriven pins and nets
+SYN-1001 : End Stage 2.3 | Map Macro; Time: 14.796460s wall, 14.390625s user + 0.171875s system = 14.562500s CPU (98.4%); Memory(MB): used = 783, reserved = 768, peak = 783;
+
+SYN-1079 : finish stage Map Macro. Total instances: 48881, Total nets: 53576.
+
+SYN-1001 : Stage 2.4 | Map Gate
+SYN-3001 : Collect 10760 PI 6181 PO (171 timing unconstrained) for mapping
+SYN-2581 : Mapping with K=5, #lut = 12255 (3.58), #lev = 17 (2.67), #crit_level = 17
+SYN-2551 : Post LUT mapping optimization.
+SYN-2581 : Mapping with K=5, #lut = 11810 (3.53), #lev = 13 (2.72), #crit_level = 0
+SYN-3001 : Logic optimization opt = 4.52 sec, map = 1.48 sec, post map opt = 50.44 sec.
+SYN-3001 : Mapper removed 21 lut buffers
+SYN-1001 : End Stage 2.4 | Map Gate; Time: 64.633331s wall, 61.640625s user + 1.250000s system = 62.890625s CPU (97.3%); Memory(MB): used = 828, reserved = 810, peak = 828;
+
+SYN-1001 : Packing model "top" ...
+SYN-4010 : Pack lib has 58 rtl pack models with 26 top pack blocks
+SYN-1014 : Optimize round 1
+SYN-1015 : Optimize round 1, 0 better
+SYN-4002 : Packing 10792 DFF/LATCH to SEQ ...
+SYN-4009 : Pack 85 carry chain into lslice
+SYN-4007 : Packing 2073 adder to BLE ...
+SYN-4008 : Packed 2073 adder and 330 SEQ to BLE.
+SYN-4007 : Packing 0 gate4 to BLE ...
+SYN-4008 : Packed 0 gate4 and 0 SEQ to BLE.
+SYN-4013 : Packed 190 DRAM and 0 SEQ.
+RUN-1002 : start command "report_qor -step gate -file gate.qor"
+RUN-1002 : start command "start_timer"
+-----------------------------------------------------------
+| QoR metrics               |         value               |
+-----------------------------------------------------------
+| Timing                    |                             |
+|     Setup WNS             |       -16708                |
+|     Setup TNS             |     -7836259                |
+|     Num of violated S-EP  |         3534                |
+|     Hold WNS              |          451                |
+|     Hold TNS              |            0                |
+|     Num of violated H-EP  |            0                |
+-----------------------------------------------------------
+| Utilization               |                             |
+|     #registers            |        10462                |
+|     #luts                 |        11900                |
+|     #lut1                 |           95                |
+|     #lut1(~A)             |           95                |
+|     #slices               |         2245                |
+|     slices percentage     |       22.91%                |
+|     #RAMs                 |           41                |
+|     #DSPs                 |           27                |
+|     #f7mux                |        0.00%                |
+|     #MACROs               |          497                |
+|     #insts in MACRO       |         2245                |
+-----------------------------------------------------------
+| kept_net                  |                             |
+|     #syn_keep             |          193                |
+|     #keep_hier            |          152                |
+|     #dont_touch           |            0                |
+|     #mark_debug           |            0                |
+|     #max_fanout_keep      |            0                |
+|     #async_reg            |          215                |
+-----------------------------------------------------------
+| Top 10% datanet fanout#   |        49.11                |
+| dff(single fanout)->dff   |         1752                |
+| dff(single fanout)->dram  |            0                |
+-----------------------------------------------------------
+| Over-quota path num*      |                             |
+|     video_pl...           |          318                |
+|     Total                 |          318                |
+-----------------------------------------------------------
+| Rent**                    |                             |
+-----------------------------------------------------------
+Note*: Over-quota path shows the over-path-level-threshold path number of each clock.
+       The clock will not be shown if no path is with path level over the threshold.
+       The threshold is defined as worst path_margin / 800ps.
+Note**: Rent shows the rent exponent value of the modules whose rent value exceeds the threshold.
+        Only modules under top are reported, and the threshold is defined as 0.7.
+
+Over-quota Path Details
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+              Clock              |  Index  |  Budget(Period)  |  Level(Quota)  |                                                  Cell Type List                                                   |        Reason        |  Slack   
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  video_pll_m0/pll_inst.clkc[0]  |    1    |   4854(40000)    |     16(7)      |     SEQ,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,MULT18,ADDER,ADDER,ADDER,ADDER,ADDER,LUT3,ADDER,ADDER,ADDER,ADDER     |  large launch delay  |  -16343  
+                                 |    2    |   4854(40000)    |     16(7)      |     SEQ,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,MULT18,ADDER,ADDER,ADDER,ADDER,ADDER,LUT3,ADDER,ADDER,ADDER,ADDER     |  large launch delay  |  -16264  
+                                 |    3    |   4854(40000)    |     16(7)      |  SEQ,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,MULT18,ADDER,ADDER,ADDER,ADDER,ADDER,LUT3,ADDER,ADDER,ADDER,ADDER,ADDER  |  large launch delay  |  -16205  
+                                 |    4    |   4854(40000)    |     16(7)      |     SEQ,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,ADDER,ADDER,ADDER,ADDER,ADDER     |  large launch delay  |  -16170  
+                                 |    5    |   4854(40000)    |     16(7)      |  SEQ,MULT18,ADDER,ADDER,ADDER,ADDER,LUT3,MULT18,ADDER,ADDER,ADDER,ADDER,ADDER,LUT3,ADDER,ADDER,ADDER,ADDER,ADDER  |  large launch delay  |  -16126  
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Note: Table only show top 5 paths for each clock group in default
+
+Logic Level Distribution
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Clock                          |  Period             |  0      |  1     |  2     |  3     |  4     |  5    |  6    |  7    |  8    |  9   |  10  |  11  |  12  |  13  |  14  |  15  |  16
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  clk                            |  20.000ns (50MHz)   |  0      |  0     |  0     |  0     |  0     |  0    |  0    |  0    |  0    |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  sys_pll_m0/pll_inst.clkc[0]    |  10.000ns (100MHz)  |  5719   |  3048  |  3017  |  1215  |  785   |  450  |  204  |  471  |  253  |  15  |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  sys_pll_m0/pll_inst.clkc[1]    |  25.000ns (40MHz)   |  894    |  153   |  111   |  163   |  46    |  2    |  5    |  3    |  5    |  42  |  1   |  1   |  2   |  3   |  0   |  0   |  0
+  sys_pll_m0/pll_inst.clkc[2]    |  25.000ns (40MHz)   |  16     |  32    |  0     |  0     |  0     |  0    |  0    |  0    |  0    |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  video_pll_m0/pll_inst.clkc[0]  |  40.000ns (25MHz)   |  5662   |  1327  |  738   |  946   |  554   |  441  |  344  |  102  |  43   |  35  |  16  |  1   |  17  |  5   |  35  |  2   |  14
+  video_pll_m0/pll_inst.clkc[1]  |  8.000ns (125MHz)   |  54     |  33    |  0     |  0     |  0     |  0    |  0    |  0    |  0    |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  video_pll_m0/pll_inst.clkc[2]  |  25.000ns (40MHz)   |  139    |  10    |  0     |  0     |  0     |  0    |  0    |  0    |  0    |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  video_pll_m0/pll_inst.clkc[3]  |  5.000ns (200MHz)   |  0      |  0     |  0     |  0     |  0     |  0    |  0    |  0    |  0    |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0
+  Total                          |  NA                 |  12484  |  4603  |  3866  |  2324  |  1385  |  893  |  553  |  576  |  301  |  92  |  17  |  2   |  19  |  8   |  35  |  2   |  14
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Note: The table count the worst 100000 paths, each endpoint count only one time.(27174 paths analyzed)
+
+Hierarchical Rent Exponent Report
++----------------------------------------------------------------------------------------------------+
+|Inst                  |Model                                 |Rent     |Cell     |Pin     |Term     |
++----------------------------------------------------------------------------------------------------+
+|top                   |top                                   |0.17     |25745    |116809  |25       |
+|  u_hdmi_svga         |hdmi_1_4b_transmitter_core_wrapper_57 |0.58     |2367     |8678    |336      |
+|  frame_read_write_m0 |frame_read_write_18                   |0.57     |1120     |4154    |204      |
+|  sd_card_bmp_m0      |sd_card_bmp_45                        |0.40     |9583     |42630   |174      |
+|  game                |snake_game_22                         |0.35     |1410     |10261   |92       |
++----------------------------------------------------------------------------------------------------+
+Note: Cell represents total number of cells inside module; Pin represents total number of pins
+      which have net connection inside module; Term represents total number of PIs and POs of module.
+      Rent represents the relationship between number of terms and number of cells in module.
+      A module with higher rent corresponds to highly connected logic and strong connectivity with others.
+Report gate stage QoR done.
+
+SYN-1001 : The design has 8 dangling syn_keep insts,1 dangling async_reg inst.
+RUN-1003 : finish command "report_qor -step gate -file gate.qor" in  5.473567s wall, 5.296875s user + 0.062500s system = 5.359375s CPU (97.9%)
+
+RUN-1004 : used memory is 829 MB, reserved memory is 810 MB, peak memory is 829 MB
+SYN-1001 : End Stage 2 | Optimize Gate; Time: 86.678508s wall, 82.968750s user + 1.531250s system = 84.500000s CPU (97.5%); Memory(MB): used = 829, reserved = 810, peak = 829;
+
+RUN-1003 : finish command "optimize_gate" in  86.692941s wall, 82.984375s user + 1.531250s system = 84.515625s CPU (97.5%)
+
+RUN-1004 : used memory is 829 MB, reserved memory is 810 MB, peak memory is 829 MB
+RUN-1002 : start command "legalize_phy_inst"
+SYN-1001 : Stage 3 | Legalize Phy Inst
+SYN-1011 : Flatten model top
+SYN-1001 : End Stage 3 | Legalize Phy Inst; Time: 0.126322s wall, 0.125000s user + 0.000000s system = 0.125000s CPU (99.0%); Memory(MB): used = 829, reserved = 810, peak = 829;
+
+RUN-1002 : start command "report_area -file reports/gate_area.txt"
+RUN-1001 : standard
+***Report Model: top Device: EG4S20BG256***
+
+IO Statistics
+#IO                        40   out of    188   21.28%
+  #input                   13
+  #output                  21
+  #inout                    6
+
+LUT Statistics
+#Total_luts             11897
+  #lut4                  9409
+  #lut5                  2395
+  #lut6                    93
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                    16480   out of  19600   84.08%
+#reg                    10748   out of  19600   54.84%
+#bram                      41   out of     64   64.06%
+  #bram9k                  41
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                       27   out of     29   93.10%
+#pad                       44   out of    188   23.40%
+  #ireg                    12
+  #oreg                    20
+  #treg                     2
+#pll                        2   out of      4   50.00%
+#gclk                       4   out of     16   25.00%
+
+RUN-1002 : start command "export_db reports/video_improve_gate.db"
+RUN-1001 : Exported flow parameters
+RUN-1001 : Exported /
+RUN-1001 : Exported libs
+RUN-1001 : Exported entities
+RUN-1001 : Exported ports
+RUN-1001 : Exported pins
+RUN-1001 : Exported instances
+RUN-1001 : Exported nets
+RUN-1001 : Exported buses
+RUN-1001 : Exported models
+RUN-1001 : Exported packer
+RUN-1001 : Exported congestions
+RUN-1001 : Exported violations
+RUN-1001 : Exported ATMR Setting
+RUN-1001 : Exported timing constraints
+RUN-1001 : Exported IO constraints
+RUN-1001 : Exported Inst constraints
+RUN-1001 : Exported ChipWatcher
+SYNTHESIS_COMPLETED

@@ -1,0 +1,47 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_retry_edges.log -lib msim_work -c tb_audio_retry_edges 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2685) [TFMPC] - Too few port connections for 'a'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2685) [TFMPC] - Too few port connections for 'b'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2685) [TFMPC] - Too few port connections for 'c'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_retry_edges(fast)
+# run -all 
+# ALL PASS tb_audio_retry_edges
+# ** Note: $finish    : tb_audio_retry_edges.v(20)
+#    Time: 216 ns  Iteration: 0  Instance: /tb_audio_retry_edges

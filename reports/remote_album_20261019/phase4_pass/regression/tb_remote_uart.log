@@ -1,0 +1,25 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_remote_uart.log -lib msim_work -c tb_remote_uart 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'caption'.  Expected 17, found 14.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_rgb'.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_remote_uart(fast)
+# run -all 
+# ALL PASS tb_remote_uart: real 8N1 pins, atomic timestamp, range, timeout, recovery, legacy controls isolated, CDC, frame latch, midnight
+# ** Note: $finish    : tb_remote_uart.v(67)
+#    Time: 71270 ns  Iteration: 1  Instance: /tb_remote_uart

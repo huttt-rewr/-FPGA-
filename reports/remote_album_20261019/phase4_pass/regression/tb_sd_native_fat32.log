@@ -1,0 +1,77 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_fat32.log -lib msim_work -c tb_sd_native_fat32 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_fat32(fast)
+# Loading work.sd_fat32(fast)
+# Loading work.sd_card_top_native(fast)
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# 
+#         Region: /tb_sd_native_fat32/fixture[0]/dut/fs
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# 
+#         Region: /tb_sd_native_fat32/fixture[1]/dut/fs
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# run -all 
+# ALL PASS tb_sd_native_fat32: 4-bit pins -> transport -> unchanged arbiter/FAT32, MBR/superfloppy, fragmented BMP/WAV exact bytes
+# ** Note: $finish    : tb_sd_native_fat32.v(101)
+#    Time: 3917820 ns  Iteration: 1  Instance: /tb_sd_native_fat32

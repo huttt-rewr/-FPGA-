@@ -1,0 +1,192 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+V`Q<B0BU4@2IkBhGa<o@443
+04 12 4 work tb_ir_nec_rx fast 0
+=1-bcfce7e1723c-6ad77218-165-39e4
+o-quiet -auto_acc_if_foreign -work ../work
+n@_opt
+OL;O;10.1c;51
+vir_nec_rx
+Ink^8z9_52[=k1?XaQ<kkB2
+V^m4j3P7z0^34V8fC;Udml3
+Z1 dE:\fpga
+Z2 w1792504341
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\ir_nec_rx.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\ir_nec_rx.v
+L0 16
+Z3 OL;L;10.1c;51
+r1
+31
+Z4 !s108 1792504341.775000
+Z5 !s107 E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_remote_ir.v|E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_ir_nec_rx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx_queue.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_rx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\time_cmd.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\remote_controls.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\player_control.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\ir_nec_rx.v|
+Z6 !s90 -work|E:\fpga\reports\remote_album_20261019\ir_candidate\work|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\ir_nec_rx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\player_control.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\remote_controls.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\time_cmd.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_rx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx_queue.v|E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_ir_nec_rx.v|E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_remote_ir.v|
+Z7 o-work {E:\fpga\reports\remote_album_20261019\ir_candidate\work} -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 125;m4oQH?<;eL27NW95W0
+!s85 0
+vir_nec_rx_reference
+I>f0j4gn]K[DaCV6;e=Nb=2
+VfP?K>gMj8?AXd_am1<@S32
+R1
+R2
+Z8 8E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_ir_nec_rx.v
+Z9 FE:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_ir_nec_rx.v
+L0 151
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 >lY4E^NG@4Z;?8S22:44m0
+!s85 0
+vplayer_control
+I[E_:Y`o<AMWXP>lF1F:X93
+VcB]3fcIPVfmCJ]jZEgJQR1
+R1
+w1792499405
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\player_control.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\player_control.v
+L0 2
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 kJmRS[8?156`U0PjVBN=93
+!s85 0
+vremote_controls
+I45>SMl`oA:P`3e3[n0ngH0
+VO[=7Vb>ebkI@]UT>b_;oB3
+R1
+R2
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\remote_controls.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\remote_controls.v
+L0 2
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 Ai;OWL@R7^obaL:o5V:2H2
+!s85 0
+vtb_ir_nec_rx
+IaeXZ8iF2<hQYQh@h3`dD60
+V>zQ1gQ[2zblC6`UBlcOAA0
+R1
+R2
+R8
+R9
+L0 14
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 NFm58eVNiciZU^bnz;Ihd0
+!s85 0
+vtb_remote_ir
+I[a?0cL]3c>M^B>`iSbGB<3
+Vb>J46[hXWoU1iC9B6Q7QW3
+R1
+w1792496905
+8E:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_remote_ir.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\sim\tb_remote_ir.v
+L0 2
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 D>[TE5ag=D>;O0g0Ea;^_0
+!s85 0
+vtime_cmd
+I;7ZAV>eMnUg7a_z>NFDWT2
+VMPciWA`Faf;n9NmRWGg1>2
+R1
+w1792417144
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\time_cmd.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\time_cmd.v
+L0 2
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 X?^<m1mZV<<Fg<X41Q;nd0
+!s85 0
+vuart_rx
+II;VPCHRe?]b@?<>_Ol<f@1
+VLhzRX@iWR_F]j>^5fG71k3
+R1
+w1791462972
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_rx.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_rx.v
+L0 11
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 B8@@QdRnT=mTb`VlN0BP^1
+!s85 0
+vuart_tx
+IoOaA[IgV:k3NjFW151<aj3
+VCUbLP?`JIVQOaz3JV5Tmg2
+R1
+w1790587830
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx.v
+L0 1
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 5GWa8Fc@9k:XfjNRo_caW0
+!s85 0
+vuart_tx_queue
+IV0GiQR[SBL:^X[_5gJ]I42
+VCNhKB9j`EDIQ4zE0<30[@2
+R1
+w1790931525
+8E:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx_queue.v
+FE:\fpga\reports\remote_album_20261019\ir_candidate\src\modules\control\uart_tx_queue.v
+L0 2
+R3
+r1
+31
+R4
+R5
+R6
+R7
+!i10b 1
+!s100 e9j58CDg`oFzMDhDc69kI3
+!s85 0

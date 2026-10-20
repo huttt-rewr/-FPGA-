@@ -1,0 +1,103 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_commit_timeout.log -lib msim_work -c tb_commit_timeout 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 18.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sector_room'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_enable'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_commit_timeout(fast)
+# run -all 
+# ALL PASS tb_commit_timeout: no fabricated commit, buffers protected, late ack accepted
+# ** Note: $finish    : tb_commit_timeout.v(38)
+#    Time: 1540 ns  Iteration: 1  Instance: /tb_commit_timeout

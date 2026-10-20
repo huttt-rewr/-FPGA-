@@ -1,0 +1,39 @@
+standard
+***Report Model: cdc_encoded_probe Device: EG4S20BG256***
+
+IO Statistics
+#IO                       144   out of    188   76.60%
+  #input                   74
+  #output                  70
+  #inout                    0
+
+LUT Statistics
+#Total_luts               143
+  #lut4                   143
+  #lut5                     0
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      143   out of  19600    0.73%
+#reg                       78   out of  19600    0.40%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        0   out of     29    0.00%
+#pad                      144   out of    188   76.60%
+  #ireg                     0
+  #oreg                    70
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++---------------------------------------------------------------------------+
+|Instance   |Module            |lut     |ripple  |seq     |bram    |dsp     |
++---------------------------------------------------------------------------+
+|top        |cdc_encoded_probe |143     |0       |148     |0       |0       |
+|  snapshot |cdc_snapshot      |143     |0       |78      |0       |0       |
++---------------------------------------------------------------------------+

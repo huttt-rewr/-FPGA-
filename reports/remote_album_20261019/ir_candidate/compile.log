@@ -1,0 +1,15 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module ir_nec_rx
+-- Compiling module player_control
+-- Compiling module remote_controls
+-- Compiling module time_cmd
+-- Compiling module uart_rx
+-- Compiling module uart_tx
+-- Compiling module uart_tx_queue
+-- Compiling module tb_ir_nec_rx
+-- Compiling module ir_nec_rx_reference
+-- Compiling module tb_remote_ir
+
+Top level modules:
+	tb_ir_nec_rx
+	tb_remote_ir

@@ -1,0 +1,37 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_watchdog.log -lib msim_work -c tb_sd_watchdog 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 32, found 23.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_read_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_data_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_end'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data_valid'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'transfer_error'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_watchdog(fast)
+# run -all 
+# ALL PASS tb_sd_watchdog: bounded failure, quiet pause, successful retry
+# ** Note: $finish    : tb_sd_watchdog.v(50)
+#    Time: 7420 ns  Iteration: 1  Instance: /tb_sd_watchdog

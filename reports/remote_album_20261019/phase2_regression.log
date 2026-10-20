@@ -1,0 +1,4049 @@
+FIRST   BMP bytes= 2630 chain= [10, 147, 284, 421, 558, 695]
+SECOND  bmp bytes= 2554 chain= [1810, 1947, 2084, 2221, 2358]
+THIRD   BMP bytes= 730 chain= [3610, 3747]
+FOURTH  BMP bytes= 1494 chain= [5410, 5547, 5684]
+SOUND   WAV bytes= 4044 chain= [7210, 7347, 7484, 7621, 7758, 7895, 8032, 8169]
+ALL PASS FAT32 verify: super.img superfloppy spc= 1
+FIRST   BMP bytes= 2630 chain= [10, 147, 284]
+SECOND  bmp bytes= 2554 chain= [1810, 1947, 2084]
+THIRD   BMP bytes= 730 chain= [3610]
+FOURTH  BMP bytes= 1494 chain= [5410, 5547]
+SOUND   WAV bytes= 4044 chain= [7210, 7347, 7484, 7621]
+ALL PASS FAT32 verify: mbr.img MBR spc= 2
+FIRST   BMP bytes= 2630 chain= [10, 11, 12, 13, 14, 15]
+SECOND  bmp bytes= 2554 chain= [16, 17, 18, 19, 20]
+THIRD   BMP bytes= 730 chain= [21, 22]
+FOURTH  BMP bytes= 1494 chain= [23, 24, 25]
+SOUND   WAV bytes= 4044 chain= [26, 27, 28, 29, 30, 31, 32, 33]
+ALL PASS FAT32 verify: contig.img superfloppy spc= 1
+Generated 12 constant-color 4x4 BMP and 3 distinct constant PCM WAV
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module board_debug
+-- Compiling module board_supervisor
+-- Compiling module cdc_snapshot
+-- Compiling module reset_sync
+-- Compiling module startup_pulse
+-- Compiling module fps_control
+-- Compiling module ir_nec_rx
+-- Compiling module picture_controls
+-- Compiling module player_control
+-- Compiling module remote_controls
+-- Compiling module switch_controls
+-- Compiling module time_cmd
+-- Compiling module uart_rx
+-- Compiling module uart_tx
+-- Compiling module uart_tx_queue
+-- Compiling module caption_overlay
+-- Compiling module osd_char_rom
+-- Compiling module status_osd
+-- Compiling module adaptive_raster
+-- Compiling module adaptive_video_clock
+-- Compiling module audio_visualizer
+-- Compiling module bmp_scale_loader
+-- Compiling module rgb_lerp_pipeline
+-- Compiling module color_bar
+-- Compiling module edid_base_check
+-- Compiling module edid_display_mode
+-- Compiling module frame_swap
+-- Compiling module glass_osd
+-- Compiling module glass_title_row
+-- Compiling module picture_adjust
+-- Compiling module picture_gamma
+-- Compiling module pixel_effects
+-- Compiling module video_luma_window
+-- Compiling module transition_pixels
+-- Compiling module video_coordinates
+-- Compiling module viewport_coordinates
+-- Compiling module video_delay
+-- Compiling module video_enhance
+-- Compiling module video_luma_window_bram
+-- Compiling module video_mode_control
+-- Compiling module video_rgb_to_axis_640x480
+-- Compiling module video_timing_data
+-- Compiling module audio_async_fifo
+-- Compiling module audio_effects
+-- Compiling module audio_effects_stream
+-- Compiling module audio_fifo_room
+-- Compiling module audio_playback
+-- Compiling module audio_error_history
+-- Compiling module audio_test_source
+-- Compiling module audio_wav
+-- Compiling module video_mode_table
+-- Compiling module video_scaler
+-- Compiling module ycbcr_to_rgb
+-- Compiling module bmp_read
+-- Compiling module sd_card_bmp
+-- Compiling module key_press_debounce
+-- Compiling module sd_card_top
+-- Compiling module sd_card_sec_read_write
+-- Compiling module sd_card_cmd
+-- Compiling module spi_master
+-- Compiling module tb_uart_rx
+-- Compiling module tb_ir_nec_rx
+-- Compiling module tb_video_scaler
+-- Compiling module tb_upgrade
+-- Compiling module tb_cdc
+-- Compiling module tb_stream_queue
+-- Compiling module tb_uart_queue
+-- Compiling module tb_sd_address
+-- Compiling module tb_load_recovery
+-- Compiling module tb_bmp_stream
+-- Compiling module frame_fifo_write
+-- Compiling module wfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_wfifo_32_32_512
+-- Compiling module ram_infer_wfifo_32_32_512
+-- Compiling module tb_fifo_boundary
+-- Compiling module tb_frame_writer
+-- Compiling module frame_fifo_read
+-- Compiling module frame_read_write
+-- Compiling module rfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_rfifo_32_32_512
+-- Compiling module ram_infer_rfifo_32_32_512
+-- Compiling module tb_frame_tail
+-- Compiling module tb_osd_text
+-- Compiling module tb_bmp_headers
+-- Compiling module tb_hdmi_line_contract
+-- Compiling module tb_sd_watchdog
+-- Compiling module tb_sd_crc
+-- Compiling module tb_read_drain
+-- Compiling module tb_memory_refresh
+-- Compiling module sd_read_arbiter
+-- Compiling module sd_fat32
+-- Compiling module sd_bus_phy
+-- Compiling module sd_card_top_native
+-- Compiling module sd_native_controller
+-- Compiling module sd_native_card_model
+-- Compiling module ps2_controls
+-- Compiling module ps2_keyboard
+-- Compiling module snake_game
+-- Compiling module snake_frame_control
+-- Compiling module snake_lut_ram
+-- Compiling module tmds_encoder
+-- Compiling module hdmi_tmds_vga
+-- Compiling module edid_i2c
+-- Compiling module tb_sd_waits
+-- Compiling module tb_edid_timeout
+-- Compiling module tb_bmp_stall
+-- Compiling module tb_commit_timeout
+-- Compiling module tb_write_backpressure
+-- Compiling module tb_svga_writer
+-- Compiling module tb_svga_pipeline
+-- Compiling module tb_svga_memory
+-- Compiling module tb_edid_display_mode
+-- Compiling module tb_adaptive_raster
+-- Compiling module tb_scaled_svga
+-- Compiling module tb_svga_osd
+-- Compiling module tb_scaled_bmp
+-- Compiling module tb_picture_controls
+-- Compiling module tb_picture_adjust
+-- Compiling module tb_picture_osd
+-- Compiling module tb_switch_controls
+-- Compiling module tb_transition
+-- Compiling module tb_transition_pixels
+-- Compiling module tb_caption_overlay
+-- Compiling module tb_effects_pipeline
+** Warning: tb_sd_crc.v(3): (vlog-2275) 'tb_sd_crc' already exists and will be overwritten.
+-- Compiling module tb_sd_crc
+** Warning: tb_read_drain.v(4): (vlog-2275) 'tb_read_drain' already exists and will be overwritten.
+-- Compiling module tb_read_drain
+** Warning: tb_memory_refresh.v(4): (vlog-2275) 'tb_memory_refresh' already exists and will be overwritten.
+-- Compiling module tb_memory_refresh
+-- Compiling module tb_board_menu
+-- Compiling module tb_board_supervisor
+-- Compiling module tb_picture_gamma
+-- Compiling module tb_board_debug
+-- Compiling module tb_board_osd
+-- Compiling module tb_board_pipeline
+-- Compiling module tb_audio_wav
+-- Compiling module tb_audio_fifo
+-- Compiling module audio_playback_case
+-- Compiling module tb_audio_playback
+-- Compiling module tb_sd_audio_arbiter
+-- Compiling module tb_audio_menu
+-- Compiling module tb_audio_sd_integration
+-- Compiling module tb_audio_osd
+-- Compiling module tb_audio_retry
+-- Compiling module tb_audio_retry_edges
+-- Compiling module tb_audio_diagnostics
+-- Compiling module audio_effects_case
+-- Compiling module tb_audio_effects
+-- Compiling module tb_audio_stream_flush
+-- Compiling module tb_audio_fifo_room
+-- Compiling module fat32_fixture
+-- Compiling module tb_fat32_mount
+-- Compiling module tb_fat32_stream
+-- Compiling module tb_fat32_player
+-- Compiling module tb_sd_native
+-- Compiling module tb_sd_native_clock
+-- Compiling module native_fat32_fixture
+-- Compiling module tb_sd_native_fat32
+-- Compiling module tb_sd_native_player
+-- Compiling module tb_ps2_keyboard
+-- Compiling module tb_ps2_controls
+-- Compiling module tb_fat32_indexed
+-- Compiling module tb_indexed_player
+-- Compiling module tb_file_osd
+-- Compiling module tb_video_mode_control
+-- Compiling module tb_mode_reload
+-- Compiling module tb_mode_request_cdc
+-- Compiling module tb_fps_control
+-- Compiling module tb_rate_player
+-- Compiling module tb_sd_native_integrated
+-- Compiling module tb_sd_highspeed
+-- Compiling module tb_sd_highspeed_player
+-- Compiling module tb_caption_pipeline
+-- Compiling module tb_pixel_effects
+-- Compiling module tb_glass_osd
+-- Compiling module tb_audio_visualizer
+-- Compiling module tb_visual_pipeline
+-- Compiling module tb_shared_luma
+-- Compiling module tb_snake_game
+-- Compiling module tb_snake_controls
+-- Compiling module tb_snake_pipeline
+-- Compiling module tb_bram_window
+-- Compiling module tb_osd_bcd
+-- Compiling module tb_bram_waveform
+-- Compiling module tb_scaler_row_address
+-- Compiling module tb_fat32_compare
+-- Compiling module tb_fps_equivalence
+-- Compiling module fps_equivalence_case
+-- Compiling module fps_control_reference
+-- Compiling module tb_fat32_schedule
+-- Compiling module sd_fat32_reference
+-- Compiling module tb_image_index_equivalence
+-- Compiling module tb_audio_rx_boundary
+-- Compiling module tb_tmds_encoder
+-- Compiling module tb_hdmi_tmds_vga
+-- Compiling module tb_edid_i2c
+-- Compiling module tb_transition_effects
+-- Compiling module tb_remote_uart
+-- Compiling module tb_remote_ir
+
+Top level modules:
+	startup_pulse
+	adaptive_video_clock
+	video_mode_table
+	tb_uart_rx
+	tb_ir_nec_rx
+	tb_video_scaler
+	tb_upgrade
+	tb_cdc
+	tb_stream_queue
+	tb_uart_queue
+	tb_sd_address
+	tb_load_recovery
+	tb_bmp_stream
+	tb_fifo_boundary
+	tb_frame_writer
+	tb_frame_tail
+	tb_osd_text
+	tb_bmp_headers
+	tb_hdmi_line_contract
+	tb_sd_watchdog
+	tb_sd_crc
+	tb_read_drain
+	tb_memory_refresh
+	tb_sd_waits
+	tb_edid_timeout
+	tb_bmp_stall
+	tb_commit_timeout
+	tb_write_backpressure
+	tb_svga_writer
+	tb_svga_pipeline
+	tb_svga_memory
+	tb_edid_display_mode
+	tb_adaptive_raster
+	tb_scaled_svga
+	tb_svga_osd
+	tb_scaled_bmp
+	tb_picture_controls
+	tb_picture_adjust
+	tb_picture_osd
+	tb_switch_controls
+	tb_transition
+	tb_transition_pixels
+	tb_caption_overlay
+	tb_effects_pipeline
+	tb_board_menu
+	tb_board_supervisor
+	tb_picture_gamma
+	tb_board_debug
+	tb_board_osd
+	tb_board_pipeline
+	tb_audio_wav
+	tb_audio_fifo
+	tb_audio_playback
+	tb_sd_audio_arbiter
+	tb_audio_menu
+	tb_audio_sd_integration
+	tb_audio_osd
+	tb_audio_retry
+	tb_audio_retry_edges
+	tb_audio_diagnostics
+	tb_audio_effects
+	tb_audio_stream_flush
+	tb_audio_fifo_room
+	tb_fat32_mount
+	tb_fat32_stream
+	tb_fat32_player
+	tb_sd_native
+	tb_sd_native_clock
+	tb_sd_native_fat32
+	tb_sd_native_player
+	tb_ps2_keyboard
+	tb_ps2_controls
+	tb_fat32_indexed
+	tb_indexed_player
+	tb_file_osd
+	tb_video_mode_control
+	tb_mode_reload
+	tb_mode_request_cdc
+	tb_fps_control
+	tb_rate_player
+	tb_sd_native_integrated
+	tb_sd_highspeed
+	tb_sd_highspeed_player
+	tb_caption_pipeline
+	tb_pixel_effects
+	tb_glass_osd
+	tb_audio_visualizer
+	tb_visual_pipeline
+	tb_shared_luma
+	tb_snake_game
+	tb_snake_controls
+	tb_snake_pipeline
+	tb_bram_window
+	tb_osd_bcd
+	tb_bram_waveform
+	tb_scaler_row_address
+	tb_fat32_compare
+	tb_fps_equivalence
+	tb_fat32_schedule
+	tb_image_index_equivalence
+	tb_audio_rx_boundary
+	tb_tmds_encoder
+	tb_hdmi_tmds_vga
+	tb_edid_i2c
+	tb_transition_effects
+	tb_remote_uart
+	tb_remote_ir
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_uart_rx.log -lib msim_work -c tb_uart_rx 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_uart_rx(fast)
+# run -all 
+# [PASS] ?????¡ã????????????
+# [PASS] ??? ???????? == 0xA5
+# [PASS] ??? ???????? == 0x3C
+#    ?????¡ã 2 ??????¨¨?????a5 3c
+# 
+# === tb_uart_rx ALL PASS ===
+# ** Note: $finish    : tb_uart_rx.v(81)
+#    Time: 226700 ns  Iteration: 0  Instance: /tb_uart_rx
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_ir_nec_rx.log -lib msim_work -c tb_ir_nec_rx 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_ir_nec_rx(fast)
+# run -all 
+# [PASS] ????????? == 0x1A
+#    got_valid=1 got_cmd=1a
+# [PASS] ¨¦???¡è???? o_repea???¡ì????
+# [PASS] ????? ->?????????? command_valid
+# 
+# === tb_ir_nec_rx ALL PASS ===
+# ** Note: $finish    : tb_ir_nec_rx.v(109)
+#    Time: 138871020 ns  Iteration: 0  Instance: /tb_ir_nec_rx
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_video_scaler.log -lib msim_work -c tb_video_scaler 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_video_scaler(fast)
+# run -all 
+# === tb_video_scaler ALL PASS?????¡À 192 ?????????===
+# ** Note: $finish    : tb_video_scaler.v(118)
+#    Time: 2765 ns  Iteration: 0  Instance: /tb_video_scaler
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_upgrade.log -lib msim_work -c tb_upgrade 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_upgrade.v(26): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
+# 
+# ** Warning: tb_upgrade.v(42): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 42, found 22.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 9.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'transition_busy'.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'slide_offset'.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fade_level'.
+# 
+# ** Warning: tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'effect_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_upgrade(fast)
+# run -all 
+# PASS display blank after reset
+# PASS no commit outside vblank
+# PASS commit exactly at vblank
+# PASS second buffer retained until next blank
+# PASS second commit acknowledged
+# PASS safe control reset defaults
+# PASS effect defaults
+# PASS slide mode command
+# PASS cut mode command
+# PASS fade mode cycle
+# PASS captions toggle
+# PASS scroll pause
+# PASS slogan cycle
+# PASS next command
+# PASS command is one cycle
+# PASS previous command
+# PASS pause resume toggle
+# PASS volume clamps high
+# PASS volume clamps low
+# PASS mute toggle
+# PASS OSD toggle
+# PASS unknown command rejected
+# PASS brightness clamps high
+# PASS brightness clamps low
+# PASS 40-column OSD covers its first status row
+# PASS OSD bypass
+# PASS RGB positive saturation
+# PASS RGB negative saturation
+# PASS YCbCr black
+# PASS YCbCr white
+# PASS YCbCr red
+# PASS 1280 pixels with exact SOF and EOL
+# PASS SOF rearms on next frame
+# PASS EDID checksum accepted/rejected
+# PASS EDID checksum accepted/rejected
+# PASS 48kHz rational sample rate and mute
+# PASS stereo test tone enabled
+# ALL PASS tb_upgrade
+# ** Note: $finish    : tb_upgrade.v(117)
+#    Time: 382806 ns  Iteration: 0  Instance: /tb_upgrade
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_cdc.log -lib msim_work -c tb_cdc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_cdc(fast)
+# run -all 
+# ALL PASS tb_cdc
+# ** Note: $finish    : tb_cdc.v(15)
+#    Time: 3094 ns  Iteration: 0  Instance: /tb_cdc
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_stream_queue.log -lib msim_work -c tb_stream_queue 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_stream_queue.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 12, found 11.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_stream_queue(fast)
+# run -all 
+# ALL PASS tb_stream_queue: stalls, order, SOF/EOL, overflow recovery
+# ** Note: $finish    : tb_stream_queue.v(36)
+#    Time: 16370 ns  Iteration: 1  Instance: /tb_stream_queue
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_uart_queue.log -lib msim_work -c tb_uart_queue 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_uart_queue(fast)
+# run -all 
+# ALL PASS tb_uart_queue: 16 ordered replies and overflow flag
+# ** Note: $finish    : tb_uart_queue.v(24)
+#    Time: 270420 ns  Iteration: 1  Instance: /tb_uart_queue
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_address.log -lib msim_work -c tb_sd_address 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 32, found 24.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_read_req'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_data_req'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data_valid'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data'.
+# 
+# ** Warning: tb_sd_address.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'init_error'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_address(fast)
+# run -all 
+# ALL PASS tb_sd_address: R7/OCR, addressing, command and token errors propagated
+# ** Note: $finish    : tb_sd_address.v(63)
+#    Time: 1456 ns  Iteration: 0  Instance: /tb_sd_address
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_load_recovery.log -lib msim_work -c tb_load_recovery 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 17.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sector_room'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_ready'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_enable'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'disp_buf_idx'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'display_valid'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_req_toggle'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_load_recovery(fast)
+# run -all 
+# ALL PASS tb_load_recovery: timeout releases busy, scan survives, retry starts
+# ** Note: $finish    : tb_load_recovery.v(46)
+#    Time: 60685 ns  Iteration: 2  Instance: /tb_load_recovery
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_bmp_stream.log -lib msim_work -c tb_bmp_stream 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 24.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'read_stall'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_bmp_stream.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bmp_stream(fast)
+# run -all 
+# ALL PASS tb_bmp_stream: 307200 RGB pixels, 1801 sectors, exact channel order
+# ** Note: $finish    : tb_bmp_stream.v(42)
+#    Time: 9303630 ns  Iteration: 1  Instance: /tb_bmp_stream
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fifo_boundary.log -lib msim_work -c tb_fifo_boundary 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: tb_fifo_boundary.v(8): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 14, found 11.
+# 
+# ** Warning: tb_fifo_boundary.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'aempty'.
+# 
+# ** Warning: tb_fifo_boundary.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'afull'.
+# 
+# ** Warning: tb_fifo_boundary.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fifo_boundary(fast)
+# run -all 
+# ALL PASS tb_fifo_boundary: 511 usable slots, no counter wrap, exact data order
+# ** Note: $finish    : tb_fifo_boundary.v(24)
+#    Time: 12936 ns  Iteration: 1  Instance: /tb_fifo_boundary
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_frame_writer.log -lib msim_work -c tb_frame_writer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 21, found 18.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'fifo_aclr'.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'O_wr_busy'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_frame_writer(fast)
+# run -all 
+# ALL PASS tb_frame_writer: 307200 flipped addresses and writer abort/restart
+# ** Note: $finish    : tb_frame_writer.v(28)
+#    Time: 3120630 ns  Iteration: 1  Instance: /tb_frame_writer
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_frame_tail.log -lib msim_work -c tb_frame_tail 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_frame_tail.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'writer'.  Expected 21, found 20.
+# 
+# ** Warning: tb_frame_tail.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_frame_tail(fast)
+# run -all 
+# ALL PASS tb_frame_tail: exact read/write lengths, tails and completion
+# ** Note: $finish    : tb_frame_tail.v(53)
+#    Time: 28890 ns  Iteration: 1  Instance: /tb_frame_tail
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_osd_text.log -lib msim_work -c tb_osd_text 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 17.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_osd_text(fast)
+# run -all 
+# ALL PASS tb_osd_text: raster positions, all 40 columns, dynamic states
+# ** Note: $finish    : tb_osd_text.v(53)
+#    Time: 1545730 ns  Iteration: 1  Instance: /tb_osd_text
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_bmp_headers.log -lib msim_work -c tb_bmp_headers 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 21.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'read_stall'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data_wr_en'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_addr'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_bmp_headers.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bmp_headers(fast)
+# run -all 
+# ALL PASS tb_bmp_headers: DIB, planes, offset and stale/truncated header rejection
+# ** Note: $finish    : tb_bmp_headers.v(52)
+#    Time: 84560 ns  Iteration: 1  Instance: /tb_bmp_headers
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_hdmi_line_contract.log -lib msim_work -c tb_hdmi_line_contract 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_hdmi_line_contract.v(10): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 12, found 11.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_hdmi_line_contract(fast)
+# run -all 
+# ALL PASS tb_hdmi_line_contract: two frames, continuous 640-pixel lines, legal line-end stalls
+# ** Note: $finish    : tb_hdmi_line_contract.v(38)
+#    Time: 8400040 ns  Iteration: 1  Instance: /tb_hdmi_line_contract
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_watchdog.log -lib msim_work -c tb_sd_watchdog 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 32, found 23.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'block_read_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_data_req'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_end'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data_valid'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data'.
+# 
+# ** Warning: tb_sd_watchdog.v(16): (vopt-2718) [TFMPC] - Missing connection for port 'transfer_error'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_watchdog(fast)
+# run -all 
+# ALL PASS tb_sd_watchdog: bounded failure, quiet pause, successful retry
+# ** Note: $finish    : tb_sd_watchdog.v(50)
+#    Time: 7420 ns  Iteration: 1  Instance: /tb_sd_watchdog
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_waits.log -lib msim_work -c tb_sd_waits 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 18.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'spi_data_in'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'clk_div'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'nCS_ctrl'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data_rd'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'block_read_data'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'response_data'.
+# 
+# ** Warning: tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2685) [TFMPC] - Too few port connections for 'wrapper'.  Expected 25, found 9.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_data_req'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_end'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data_valid'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_transfer_error'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_init_done'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_waits(fast)
+# run -all 
+# ALL PASS tb_sd_waits: startup count, token/write waits, read recovery, wrapper retries
+# ** Note: $finish    : tb_sd_waits.v(61)
+#    Time: 42530 ns  Iteration: 1  Instance: /tb_sd_waits
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_edid_timeout.log -lib msim_work -c tb_edid_timeout 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_edid_timeout(fast)
+# run -all 
+# ALL PASS tb_edid_timeout: stray bytes, stall, progress and restart
+# ** Note: $finish    : tb_edid_timeout.v(31)
+#    Time: 7020 ns  Iteration: 1  Instance: /tb_edid_timeout
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_bmp_stall.log -lib msim_work -c tb_bmp_stall 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 19.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data_wr_en'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_addr'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_valid'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'scan_done'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_bmp_stall.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bmp_stall(fast)
+# run -all 
+# ALL PASS tb_bmp_stall: progress, missing data, abort and restart
+# ** Note: $finish    : tb_bmp_stall.v(29)
+#    Time: 1660 ns  Iteration: 1  Instance: /tb_bmp_stall
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_commit_timeout.log -lib msim_work -c tb_commit_timeout 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 18.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sector_room'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_enable'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_count'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: tb_commit_timeout.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_commit_timeout(fast)
+# run -all 
+# ALL PASS tb_commit_timeout: no fabricated commit, buffers protected, late ack accepted
+# ** Note: $finish    : tb_commit_timeout.v(38)
+#    Time: 1540 ns  Iteration: 1  Instance: /tb_commit_timeout
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_write_backpressure.log -lib msim_work -c tb_write_backpressure 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: tb_write_backpressure.v(25): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 45, found 42.
+# 
+# ** Warning: tb_write_backpressure.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'debug_read_status'.
+# 
+# ** Warning: tb_write_backpressure.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mem_status'.
+# 
+# ** Warning: tb_write_backpressure.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'rd_frame_invalid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_write_backpressure(fast)
+# run -all 
+# ALL PASS tb_write_backpressure: full-rate producer, near-full stall, 1400 exact words, frame clear/restart
+# ** Note: $finish    : tb_write_backpressure.v(64)
+#    Time: 53720 ns  Iteration: 1  Instance: /tb_write_backpressure
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_writer.log -lib msim_work -c tb_svga_writer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_svga_writer.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 21, found 19.
+# 
+# ** Warning: tb_svga_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'fifo_aclr'.
+# 
+# ** Warning: tb_svga_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'O_wr_busy'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_writer(fast)
+# run -all 
+# ALL PASS tb_svga_writer: 480000 flipped addresses and writer abort/restart
+# ** Note: $finish    : tb_svga_writer.v(28)
+#    Time: 5100630 ns  Iteration: 1  Instance: /tb_svga_writer
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_pipeline.log -lib msim_work -c tb_svga_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 20.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_svga_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_pipeline(fast)
+# run -all 
+# ALL PASS tb_svga_pipeline: 3 complete frames, RGB alignment, 800 continuous pixels, legal HDMI stalls, layered overlay
+# ** Note: $finish    : tb_svga_pipeline.v(65)
+#    Time: 20088040 ns  Iteration: 1  Instance: /tb_svga_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_memory.log -lib msim_work -c tb_svga_memory 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 45, found 42.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'debug_read_status'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mem_status'.
+# 
+# ** Warning: tb_svga_memory.v(28): (vopt-2718) [TFMPC] - Missing connection for port 'rd_frame_invalid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_memory(fast)
+# run -all 
+# ALL PASS tb_svga_memory: 480000 continuous display reads plus 64000 background writes, flipped addresses, bounded six-cycle SDRAM model
+# ** Note: $finish    : tb_svga_memory.v(64)
+#    Time: 16552528 ns  Iteration: 1  Instance: /tb_svga_memory
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_edid_display_mode.log -lib msim_work -c tb_edid_display_mode 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_edid_display_mode(fast)
+# run -all 
+# ALL PASS tb_edid_display_mode: established/standard/DTD, 56/75Hz rejection, checksum/header, analog, timeout, reset
+# ** Note: $finish    : tb_edid_display_mode.v(57)
+#    Time: 26620 ns  Iteration: 1  Instance: /tb_edid_display_mode
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_adaptive_raster.log -lib msim_work -c tb_adaptive_raster 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_adaptive_raster(fast)
+# run -all 
+# ALL PASS tb_adaptive_raster: complete VGA/SVGA frame periods, sync widths, coordinates and active pixel counts
+# ** Note: $finish    : tb_adaptive_raster.v(29)
+#    Time: 10831760 ns  Iteration: 1  Instance: /tb_adaptive_raster
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_scaled_svga.log -lib msim_work -c tb_scaled_svga 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 28.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_scaled_svga(fast)
+# run -all 
+# case 0: 320x240 -> 800x600, pixels=480000 errors=0
+# case 1: 321x241 -> 800x600, pixels=480000 errors=0
+# case 2: 480x800 -> 800x600, pixels=480000 errors=0
+# case 3: 640x480 -> 800x600, pixels=480000 errors=0
+# case 4: 800x600 -> 800x600, pixels=480000 errors=0
+# case 5: 1280x720 -> 800x600, pixels=480000 errors=0
+# case 6: 1920x1080 -> 800x600, pixels=480000 errors=0
+# case 7: 1x1 -> 800x600, pixels=480000 errors=0
+# case 8: 17x13 -> 800x600, pixels=480000 errors=0
+# ALL PASS tb_scaled_svga: 9 full frames, bilinear RGB reference, padding, extended offsets, scan, backpressure, abort/reload, truncated sector
+# ** Note: $finish    : tb_scaled_svga.v(77)
+#    Time: 1033912687 ns  Iteration: 0  Instance: /tb_scaled_svga
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_svga_osd.log -lib msim_work -c tb_svga_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 23.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_osd(fast)
+# run -all 
+# ALL PASS tb_svga_osd: 40 columns, resolution, signed brightness, fractional contrast, mode hints
+# ** Note: $finish    : tb_svga_osd.v(46)
+#    Time: 2412130 ns  Iteration: 1  Instance: /tb_svga_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_scaled_bmp.log -lib msim_work -c tb_scaled_bmp 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 28.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_scaled_bmp.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_scaled_bmp(fast)
+# run -all 
+# case 0: 320x240 -> 640x480, pixels=307200 errors=0
+# case 1: 321x241 -> 640x480, pixels=307200 errors=0
+# case 2: 480x800 -> 640x480, pixels=307200 errors=0
+# case 3: 640x480 -> 640x480, pixels=307200 errors=0
+# case 4: 800x600 -> 640x480, pixels=307200 errors=0
+# case 5: 1280x720 -> 640x480, pixels=307200 errors=0
+# case 6: 1920x1080 -> 640x480, pixels=307200 errors=0
+# case 7: 1x1 -> 640x480, pixels=307200 errors=0
+# case 8: 17x13 -> 640x480, pixels=307200 errors=0
+# ALL PASS tb_scaled_bmp: 9 full frames, bilinear RGB reference, padding, extended offsets, scan, backpressure, abort/reload, truncated sector
+# ** Note: $finish    : tb_scaled_bmp.v(77)
+#    Time: 794306327 ns  Iteration: 0  Instance: /tb_scaled_bmp
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_picture_controls.log -lib msim_work -c tb_picture_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_picture_controls.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 20, found 10.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_picture_controls(fast)
+# run -all 
+# ALL PASS tb_picture_controls: reset-held suppression, bounce, modes, bounded adjustments, one action per press
+# ** Note: $finish    : tb_picture_controls.v(26)
+#    Time: 16370 ns  Iteration: 1  Instance: /tb_picture_controls
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_picture_adjust.log -lib msim_work -c tb_picture_adjust 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_picture_adjust(fast)
+# run -all 
+# ALL PASS tb_picture_adjust: all 256 intensities x17 brightness x7 contrast, clipping and RGB/VS/DE/X alignment
+# ** Note: $finish    : tb_picture_adjust.v(33)
+#    Time: 304720 ns  Iteration: 1  Instance: /tb_picture_adjust
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_picture_osd.log -lib msim_work -c tb_picture_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 22.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: tb_picture_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_picture_osd(fast)
+# run -all 
+# ALL PASS tb_picture_osd: 40 columns, resolution, signed brightness, fractional contrast, mode hints
+# ** Note: $finish    : tb_picture_osd.v(46)
+#    Time: 1545730 ns  Iteration: 1  Instance: /tb_picture_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_switch_controls.log -lib msim_work -c tb_switch_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_switch_controls.v(18): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 13.
+# 
+# ** Warning: tb_switch_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_switch_controls(fast)
+# run -all 
+# ALL PASS tb_switch_controls: contact bounce, 16 states, stable holds, reset, CDC, five-effect transitions, busy mode capture
+# ** Note: $finish    : tb_switch_controls.v(70)
+#    Time: 101192 ns  Iteration: 1  Instance: /tb_switch_controls
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_transition.log -lib msim_work -c tb_transition 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_transition.v(10): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 13.
+# 
+# ** Warning: tb_transition.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_transition(fast)
+# run -all 
+# ALL PASS tb_transition: boundary-only state, full black handoff, held ownership, mode capture, reset
+# ** Note: $finish    : tb_transition.v(61)
+#    Time: 11580 ns  Iteration: 1  Instance: /tb_transition
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_transition_pixels.log -lib msim_work -c tb_transition_pixels 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_transition_pixels(fast)
+# run -all 
+# ALL PASS tb_transition_pixels: exact RGB, 33 fade/slide steps, 640 pixels per line, stale-row exclusion
+# ** Note: $finish    : tb_transition_pixels.v(58)
+#    Time: 1277210 ns  Iteration: 1  Instance: /tb_transition_pixels
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_caption_overlay.log -lib msim_work -c tb_caption_overlay 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_caption_overlay(fast)
+# run -all 
+# ALL PASS tb_caption_overlay: alpha, font, elapsed timer, frame snapshots, pause/wrap, reset
+# ** Note: $finish    : tb_caption_overlay.v(53)
+#    Time: 3889010 ns  Iteration: 1  Instance: /tb_caption_overlay
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_effects_pipeline.log -lib msim_work -c tb_effects_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_effects_pipeline.v(20): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 19.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_effects_pipeline.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_effects_pipeline(fast)
+# run -all 
+# ALL PASS tb_effects_pipeline: 3 complete frames, RGB alignment, 640 continuous pixels, legal HDMI stalls, layered overlay
+# ** Note: $finish    : tb_effects_pipeline.v(65)
+#    Time: 12600040 ns  Iteration: 1  Instance: /tb_effects_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_crc.log -lib msim_work -c tb_sd_crc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 18.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'spi_data_in'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'clk_div'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'nCS_ctrl'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req_ack'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data_rd'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_data'.
+# 
+# ** Warning: tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_crc(fast)
+# run -all 
+# ALL PASS tb_sd_crc: valid block, flipped payload bit rejected, next valid block recovers
+# ** Note: $finish    : tb_sd_crc.v(49)
+#    Time: 62440 ns  Iteration: 1  Instance: /tb_sd_crc
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_read_drain.log -lib msim_work -c tb_read_drain 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_read_drain(fast)
+# run -all 
+# ALL PASS tb_read_drain: 40-cycle returns, 23-cycle refresh, pending frame waits for all responses
+# ** Note: $finish    : tb_read_drain.v(49)
+#    Time: 2630 ns  Iteration: 1  Instance: /tb_read_drain
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_memory_refresh.log -lib msim_work -c tb_memory_refresh 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: ../src/ip/fifo/afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: tb_memory_refresh.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 45, found 42.
+# 
+# ** Warning: tb_memory_refresh.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'debug_read_status'.
+# 
+# ** Warning: tb_memory_refresh.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mem_status'.
+# 
+# ** Warning: tb_memory_refresh.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'rd_frame_invalid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_memory_refresh(fast)
+# run -all 
+# ALL PASS tb_memory_refresh: 1440000 pixels, alternating frame addresses, 64000 background writes, periodic 22-cycle refresh and 10..17-cycle minimum return latency
+# ** Note: $finish    : tb_memory_refresh.v(88)
+#    Time: 49710928 ns  Iteration: 1  Instance: /tb_memory_refresh
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_menu.log -lib msim_work -c tb_board_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 20, found 15.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'kb_mute'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_dn'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_up'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_mute'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_volume'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_menu(fast)
+# run -all 
+# ALL PASS tb_board_menu: short/long disjoint, menu navigation/actions, legacy modes, reset-held and simultaneous suppression
+# ** Note: $finish    : tb_board_menu.v(38)
+#    Time: 7240 ns  Iteration: 1  Instance: /tb_board_menu
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_supervisor.log -lib msim_work -c tb_board_supervisor 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_supervisor(fast)
+# run -all 
+# ALL PASS tb_board_supervisor: power delay, arming, healthy feed, stalled video reset, no feedback deadlock, relock
+# ** Note: $finish    : tb_board_supervisor.v(26)
+#    Time: 3030 ns  Iteration: 1  Instance: /tb_board_supervisor
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_picture_gamma.log -lib msim_work -c tb_picture_gamma 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_picture_gamma(fast)
+# run -all 
+# ALL PASS tb_picture_gamma: independent real-power reference, 256 values, bypass/enabled, mixed controls, RGB/VS/DE/X alignment
+# ** Note: $finish    : tb_picture_gamma.v(36)
+#    Time: 7760 ns  Iteration: 1  Instance: /tb_picture_gamma
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_debug.log -lib msim_work -c tb_board_debug 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_debug(fast)
+# run -all 
+# ALL PASS tb_board_debug: unrelated clocks, coherent buses, frame/line counters, four pages, reset
+# ** Note: $finish    : tb_board_debug.v(30)
+#    Time: 5880 ns  Iteration: 1  Instance: /tb_board_debug
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_osd.log -lib msim_work -c tb_board_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 30.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_board_osd.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_osd(fast)
+# run -all 
+# ALL PASS tb_board_osd: board-only menu text and control hints in both adaptive viewports
+# ** Note: $finish    : tb_board_osd.v(37)
+#    Time: 1319340 ns  Iteration: 1  Instance: /tb_board_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_board_pipeline.log -lib msim_work -c tb_board_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 30.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_board_pipeline.v(25): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_board_pipeline(fast)
+# run -all 
+# ALL PASS tb_board_pipeline: six full frames, both modes, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines
+# ** Note: $finish    : tb_board_pipeline.v(79)
+#    Time: 34070480 ns  Iteration: 1  Instance: /tb_board_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_wav.log -lib msim_work -c tb_audio_wav 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_wav.v(9): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 17, found 16.
+# 
+# ** Warning: tb_audio_wav.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'error_code'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_wav(fast)
+# run -all 
+# ALL PASS tb_audio_wav
+# ** Note: $finish    : tb_audio_wav.v(52)
+#    Time: 82310 ns  Iteration: 1  Instance: /tb_audio_wav
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_fifo.log -lib msim_work -c tb_audio_fifo 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_fifo(fast)
+# run -all 
+# ALL PASS tb_audio_fifo
+# ** Note: $finish    : tb_audio_fifo.v(19)
+#    Time: 122746 ns  Iteration: 1  Instance: /tb_audio_fifo
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_playback.log -lib msim_work -c tb_audio_playback 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 15, found 14.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 15, found 14.
+# 
+# ** Warning: tb_audio_playback.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_playback(fast)
+# run -all 
+# ALL PASS tb_audio_playback
+# ** Note: $finish    : tb_audio_playback.v(45)
+#    Time: 4925050 ns  Iteration: 2  Instance: /tb_audio_playback
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_audio_arbiter.log -lib msim_work -c tb_sd_audio_arbiter 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_audio_arbiter(fast)
+# run -all 
+# ALL PASS tb_sd_audio_arbiter
+# ** Note: $finish    : tb_sd_audio_arbiter.v(14)
+#    Time: 530 ns  Iteration: 1  Instance: /tb_sd_audio_arbiter
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_menu.log -lib msim_work -c tb_audio_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 20, found 11.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_mute'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_dn'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_up'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_menu(fast)
+# run -all 
+# ALL PASS tb_audio_menu
+# ** Note: $finish    : tb_audio_menu.v(15)
+#    Time: 22980 ns  Iteration: 1  Instance: /tb_audio_menu
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_sd_integration.log -lib msim_work -c tb_audio_sd_integration 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2685) [TFMPC] - Too few port connections for 'bmp'.  Expected 34, found 29.
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# ** Warning: tb_audio_sd_integration.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'wav'.  Expected 17, found 16.
+# 
+# ** Warning: tb_audio_sd_integration.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'error_code'.
+# 
+# ** Warning: tb_audio_sd_integration.v(22): (vopt-2685) [TFMPC] - Too few port connections for 'player'.  Expected 15, found 14.
+# 
+# ** Warning: tb_audio_sd_integration.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_sd_integration(fast)
+# run -all 
+# ALL PASS tb_audio_sd_integration
+# ** Note: $finish    : tb_audio_sd_integration.v(53)
+#    Time: 46548815 ns  Iteration: 2  Instance: /tb_audio_sd_integration
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_osd.log -lib msim_work -c tb_audio_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 30.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_y'.
+# 
+# ** Warning: tb_audio_osd.v(6): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_x'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_osd(fast)
+# run -all 
+# ALL PASS tb_audio_osd
+# ** Note: $finish    : tb_audio_osd.v(49)
+#    Time: 13193400 ns  Iteration: 1  Instance: /tb_audio_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_retry.log -lib msim_work -c tb_audio_retry 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_retry(fast)
+# run -all 
+# ALL PASS tb_audio_retry
+# ** Note: $finish    : tb_audio_retry.v(107)
+#    Time: 201230 ns  Iteration: 1  Instance: /tb_audio_retry
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_retry_edges.log -lib msim_work -c tb_audio_retry_edges 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2685) [TFMPC] - Too few port connections for 'a'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(7): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2685) [TFMPC] - Too few port connections for 'b'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(8): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2685) [TFMPC] - Too few port connections for 'c'.  Expected 17, found 13.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'ready'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'sample'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'sample_valid'.
+# 
+# ** Warning: tb_audio_retry_edges.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'addr'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_retry_edges(fast)
+# run -all 
+# ALL PASS tb_audio_retry_edges
+# ** Note: $finish    : tb_audio_retry_edges.v(20)
+#    Time: 216 ns  Iteration: 0  Instance: /tb_audio_retry_edges
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_diagnostics.log -lib msim_work -c tb_audio_diagnostics 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_diagnostics(fast)
+# run -all 
+# ALL PASS tb_audio_diagnostics
+# ** Note: $finish    : tb_audio_diagnostics.v(35)
+#    Time: 177680 ns  Iteration: 1  Instance: /tb_audio_diagnostics
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_effects.log -lib msim_work -c tb_audio_effects 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_effects(fast)
+# run -all 
+# ALL PASS tb_audio_effects: flat/EQ/signed saturation/50ms echo/reset/continuous valid/25 and 40MHz
+# ** Note: $finish    : tb_audio_effects.v(163)
+#    Time: 166069252500 ps  Iteration: 1  Instance: /tb_audio_effects
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_stream_flush.log -lib msim_work -c tb_audio_stream_flush 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_stream_flush(fast)
+# run -all 
+# ALL PASS tb_audio_stream_flush: nonzero EQ/echo clear on source switch, scheduled silence and valid preserved; mute/volume0 clear old echo
+# ** Note: $finish    : tb_audio_stream_flush.v(51)
+#    Time: 39080 ns  Iteration: 1  Instance: /tb_audio_stream_flush
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_fifo_room.log -lib msim_work -c tb_audio_fifo_room 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_fifo_room(fast)
+# run -all 
+# ALL PASS tb_audio_fifo_room: pipeline admission reserve, stalled full, async refill/wrap/random order, no dropped PCM
+# ** Note: $finish    : tb_audio_fifo_room.v(33)
+#    Time: 220064 ns  Iteration: 1  Instance: /tb_audio_fifo_room
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_mount.log -lib msim_work -c tb_fat32_mount 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_mount(fast)
+# run -all 
+# ALL PASS tb_fat32_mount: MBR/superfloppy/spc1/spc2/fragmented root/filters/sizes/errors/EOC
+# ** Note: $finish    : tb_fat32_mount.v(120)
+#    Time: 287775 ns  Iteration: 2  Instance: /tb_fat32_mount
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_stream.log -lib msim_work -c tb_fat32_stream 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_stream(fast)
+# run -all 
+# ALL PASS tb_fat32_stream: exact fragmented bytes/BMP/WAV/bounds/loops/cache/bad cluster/SD errors/abort
+# ** Note: $finish    : tb_fat32_stream.v(93)
+#    Time: 1001230 ns  Iteration: 1  Instance: /tb_fat32_stream
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_player.log -lib msim_work -c tb_fat32_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 43.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_fat32_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_player(fast)
+# run -all 
+# ALL PASS tb_fat32_player: real scheduler/two scaled fragmented BMP frames/exact PCM concurrent loops/commit
+# ** Note: $finish    : tb_fat32_player.v(75)
+#    Time: 53769840 ns  Iteration: 1  Instance: /tb_fat32_player
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native.log -lib msim_work -c tb_sd_native 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_native.v(26): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native(fast)
+# run -all 
+# NATIVE sustained: 8192 bytes / 73113 host cycles = 11.204574 MB/s (16 CMD17 sectors, all handshakes/CRC included)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE queued request recovered after 7613 host cycles (includes previous fault recovery)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4566 host cycles = 11.213316 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE queued request recovered after 15049 host cycles (includes previous fault recovery)
+# NATIVE throughput: 512 bytes / 4564 host cycles = 11.218230 MB/s (CMD17 request through CRC/end)
+# NATIVE throughput: 512 bytes / 4589 host cycles = 11.157115 MB/s (CMD17 request through CRC/end)
+# ALL PASS tb_sd_native: SDHC/SDSC init, R2/R3/R6/R7, busy, four CRC lanes, faults/recovery, >=10MB/s logical peer
+# ** Note: $finish    : tb_sd_native.v(120)
+#    Time: 3217920 ns  Iteration: 1  Instance: /tb_sd_native
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_clock.log -lib msim_work -c tb_sd_native_clock 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_native_clock.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_clock.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_clock(fast)
+# Loading work.sd_bus_phy(fast)
+# run -all 
+# ALL PASS tb_sd_native_clock: default 200kHz init, >=80 startup clocks, open-drain ID, glitch-free switch to 25MHz
+# ** Note: $finish    : tb_sd_native_clock.v(41)
+#    Time: 6957065 ns  Iteration: 3  Instance: /tb_sd_native_clock
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_fat32.log -lib msim_work -c tb_sd_native_fat32 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_fat32.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_fat32(fast)
+# Loading work.sd_fat32(fast)
+# Loading work.sd_card_top_native(fast)
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# 
+#         Region: /tb_sd_native_fat32/fixture[0]/dut/fs
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# 
+#         Region: /tb_sd_native_fat32/fixture[1]/dut/fs
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# run -all 
+# ALL PASS tb_sd_native_fat32: 4-bit pins -> transport -> unchanged arbiter/FAT32, MBR/superfloppy, fragmented BMP/WAV exact bytes
+# ** Note: $finish    : tb_sd_native_fat32.v(101)
+#    Time: 3917820 ns  Iteration: 1  Instance: /tb_sd_native_fat32
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_player.log -lib msim_work -c tb_sd_native_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 43.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_sd_native_player.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_player.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_player(fast)
+# Loading work.sd_card_top_native(fast)
+# run -all 
+# ALL PASS tb_sd_native_player: 4-bit physical transport/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : tb_sd_native_player.v(80)
+#    Time: 55487780 ns  Iteration: 1  Instance: /tb_sd_native_player
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_ps2_keyboard.log -lib msim_work -c tb_ps2_keyboard 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_ps2_keyboard(fast)
+# run -all 
+# ALL PASS tb_ps2_keyboard: filtered/synchronized 11-bit frames, odd parity, E0/F0, Pause/BAT, malformed-frame/prefix timeouts
+# ** Note: $finish    : tb_ps2_keyboard.v(82)
+#    Time: 3563060 ns  Iteration: 0  Instance: /tb_ps2_keyboard
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_ps2_controls.log -lib msim_work -c tb_ps2_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 20.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_right'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_left'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_down'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'held_up'.
+# 
+# ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'game_enable'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_ps2_controls(fast)
+# run -all 
+# ALL PASS tb_ps2_controls: Set2 mapping, break/typematic policy, A+digit/Esc/timeout, shared KEY/keyboard audio registers
+# ** Note: $finish    : tb_ps2_controls.v(73)
+#    Time: 10190 ns  Iteration: 1  Instance: /tb_ps2_controls
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_indexed.log -lib msim_work -c tb_fat32_indexed 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_indexed(fast)
+# run -all 
+# ALL PASS tb_fat32_indexed: 12BMP/3WAV, 64 total cap, high clusters, fragmented streams, audio cursor/safe cancellation, bounds
+# ** Note: $finish    : tb_fat32_indexed.v(119)
+#    Time: 291710 ns  Iteration: 1  Instance: /tb_fat32_indexed
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_indexed_player.log -lib msim_work -c tb_indexed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 52.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_indexed_player(fast)
+# run -all 
+# ALL PASS tb_indexed_player: 12BMP/3WAV, exact scaled frames/PCM, next/prev/direct/busy selection, audio cancel/drain/reset
+# ** Note: $finish    : tb_indexed_player.v(89)
+#    Time: 185365320 ns  Iteration: 1  Instance: /tb_indexed_player
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_file_osd.log -lib msim_work -c tb_file_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_file_osd(fast)
+# run -all 
+# ALL PASS tb_file_osd: 10/12,64/64,03/03,00/00,truncation,busy/error,TARGET05/30/01 and limited flag
+# ** Note: $finish    : tb_file_osd.v(32)
+#    Time: 193 ns  Iteration: 0  Instance: /tb_file_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_video_mode_control.log -lib msim_work -c tb_video_mode_control 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_video_mode_control(fast)
+# run -all 
+# ALL PASS tb_video_mode_control: quiesce/reset-before-mux, VGA/SVGA/back, EDID fallback, pending requests, restart, EDID boot exception and runtime HDMI reset
+# ** Note: $finish    : tb_video_mode_control.v(42)
+#    Time: 19960 ns  Iteration: 1  Instance: /tb_video_mode_control
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_mode_reload.log -lib msim_work -c tb_mode_reload 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 52.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_mode_reload.v(27): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_mode_reload(fast)
+# run -all 
+# ALL PASS tb_mode_reload: real FAT/BMP/WAV reload across VGA-SVGA-VGA, exact pixels, mid-load abort, same file resume
+# ** Note: $finish    : tb_mode_reload.v(104)
+#    Time: 152129210 ns  Iteration: 1  Instance: /tb_mode_reload
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_mode_request_cdc.log -lib msim_work -c tb_mode_request_cdc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_mode_request_cdc(fast)
+# run -all 
+# request=10 received=10 active=10 mode_800=1
+# request=00 received=00 active=00 mode_800=0
+# request=01 received=01 active=01 mode_800=0
+# request=10 received=10 active=10 mode_800=1
+# request=01 received=01 active=01 mode_800=0
+# request=10 received=10 active=10 mode_800=0
+# request=11 received=11 active=01 mode_800=0
+# ALL PASS tb_mode_request_cdc: two-bit modes 0/1/2/3, EDID fallback, pending request and reset
+# ** Note: $finish    : tb_mode_request_cdc.v(47)
+#    Time: 14380 ns  Iteration: 2  Instance: /tb_mode_request_cdc
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fps_control.log -lib msim_work -c tb_fps_control 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fps_control(fast)
+# run -all 
+# ALL PASS tb_fps_control: six periods, mode update, busy deadline guard, no backlog, target vs limited
+# ** Note: $finish    : tb_fps_control.v(30)
+#    Time: 149010 ns  Iteration: 1  Instance: /tb_fps_control
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_rate_player.log -lib msim_work -c tb_rate_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 54.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_rate_player.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_rate_player(fast)
+# run -all 
+# ALL PASS tb_rate_player: real FAT/scaler/player, guarded target cadence, full frames, pause during load, no backlog
+# ** Note: $finish    : tb_rate_player.v(90)
+#    Time: 69640760 ns  Iteration: 1  Instance: /tb_rate_player
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_integrated.log -lib msim_work -c tb_sd_native_integrated 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 49.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_sd_native_integrated.v(30): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_integrated.v(30): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_integrated(fast)
+# run -all 
+# ALL PASS tb_sd_native_integrated: formal native profile without force/real SD pins/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : tb_sd_native_integrated.v(66)
+#    Time: 62386670 ns  Iteration: 1  Instance: /tb_sd_native_integrated
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_highspeed.log -lib msim_work -c tb_sd_highspeed 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_highspeed(fast)
+# run -all 
+# SDR50 logical peer: 8192B/36672 host cycles = 22.338569 MB/s; card output delay=6ns
+# ALL PASS tb_sd_highspeed: CMD6 support/check/switch/busy/reject, four-lane status CRC, timeout/response error reinit25, delayed pin peer and 50MHz throughput
+# ** Note: $finish    : tb_sd_highspeed.v(53)
+#    Time: 2114570 ns  Iteration: 1  Instance: /tb_sd_highspeed
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_highspeed_player.log -lib msim_work -c tb_sd_highspeed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(143): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 49.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_highspeed_player(fast)
+# run -all 
+# ALL PASS tb_sd_highspeed_player: formal CMD6/50MHz with14ns delayed card, no force/real SD pins/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : tb_sd_highspeed_player.v(66)
+#    Time: 61414730 ns  Iteration: 1  Instance: /tb_sd_highspeed_player
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_caption_pipeline.log -lib msim_work -c tb_caption_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_caption_pipeline(fast)
+# run -all 
+# ALL PASS tb_caption_pipeline: four VGA/SVGA frames, exact font/tint/RGB and VS DE latency, slogans/disable/scroll
+# ** Note: $finish    : tb_caption_pipeline.v(41)
+#    Time: 16178530 ns  Iteration: 1  Instance: /tb_caption_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_pixel_effects.log -lib msim_work -c tb_pixel_effects 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_pixel_effects.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 14, found 10.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_pixel_effects(fast)
+# run -all 
+# ALL PASS tb_pixel_effects: 46198 cycles, exact four modes, VGA/SVGA widths, poisoned blanking, repeated-frame boundaries and three-stage alignment
+# ** Note: $finish    : tb_pixel_effects.v(54)
+#    Time: 462016 ns  Iteration: 0  Instance: /tb_pixel_effects
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_glass_osd.log -lib msim_work -c tb_glass_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_glass_osd.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 16, found 12.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_glass_osd(fast)
+# Loading work.glass_title_row(fast)
+# run -all 
+# ALL PASS tb_glass_osd: 1094400 active pixels, exact nine-tap luma/chroma/saturation/alpha, A glyph/shadow, VGA/SVGA, fixed six stages, disabled/frame-locked control
+# ** Note: $finish    : tb_glass_osd.v(60)
+#    Time: 10959956 ns  Iteration: 0  Instance: /tb_glass_osd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_visualizer.log -lib msim_work -c tb_audio_visualizer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_visualizer(fast)
+# run -all 
+# ALL PASS tb_audio_visualizer: signed extremes, circular order, two pixels/sample, frozen frame despite live audio, enabled/disabled pass and two-stage alignment
+# ** Note: $finish    : tb_audio_visualizer.v(56)
+#    Time: 21546 ns  Iteration: 0  Instance: /tb_audio_visualizer
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_visual_pipeline.log -lib msim_work -c tb_visual_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_visual_pipeline(fast)
+# Loading work.glass_title_row(fast)
+# run -all 
+# ALL PASS tb_visual_pipeline: full VGA+SVGA 787200 exact pixels, reconstructed per-stage coordinates, fixed 11 stages no missing/extra pixels
+# ** Note: $finish    : tb_visual_pipeline.v(39)
+#    Time: 7915716 ns  Iteration: 0  Instance: /tb_visual_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_shared_luma.log -lib msim_work -c tb_shared_luma 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_shared_luma(fast)
+# Loading work.glass_title_row(fast)
+# run -all 
+# ALL PASS tb_shared_luma: four modes VGA/SVGA 3148800 exact pixels, shared transformed-luma sums equal independent post-effect blur, binary Sobel history exact
+# ** Note: $finish    : tb_shared_luma.v(38)
+#    Time: 31532720 ns  Iteration: 1  Instance: /tb_shared_luma
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_snake_game.log -lib msim_work -c tb_snake_game 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_snake_game(fast)
+# run -all 
+# ALL PASS tb_snake_game: rendering, latency, reverse, grow, food, walls, self/tail collision, ring wrap, reset
+# ** Note: $finish    : tb_snake_game.v(117)
+#    Time: 3153086 ns  Iteration: 0  Instance: /tb_snake_game
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_snake_controls.log -lib msim_work -c tb_snake_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2685) [TFMPC] - Too few port connections for 'decoder'.  Expected 25, found 16.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'audio_pending'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_audio_select'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_image_select'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_digit'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_fps'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_res'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_osd'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_mute'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_toggle_auto'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_snake_controls(fast)
+# run -all 
+# ALL PASS tb_snake_controls: G make/break, held arrows, CDC, priority, six-frame tick, media isolation
+# ** Note: $finish    : tb_snake_controls.v(51)
+#    Time: 20100 ns  Iteration: 1  Instance: /tb_snake_controls
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_snake_pipeline.log -lib msim_work -c tb_snake_pipeline 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_snake_pipeline(fast)
+# run -all 
+# ALL PASS tb_snake_pipeline: VGA/SVGA enabled+bypass 1574400 active pixels, centered viewport, fixed latency
+# ** Note: $finish    : tb_snake_pipeline.v(46)
+#    Time: 15956840 ns  Iteration: 1  Instance: /tb_snake_pipeline
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_bram_window.log -lib msim_work -c tb_bram_window 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bram_window(fast)
+# run -all 
+# ALL PASS tb_bram_window: 3148800 exact pixels, four modes VGA/SVGA, unchanged three-cycle latency and shared luma
+# ** Note: $finish    : tb_bram_window.v(37)
+#    Time: 31704760 ns  Iteration: 1  Instance: /tb_bram_window
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_osd_bcd.log -lib msim_work -c tb_osd_bcd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 37.
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_y'.
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_x'.
+# 
+# ** Warning: tb_osd_bcd.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'result'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_osd_bcd(fast)
+# run -all 
+# ALL PASS tb_osd_bcd: all 4096 widths/heights, one register latency and asynchronous reset
+# ** Note: $finish    : tb_osd_bcd.v(40)
+#    Time: 40991 ns  Iteration: 0  Instance: /tb_osd_bcd
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_bram_waveform.log -lib msim_work -c tb_bram_waveform 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_bram_waveform(fast)
+# run -all 
+# ALL PASS tb_bram_waveform: 2371885 cycles, exact VGA/SVGA frames, signed PCM, frame bank swap, enable/reset and two-stage alignment
+# ** Note: $finish    : tb_bram_waveform.v(39)
+#    Time: 23718930 ns  Iteration: 1  Instance: /tb_bram_waveform
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_scaler_row_address.log -lib msim_work -c tb_scaler_row_address 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_scaler_row_address(fast)
+# run -all 
+# 1920x1080 last row: offset=00001000 y=1079 stride=5760 byte_address=005ee580 reference=005ee580
+# ALL PASS tb_scaler_row_address: 5437 checks, all 1080 source rows, low carry, high wrap, sector crossings, increment and reset
+# ** Note: $finish    : tb_scaler_row_address.v(68)
+#    Time: 32666 ns  Iteration: 0  Instance: /tb_scaler_row_address
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_compare.log -lib msim_work -c tb_fat32_compare 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 43, found 22.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_end'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_end'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: tb_fat32_compare.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_compare(fast)
+# run -all 
+# tb_fat32_compare ALL PASS (4074 real-DUT cases)
+# ** Note: $finish    : tb_fat32_compare.v(111)
+#    Time: 87616 ns  Iteration: 0  Instance: /tb_fat32_compare
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fps_equivalence.log -lib msim_work -c tb_fps_equivalence 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fps_equivalence(fast)
+# run -all 
+# ALL PASS tb_fps_equivalence: cycle-exact original reference, frequencies 1/2/17/3000/100M, deadlines, busy, mode bounce, reset and enable
+# ** Note: $finish    : tb_fps_equivalence.v(15)
+#    Time: 2042150 ns  Iteration: 2  Instance: /tb_fps_equivalence
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_fat32_schedule.log -lib msim_work -c tb_fat32_schedule 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 43, found 26.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'reference'.  Expected 43, found 26.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'arb_aud_addr'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'arb_bmp_addr'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_valid'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'aud_data'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_grant'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_valid'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_data'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_size'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_size'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'wav_found'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'bmp_count'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error_code'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_error'.
+# 
+# ** Warning: tb_fat32_schedule.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_schedule(fast)
+# run -all 
+# ALL PASS tb_fat32_schedule: 1152 requests, original reference, cursor ownership, unchanged state/handshake cycles and range predicates retained across FAT hops
+# ** Note: $finish    : tb_fat32_schedule.v(102)
+#    Time: 92196 ns  Iteration: 0  Instance: /tb_fat32_schedule
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_image_index_equivalence.log -lib msim_work -c tb_image_index_equivalence 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 22.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'disp_buf_idx'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'display_valid'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_error'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_busy'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_req_toggle'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_image_index_equivalence(fast)
+# run -all 
+# ALL PASS tb_image_index_equivalence: 8192 exhaustive production-function cases, zero count, max index, carry and out-of-range counts
+# ** Note: $finish    : tb_image_index_equivalence.v(31)
+#    Time: 8192 ns  Iteration: 0  Instance: /tb_image_index_equivalence
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_audio_rx_boundary.log -lib msim_work -c tb_audio_rx_boundary 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_rx_boundary(fast)
+# run -all 
+# ALL PASS tb_audio_rx_boundary
+# ** Note: $finish    : tb_audio_rx_boundary.v(92)
+#    Time: 480980 ns  Iteration: 1  Instance: /tb_audio_rx_boundary
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_tmds_encoder.log -lib msim_work -c tb_tmds_encoder 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_tmds_encoder(fast)
+# run -all 
+# ALL PASS tb_tmds_encoder: 65536 byte pairs, 256 constant runs, all controls, DC bound and async reset
+# ** Note: $finish    : tb_tmds_encoder.v(49)
+#    Time: 1477201 ns  Iteration: 0  Instance: /tb_tmds_encoder
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_hdmi_tmds_vga.log -lib msim_work -c tb_hdmi_tmds_vga 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_hdmi_tmds_vga(fast)
+# run -all 
+# ALL PASS tb_hdmi_tmds_vga: full frames, delayed overlays, mid-frame reset/relock, RGB/DC/control codes, clock 01f
+# ** Note: $finish    : tb_hdmi_tmds_vga.v(89)
+#    Time: 16800380 ns  Iteration: 1  Instance: /tb_hdmi_tmds_vga
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_edid_i2c.log -lib msim_work -c tb_edid_i2c 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_edid_i2c(fast)
+# run -all 
+# ALL PASS tb_edid_i2c: A0/offset/repeated START/A1,128 bytes, ACK127/NACK1, checksum/header, unsupported display, three NACK stages, missing display, reset/retry
+# ** Note: $finish    : tb_edid_i2c.v(131)
+#    Time: 1999040 ns  Iteration: 1  Instance: /tb_edid_i2c
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_transition_effects.log -lib msim_work -c tb_transition_effects 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_transition_effects(fast)
+# run -all 
+# ALL PASS tb_transition_effects: VGA/SVGA all 33 levels, mask boundaries, exact endpoint frames, RGB/VS/DE/XY alignment, reset
+# ** Note: $finish    : tb_transition_effects.v(92)
+#    Time: 49000810 ns  Iteration: 1  Instance: /tb_transition_effects
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_remote_uart.log -lib msim_work -c tb_remote_uart 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'caption'.  Expected 16, found 13.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_rgb'.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_remote_uart.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_remote_uart(fast)
+# run -all 
+# ALL PASS tb_remote_uart: real 8N1 pins, atomic timestamp, range, timeout, recovery, legacy controls isolated, CDC, frame latch, midnight
+# ** Note: $finish    : tb_remote_uart.v(57)
+#    Time: 49990 ns  Iteration: 1  Instance: /tb_remote_uart
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l ../reports/tb_remote_ir.log -lib msim_work -c tb_remote_ir 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_remote_ir(fast)
+# run -all 
+# ALL PASS tb_remote_ir: real NEC pins, mapped next/previous/toggle, bad CRC complement, ignored hold repeats, reset, no UART replies
+# ** Note: $finish    : tb_remote_ir.v(40)
+#    Time: 4129110 ns  Iteration: 1  Instance: /tb_remote_ir
+ALL TESTS PASSED

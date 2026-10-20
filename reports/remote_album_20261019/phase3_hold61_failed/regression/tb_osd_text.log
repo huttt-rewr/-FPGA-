@@ -1,0 +1,69 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_osd_text.log -lib msim_work -c tb_osd_text 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 17.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'source_height'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'source_width'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_osd_text.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_osd_text(fast)
+# run -all 
+# ALL PASS tb_osd_text: raster positions, all 40 columns, dynamic states
+# ** Note: $finish    : tb_osd_text.v(53)
+#    Time: 1545730 ns  Iteration: 1  Instance: /tb_osd_text
