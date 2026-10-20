@@ -6,7 +6,7 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     input enable,input scroll_enable,input [1:0] slogan_select,
     input [1:0] transition_mode,
     output reg out_vs,output reg out_de,output reg [23:0] out_rgb,input mode_800,
-    input [7:0] time_seq,input [23:0] time_bcd,input time_set);
+    input [7:0] time_seq,input [23:0] time_bcd,input time_set,input large_clock);
     function [7:0] char40;
         input [319:0] text;input [5:0] index;
         reg [319:0] reversed;integer k;
@@ -24,14 +24,14 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     reg [3:0] sec_units,sec_tens,min_units,min_tens,hour_units,hour_tens;
     reg [23:0] displayed_time;
     reg [7:0] last_seq;
-    reg wall_clock,displayed_wall;
+    reg wall_clock,displayed_wall,clock_large;
     wire load_time=(time_set===1'b1) && (!wall_clock || time_seq!=last_seq);
     reg [9:0] scroll_x;
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             vs_d<=1;enabled<=0;scrolling<=1;selected<=0;selected_mode<=1;
             second_count<=0;sec_units<=0;sec_tens<=0;min_units<=0;min_tens<=0;
-            hour_units<=0;hour_tens<=0;displayed_time<=0;scroll_x<=0;last_seq<=0;wall_clock<=0;displayed_wall<=0;
+            hour_units<=0;hour_tens<=0;displayed_time<=0;scroll_x<=0;last_seq<=0;wall_clock<=0;displayed_wall<=0;clock_large<=0;
         end else begin
             vs_d<=vs;
             if(load_time)begin
@@ -68,7 +68,7 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
                 enabled<=enable;scrolling<=scroll_enable;
                 selected<=slogan_select;selected_mode<=transition_mode;
                 displayed_time<=load_time?time_bcd:{hour_tens,hour_units,min_tens,min_units,sec_tens,sec_units};
-                displayed_wall<=wall_clock || load_time;
+                displayed_wall<=wall_clock || load_time;clock_large<=(large_clock===1'b1);
                 if(selected!=slogan_select) scroll_x<=0;
                 else if(enable && scroll_enable) scroll_x<=(scroll_x==639)?0:scroll_x+1'b1;
             end
@@ -100,13 +100,15 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     wire draw_enabled=PIPELINED?en2:enabled,draw_scroll=PIPELINED?scroll2:scrolling;
     wire [1:0] draw_mode=PIPELINED?mode2:selected_mode;
     wire in_banner=(yy>=432 && yy<472);
-    wire in_clock=(xx>=448 && xx<624 && yy>=16 && yy<48);
-    wire [9:0] clock_x=cx-10'd448;
-    wire [9:0] clock_y=yy-10'd20;
+    wire in_clock=clock_large?(xx>=144 && xx<496 && yy>=96 && yy<160):(xx>=448 && xx<624 && yy>=16 && yy<48);
+    wire [9:0] clock_x=cx-(clock_large?10'd144:10'd448);
+    wire [3:0] clock_index=clock_large?clock_x[8:5]:clock_x[7:4];
+    wire [9:0] clock_y=yy-(clock_large?10'd104:10'd20);
+    wire [3:0] clock_row=clock_large?clock_y[5:2]:clock_y[4:1];
     wire [9:0] banner_y=yy-10'd444;
     reg [7:0] clock_char;
     always @* begin
-        case(clock_x[7:4])
+        case(clock_index)
             0:clock_char=displayed_wall?"B":"U";1:clock_char=displayed_wall?"J":"P";2:clock_char=" ";
             3:clock_char="0"+displayed_time[23:20];
             4:clock_char="0"+displayed_time[19:16];5:clock_char=":";
@@ -119,7 +121,8 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     end
     wire [9:0] select_x=PIPELINED?tx1:text_x;
     wire [7:0] moving_char=(select_x<640)?char40(slogan,select_x[9:4]):8'h20;
-    wire [9:0] glyph_clock_x=xx-10'd448;
+    wire [9:0] glyph_clock_x=xx-(clock_large?10'd144:10'd448);
+    wire [2:0] clock_column=clock_large?glyph_clock_x[4:2]:glyph_clock_x[3:1];
     generate if(PIPELINED)begin:font_pipeline
       always @(posedge clk or posedge rst)begin
         if(rst)begin
@@ -137,9 +140,9 @@ module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,paramete
     end endgenerate
     wire [7:0] moving_glyph,clock_glyph;
     osd_char_rom moving_font(PIPELINED?moving_char2:moving_char,banner_y[4:1],moving_glyph);
-    osd_char_rom clock_font(PIPELINED?clock_char2:clock_char,clock_y[4:1],clock_glyph);
+    osd_char_rom clock_font(PIPELINED?clock_char2:clock_char,clock_row,clock_glyph);
     wire moving_lit=in_banner && yy>=444 && yy<458 && moving_x[3:1]<5 && moving_glyph[4-moving_x[3:1]];
-    wire clock_lit=in_clock && yy>=20 && yy<34 && glyph_clock_x[3:1]<5 && clock_glyph[4-glyph_clock_x[3:1]];
+    wire clock_lit=in_clock && (clock_large?(yy>=104 && yy<132):(yy>=20 && yy<34)) && clock_column<5 && clock_glyph[4-clock_column];
     // alpha=1/2: each channel average of background and dark blue (0,16,32).
     wire [7:0] br={1'b0,background[23:17]};
     wire [7:0] bg={1'b0,background[15:9]}+8'd8;

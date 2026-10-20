@@ -82,3 +82,6 @@ src/modules/control/time_cmd.v
 src/modules/control/remote_controls.v
 src/modules/video/auto_enhance.v
 src/modules/video/auto_enhance_scale.v
+src/modules/control/slideshow_timer.v
+src/modules/osd/zh_overlay.v
+src/modules/osd/zh_font_rom.v

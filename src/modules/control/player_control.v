@@ -6,7 +6,7 @@ module player_control #(parameter PC_COMMANDS=0)(input clk,input rst,input [7:0]
     output reg signed [7:0] brightness,output reg test_pattern,
     output reg reply_valid,output reg [7:0] reply,
     output reg [1:0] transition_mode,output reg captions_enable,
-    output reg scroll_enable,output reg [1:0] slogan_select,output reg auto_enh_en);
+    output reg scroll_enable,output reg [1:0] slogan_select,output reg auto_enh_en,output reg slide_enable,zh_enable,large_clock);
     reg [7:0] cmd;
     always @* begin
         cmd=uart_valid ? uart_data : 0;
@@ -23,13 +23,16 @@ module player_control #(parameter PC_COMMANDS=0)(input clk,input rst,input [7:0]
             next_pulse<=0;prev_pulse<=0;toggle_pulse<=0;
             volume<=8;mute<=1;osd_enable<=1;brightness<=0;test_pattern<=0;
             reply_valid<=0;reply<=0;
-            transition_mode<=1;captions_enable<=1;scroll_enable<=1;slogan_select<=0;auto_enh_en<=0;
+            transition_mode<=1;captions_enable<=1;scroll_enable<=1;slogan_select<=0;auto_enh_en<=0;slide_enable<=0;zh_enable<=0;large_clock<=0;
         end else begin
             next_pulse<=0;prev_pulse<=0;toggle_pulse<=0;reply_valid<=0;
             if(uart_valid || ir_valid) begin
                 reply_valid<=uart_valid;reply<="K";
                 case(cmd)
                     "a":auto_enh_en<=~auto_enh_en;
+                    "s":slide_enable<=~slide_enable;
+                    "h":zh_enable<=~zh_enable;
+                    "l":large_clock<=~large_clock;
                     "n":next_pulse<=1;
                     "b":if(PC_COMMANDS)toggle_pulse<=1;else prev_pulse<=1;
                     "p":if(PC_COMMANDS)prev_pulse<=1;else toggle_pulse<=1;

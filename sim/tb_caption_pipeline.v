@@ -5,9 +5,9 @@ module tb_caption_pipeline;
  always #5 clk=~clk;
  wire av,ad,bv,bd;wire [23:0] a,b;
  caption_overlay #(.ADAPTIVE(1),.CLK_HZ(1000)) reference(
- clk,rst,vs,de,rgb,enable,scroll,slogan,mode,av,ad,a,mode800,8'd0,24'd0,1'b0);
+ clk,rst,vs,de,rgb,enable,scroll,slogan,mode,av,ad,a,mode800,8'd0,24'd0,1'b0,1'b0);
  caption_overlay #(.ADAPTIVE(1),.PIPELINED(1),.CLK_HZ(1000)) piped(
- clk,rst,vs,de,rgb,enable,scroll,slogan,mode,bv,bd,b,mode800,8'd0,24'd0,1'b0);
+ clk,rst,vs,de,rgb,enable,scroll,slogan,mode,bv,bd,b,mode800,8'd0,24'd0,1'b0,1'b0);
  reg [25:0] d0=0,d1=0;integer errors=0,checked=0,f,x,y,w,h;
  always @(posedge clk)begin
   if(rst)begin d0<=0;d1<=0;end

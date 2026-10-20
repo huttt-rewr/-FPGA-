@@ -47,6 +47,7 @@ try {
  $mergeTests += @('tb_remote_uart')
  $mergeTests += @('tb_remote_ir')
  $mergeTests += @('tb_auto_enhance')
+ $mergeTests += @('tb_album_timer','tb_zh_overlay','tb_album_clock')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }

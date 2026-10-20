@@ -5,7 +5,7 @@ module tb_caption_overlay;
  wire ov,od;wire [23:0] color;
  integer errors=0,x,y,i,n,fd;
  reg [23:0] snap;reg [9:0] position;
- caption_overlay #(.CLK_HZ(1000)) dut(clk,rst,vs,de,rgb,en,scroll,slogan,mode,ov,od,color,1'b0,8'd0,24'd0,1'b0);
+ caption_overlay #(.CLK_HZ(1000)) dut(clk,rst,vs,de,rgb,en,scroll,slogan,mode,ov,od,color,1'b0,8'd0,24'd0,1'b0,1'b0);
  task check;input ok;input [511:0] msg;begin
   if(!ok)begin errors=errors+1;$display("FAIL %0s",msg);end
  end endtask

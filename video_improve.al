@@ -698,6 +698,30 @@
                     <Attr Name="CompileOrder" Val="84"/>
                 </FileInfo>
             </File>
+            <File Path="src/modules/control/slideshow_timer.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="85"/>
+                </FileInfo>
+            </File>
+            <File Path="src/modules/osd/zh_overlay.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="86"/>
+                </FileInfo>
+            </File>
+            <File Path="src/modules/osd/zh_font_rom.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="87"/>
+                </FileInfo>
+            </File>
         </Verilog>
         <ADC_FILE>
             <File Path="src/constraints/pin.adc">

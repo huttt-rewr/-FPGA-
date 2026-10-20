@@ -14,10 +14,10 @@ frame_swap swap(.clk(clk),.rst(rst),.vblank(vb),.request_toggle(req),
 reg [7:0] command=0;reg command_valid=0;
 wire nextp,prevp,togglep;wire [4:0] volume;wire mute,osden,pattern;
 wire signed [7:0] bright;wire replyv;wire [7:0] reply;
-wire [1:0] effect,slogan;wire captions,scroll,auto_enh;
+wire [1:0] effect,slogan;wire captions,scroll,auto_enh,slide,zh,clock_big;
 player_control ctrl(clk,rst,command,command_valid,8'd0,1'b0,
  nextp,prevp,togglep,volume,mute,osden,bright,pattern,replyv,reply,
- effect,captions,scroll,slogan,auto_enh);
+ effect,captions,scroll,slogan,auto_enh,slide,zh,clock_big);
 task send;input [7:0] c;begin @(negedge clk);command=c;command_valid=1;tick;
  @(negedge clk);command_valid=0;end endtask
 reg de=0,vs=1;reg [23:0] rgb=0;

@@ -3,7 +3,7 @@ module tb_remote_uart;
  reg clk=0,vclk=0,rst=1,rx=1,vs=1;
  always #5 clk=~clk;
  always #7 vclk=~vclk;
- wire tx,overflow,np,pp,tp,ts,auto_enh;
+ wire tx,overflow,np,pp,tp,ts,auto_enh,slide,zh,clock_big;
  wire [23:0] time_bcd;
  wire [7:0] seq,reply;
  wire rv;
@@ -11,12 +11,12 @@ module tb_remote_uart;
  integer errors=0,n=0,p=0,b=0,count=0;
  reg [7:0] replies[0:31];
  remote_controls #(.CLK_HZ(1600000),.BAUD(100000),.TIMEOUT_CYCLES(500)) dut(
- clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts,1'b1,auto_enh);
+ clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts,1'b1,auto_enh,slide,zh,clock_big);
  uart_rx #(.CLK_FREQ(1600000),.BAUD(100000)) monitor(clk,rst,tx,reply,rv);
  cdc_snapshot #(.WIDTH(33)) cdc(clk,rst,{ts,seq,time_bcd},vclk,rst,snapshot);
  caption_overlay #(.CLK_HZ(100)) caption(.clk(vclk),.rst(rst),.vs(vs),.de(1'b0),.rgb(24'd0),
  .enable(1'b0),.scroll_enable(1'b0),.slogan_select(2'd0),.transition_mode(2'd0),.mode_800(1'b0),
- .time_set(snapshot[32]),.time_seq(snapshot[31:24]),.time_bcd(snapshot[23:0]));
+ .large_clock(1'b0),.time_set(snapshot[32]),.time_seq(snapshot[31:24]),.time_bcd(snapshot[23:0]));
  always @(posedge clk)if(!rst)begin
   if(np)n=n+1;if(pp)p=p+1;if(tp)b=b+1;
   if(rv)begin replies[count]=reply;count=count+1;end
@@ -53,9 +53,15 @@ module tb_remote_uart;
   check(auto_enh && replies[9]=="K" && count==10,"UART a persists and acknowledges automatic levels enable");
   byte("a");repeat(200)@(negedge clk);
   check(!auto_enh && replies[10]=="K" && count==11,"UART a disables automatic levels independently of playback");
+  byte("s");byte("h");byte("l");repeat(220)@(negedge clk);
+  check(slide && zh && clock_big && !auto_enh && count==14,"optional album controls persist independently");
+  check({replies[11],replies[12],replies[13]}=={"K","K","K"},"one K for each s h l option");
+  byte("s");byte("h");byte("l");repeat(220)@(negedge clk);
+  check(!slide && !zh && !clock_big && count==17,"optional album controls can all be disabled");
   check(!overflow,"bounded response queue no overflow");
   rst=1;repeat(4)@(negedge clk);
   check(seq==0 && !ts && time_bcd==0,"reset disables wallclock and clears time");
+  check(!slide && !zh && !clock_big && !auto_enh,"reset restores all new features to disabled");
   if(errors==0)$display("ALL PASS tb_remote_uart: real 8N1 pins, atomic timestamp, range, timeout, recovery, legacy controls isolated, CDC, frame latch, midnight");
   else $display("FAILED tb_remote_uart %d",errors);
   $finish;

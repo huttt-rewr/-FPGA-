@@ -109,7 +109,10 @@ wire [23:0] remote_time_bcd;
 wire [7:0] remote_time_seq;
 wire remote_time_set;
 wire [32:0] time_video;
-wire auto_enh_en,auto_enh_video;
+wire auto_enh_en,auto_enh_video,slide_enable,zh_enable,large_clock;
+wire [1:0] album_video;
+wire slide_next;
+wire zh_vs,zh_de;wire [23:0] zh_rgb;wire [9:0] zh_x,zh_y;
 wire ae_vs,ae_de;wire [9:0] ae_x,ae_y;wire [23:0] ae_rgb;
 wire pixel_write_ready;
 wire [11:0] image_width,image_height;
@@ -648,12 +651,17 @@ hdmi_phy_wrapper #(
 );
 
 // Physical keys, keyboard and remote commands share the same playback consumer.
-assign cmd_next=board_next || kb_next || pc_next;
+assign cmd_next=board_next || kb_next || pc_next || slide_next;
 assign cmd_prev=kb_prev || pc_prev;
 assign cmd_toggle=board_toggle || kb_toggle || pc_toggle;
 remote_controls #(.IR_ENABLED(1)) remote(.clk(sd_card_clk),.rst(rst_controls),.rx(uart_rx_pin),
  .tx(uart_tx_pin),.overflow(tx_overflow),.next_pulse(pc_next),.prev_pulse(pc_prev),.toggle_pulse(pc_toggle),
- .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set),.ir_rx(ir_rx_pin),.auto_enh_en(auto_enh_en));
+ .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set),.ir_rx(ir_rx_pin),.auto_enh_en(auto_enh_en),.slide_enable(slide_enable),.zh_enable(zh_enable),.large_clock(large_clock));
+slideshow_timer #(.PERIOD(500000000)) album_timer(.clk(sd_card_clk),.rst(rst_controls),
+ .enable(slide_enable && !status_auto && player_display_valid && media_image_count>1),
+ .busy(status_busy || status_error || !sd_init_done),.next_pulse(slide_next));
+cdc_snapshot #(.WIDTH(2)) album_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data({large_clock,zh_enable}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(album_video));
 cdc_snapshot #(.WIDTH(33)) time_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
  .src_data({remote_time_set,remote_time_seq,remote_time_bcd}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(time_video));
 assign osd_enable=osd_on;
@@ -697,7 +705,7 @@ cdc_snapshot #(.WIDTH(70),.ENCODE_HOLD(1)) status_cdc(.src_clk(sd_card_clk),.src
 cdc_snapshot #(.WIDTH(7)) rate_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
  .src_data({res_mode,rate_limited,fps_mode}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(rate_video));
 // Independent bus: historical 70-bit status layout and selectors stay fixed.
-cdc_snapshot #(.WIDTH(29)) media_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
+cdc_snapshot #(.WIDTH(29),.ENCODE_HOLD(1)) media_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data({media_truncated,media_audio_index,media_audio_count,media_image_index,media_image_count}),
  .dst_clk(video_clk),.dst_rst(rst_video),.dst_data(media_video));
 frame_swap #(.ENABLE_EFFECTS(1),.ADAPTIVE(1)) swap(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vblank(vblank),
@@ -740,11 +748,14 @@ audio_visualizer #(.BRAM_HISTORY(1)) waveform(.clk(video_clk),.rst(rst_video),.v
  .rgb(glass_rgb),.audio_valid(audio_valid),.audio_left(audio_left),.enable(video_osd),
  .out_vs(wave_vs),.out_de(wave_de),.out_rgb(wave_rgb));
 caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(wave_vs),.de(wave_de),
- .time_set(time_video[32]),.time_seq(time_video[31:24]),.time_bcd(time_video[23:0]),
+ .large_clock(album_video[1]),.time_set(time_video[32]),.time_seq(time_video[31:24]),.time_bcd(time_video[23:0]),
  .rgb(wave_rgb),.enable(video_captions),.scroll_enable(video_scroll),
  .slogan_select(video_slogan),.transition_mode(video_effect),
  .out_vs(caption_vs),.out_de(caption_de),.out_rgb(caption_rgb));
-status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.rgb(caption_rgb),
+viewport_coordinates chinese_coordinates(video_clk,rst_video,caption_vs,caption_de,mode_video,zh_x,zh_y,,);
+zh_overlay chinese(.clk(video_clk),.rst(rst_video),.vs(caption_vs),.de(caption_de),.x(zh_x),.y(zh_y),
+ .rgb(caption_rgb),.enable(album_video[0]),.out_vs(zh_vs),.out_de(zh_de),.out_rgb(zh_rgb),.out_x(),.out_y());
+status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(zh_vs),.de(zh_de),.rgb(zh_rgb),
  .enable(frame_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
  .volume(video_volume),.mute(video_mute),.busy(video_busy),
  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),

@@ -16,9 +16,12 @@ module tb_board_pipeline;
  picture_gamma gamma(clk,rst,av,ad,ax,ac,en,gv,gd,gx,gc,ay,gy);
  auto_enhance levels(clk,rst,gv,gd,gx,gy,gc,1'b0,aev,aed,aex,aey,aer);
  transition_pixels fx(clk,rst,aev,aed,aex,aer,{1'b0,effect},6'd16,offset,ev,ed,ec,aey,mode);
- caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode,8'd0,24'd0,1'b0);
+ caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode,8'd0,24'd0,1'b0,1'b0);
+ wire zvs,zde;wire [23:0]zrgb;wire [9:0]zx,zy;
+ viewport_coordinates zcoords(clk,rst,cv,cd,mode,zx,zy,,);
+ zh_overlay chinese(clk,rst,cv,cd,zx,zy,cc,1'b0,zvs,zde,,,zrgb);
  status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1)) panel(
-  .clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(overlay),
+  .clk(clk),.rst(rst),.vs(zvs),.de(zde),.rgb(zrgb),.enable(overlay),
   .auto_play(1'b0),.image_index(2'd0),.image_count(3'd4),.volume(5'd8),.mute(1'b1),
   .busy(1'b0),.error(1'b0),.edid_ok(1'b1),.result(oc),.pixel_x(),.pixel_y(),
   .brightness(8'sd8),.contrast(4'd5),.edit_mode(2'd0),.source_width(12'd640),.source_height(12'd480),
@@ -75,7 +78,7 @@ module tb_board_pipeline;
    end
    if(received!=3*frame_pixels || overflow || line_pixels!=0)errors=errors+1;
   end
-  if(errors==0)$display("ALL PASS tb_board_pipeline: six full frames, both modes, automatic-level bypass, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines");
+  if(errors==0)$display("ALL PASS tb_board_pipeline: six full frames, both modes, automatic-level/Chinese bypass, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines");
   else $display("FAILED tb_board_pipeline %d",errors);
   $finish;
  end

@@ -10,6 +10,11 @@
 
 ## 2026-10-20 同步ROM及状态快照短路径
 
+- 2026-10-21第四阶段为media_cdc启用编码后最终通过：108项，SWNS +0.142ns、STNS0、HWNS +0.024ns、HTNS0，冻结`phase4_pass/`。最终物理LUT17283、REG11014、BRAM45、DSP26；不是综合LUT16626。保护文件及status70核验通过，无新增critical warning，没有新bit或上板结论。
+
+- 第三阶段编码状态快照版最终通过：105项，SWNS +0.061ns、STNS0、HWNS +0.021ns、HTNS0，冻结`phase3_pass/`，提交e1c0e10。
+- 第四阶段首次108项回归全通过，最终SWNS +0.038ns、STNS0、HWNS −0.234ns、HTNS −0.369ns，未通过。剩余为`media_cdc/held[7]`→`dst_data[7]`普通hold。冻结`phase4_media_hold_failed/`，仅为该29位快照启用同一可选编码，再执行全部门禁。媒体读取文件未修改。
+
 - 同步ROM版105项通过；综合LUT 16299/19600、BRAM44/64、DSP26/29。最终SWNS +0.084ns、STNS0、HWNS −0.234ns、HTNS −0.369ns，仍未通过，冻结`phase3_bram_hold61_failed/`。
 - 状态快照的`held[61]`→`dst_data[61]`短路径经TD全局/定向hold fixer均无法修复，未放宽约束。
 - 增加`cdc_snapshot.ENCODE_HOLD`可选编码，默认0，仅status_cdc设1。源侧保存取反数据，目的侧还原，显式保留解码组合逻辑；不改变70位status_source表达式、位序、发布值或握手延迟。
