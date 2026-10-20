@@ -77,6 +77,23 @@ wire is_repeat_space = (s_len >= REPEAT_SPACE_MIN) && (s_len <= REPEAT_SPACE_MAX
 wire is_bit0_space   = (s_len >= BIT_MARK_MIN)     && (s_len <= BIT0_SPACE_MAX);
 wire is_bit1_space   = (s_len >= BIT1_SPACE_MIN)   && (s_len <= BIT1_SPACE_MAX);
 
+// Register all duration predicates WITH their matching edge. This splits
+// duration compare -> protocol decision -> bit counter at 100MHz without
+// changing threshold values or quantization. Published events gain one clock.
+reg ir_fall_q,ir_rise_q;
+reg leader_mark_q,bit_mark_q,leader_space_q,repeat_space_q,bit0_q,bit1_q;
+always @(posedge clk or posedge rst)begin
+ if(rst)begin
+  ir_fall_q<=0;ir_rise_q<=0;leader_mark_q<=0;bit_mark_q<=0;
+  leader_space_q<=0;repeat_space_q<=0;bit0_q<=0;bit1_q<=0;
+ end else begin
+  ir_fall_q<=ir_fall;ir_rise_q<=ir_rise;
+  leader_mark_q<=is_leader_mark;bit_mark_q<=is_bit_mark;
+  leader_space_q<=is_leader_space;repeat_space_q<=is_repeat_space;
+  bit0_q<=is_bit0_space;bit1_q<=is_bit1_space;
+ end
+end
+
 // ---- 状态机 ----
 localparam S_IDLE  = 2'd0;
 localparam S_MARK  = 2'd1;   // 低电平中，等上升沿
@@ -90,7 +107,7 @@ reg [5:0]  bit_cnt;
 // 移入当前位后的完整 32bit（用于第 32 位收齐后立即校验）
 // 新 bit 进最高位、旧 bit 右移：使最先收到的 bit 落在 data[0]，
 // 从而 data[7:0]=地址、[15:8]=地址反码、[23:16]=命令、[31:24]=命令反码。
-wire [31:0] new_data = {is_bit1_space, data[31:1]};
+wire [31:0] new_data = {bit1_q, data[31:1]};
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
@@ -111,29 +128,29 @@ always @(posedge clk or posedge rst) begin
                 in_data <= 1'b0;
                 data    <= 32'd0;
                 bit_cnt <= 6'd0;
-                if (ir_fall) begin
+                if (ir_fall_q) begin
                     state  <= S_MARK;
                 end
             end
 
             S_MARK: begin
-                if (ir_rise) begin
+                if (ir_rise_q) begin
                     state  <= S_SPACE;
                 end
             end
 
             S_SPACE: begin
-                if (ir_fall) begin
+                if (ir_fall_q) begin
                     state  <= S_MARK;          // 默认继续收下一个 mark
 
-                    if (is_leader_mark) begin
+                    if (leader_mark_q) begin
                         // 引导码的低电平已结束，看高电平是“引导”还是“重复”
-                        if (is_leader_space) begin
+                        if (leader_space_q) begin
                             in_data <= 1'b1;   // 进入数据接收
                             data    <= 32'd0;
                             bit_cnt <= 6'd0;
                         end
-                        else if (is_repeat_space) begin
+                        else if (repeat_space_q) begin
                             o_repeat <= 1'b1;
                             state    <= S_IDLE; // 重复码结束，回 IDLE
                         end
@@ -141,7 +158,7 @@ always @(posedge clk or posedge rst) begin
                             state <= S_IDLE;    // 非法，回 IDLE
                         end
                     end
-                    else if (is_bit_mark && in_data && (is_bit0_space || is_bit1_space)) begin
+                    else if (bit_mark_q && in_data && (bit0_q || bit1_q)) begin
                         // 数据位：按高电平宽度判 0/1（LSB 先）
                         data <= new_data;
                         if (bit_cnt == 6'd31) begin

@@ -80,3 +80,5 @@ src/modules/hdmi/hdmi_tmds_vga.v
 src/modules/hdmi/edid_i2c.v
 src/modules/control/time_cmd.v
 src/modules/control/remote_controls.v
+src/modules/video/auto_enhance.v
+src/modules/video/auto_enhance_scale.v

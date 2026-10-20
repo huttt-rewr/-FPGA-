@@ -23,7 +23,8 @@ def exchange(port,packet):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port',required=True,help='Windows serial port, e.g. COM3')
-    parser.add_argument('--command',choices=['n','p','b'],help='next / previous / toggle auto-play')
+    parser.add_argument('--command',choices=['n','p','b','a'],
+                        help='next / previous / toggle auto-play / toggle automatic levels')
     parser.add_argument('--time',help='HHMMSS in Beijing time; calendar checked by FPGA')
     parser.add_argument('--sync',action='store_true',help='send Beijing wall time every second until Ctrl+C')
     args=parser.parse_args()

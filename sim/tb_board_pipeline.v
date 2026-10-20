@@ -5,7 +5,7 @@ module tb_board_pipeline;
  reg clk=0,rst=1,vs=1,de=0,ready=1,mode=0,en=0,overlay=0;
  always #5 clk=~clk;
  reg [23:0] rgb=0;reg [1:0] effect=0;reg [9:0] offset=0;
- wire [9:0] px,py,ax,ay,gx,gy;
+ wire [9:0] px,py,ax,ay,gx,gy,aex,aey;wire aev,aed;wire [23:0] aer;
  wire av,ad,gv,gd,ev,ed,cv,cd,ov,od,user,valid,last,overflow;
  wire [23:0] ac,gc,ec,cc,oc,data;
  integer m,f,x,y,i,k,v,width,height,frame_pixels,received=0,line_pixels=0,pauses=0,errors=0;
@@ -14,7 +14,8 @@ module tb_board_pipeline;
  video_coordinates coords(clk,rst,vs,de,px,py);
  picture_adjust adjust(clk,rst,vs,de,px,rgb,8'sd8,4'd5,av,ad,ax,ac,py,ay);
  picture_gamma gamma(clk,rst,av,ad,ax,ac,en,gv,gd,gx,gc,ay,gy);
- transition_pixels fx(clk,rst,gv,gd,gx,gc,{1'b0,effect},6'd16,offset,ev,ed,ec,gy,mode);
+ auto_enhance levels(clk,rst,gv,gd,gx,gy,gc,1'b0,aev,aed,aex,aey,aer);
+ transition_pixels fx(clk,rst,aev,aed,aex,aer,{1'b0,effect},6'd16,offset,ev,ed,ec,aey,mode);
  caption_overlay #(.ADAPTIVE(1)) captions(clk,rst,ev,ed,ec,overlay,1'b1,2'd0,effect,cv,cd,cc,mode,8'd0,24'd0,1'b0);
  status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1)) panel(
   .clk(clk),.rst(rst),.vs(cv),.de(cd),.rgb(cc),.enable(overlay),
@@ -74,7 +75,7 @@ module tb_board_pipeline;
    end
    if(received!=3*frame_pixels || overflow || line_pixels!=0)errors=errors+1;
   end
-  if(errors==0)$display("ALL PASS tb_board_pipeline: six full frames, both modes, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines");
+  if(errors==0)$display("ALL PASS tb_board_pipeline: six full frames, both modes, automatic-level bypass, gamma/bypass, fade/slide, menu/captions, exact continuous HDMI lines");
   else $display("FAILED tb_board_pipeline %d",errors);
   $finish;
  end

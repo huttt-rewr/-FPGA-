@@ -3,7 +3,7 @@ module tb_remote_uart;
  reg clk=0,vclk=0,rst=1,rx=1,vs=1;
  always #5 clk=~clk;
  always #7 vclk=~vclk;
- wire tx,overflow,np,pp,tp,ts;
+ wire tx,overflow,np,pp,tp,ts,auto_enh;
  wire [23:0] time_bcd;
  wire [7:0] seq,reply;
  wire rv;
@@ -11,7 +11,7 @@ module tb_remote_uart;
  integer errors=0,n=0,p=0,b=0,count=0;
  reg [7:0] replies[0:31];
  remote_controls #(.CLK_HZ(1600000),.BAUD(100000),.TIMEOUT_CYCLES(500)) dut(
- clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts,1'b1);
+ clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts,1'b1,auto_enh);
  uart_rx #(.CLK_FREQ(1600000),.BAUD(100000)) monitor(clk,rst,tx,reply,rv);
  cdc_snapshot #(.WIDTH(33)) cdc(clk,rst,{ts,seq,time_bcd},vclk,rst,snapshot);
  caption_overlay #(.CLK_HZ(100)) caption(.clk(vclk),.rst(rst),.vs(vs),.de(1'b0),.rgb(24'd0),
@@ -49,6 +49,10 @@ module tb_remote_uart;
   check(count==9,"one reply per command, never per timestamp digit");
   check({replies[0],replies[1],replies[2],replies[3],replies[4],replies[5],replies[6],replies[7],replies[8]}==
         {"K","K","K","?","K","?","?","?","K"},"actual UART reply bytes and error recovery");
+  byte("a");repeat(200)@(negedge clk);
+  check(auto_enh && replies[9]=="K" && count==10,"UART a persists and acknowledges automatic levels enable");
+  byte("a");repeat(200)@(negedge clk);
+  check(!auto_enh && replies[10]=="K" && count==11,"UART a disables automatic levels independently of playback");
   check(!overflow,"bounded response queue no overflow");
   rst=1;repeat(4)@(negedge clk);
   check(seq==0 && !ts && time_bcd==0,"reset disables wallclock and clears time");

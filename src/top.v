@@ -109,6 +109,8 @@ wire [23:0] remote_time_bcd;
 wire [7:0] remote_time_seq;
 wire remote_time_set;
 wire [32:0] time_video;
+wire auto_enh_en,auto_enh_video;
+wire ae_vs,ae_de;wire [9:0] ae_x,ae_y;wire [23:0] ae_rgb;
 wire pixel_write_ready;
 wire [11:0] image_width,image_height;
 wire [3:0] contrast;
@@ -651,7 +653,7 @@ assign cmd_prev=kb_prev || pc_prev;
 assign cmd_toggle=board_toggle || kb_toggle || pc_toggle;
 remote_controls #(.IR_ENABLED(1)) remote(.clk(sd_card_clk),.rst(rst_controls),.rx(uart_rx_pin),
  .tx(uart_tx_pin),.overflow(tx_overflow),.next_pulse(pc_next),.prev_pulse(pc_prev),.toggle_pulse(pc_toggle),
- .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set),.ir_rx(ir_rx_pin));
+ .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set),.ir_rx(ir_rx_pin),.auto_enh_en(auto_enh_en));
 cdc_snapshot #(.WIDTH(33)) time_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
  .src_data({remote_time_set,remote_time_seq,remote_time_bcd}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(time_video));
 assign osd_enable=osd_on;
@@ -690,7 +692,7 @@ picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MU
 switch_controls switches(.clk(sd_card_clk),.rst(rst_controls),.sw(sw),
  .captions_enable(captions_enable),.scroll_enable(scroll_enable),
  .transition_mode(transition_mode));
-cdc_snapshot #(.WIDTH(70)) status_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
+cdc_snapshot #(.WIDTH(70),.ENCODE_HOLD(1)) status_cdc(.src_clk(sd_card_clk),.src_rst(rst_sd),
  .src_data(status_source),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(status_video));
 cdc_snapshot #(.WIDTH(7)) rate_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
  .src_data({res_mode,rate_limited,fps_mode}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(rate_video));
@@ -711,8 +713,12 @@ picture_adjust enhance(.clk(video_clk),.rst(rst_video),.vs(vs),.de(de),.x(pixel_
 picture_gamma gamma(.clk(video_clk),.rst(rst_video),.vs(adjusted_vs),.de(adjusted_de),
  .x(adjusted_x),.y(adjusted_y),.rgb(enhanced_rgb),.enable(frame_ui[4]),
  .out_vs(gamma_vs),.out_de(gamma_de),.out_x(gamma_x),.out_y(gamma_y),.out_rgb(gamma_rgb));
-transition_pixels effects(.clk(video_clk),.rst(rst_video),.vs(gamma_vs),.de(gamma_de),
- .x(gamma_x),.y(gamma_y),.mode_800(mode_video),.rgb(gamma_rgb),.effect_mode(running_effect),
+cdc_snapshot #(.WIDTH(1)) autoenh_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+ .src_data(auto_enh_en),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(auto_enh_video));
+auto_enhance autoe(.clk(video_clk),.rst(rst_video),.vs(gamma_vs),.de(gamma_de),.x(gamma_x),.y(gamma_y),
+ .rgb(gamma_rgb),.enable(auto_enh_video),.out_vs(ae_vs),.out_de(ae_de),.out_x(ae_x),.out_y(ae_y),.out_rgb(ae_rgb));
+transition_pixels effects(.clk(video_clk),.rst(rst_video),.vs(ae_vs),.de(ae_de),
+ .x(ae_x),.y(ae_y),.mode_800(mode_video),.rgb(ae_rgb),.effect_mode(running_effect),
  .fade_level(fade_level),.slide_offset(slide_offset),
  .out_vs(transition_vs),.out_de(transition_de),.out_rgb(transition_rgb));
 // Physical coordinates for line RAM, logical viewport for adaptive UI panels.

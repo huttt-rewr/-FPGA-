@@ -40,6 +40,20 @@ module tb_pixel_effects;
  initial begin
   for(i=0;i<3;i=i+1)q[i]=0;
   repeat(3)@(negedge clk);rst=0;
+  // Every gray value is reachable with R=G=B; independent integer oracle.
+  for(i=0;i<256;i=i+1)begin
+   rgb={i[7:0],i[7:0],i[7:0]};#1;
+   case(i/64)
+    0:begin xx=0;yy=(i%64)*4;k=255;end
+    1:begin xx=0;yy=255;k=255-(i%64)*4;end
+    2:begin xx=(i%64)*4;yy=255;k=0;end
+    3:begin xx=255;yy=255-(i%64)*4;k=0;end
+   endcase
+   m=(77*xx+150*yy+29*k)/256;
+   if(dut.raw_gray!==i[7:0] || dut.heat_weighted[15:8]!==m[7:0])begin
+    errors=errors+1;$display("FAILED exact thermal luma at gray=%d",i);
+   end
+  end
   for(f=0;f<8;f=f+1)begin
    m=f%4;mode=m;w=(f<4)?640:800;
    for(k=0;k<6;k=k+1)step(0,0,0,0,f,m);

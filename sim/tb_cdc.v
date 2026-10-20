@@ -1,9 +1,15 @@
 `timescale 1ns/1ps
 module tb_cdc;
 reg sc=0,dc=0,rst=1;always #5 sc=~sc;always #7 dc=~dc;
-reg [15:0] src=0;wire [15:0] dst;
+reg [15:0] src=0;wire [15:0] dst,encoded_dst;
 integer i,errors=0;
 cdc_snapshot #(.WIDTH(16)) dut(sc,rst,src,dc,rst,dst);
+cdc_snapshot #(.WIDTH(16),.ENCODE_HOLD(1)) coded(sc,rst,src,dc,rst,encoded_dst);
+always @(posedge dc)begin
+ #1;if(encoded_dst!==dst)begin
+  $display("FAILED polarity-coded CDC differs: %h %h",encoded_dst,dst);errors=errors+1;
+ end
+end
 initial begin
  #53;rst=0;
  for(i=1;i<100;i=i+1) begin @(negedge sc);src=i*257;end
