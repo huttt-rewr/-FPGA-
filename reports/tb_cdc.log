@@ -13,5 +13,5 @@
 # Loading work.tb_cdc(fast)
 # run -all 
 # ALL PASS tb_cdc
-# ** Note: $finish    : tb_cdc.v(15)
+# ** Note: $finish    : tb_cdc.v(21)
 #    Time: 3094 ns  Iteration: 0  Instance: /tb_cdc

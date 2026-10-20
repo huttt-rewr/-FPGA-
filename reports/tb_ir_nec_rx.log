@@ -18,5 +18,5 @@
 # [PASS] ÿÿÿ… ->ÿÿÿÿÿÿåÿº command_valid
 # 
 # === tb_ir_nec_rx ALL PASS ===
-# ** Note: $finish    : tb_ir_nec_rx.v(109)
-#    Time: 138871020 ns  Iteration: 0  Instance: /tb_ir_nec_rx
+# ** Note: $finish    : tb_ir_nec_rx.v(130)
+#    Time: 205643020 ns  Iteration: 0  Instance: /tb_ir_nec_rx

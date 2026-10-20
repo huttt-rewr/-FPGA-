@@ -1,0 +1,20 @@
+{
+  "source_head_before_final_commit": "c08aa0a616985491fcd6dbe219abe7f7ef17327b",
+  "tests": 108,
+  "timing_ns": {
+    "SWNS": 0.142,
+    "STNS": 0.0,
+    "HWNS": 0.024,
+    "HTNS": 0.0
+  },
+  "physical_resources": {
+    "lut": 17283,
+    "reg": 11014,
+    "bram": 45,
+    "dsp": 26
+  },
+  "build_manifest_sha256": "52ed3f076277f426710a9106b25a3ff40af9628cf83911c08c6724f3a24d2a3e",
+  "bitstream_created": false,
+  "hardware_verified": false,
+  "physical_area_sha256": "e8e1a3cb7bff0a7dd1f06594e7859be9fd40d9bf2b206b69bdd01cbc8b018f53"
+}

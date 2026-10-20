@@ -1,8 +1,6 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_effects_pipeline.log -lib msim_work -c tb_effects_pipeline 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_effects_pipeline.v(16): (vopt-2684) [TFMPC] - Too few port connections for 'captions'.  Expected 13, found 12.
-# 
 # ** Warning: tb_effects_pipeline.v(20): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
 # 
 # ** Warning: tb_effects_pipeline.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'panel'.  Expected 42, found 19.

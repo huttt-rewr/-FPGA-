@@ -1,8 +1,6 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_caption_overlay.log -lib msim_work -c tb_caption_overlay 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_caption_overlay.v(8): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 13, found 12.
-# 
 # //  ModelSim SE-64 10.1c Jul 28 2012 
 # //
 # //  Copyright 1991-2012 Mentor Graphics Corporation

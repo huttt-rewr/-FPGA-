@@ -39,10 +39,10 @@
 | [src/modules/audio/audio_test_source.v](../src/modules/audio/audio_test_source.v) | 旧测试音参考；正式音源为WAV，不应误认为其代表TF音频。 |
 | [src/modules/common/cdc_snapshot.v](../src/modules/common/cdc_snapshot.v) | 握手保持多位一致快照；状态、媒体和请求使用独立实例。 |
 | [src/modules/common/reset_sync.v](../src/modules/common/reset_sync.v) | 异步置位、各时钟域多拍同步释放。 |
-| [src/modules/control/ir_nec_rx.v](../src/modules/control/ir_nec_rx.v) | NEC接收参考，正式顶层禁用IR控制。 |
-| [src/modules/control/player_control.v](../src/modules/control/player_control.v) | 旧UART/IR播放命令参考，正式KEY/SW/键盘路径不实例化。 |
-| [src/modules/control/uart_rx.v](../src/modules/control/uart_rx.v) | UART字节接收参考，正式控制禁用。 |
-| [src/modules/control/uart_tx.v](../src/modules/control/uart_tx.v) | UART字节发送参考，正式控制禁用。 |
+| [src/modules/control/ir_nec_rx.v](../src/modules/control/ir_nec_rx.v) | NEC数字基带解码；remote_controls接入下一张、上一张和轮播切换，重复码忽略。 |
+| [src/modules/control/player_control.v](../src/modules/control/player_control.v) | UART播放命令译码；PC_COMMANDS选择n/p/b新协议，KEY/SW/键盘仍走原消费者。 |
+| [src/modules/control/uart_rx.v](../src/modules/control/uart_rx.v) | UART 115200 8N1接收，经remote_controls过滤播放命令或原子时间包。 |
+| [src/modules/control/uart_tx.v](../src/modules/control/uart_tx.v) | UART字节发送，由uart_tx_queue排队返回K或?。 |
 | [src/modules/optional/ycbcr_to_rgb.v](../src/modules/optional/ycbcr_to_rgb.v) | 未接入的YCbCr转RGB参考。 |
 | [src/modules/osd/osd_char_rom.v](../src/modules/osd/osd_char_rom.v) | ASCII字模查表。 |
 | [src/modules/osd/status_osd.v](../src/modules/osd/status_osd.v) | 状态字符、完整文件计数、错误和TARGET/L叠加与像素流水。 |
@@ -52,7 +52,7 @@
 | [src/modules/video/video_enhance.v](../src/modules/video/video_enhance.v) | 旧视频调节参考，正式使用picture_adjust/picture_gamma。 |
 | [src/modules/optional/video_mode_table.v](../src/modules/optional/video_mode_table.v) | 未接入的模式参数表参考。 |
 | [src/modules/optional/video_scaler.v](../src/modules/optional/video_scaler.v) | 旧固定参数缩放参考，正式动态缩放由bmp_scale_loader承担。 |
-| [src/modules/control/uart_tx_queue.v](../src/modules/control/uart_tx_queue.v) | 旧串口应答排队，正式控制禁用。 |
+| [src/modules/control/uart_tx_queue.v](../src/modules/control/uart_tx_queue.v) | UART应答有界排队；溢出粘滞标志进入既有状态错误位。 |
 | [src/modules/video/video_coordinates.v](../src/modules/video/video_coordinates.v) | 有效区坐标与视口映射，OSD/字幕布局基础。 |
 | [src/modules/video/transition_pixels.v](../src/modules/video/transition_pixels.v) | 按逐帧权重/偏移实现淡出淡入和滑动像素处理。 |
 | [src/modules/osd/caption_overlay.v](../src/modules/osd/caption_overlay.v) | 内置ASCII字幕、滚动、运行时间与视口适配；正式三段流水同步延迟RGB/VS/DE。 |
@@ -81,7 +81,7 @@
 
 `src/constraints/pin.adc`与`timing.sdc`分别约束管脚与时序；`memory/global_def.v`通过include提供刷新等宏。两个TD入口是根video_improve.al与src/td_project/video_improve.al，必须与scripts/design_files.txt保持同一源集合。
 
-`src/modules/sd/native/`已接正式板级工程，使用原生四位25MHz，见[协议/硬件限制](SD_NATIVE_4BIT_20261016.md)。未登记的pixel_effects/玻璃OSD来自其他实验，不能据文件存在就宣称已启用。测试放sim，主机/仿真素材工具放scripts，报告和试验放reports，备份放backups，历史参考放legacy；这些目录不能通配加进TD。官方加密核、FIFO包装、PLL/SDRAM依赖不能当成重复垃圾删除。
+`src/modules/sd/native/`已接正式板级工程，使用原生四位CMD6协商25/50MHz，见[协议/硬件限制](SD_NATIVE_4BIT_20261016.md)。pixel_effects、glass_osd与音频波形已接入正式视频链；是否启用以top实例和正式清单为准。测试放sim，主机/仿真素材工具放scripts，报告和试验放reports，备份放backups，历史参考放legacy；这些目录不能通配加进TD。官方加密核、FIFO包装、PLL/SDRAM依赖不能当成重复垃圾删除。
 
 ## 新增正式原生SD源
 
@@ -100,3 +100,22 @@ sd_native_controller在25MHz查询/切换High Speed，锁存64字节状态中的
 ## 实验：像素特效、玻璃与波形
 
 新增三份video模块和五项激励，清单75源。模块职责、操作、ModelSim入口和未解决的物理/时序问题见[本轮手册](OSD_AUDIO_VISUALIZER_20261017.md)。85项功能通过不代表可上板，本轮没有新bit。
+
+## 2026-10-20 UART/IR/画质/相册增量源码
+
+| 源文件 | 作用 |
+|---|---|
+| [remote_controls.v](../src/modules/control/remote_controls.v) | UART播放、对时、回显整合；包内字符不触发播放。 |
+| [time_cmd.v](../src/modules/control/time_cmd.v) | 六位BCD范围检查、0.5秒半包超时、原子时间与序号发布。 |
+
+状态和接线限制见 [本轮手册](UART_IR_ALBUM_20261020.md)。
+
+| 新增源 | 具体职责 |
+|---|---|
+| [auto_enhance.v](../src/modules/video/auto_enhance.v) | 上一帧RGB范围统计，四级定点拉伸、舍入和饱和；默认旁路。 |
+| [auto_enhance_scale.v](../src/modules/video/auto_enhance_scale.v) | Q8倒数同步ROM，RGB三份BRAM，范围0输出0，内嵌常量避免工作目录依赖。 |
+| [slideshow_timer.v](../src/modules/control/slideshow_timer.v) | 默认五秒、忙时饱和、单次待处理的可选翻图脉冲。 |
+| [zh_font_rom.v](../src/modules/osd/zh_font_rom.v) | 17个16×16汉字，512行同步ROM，未用地址置0。 |
+| [zh_overlay.v](../src/modules/osd/zh_overlay.v) | 两级中文取字/叠加，半透明背景和RGB/VS/DE/XY同步寄存。 |
+
+auto_enhance_scale.mem、zh_font.mem用于审计和激励参考；生产RTL内嵌同值常量，不依赖启动目录readmemh。主机脚本scripts/album_remote.py不能加入TD综合。状态与冻结证据见[本轮手册](UART_IR_ALBUM_20261020.md)。

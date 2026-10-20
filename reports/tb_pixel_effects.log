@@ -15,5 +15,5 @@
 # Loading work.tb_pixel_effects(fast)
 # run -all 
 # ALL PASS tb_pixel_effects: 46198 cycles, exact four modes, VGA/SVGA widths, poisoned blanking, repeated-frame boundaries and three-stage alignment
-# ** Note: $finish    : tb_pixel_effects.v(54)
-#    Time: 462016 ns  Iteration: 0  Instance: /tb_pixel_effects
+# ** Note: $finish    : tb_pixel_effects.v(68)
+#    Time: 462266 ns  Iteration: 0  Instance: /tb_pixel_effects

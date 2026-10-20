@@ -1,5 +1,6 @@
 # 文档阅读入口
 
+> **2026-10-21 UART/红外/画质/相册：四阶段已通过静态、全量仿真与内部物理门禁；没有本轮新bit，未上板。** 108项ModelSim通过；SWNS +0.142ns、HWNS +0.024ns，STNS/HTNS均0。默认保留KEY/SW/PS/2；新增选项默认关闭。当前用法与限制见 [本轮操作手册](UART_IR_ALBUM_20261020.md)。历史数值只代表各自冻结版本，不能验收当前源码；没有整体+0.5ns签核。
 > 当前入口（2026-10-16）：[完整用户手册](USER_GUIDE.md)、[键盘/R/F教程](KEYBOARD_USAGE_20261016.md)、[KEY/SW教程](KEY_SW_OPERATION.md)、[逐源文件职责](SOURCE_MAP.md)、[实际构建与候选状态](BUILD_STATUS.md)。正式实现阶段1～4，SD仍SPI25MHz，四位50MHz和实板验收未完成。下列旧日期更新仅作历史对照。
 
 2026-10-16 键盘路线请先看[PS/2接线、键位与实施状态](KEYBOARD_USAGE_20261016.md)，实际整机时序进度见[构建状态](BUILD_STATUS.md)。新源码65设计源、38 IO；数字/R/F暂存请求，SD仍SPI25MHz。下文63源/36 IO是旧版本记录。
