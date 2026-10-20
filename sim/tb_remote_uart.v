@@ -11,7 +11,7 @@ module tb_remote_uart;
  integer errors=0,n=0,p=0,b=0,count=0;
  reg [7:0] replies[0:31];
  remote_controls #(.CLK_HZ(1600000),.BAUD(100000),.TIMEOUT_CYCLES(500)) dut(
- clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts);
+ clk,rst,rx,tx,overflow,np,pp,tp,time_bcd,seq,ts,1'b1);
  uart_rx #(.CLK_FREQ(1600000),.BAUD(100000)) monitor(clk,rst,tx,reply,rv);
  cdc_snapshot #(.WIDTH(33)) cdc(clk,rst,{ts,seq,time_bcd},vclk,rst,snapshot);
  caption_overlay #(.CLK_HZ(100)) caption(.clk(vclk),.rst(rst),.vs(vs),.de(1'b0),.rgb(24'd0),

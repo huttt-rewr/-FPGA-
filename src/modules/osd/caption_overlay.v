@@ -1,6 +1,6 @@
 // Pixel-domain layers: incoming picture -> half-transparent banner -> text/shadow.
 // One output register, with VS/DE delayed identically. Controls/time latch in blank.
-// Time is elapsed powered-on time, NOT wall clock. Text uses the existing ASCII font.
+// Time defaults to uptime; accepted UART HHMMSS selects a 24-hour wall clock.
 module caption_overlay #(parameter CLK_HZ=25000000,parameter ADAPTIVE=0,parameter PIPELINED=0)(
     input clk,input rst,input vs,input de,input [23:0] rgb,
     input enable,input scroll_enable,input [1:0] slogan_select,

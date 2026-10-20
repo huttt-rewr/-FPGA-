@@ -649,9 +649,9 @@ hdmi_phy_wrapper #(
 assign cmd_next=board_next || kb_next || pc_next;
 assign cmd_prev=kb_prev || pc_prev;
 assign cmd_toggle=board_toggle || kb_toggle || pc_toggle;
-remote_controls remote(.clk(sd_card_clk),.rst(rst_controls),.rx(uart_rx_pin),
+remote_controls #(.IR_ENABLED(1)) remote(.clk(sd_card_clk),.rst(rst_controls),.rx(uart_rx_pin),
  .tx(uart_tx_pin),.overflow(tx_overflow),.next_pulse(pc_next),.prev_pulse(pc_prev),.toggle_pulse(pc_toggle),
- .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set));
+ .time_bcd(remote_time_bcd),.time_seq(remote_time_seq),.time_set(remote_time_set),.ir_rx(ir_rx_pin));
 cdc_snapshot #(.WIDTH(33)) time_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
  .src_data({remote_time_set,remote_time_seq,remote_time_bcd}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(time_video));
 assign osd_enable=osd_on;
