@@ -1,7 +1,9 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_fat32_schedule.log -lib msim_work -c tb_fat32_schedule 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_fat32_schedule.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 43, found 26.
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 44, found 26.
+# 
+# ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # ** Warning: tb_fat32_schedule.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
 # 

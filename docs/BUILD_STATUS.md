@@ -1,5 +1,21 @@
 # 构建状态
 
+> **2026-10-23 最新：媒体菜单版bit已生成。** 116项RTL、10项Python、94源/40 IO静态检查及综合/P&R/最终STA通过；SWNS +0.160ns、HWNS +0.022ns，STNS/HTNS均0；LUT 16618/19600、BRAM 57/64、DSP 23/29。[新bit](../reports/menu_media_20261023/bitstream/video_improve_menu_media_20261023.bit)为648248字节，前后STA与源码/数据库匹配。操作见[媒体菜单](MENU_MEDIA_20261023.md)，证据见[结果](../reports/menu_media_20261023/RESULT.md)。board_signoff=false，未上板、未达整体+0.5ns；全局HWNS不是HDMI管脚hold签核。下文为历史记录。
+
+> **2026-10-23 最新：纯色128像素单列菜单、子菜单及两秒提示，候选bit已生成。** 取消渐变，主菜单贴左、宽128个逻辑像素、只显示功能名称；KEY3进入子菜单，KEY1/KEY2调节，KEY3返回，长按关闭。菜单外调节亮度/对比度后，左上角显示最新值，最后一次实际变化后两秒消失，连续调节重新计时。94源/40 IO静态检查、114项RTL主回归、10项Python及VGA/SVGA共14169600像素专项通过；SWNS **+0.110ns**、HWNS **+0.021ns**，STNS/HTNS均0，LUT **16480/19600**、BRAM **57/64**、DSP **23/29**。 [本轮新bit](../reports/menu_submenu_20261023/bitstream/video_improve_menu_submenu_20261023.bit)为648248字节，生成前后STA及源码/数据库哈希一致；见[结果](../reports/menu_submenu_20261023/RESULT.md)和[操作](MENU_SUBMENU_20261023.md)。board_signoff=false，未上板、未达到整体+0.5ns；全局HWNS不代表HDMI管脚hold。以下数据与bit为历史版本。
+
+> **2026-10-23 历史记录：彩色渐变菜单候选bit。** 静态检查94源/40 IO、113项RTL主回归、10项Python测试全部通过；VGA/SVGA菜单逐像素测试通过。初次seed25布局出现SWNS -0.016ns，已保留失败证据；保持RTL、官方IP、引脚及全部时钟/时序约束不变，以seed26重新布局布线，最终SWNS **+0.185ns**、HWNS **+0.021ns**、STNS/HTNS均0，物理LUT **16370/19600**、BRAM **57/64**、DSP **23/29**。[新候选bit](../reports/menu_gradient_20261023/bitstream/video_improve_menu_gradient_20261023.bit)为 **648248字节**，生成前后STA一致，详见[生成记录](../reports/menu_gradient_20261023/bitstream/RESULT.md)。`board_signoff=false`；未下载到板卡、未上板验收、未达到整体+0.5ns；全局HWNS不代表HDMI管脚hold。当前工程XML变化经过独立核验并显式记录，实际综合读取的全部HDL/脚本/约束与初次构建快照一致。
+
+## 2026-10-23 纯色菜单历史构建
+
+> **2026-10-23 当前构建（北京时间09:15完成）：中文分级菜单已接入，综合/P&R/内部STA通过，已生成新候选bit。** SWNS +0.156ns、HWNS +0.024ns、STNS/HTNS均0；100MHz主控，报告Fmax 101.585MHz。94源/40 IO静态检查、113项RTL主回归、10项Python测试全部通过；另有VGA/SVGA中文菜单像素及AVF三档补充仿真。最终物理LUT16281/19600、BRAM57/64、DSP23/29，较上一版LUT减少737、BRAM增加2、DSP不变。setup裕量较+0.038ns基线提高，hold保持+0.024ns，没有改时序约束。原115份测试台、44份媒体/存储/IP/约束源码和70位status_source布局核对不变。见[中文菜单操作说明](CHINESE_MENU_20261023.md)与[本轮验收及完整差异](../reports/chinese_menu_20261023/RESULT.md)。**[包含中文菜单的新候选bit](../reports/chinese_menu_20261023/bitstream/video_improve_chinese_menu_20261023.bit)为648248字节，生成前后STA及源码/数据库校验一致，见[生成记录](../reports/chinese_menu_20261023/bitstream/RESULT.md)；未上板。旧native640候选bit保留且不含菜单。** board_signoff=false，未达到整体+0.5ns；PHY-7002/PHY-5079及外部IO验收仍待处理，内部HWNS不能当作HDMI管脚hold。
+
+## 2026-10-22及以前的历史记录
+
+> **2026-10-22 当前构建（北京时间23:20完成）：AVF 三档已接入，新增 native 640×480，综合/P&R/内部 STA 通过。** SWNS +0.038ns、HWNS +0.024ns、STNS/HTNS 均为0；111项主回归、29场景AVF专项、9项转换工具测试通过，93源/40 IO静态检查通过。物理资源 LUT 17018/19600、BRAM 55/64、DSP 23/29；AVF 默认开启。主控100MHz，报告 Fmax 100.381MHz。未达到整体 +0.5ns，board_signoff=false；未上板，PHY-7002/PHY-5079警告仍保留，不能把全局 HWNS 当作 HDMI 管脚 hold 签核。**北京时间23:39已生成[含 native 功能的新候选 bit](../reports/native640_20261022/bitstream/video_improve_native640_20261022.bit)，645920字节，生成前后STA及源码/数据库校验一致；[旧候选 bit](../reports/bitstream_20261022/video_improve_20261022.bit)不含此次 native 修改。** 详情见[本轮结果](../reports/native640_20261022/RESULT.md)、[bit生成记录](../reports/native640_20261022/bitstream/RESULT.md)及最新 build_manifest，以下记录只适用各自历史版本。
+
+> **2026-10-22 AVF 合并后状态：** AVF 播放链路已接入并默认开启，通过 FAT32 根目录读取 `.AVF`，支持160×120、320×240及640×480三档。当前 SWNS +0.038ns、HWNS +0.024ns，LUT 17018、BRAM 55、DSP 23；已生成含 native 功能的新候选 bit、未上板、未达到整体 +0.5ns。10月21日合并过程及当时验收数据保留在[历史合并说明](F_DRIVE_VIDEO_MERGE_20261021.md)与[历史结果](../reports/f_drive_merge_20261021/RESULT.md)。
+
 > **2026-10-21 UART/红外/画质/相册：四阶段已通过静态、全量仿真与内部物理门禁；没有本轮新bit，未上板。** 108项ModelSim通过；SWNS +0.142ns、HWNS +0.024ns，STNS/HTNS均0。默认保留KEY/SW/PS/2；新增选项默认关闭。当前用法与限制见 [本轮操作手册](UART_IR_ALBUM_20261020.md)。历史数值只代表各自冻结版本，不能验收当前源码；没有整体+0.5ns签核。
 > **2026-10-19 转场扩充：仅第一阶段已通过软件/内部时序门禁，尚未实板验收。** 80源/40IO静态检查、102项ModelSim通过；SWNS +0.116ns、HWNS +0.030ns，STNS/HTNS均0。SW第3、4路同时ON后，每次换图依次轮播淡入淡出、滑动、擦除、圆形、棋盘。二维Ken-Burns受两行缓存与禁止修改SDRAM的约束冲突而未实现，FFT按指定顺序尚未启动；本轮无新bit，旧bit不含这些修改。见[操作、原理与未完成项](TRANSITIONS_ZOOM_FFT_20261019.md)。
 
@@ -45,7 +61,7 @@
 
 静态72源/40IO、78项ModelSim回归、综合/P&R/STA通过：SWNS **+0.260ns**、HWNS **+0.022ns**，TNS均0。新激励直接使用正式原生profile和物理引脚，不force替换扇区通道。[冻结验收](../reports/keyboard_20261016/native25_delivery_validation.json)、[报告](../reports/keyboard_20261016/RESULT_native25_delivery.md)。70位状态布局保留；没有降频、屏蔽功能路径或整体+0.5ns声明。
 
-CMD6高速代码已在隔离候选完成逻辑仿真，尚未接入本阶段正式profile；当前仍25MHz。四位25MHz理想模型11.20MB/s不是实体卡实测。没有下载、写实体卡或实板出图/出声/吞吐验收。以下较早“当前SPI”记录属于历史阶段。
+CMD6高速代码当时已在隔离候选完成逻辑仿真，还未纳入该历史阶段正式profile；当时仍25MHz。四位25MHz理想模型11.20MB/s不是实体卡实测。没有下载、写实体卡或实板出图/出声/吞吐验收。以下较早“当前SPI”记录属于历史阶段。
 
 
 ## 历史：键盘、多文件、R/F检查点

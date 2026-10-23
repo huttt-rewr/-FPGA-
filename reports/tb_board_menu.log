@@ -1,7 +1,33 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_board_menu.log -lib msim_work -c tb_board_menu 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_board_menu.v(10): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 20, found 15.
+# ** Warning: tb_board_menu.v(10): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 15.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'res_up'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'res_down'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'wav_next'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'movie_next'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'image_next'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'menu_page'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_dn'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_up'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_dn'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_up'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_mute'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_dn'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_up'.
 # 
 # ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'kb_mute'.
 # 
@@ -12,6 +38,8 @@
 # ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_mute'.
 # 
 # ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'audio_volume'.
+# 
+# ** Warning: tb_board_menu.v(10): (vopt-2718) [TFMPC] - Missing connection for port 'menu_edit'.
 # 
 # //  ModelSim SE-64 10.1c Jul 28 2012 
 # //

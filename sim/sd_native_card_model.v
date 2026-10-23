@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 // Logical SD card peer: works only from pins, never peeks at DUT state.
 // CRC7 uses polynomial long division, independently of the host implementation.
-module sd_native_card_model #(parameter integer IMAGE_MODE=0,parameter integer DOUT_DELAY=0)(
+module sd_native_card_model #(parameter integer IMAGE_MODE=0,parameter integer DOUT_DELAY=0,parameter IMAGE_FILE="")(
  input rst,SD_CLK,inout SD_CMD,inout [3:0] SD_DAT,
  input ccs,input [3:0] fault,input [3:0] hs_mode,
  output reg [31:0] last_read_argument,
@@ -149,6 +149,7 @@ module sd_native_card_model #(parameter integer IMAGE_MODE=0,parameter integer D
   commands=0;reads=0;errors=0;last_read_argument=0;
   if(IMAGE_MODE==1)fd=$fopen("../reports/fat32_20261015/vectors/super.img","rb");
   if(IMAGE_MODE==2)fd=$fopen("../reports/fat32_20261015/vectors/mbr.img","rb");
+  if(IMAGE_MODE==3)fd=$fopen(IMAGE_FILE,"rb");
   if(IMAGE_MODE!=0 && fd==0)begin $display("FAILED native card image missing");$finish;end
  end
  always @(posedge rst)begin

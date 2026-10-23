@@ -37,3 +37,15 @@ module hdmi_tmds_vga(
     // Five ones, five zeros. Binary 0000011111 is 0x01f, NOT 0x03f.
     assign clk_ch=10'b0000011111;
 endmodule
+
+// Cut the compositor/font path before either VGA TMDS or the SVGA AXIS input.
+// All three signals advance together; no raster or image dimensions change.
+module hdmi_video_stage(
+    input clk,input rst,input vs,input de,input [23:0] rgb,
+    output reg out_vs,output reg out_de,output reg [23:0] out_rgb
+);
+    always @(posedge clk or posedge rst)begin
+        if(rst)begin out_vs<=1;out_de<=0;out_rgb<=0;end
+        else begin out_vs<=vs;out_de<=de;out_rgb<=rgb;end
+    end
+endmodule

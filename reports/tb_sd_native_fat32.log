@@ -1,7 +1,9 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_fat32.log -lib msim_work -c tb_sd_native_fat32 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 44, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
 # 
@@ -17,7 +19,9 @@
 # 
 # ** Warning: tb_sd_native_fat32.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
 # 
-# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 43, found 38.
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 44, found 38.
+# 
+# ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # ** Warning: tb_sd_native_fat32.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
 # 
@@ -45,7 +49,7 @@
 # Loading work.tb_sd_native_fat32(fast)
 # Loading work.sd_fat32(fast)
 # Loading work.sd_card_top_native(fast)
-# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 44, found 38.
 # 
 #         Region: /tb_sd_native_fat32/fixture[0]/dut/fs
 # ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
@@ -58,7 +62,9 @@
 # 
 # ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
 # 
-# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 43, found 38.
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: (vsim-3017) tb_sd_native_fat32.v(23): [TFMPC] - Too few port connections. Expected 44, found 38.
 # 
 #         Region: /tb_sd_native_fat32/fixture[1]/dut/fs
 # ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'aud_file_idx'.
@@ -70,6 +76,8 @@
 # ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'wav_count'.
 # 
 # ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: (vsim-3722) tb_sd_native_fat32.v(23): [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # run -all 
 # ALL PASS tb_sd_native_fat32: 4-bit pins -> transport -> unchanged arbiter/FAT32, MBR/superfloppy, fragmented BMP/WAV exact bytes

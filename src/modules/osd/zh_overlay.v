@@ -7,7 +7,7 @@ module zh_overlay #(parameter WIN_X=32,WIN_Y=384,CHARS=17)(
  wire [9:0] local_x=x-WIN_X,local_y=y-WIN_Y;
  wire in_window=(x>=WIN_X && x<WIN_X+CHARS*16 && y>=WIN_Y && y<WIN_Y+16);
  wire [15:0] glyph;
- zh_font_rom font(clk,local_x[8:4],local_y[3:0],glyph);
+ zh_font_rom #(.BANK(1)) font(clk,{2'b00,local_x[8:4]},local_y[3:0],glyph);
  reg v1,d1,draw1;reg [9:0]x1,y1;reg [23:0]rgb1;reg [3:0]column1;
  always @(posedge clk or posedge rst)begin
   if(rst)begin

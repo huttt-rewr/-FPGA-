@@ -13,19 +13,35 @@ module tmds_encoder(
     wire signed [5:0] balance;
     function [3:0] count_ones;
         input [7:0] value;
-        integer i;
-        begin count_ones=0;for(i=0;i<8;i=i+1)count_ones=count_ones+value[i];end
+        reg [1:0] pair0,pair1,pair2,pair3;
+        reg [2:0] half0,half1;
+        begin
+            pair0={1'b0,value[0]}+{1'b0,value[1]};
+            pair1={1'b0,value[2]}+{1'b0,value[3]};
+            pair2={1'b0,value[4]}+{1'b0,value[5]};
+            pair3={1'b0,value[6]}+{1'b0,value[7]};
+            half0={1'b0,pair0}+{1'b0,pair1};
+            half1={1'b0,pair2}+{1'b0,pair3};
+            count_ones={1'b0,half0}+{1'b0,half1};
+        end
     endfunction
     assign data_ones=count_ones(data);
     assign use_xnor=(data_ones>4 || (data_ones==4 && !data[0]));
     assign qm[0]=data[0];
     genvar bit_number;
     generate for(bit_number=1;bit_number<8;bit_number=bit_number+1)begin: minimize
-        assign qm[bit_number]=qm[bit_number-1]^data[bit_number]^use_xnor;
+        // The recurrence is prefix parity; XNOR contributes on odd indices.
+        assign qm[bit_number]=(^data[bit_number:0])^
+                                   ((bit_number%2)?use_xnor:1'b0);
     end endgenerate
     assign qm[8]=!use_xnor;
     assign qm_ones=count_ones(qm[7:0]);
     assign balance=$signed({1'b0,qm_ones,1'b0})-6'sd8;
+    wire invert=(disparity==0 || balance==0) ? !qm[8] :
+                (disparity[5]==balance[5]);
+    wire signed [5:0] delta_keep=balance-(qm[8]?6'sd0:6'sd2);
+    wire signed [5:0] delta_invert=(qm[8]?6'sd2:6'sd0)-balance;
+    wire signed [5:0] delta=invert?delta_invert:delta_keep;
     always @(posedge clk or posedge rst) begin
         if(rst) begin symbol<=10'b1101010100; disparity<=0; end
         else if(!de) begin
@@ -36,15 +52,9 @@ module tmds_encoder(
                 2'b10:symbol<=10'b0101010100;
                 2'b11:symbol<=10'b1010101011;
             endcase
-        end else if(disparity==0 || balance==0) begin
-            symbol<={~qm[8],qm[8],(qm[8]?qm[7:0]:~qm[7:0])};
-            disparity<=disparity+(qm[8]?balance:-balance);
-        end else if((disparity>0 && balance>0) || (disparity<0 && balance<0)) begin
-            symbol<={1'b1,qm[8],~qm[7:0]};
-            disparity<=disparity+(qm[8]?6'sd2:6'sd0)-balance;
         end else begin
-            symbol<={1'b0,qm[8],qm[7:0]};
-            disparity<=disparity+balance-(qm[8]?6'sd0:6'sd2);
+            symbol<={invert,qm[8],(qm[7:0]^{8{invert}})};
+            disparity<=disparity+delta;
         end
     end
 endmodule

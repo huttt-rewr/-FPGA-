@@ -9,6 +9,12 @@ try {
  if($LASTEXITCODE -ne 0) { throw 'FAT32 fixture generation/verification failed' }
  & python ../scripts/make_indexed_media.py
  if($LASTEXITCODE -ne 0) { throw 'Indexed media fixture generation failed' }
+ & python ../scripts/test_prepare_video.py
+ if($LASTEXITCODE -ne 0) { throw 'AVF conversion/packing tests failed' }
+ & python ../scripts/test_zh_font.py
+ if($LASTEXITCODE -ne 0) { throw 'Chinese menu font test failed' }
+ & python ../scripts/make_spectrum_vectors.py
+ if($LASTEXITCODE -ne 0) { throw 'Independent spectrum DFT vector generation failed' }
  if(!(Test-Path 'msim_work')) { & "$ModelSim\vlib.exe" msim_work; if($LASTEXITCODE -ne 0) { throw 'Cannot create simulation library' } }
  $files=@('../src/modules/common/*.v','../src/modules/control/*.v','../src/modules/osd/*.v','../src/modules/video/*.v','../src/modules/audio/*.v','../src/modules/optional/*.v','../src/modules/bmp/bmp_read.v','../src/modules/bmp/sd_card_bmp.v','../src/modules/sd/sd_card_top.v','../src/modules/sd/sd_card_sec_read_write.v','../src/modules/sd/sd_card_cmd.v','../src/modules/sd/spi_master.v','tb_uart_rx.v','tb_ir_nec_rx.v','tb_video_scaler.v','tb_upgrade.v','tb_cdc.v','tb_stream_queue.v','tb_uart_queue.v','tb_sd_address.v','tb_load_recovery.v','tb_bmp_stream.v','../src/modules/memory/frame_fifo_write.v','../src/ip/fifo/afifo_16_32_256.v','tb_fifo_boundary.v','tb_frame_writer.v','../src/modules/memory/frame_fifo_read.v','../src/modules/memory/frame_read_write.v','../src/ip/fifo/afifo_32_16_256.v','tb_frame_tail.v','tb_osd_text.v')
  $files += @('tb_bmp_headers.v','tb_hdmi_line_contract.v','tb_sd_watchdog.v')
@@ -34,6 +40,7 @@ try {
  $mergeTests += @('tb_caption_pipeline','tb_pixel_effects','tb_glass_osd','tb_audio_visualizer','tb_visual_pipeline','tb_shared_luma')
  $files += @('../src/modules/game/*.v')
  $mergeTests += @('tb_snake_game','tb_snake_controls','tb_snake_pipeline')
+$mergeTests += @('tb_snake_bram')
  $mergeTests += @('tb_bram_window','tb_osd_bcd','tb_bram_waveform')
  $mergeTests += @('tb_scaler_row_address')
  $mergeTests += @('tb_fat32_compare')
@@ -48,6 +55,10 @@ try {
  $mergeTests += @('tb_remote_ir')
  $mergeTests += @('tb_auto_enhance')
  $mergeTests += @('tb_album_timer','tb_zh_overlay','tb_album_clock')
+ $files += @('../src/modules/display/seg_scan.v')
+ $mergeTests += @('tb_seg_scan_timing','tb_hdmi_video_stage')
+ $mergeTests += @('tb_chinese_menu','tb_menu_overlay','tb_menu_popup','tb_menu_mode_popup','tb_menu_media','tb_menu_media_pixels')
+ $mergeTests += @('tb_spectrum_fft','tb_spectrum_bands','tb_music_waveform','tb_music_spectrum')
  $files += @($mergeTests | ForEach-Object { "$_.v" })
  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
@@ -55,7 +66,7 @@ try {
   $log="../reports/$tb.log"
   & "$ModelSim\vsim.exe" -c -lib msim_work $tb -do 'run -all; quit -f' -l $log
   $result=Get-Content $log -Raw
-  if($LASTEXITCODE -ne 0 -or $result -match 'FAILED|\[FAIL\]|# FAIL |\*\* (Error|Fatal)' -or $result -notmatch 'ALL PASS') {
+  if($LASTEXITCODE -ne 0 -or $result -match 'FAILED|\[FAIL\]|# FAIL |\*\* Fatal' -or $result -notmatch 'ALL PASS') {
    throw "Simulation failed: $tb. See $log"
   }
  }

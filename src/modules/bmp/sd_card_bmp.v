@@ -1,6 +1,6 @@
 
 module sd_card_bmp #(
-    parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,
+    parameter NATIVE_4BIT=0,parameter NATIVE_HIGH_SPEED=0,parameter VIDEO_FILES=0,
     parameter integer RATE_CONTROLS=0,parameter integer INDEXED=0,parameter integer MAX_FILES=64,
     parameter integer CLK_FREQ_HZ       = 100_000_000,
     parameter [31:0]  SCAN_START_SECTOR = 32'd0,
@@ -58,19 +58,28 @@ module sd_card_bmp #(
     output [6:0] media_image_index,media_image_count,media_audio_index,media_audio_count,
     output SD_CLK,inout SD_CMD,SD_DAT0,SD_DAT1,SD_DAT2,SD_DAT3,
     output media_truncated,
-    input [3:0] fps_mode,output rate_limited
+    input [3:0] fps_mode,output rate_limited,
+    input movie_mode,input movie_restart,input [6:0] movie_index,output [6:0] movie_count,
+    input movie_req,input [31:0] movie_sector,
+    output [7:0] movie_data,output movie_valid,movie_end,movie_error,movie_ready
 );
 
 // Local reset leaves: immediate assertion, one extra 100MHz release clock.
 // Preserve separate physical drivers so the root reset does not drive every
 // parser, table RAM and SD register. No transaction starts before SD init.
 (* preserve="true" *) reg rst_fat,rst_bmp,rst_phy,rst_audio,rst_arb;
+wire media_reset=rst || ((VIDEO_FILES!=0) && movie_restart);
+always @(posedge clk or posedge media_reset)begin
+ if(media_reset)begin rst_fat<=1;rst_phy<=1;rst_arb<=1;end
+ else begin rst_fat<=0;rst_phy<=0;rst_arb<=0;end
+end
 always @(posedge clk or posedge rst)begin
- if(rst)begin rst_fat<=1;rst_bmp<=1;rst_phy<=1;rst_audio<=1;rst_arb<=1;end
- else begin rst_fat<=0;rst_bmp<=0;rst_phy<=0;rst_audio<=0;rst_arb<=0;end
+ if(rst)begin rst_bmp<=1;rst_audio<=1;end
+ else begin rst_bmp<=0;rst_audio<=0;end
 end
 
 wire fat_done,fat_error,fat_wav_found;
+wire movie_active=VIDEO_FILES && movie_mode;
 wire [6:0] fat_audio_count;wire fat_audio_idle;
 reg [6:0]        img_found_count;
 reg [5:0]        img_idx;
@@ -127,11 +136,18 @@ wire [7:0] phy_bmp_data;
 wire phy_aud_req,phy_aud_valid,phy_aud_end,phy_aud_error;
 wire [31:0] phy_aud_addr;
 wire [7:0] phy_aud_data;
+assign movie_data=sd_sec_read_data;
+assign movie_valid=movie_active && sd_sec_read_data_valid;
+assign movie_end=movie_active && sd_sec_read_end;
+assign movie_ready=sd_init_done && fat_done && fat_count!=0;
+assign movie_count=movie_active?fat_count:7'd0;
+assign movie_error=sd_init_error || fat_error || bmp_transfer_error ||
+    (fat_done && fat_count==0);
 generate if(FAT32_ENABLE)begin: filesystem
- sd_fat32 #(.MAX_BMP(MAX_BMP),.INDEXED(INDEXED),.MAX_FILES(MAX_FILES)) fat(.clk(clk),.rst(rst_fat),.sd_init_done(sd_init_done),
+ sd_fat32 #(.MAX_BMP(MAX_BMP),.INDEXED(INDEXED),.MAX_FILES(MAX_FILES),.VIDEO_FILES(VIDEO_FILES)) fat(.clk(clk),.rst(rst_fat),.sd_init_done(sd_init_done),.movie_mode(movie_active),
   .mount_done(fat_done),.mount_error(fat_error),.mount_error_code(fat_error_code),
   .bmp_count(fat_count),.wav_found(fat_wav_found),.bmp_size(fat_sizes),.wav_size(fat_wav_size),
-  .bmp_req(sd_sec_read),.bmp_file_idx(INDEXED?{1'b0,load_idx}:load_idx[2:0]),.bmp_rel_sector(sd_sec_read_addr),
+  .bmp_req(movie_active?movie_req:sd_sec_read),.bmp_file_idx(movie_active?movie_index:(INDEXED?{1'b0,load_idx}:load_idx[2:0])),.bmp_rel_sector(movie_active?movie_sector:sd_sec_read_addr),
   .bmp_data(sd_sec_read_data),.bmp_valid(sd_sec_read_data_valid),.bmp_end(sd_sec_read_end),
   .bmp_error(bmp_transfer_error),.bmp_grant(bmp_grant),.bmp_abort(load_abort),
   .aud_req(aud_req),.aud_file_idx(audio_active),.aud_abort(audio_switching),.aud_idle(fat_audio_idle),
@@ -173,7 +189,7 @@ generate if(ENABLE_AUDIO || FAT32_ENABLE)begin: wav_enabled
   .transport_reset(transport_reset));
  audio_wav #(.START_SECTOR(AUDIO_START_SECTOR),.FILESYSTEM(FAT32_ENABLE)) wav(
   .clk(clk),.rst(rst_audio | load_abort | audio_switching),.sd_init_done(sd_init_done),
-  .enable(ENABLE_AUDIO && audio_enable && (!FAT32_ENABLE || (fat_done && fat_wav_found))),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
+  .enable(!movie_active && ENABLE_AUDIO && audio_enable && (!FAT32_ENABLE || (fat_done && fat_wav_found))),.sector_room(audio_sector_room),.sample_ready(audio_sample_ready),
   .req(aud_req),.addr(aud_addr),.data(aud_data),.data_valid(aud_valid),
   .sector_end(aud_end),.read_error(aud_read_error),
   .sample_valid(audio_sample_valid),.sample(audio_sample),.error(),.error_code(audio_error_code),.ready(audio_ready));
@@ -394,7 +410,7 @@ always @(posedge clk or posedge rst) begin
             source_done_seen <= 0;
             write_done_seen <= 0;
             next_req_pending <= 0;
-        end else if (waiting_for_init) begin
+        end else if (waiting_for_init || movie_active) begin
             scan_kicked           <= 1'b0;
             first_image_committed <= 1'b0;
             auto_play_en          <= 1'b0;
@@ -577,7 +593,7 @@ end
 
 bmp_read #(.FILESYSTEM(FAT32_ENABLE),.SHARED_SD(ENABLE_AUDIO || FAT32_ENABLE),.READ_STALL_CYCLES(READ_STALL_CYCLES),.ADAPTIVE(ADAPTIVE),.ENABLE_SCALING(ENABLE_SCALING)) bmp_read_m0(
     .clk                    (clk),
-    .rst                    (rst_bmp),
+    .rst                    (rst_bmp | movie_active),
     .ready                  (bmp_ready),
 
     .scan_start             (scan_start_pulse),

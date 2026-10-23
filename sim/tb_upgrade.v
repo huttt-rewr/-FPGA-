@@ -12,12 +12,14 @@ frame_swap swap(.clk(clk),.rst(rst),.vblank(vb),.request_toggle(req),
  .requested_buffer(bufsel),.ack_toggle(ack),.active_buffer(active),
  .display_valid(visible),.transition_mode(2'd0));
 reg [7:0] command=0;reg command_valid=0;
-wire nextp,prevp,togglep;wire [4:0] volume;wire mute,osden,pattern;
-wire signed [7:0] bright;wire replyv;wire [7:0] reply;
+wire nextp,prevp,togglep,volup,voldn,mutet,briup,bridn,conup,condn,osdt,testt,transt;
 wire [1:0] effect,slogan;wire captions,scroll,auto_enh,slide,zh,clock_big;
-player_control ctrl(clk,rst,command,command_valid,8'd0,1'b0,
- nextp,prevp,togglep,volume,mute,osden,bright,pattern,replyv,reply,
- effect,captions,scroll,slogan,auto_enh,slide,zh,clock_big);
+player_control ctrl(.clk(clk),.rst(rst),.ir_command(command),.ir_valid(command_valid),
+ .next_pulse(nextp),.prev_pulse(prevp),.toggle_pulse(togglep),.vol_up(volup),.vol_dn(voldn),
+ .mute_toggle(mutet),.bri_up(briup),.bri_dn(bridn),.con_up(conup),.con_dn(condn),
+ .osd_toggle(osdt),.test_toggle(testt),.transition_toggle(transt),.transition_mode(effect),
+ .captions_enable(captions),.scroll_enable(scroll),.slogan_select(slogan),.auto_enh_en(auto_enh),
+ .slide_enable(slide),.zh_enable(zh),.large_clock(clock_big));
 task send;input [7:0] c;begin @(negedge clk);command=c;command_valid=1;tick;
  @(negedge clk);command_valid=0;end endtask
 reg de=0,vs=1;reg [23:0] rgb=0;
@@ -53,20 +55,15 @@ initial begin
  check(active==1 && ack,"second buffer retained until next blank");
  @(negedge clk);vb=1;tick;check(!ack && active==0,"second commit acknowledged");
  @(negedge clk);vb=0;
- check(mute && volume==8 && osden,"safe control reset defaults");
- check(effect==1 && captions && scroll && slogan==0,"effect defaults");
- send("e");check(effect==2 && reply=="K","slide mode command");
- send("e");check(effect==0,"cut mode command");send("e");check(effect==1,"fade mode cycle");
- send("c");check(!captions,"captions toggle");send("r");check(!scroll,"scroll pause");
- send("g");send("g");send("g");check(slogan==0,"slogan cycle");
- send("n");check(nextp && !prevp,"next command");tick;check(!nextp,"command is one cycle");
- send("b");check(prevp,"previous command");send("p");check(togglep,"pause resume toggle");
- repeat(25) send("+");check(volume==16,"volume clamps high");
- repeat(25) send("-");check(volume==0,"volume clamps low");
- send("m");check(!mute,"mute toggle");send("o");check(!osden,"OSD toggle");
- send("z");check(reply=="?","unknown command rejected");
- repeat(25) send("]");check(bright==64,"brightness clamps high");
- repeat(25) send("[");check(bright==-64,"brightness clamps low");
+ check(effect==1 && captions && scroll && slogan==0,"safe control reset defaults");
+ send("e");check(effect==2 && transt,"IR transition action");
+ send("e");check(effect==3,"IR transition includes fourth mode");
+ send("e");check(effect==0,"IR transition wraps to cut");
+ send("n");check(nextp && !prevp,"IR next event");tick;check(!nextp,"IR command is one cycle");
+ send("p");check(prevp,"IR previous event");send("b");check(togglep,"IR autoplay toggle event");
+ send("+");check(volup,"volume is an event, not owned state");
+ send("]");check(briup,"brightness up is an event");send("}");check(conup,"contrast up is an event");
+ send("t");check(testt,"test pattern event");send("o");check(osdt,"OSD event");
  osd_vs=1;
  for(j=0;j<17;j=j+1) begin
   for(i=0;i<640;i=i+1) begin @(negedge clk);osd_de=1;tick;end

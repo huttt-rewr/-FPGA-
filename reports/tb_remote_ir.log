@@ -1,16 +1,6 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_remote_ir.log -lib msim_work -c tb_remote_ir 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_remote_ir.v(9): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 16, found 12.
-# 
-# ** Warning: tb_remote_ir.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'large_clock'.
-# 
-# ** Warning: tb_remote_ir.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'zh_enable'.
-# 
-# ** Warning: tb_remote_ir.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'slide_enable'.
-# 
-# ** Warning: tb_remote_ir.v(9): (vopt-2718) [TFMPC] - Missing connection for port 'auto_enh_en'.
-# 
 # //  ModelSim SE-64 10.1c Jul 28 2012 
 # //
 # //  Copyright 1991-2012 Mentor Graphics Corporation
@@ -23,5 +13,5 @@
 # Loading work.tb_remote_ir(fast)
 # run -all 
 # ALL PASS tb_remote_ir: real NEC pins, mapped next/previous/toggle, bad CRC complement, ignored hold repeats, reset, no UART replies
-# ** Note: $finish    : tb_remote_ir.v(40)
-#    Time: 4129110 ns  Iteration: 1  Instance: /tb_remote_ir
+# ** Note: $finish    : tb_remote_ir.v(63)
+#    Time: 12999650 ns  Iteration: 1  Instance: /tb_remote_ir

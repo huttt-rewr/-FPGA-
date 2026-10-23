@@ -10,6 +10,7 @@ import json
 import re
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent.parent
 REPORTS = ROOT / 'reports'
@@ -20,8 +21,21 @@ def snapshot():
              if p.is_file() and p.suffix in ('.v', '.vhd', '.adc', '.sdc', '.al', '.ipc', '.tcl', '.ps1', '.py', '.txt')
              and not any(part in ('msim_work', 'pll_work', 'indexed_work', 'keyboard_work', 'sd_native_work') for part in p.parts)]
     paths.append(ROOT / 'video_improve.al')
-    return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in sorted(paths)}
+    result = {}
+    for path in sorted(paths):
+        data = path.read_bytes()
+        if path.suffix == '.al':
+            # TD rewrites UI bookkeeping (including AutoExcluded and entity
+            # spelling) while loading/saving the project. Compare normalized
+            # XML so this harmless reserialization does not look like an RTL
+            # input change; source paths and project configuration remain part
+            # of the digest.
+            root = ET.fromstring(data.decode('utf-8-sig').replace('UsedInP&R', 'UsedInP&amp;R'))
+            for node in root.iter():
+                node.attrib.pop('AutoExcluded', None)
+            data = ET.canonicalize(ET.tostring(root, encoding='unicode'), strip_text=True).encode('utf-8')
+        result[path.relative_to(ROOT).as_posix()] = hashlib.sha256(data).hexdigest()
+    return result
 
 
 def run(td, script, log, marker, products):

@@ -13,6 +13,36 @@
 # 
 # ** Warning: tb_ps2_controls.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'game_enable'.
 # 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2685) [TFMPC] - Too few port connections for 'buttons'.  Expected 34, found 20.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'res_up'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'res_down'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'wav_next'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'movie_next'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'image_next'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'menu_page'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_dn'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_up'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_dn'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_up'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_mute'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_dn'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_up'.
+# 
+# ** Warning: tb_ps2_controls.v(24): (vopt-2718) [TFMPC] - Missing connection for port 'menu_edit'.
+# 
 # //  ModelSim SE-64 10.1c Jul 28 2012 
 # //
 # //  Copyright 1991-2012 Mentor Graphics Corporation

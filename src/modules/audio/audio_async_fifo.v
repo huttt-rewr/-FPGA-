@@ -6,7 +6,12 @@ module audio_async_fifo #(parameter ADDRESS_BITS=10)(
  output [ADDRESS_BITS:0] wr_used,rd_used);
  localparam P=ADDRESS_BITS+1;
  reg [23:0] memory[0:(1<<ADDRESS_BITS)-1];
- reg [P-1:0] wb,rb,wg,rg;
+ reg [P-1:0] wb,rb,rg;
+ // Preserve the complemented launch register and decode before the first
+ // synchronizer. Bitwise inversion preserves Gray's single-bit transitions
+ // and pointer latency while adding logic delay to the short CDC hold path.
+ (* preserve="true" *) reg [P-1:0] wg_encoded;
+ (* keep="true" *) wire [P-1:0] wg=~wg_encoded;
  (* async_reg="true" *) reg [P-1:0] rgs0,rgs1,wgs0,wgs1;
  wire wr_rst,rd_rst;
  reset_sync wreset(.clk(wr_clk),.arst(rst),.rst(wr_rst));
@@ -22,8 +27,8 @@ module audio_async_fifo #(parameter ADDRESS_BITS=10)(
  always @(posedge wr_clk)if(wr_en && !full)memory[wb[ADDRESS_BITS-1:0]]<=wr_data;
  always @(posedge rd_clk)if(rd_en && !empty)rd_data<=memory[rb[ADDRESS_BITS-1:0]];
  always @(posedge wr_clk or posedge wr_rst)begin
-  if(wr_rst)begin wb<=0;wg<=0;rgs0<=0;rgs1<=0;end
-  else begin rgs0<=rg;rgs1<=rgs0;if(wr_en && !full)begin wb<=wn;wg<=(wn>>1)^wn;end end
+  if(wr_rst)begin wb<=0;wg_encoded<={P{1'b1}};rgs0<=0;rgs1<=0;end
+  else begin rgs0<=rg;rgs1<=rgs0;if(wr_en && !full)begin wb<=wn;wg_encoded<=~((wn>>1)^wn);end end
  end
  always @(posedge rd_clk or posedge rd_rst)begin
   if(rd_rst)begin rb<=0;rg<=0;wgs0<=0;wgs1<=0;end

@@ -1,7 +1,29 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_indexed_player.log -lib msim_work -c tb_indexed_player 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_indexed_player.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 52.
+# ** Warning: tb_indexed_player.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 52.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # ** Warning: tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
 # 

@@ -15,26 +15,24 @@ parameter CLK_FREQ = 50000000;
 
 parameter SCAN_COUNT = CLK_FREQ /(SCAN_FREQ * 6) - 1;
 
-reg[31:0] scan_timer;
-reg[3:0] scan_sel;
+localparam TIMER_WIDTH=(SCAN_COUNT<1)?1:$clog2(SCAN_COUNT+1);
+reg[TIMER_WIDTH-1:0] scan_timer;
+reg[5:0] scan_sel;
 always@(posedge clk or negedge rst_n)
 begin
 	if(rst_n == 1'b0)
 	begin
-		scan_timer <= 32'd0;
-		scan_sel <= 4'd0;
+		scan_timer <= 0;
+		scan_sel <= 6'b000001;
 	end
 	else if(scan_timer >= SCAN_COUNT)
 	begin
-		scan_timer <= 32'd0;
-		if(scan_sel == 4'd5)
-			scan_sel <= 4'd0;
-		else
-			scan_sel <= scan_sel + 4'd1;
+		scan_timer <= 0;
+		scan_sel <= {scan_sel[4:0],scan_sel[5]};
 	end
 	else
 		begin
-			scan_timer <= scan_timer + 32'd1;
+			scan_timer <= scan_timer + 1'b1;
 		end
 end
 always@(posedge clk or negedge rst_n)
@@ -46,43 +44,14 @@ begin
 	end
 	else
 	begin
-		case(scan_sel)
-			4'd0:
-			begin
-				seg_sel <= 6'b11_1110;
-				seg_data <= seg_data_0;
-			end
-			4'd1:
-			begin
-				seg_sel <= 6'b11_1101;
-				seg_data <= seg_data_1;
-			end
-			4'd2:
-			begin
-				seg_sel <= 6'b11_1011;
-				seg_data <= seg_data_2;
-			end
-			4'd3:
-			begin
-				seg_sel <= 6'b11_0111;
-				seg_data <= seg_data_3;
-			end
-			4'd4:
-			begin
-				seg_sel <= 6'b10_1111;
-				seg_data <= seg_data_4;
-			end
-			4'd5:
-			begin
-				seg_sel <= 6'b01_1111;
-				seg_data <= seg_data_5;
-			end
-			default:
-			begin
-				seg_sel <= 6'b11_1111;
-				seg_data <= 8'hff;
-			end
-		endcase
+        // One-hot masks form a parallel mux instead of a decoded priority chain.
+        seg_sel <= ~scan_sel;
+        seg_data <= (seg_data_0 & {8{scan_sel[0]}}) |
+                    (seg_data_1 & {8{scan_sel[1]}}) |
+                    (seg_data_2 & {8{scan_sel[2]}}) |
+                    (seg_data_3 & {8{scan_sel[3]}}) |
+                    (seg_data_4 & {8{scan_sel[4]}}) |
+                    (seg_data_5 & {8{scan_sel[5]}});
 	end
 end
 

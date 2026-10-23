@@ -4,6 +4,8 @@
 
 下面逐一列出design_files.txt登记的源。登记不等于每个模块都被正式top实例化，旧参考在表中明确标注。实际功能和验证见[README](../README.md)与[构建状态](BUILD_STATUS.md)。
 
+F盘视频功能的对比和边界见[F_DRIVE_VIDEO_MERGE_20261021](F_DRIVE_VIDEO_MERGE_20261021.md)。AVF 转换器属于主机端素材工具，不是 FPGA 源文件，也未添加到 TD 编译列表。
+
 | 正式源文件 | 职责/使用范围 |
 |---|---|
 | [src/modules/hdmi/hdmi_phy_wrapper.v](../src/modules/hdmi/hdmi_phy_wrapper.v) | 把HDMI核10bit并行通道送入串行器与差分输出包装。 |

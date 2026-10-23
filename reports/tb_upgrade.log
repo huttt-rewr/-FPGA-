@@ -1,9 +1,9 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_upgrade.log -lib msim_work -c tb_upgrade 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_upgrade.v(26): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
+# ** Warning: tb_upgrade.v(28): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
 # 
-# ** Warning: tb_upgrade.v(42): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 42, found 22.
+# ** Warning: tb_upgrade.v(44): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 42, found 22.
 # 
 # ** Warning: tb_upgrade.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 9.
 # 
@@ -34,24 +34,18 @@
 # PASS second buffer retained until next blank
 # PASS second commit acknowledged
 # PASS safe control reset defaults
-# PASS effect defaults
-# PASS slide mode command
-# PASS cut mode command
-# PASS fade mode cycle
-# PASS captions toggle
-# PASS scroll pause
-# PASS slogan cycle
-# PASS next command
-# PASS command is one cycle
-# PASS previous command
-# PASS pause resume toggle
-# PASS volume clamps high
-# PASS volume clamps low
-# PASS mute toggle
-# PASS OSD toggle
-# PASS unknown command rejected
-# PASS brightness clamps high
-# PASS brightness clamps low
+# PASS IR transition action
+# PASS IR transition includes fourth mode
+# PASS IR transition wraps to cut
+# PASS IR next event
+# PASS IR command is one cycle
+# PASS IR previous event
+# PASS IR autoplay toggle event
+# PASS volume is an event, not owned state
+# PASS brightness up is an event
+# PASS contrast up is an event
+# PASS test pattern event
+# PASS OSD event
 # PASS 40-column OSD covers its first status row
 # PASS OSD bypass
 # PASS RGB positive saturation
@@ -66,5 +60,5 @@
 # PASS 48kHz rational sample rate and mute
 # PASS stereo test tone enabled
 # ALL PASS tb_upgrade
-# ** Note: $finish    : tb_upgrade.v(117)
-#    Time: 382806 ns  Iteration: 0  Instance: /tb_upgrade
+# ** Note: $finish    : tb_upgrade.v(114)
+#    Time: 380746 ns  Iteration: 0  Instance: /tb_upgrade

@@ -85,3 +85,14 @@ src/modules/video/auto_enhance_scale.v
 src/modules/control/slideshow_timer.v
 src/modules/osd/zh_overlay.v
 src/modules/osd/zh_font_rom.v
+src/modules/osd/menu_overlay.v
+src/modules/video/av_fast_scaler.v
+src/modules/video/av_sync_player.v
+src/modules/sd/sd_av_reader.v
+src/modules/audio/av_audio_gain.v
+src/modules/control/boot_media_select.v
+src/modules/game/snake_game_bram.v
+src/modules/audio/spectrum_coefficients.v
+src/modules/audio/spectrum_fft256.v
+src/modules/audio/spectrum_analyzer.v
+src/modules/video/music_spectrum.v

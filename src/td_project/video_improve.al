@@ -701,6 +701,14 @@
                     <Attr Name="CompileOrder" Val="86"/>
                 </FileInfo>
             </File>
+            <File Path="../../src/modules/osd/menu_overlay.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&amp;R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="94"/>
+                </FileInfo>
+            </File>
             <File Path="../../src/modules/osd/zh_font_rom.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
@@ -709,7 +717,51 @@
                     <Attr Name="CompileOrder" Val="87"/>
                 </FileInfo>
             </File>
-        </Verilog>
+                <File Path="../../src/modules/video/av_fast_scaler.v">
+        </File>
+        <File Path="../../src/modules/video/av_sync_player.v">
+        </File>
+        <File Path="../../src/modules/sd/sd_av_reader.v">
+        </File>
+        <File Path="../../src/modules/audio/av_audio_gain.v">
+        </File>
+        <File Path="../../src/modules/control/boot_media_select.v">
+        </File>
+        <File Path="../../src/modules/game/snake_game_bram.v">
+        </File>
+            <File Path="../../src/modules/audio/spectrum_coefficients.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="95"/>
+                </FileInfo>
+            </File>
+            <File Path="../../src/modules/audio/spectrum_fft256.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="96"/>
+                </FileInfo>
+            </File>
+            <File Path="../../src/modules/audio/spectrum_analyzer.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="97"/>
+                </FileInfo>
+            </File>
+            <File Path="../../src/modules/video/music_spectrum.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="98"/>
+                </FileInfo>
+            </File>
+</Verilog>
         <ADC_FILE>
             <File Path="../../src/constraints/pin.adc">
                 <FileInfo>

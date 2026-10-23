@@ -3,7 +3,7 @@
 module sd_fat32 #(
  parameter integer MAX_BMP=4,parameter integer ROOT_CLUSTER_LIMIT=4096,
  parameter integer INDEXED=0,parameter integer MAX_FILES=64,
- parameter integer COUNT_WIDTH=INDEXED?7:3
+ parameter integer COUNT_WIDTH=INDEXED?7:3,parameter integer VIDEO_FILES=0
 )(
  input clk,rst,sd_init_done,
  output reg mount_done,mount_error,output reg [3:0] mount_error_code,
@@ -19,7 +19,8 @@ module sd_fat32 #(
  input [7:0] arb_aud_data,input arb_aud_valid,arb_aud_end,arb_aud_error,
  input bmp_abort,
  input [5:0] aud_file_idx,input aud_abort,output aud_idle,
- output reg [6:0] wav_count,output reg files_truncated
+ output reg [6:0] wav_count,output reg files_truncated,
+ input movie_mode
 );
  // 独热编码；几何运算、比较、地址生成分拍完成。
  localparam [48:0] WAIT_INIT=40'h1,BOOT_REQ=40'h2,BOOT_RX=40'h4,
@@ -96,6 +97,10 @@ module sd_fat32 #(
  wire [63:0] descriptor;
  reg [6:0] total_files;
  reg truncate_event;
+ wire movie_active=VIDEO_FILES && movie_mode;
+ wire image_extension=movie_active ?
+     (ext0=="A" && ext1=="V" && ext2=="F") :
+     (ext0=="B" && ext1=="M" && ext2=="P");
  always @(posedge clk or posedge rst)begin
   if(rst)begin bmp_count<=0;wav_found<=0;wav_count<=0;total_files<=0;files_truncated<=0;end
   else if(!sd_init_done)begin bmp_count<=0;wav_found<=0;wav_count<=0;total_files<=0;files_truncated<=0;end
@@ -112,7 +117,14 @@ module sd_fat32 #(
  wire [31:0] cluster_sector_address=map_base+{24'd0,within_cluster};
  wire [31:0] relative_shift_input=state[27]?data_sectors:request_rel;
  wire [31:0] relative_shifted=relative_shift_input>>spc_shift;
- reg [31:0] fat_target,fat_tag[0:1],fat_lba,fat_word,fat_q,next_cluster;
+ reg [31:0] fat_target,fat_tag[0:1],fat_lba,next_cluster;
+ // Keep the byte-assembly register polarity: encoding the low three bytes
+ // at the BRAM input adds real logic delay to the short register-to-RAM path.
+ // Decode on the synchronous read; cache contents and latency stay logical.
+ (* preserve="true" *) reg [31:0] fat_word;
+ localparam [31:0] FAT_CACHE_POLARITY=32'h00ffffff;
+ reg [31:0] fat_cache_q;
+ wire [31:0] fat_q=fat_cache_q ^ FAT_CACHE_POLARITY;
  reg [1:0] fat_valid;reg [6:0] fat_entry;reg [1:0] gap_count;
  (* ram_style="bram" *) reg [31:0] fat_cache[0:255];
  integer i;genvar k;
@@ -149,6 +161,8 @@ module sd_fat32 #(
   end
  end endgenerate
  reg [7:0] disk_data;reg disk_valid,disk_end,disk_error;
+ (* keep="true" *) wire [31:0] fat_cache_encoded=
+     {disk_data,fat_word[23:0]} ^ FAT_CACHE_POLARITY;
  // 物理返回在中间层入口整体寄存，字节/valid/end/error保持同拍。
  // 原仲裁器不变，隔断transport_reset/SD错误到FAT游标的组合反馈。
  always @(posedge clk or posedge rst)begin
@@ -211,9 +225,9 @@ module sd_fat32 #(
  end
  // 每个流缓存一个FAT扇区，共1024B；同步读，复位仅清缓存标签。
  always @(posedge clk)begin
-  fat_q<=fat_cache[{owner,fat_entry}];
+  fat_cache_q<=fat_cache[{owner,fat_entry}];
   if(state[14] && disk_valid && byte_count<512 && byte_count[1:0]==3)
-   fat_cache[{owner,byte_count[8:2]}]<={disk_data,fat_word[23:0]};
+   fat_cache[{owner,byte_count[8:2]}]<=fat_cache_encoded;
  end
  // A separate byte-counter owner prevents its saturating increment/hold
  // decode being shared into every FSM register clock enable. Requests and
@@ -305,14 +319,14 @@ module sd_fat32 #(
       26:entry_cluster[7:0]<=meta_data;27:entry_cluster[15:8]<=meta_data;
       28:entry_size[7:0]<=meta_data;29:entry_size[15:8]<=meta_data;30:entry_size[23:16]<=meta_data;
       31:if(!dir_ended && entry_first!=8'he5 && entry_attr[3:0]!=4'hf && (entry_attr&8'h18)==0)begin
-       if(ext0=="B" && ext1=="M" && ext2=="P" && bmp_count<(INDEXED?MAX_FILES:MAX_BMP) && (!INDEXED || total_files<MAX_FILES))begin
+       if(image_extension && bmp_count<(INDEXED?MAX_FILES:MAX_BMP) && (!INDEXED || total_files<MAX_FILES))begin
         store_bmp<=1;
        end
-       if(ext0=="W" && ext1=="A" && ext2=="V" && (INDEXED?(total_files<MAX_FILES):!wav_found))begin
+       if(!movie_active && ext0=="W" && ext1=="A" && ext2=="V" && (INDEXED?(total_files<MAX_FILES):!wav_found))begin
         store_wav<=1;
        end
        if(INDEXED && total_files>=MAX_FILES &&
-          ((ext0=="B" && ext1=="M" && ext2=="P") || (ext0=="W" && ext1=="A" && ext2=="V")))truncate_event<=1;
+          (image_extension || (!movie_active && ext0=="W" && ext1=="A" && ext2=="V")))truncate_event<=1;
       end
       default:;
      endcase

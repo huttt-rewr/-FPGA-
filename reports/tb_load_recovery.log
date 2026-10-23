@@ -1,7 +1,29 @@
 # vsim -do {run -all; quit -f} -l ../reports/tb_load_recovery.log -lib msim_work -c tb_load_recovery 
 # ** Note: (vsim-3812) Design is being optimized...
 # 
-# ** Warning: tb_load_recovery.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 60, found 17.
+# ** Warning: tb_load_recovery.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 17.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
 # 
 # ** Warning: tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
 # 
