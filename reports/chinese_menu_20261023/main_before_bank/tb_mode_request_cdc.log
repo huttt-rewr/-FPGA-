@@ -1,0 +1,24 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_mode_request_cdc.log -lib msim_work -c tb_mode_request_cdc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_mode_request_cdc(fast)
+# run -all 
+# request=10 received=10 active=10 mode_800=1
+# request=00 received=00 active=00 mode_800=0
+# request=01 received=01 active=01 mode_800=0
+# request=10 received=10 active=10 mode_800=1
+# request=01 received=01 active=01 mode_800=0
+# request=10 received=10 active=10 mode_800=0
+# request=11 received=11 active=01 mode_800=0
+# ALL PASS tb_mode_request_cdc: two-bit modes 0/1/2/3, EDID fallback, pending request and reset
+# ** Note: $finish    : tb_mode_request_cdc.v(47)
+#    Time: 14380 ns  Iteration: 2  Instance: /tb_mode_request_cdc

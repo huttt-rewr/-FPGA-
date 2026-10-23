@@ -1,0 +1,39 @@
+standard
+***Report Model: spectrum_fft256 Device: EG4S20BG256***
+
+IO Statistics
+#IO                        62   out of    188   32.98%
+  #input                   19
+  #output                  43
+  #inout                    0
+
+LUT Statistics
+#Total_luts               597
+  #lut4                   379
+  #lut5                   218
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      767   out of  19600    3.91%
+#reg                      403   out of  19600    2.06%
+#bram                       4   out of     64    6.25%
+  #bram9k                   4
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        1   out of     29    3.45%
+#pad                       62   out of    188   32.98%
+  #ireg                     0
+  #oreg                    42
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+Report Hierarchy Area:
++-----------------------------------------------------------------------------------+
+|Instance       |Module                |lut     |ripple  |seq     |bram    |dsp     |
++-----------------------------------------------------------------------------------+
+|top            |spectrum_fft256       |682     |85      |445     |4       |1       |
+|  coefficients |spectrum_coefficients |302     |0       |47      |0       |0       |
++-----------------------------------------------------------------------------------+

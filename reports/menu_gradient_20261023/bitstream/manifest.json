@@ -1,0 +1,50 @@
+{
+  "status": "candidate_generated",
+  "started_utc": "2026-10-23T06:13:32.198700+00:00",
+  "device": "EG4S20BG256",
+  "source_build_finished_utc": "2026-10-23T06:13:07.542214+00:00",
+  "source_build_manifest_sha256": "c2d2be01f9a520eefadc4901057eb76443a7c9f3239a834cc674f58c471f3db1",
+  "routed_database_sha256": "9045c39cf5aa5fd56472a70ff9aaf4d8a5b199553c68c24edf452d92264d0282",
+  "board_signoff": false,
+  "hardware_download_performed": false,
+  "bit_file": "E:\\fpga\\reports\\menu_gradient_20261023\\bitstream\\video_improve_menu_gradient_20261023.bit",
+  "resources": {
+    "lut": 16370,
+    "reg": 11098,
+    "bram": 57,
+    "dsp": 23
+  },
+  "rtl_tests": 113,
+  "bit_bytes": 648248,
+  "bit_sha256": "de79a3fdcec39c34782e2a006797fd2efc58f7adce2c2ce226f957ecb5fd431a",
+  "before_timing_ns": {
+    "SWNS": 0.185,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "after_timing_ns": {
+    "SWNS": 0.185,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "hold_margin_0_5ns_met": false,
+  "artifacts_sha256": {
+    "after_bit_timing_status.txt": "58cfc777545149d05fb9ba54cc1a2ca90f8c71c07d8be83c542acd24a6a644c6",
+    "after_bit_timing_summary.txt": "ba9738e4617e0103bbeb234d875447a558c33cd64bd21f5bf3ab3d10585890cf",
+    "audit_project.py": "b0efd451804538404b61820e884eb87d783e474fcff8c4d016a9ab0be71f67e1",
+    "before_bit_timing_status.txt": "58cfc777545149d05fb9ba54cc1a2ca90f8c71c07d8be83c542acd24a6a644c6",
+    "before_bit_timing_summary.txt": "b897d2540657c07342dece253be739c49e72ef6c80108ea6092ba26ea6a50338",
+    "bitgen.log": "0233b9a80c5724281a57001d23d8fb71153e76e3ab62dc5f9542203623dba6cc",
+    "expected_timing.tcl": "f528b94fc661709bd9919307720a8593ae91c2fd68dc4934706c892c202399fa",
+    "generate_candidate.py": "7641161dbf201e3988d34bcc7bfc2ad2e0d3e781f3b2077d4833a3447d9b7387",
+    "generate_candidate.tcl": "c5cf8b1bdc12ca99d49b144394aab0a9a691afb737f5dfb57dda64ba4a12fec7",
+    "publish_refinement.py": "76a02f28197263fee25340a04bee6fc7d2732e24714707059930e1da6d228c38",
+    "refine_placement.py": "b02197197f4a41436d46e6bd2cd993cfbfbc4908faf9cbedb8dd4f77b28f9c60",
+    "route_help.tcl": "5cb9cf0aa9d904e448db3eba34652376eb784a6d0bd5911a17688759dac1bed6",
+    "source_build_manifest.json": "c2d2be01f9a520eefadc4901057eb76443a7c9f3239a834cc674f58c471f3db1",
+    "video_improve_menu_gradient_20261023.bit": "de79a3fdcec39c34782e2a006797fd2efc58f7adce2c2ce226f957ecb5fd431a"
+  },
+  "finished_utc": "2026-10-23T06:14:52.842424+00:00"
+}

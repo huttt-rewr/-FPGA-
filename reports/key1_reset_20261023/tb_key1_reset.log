@@ -1,0 +1,29 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/key1_reset_20261023/tb_key1_reset.log -lib E:/fpga/reports/key1_reset_20261023/reset_work -c tb_key1_reset 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2685) [TFMPC] - Too few port connections for 'controls'.  Expected 34, found 29.
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'audio_mute'.
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'audio_volume'.
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_key1_reset(fast)
+# run -all 
+# ALL PASS tb_key1_reset: B2 repeated/long/menu presses no global or HDMI reset; A2 direct reset; deliberate B2+C1 mode change restarts once
+# ** Note: $finish    : E:/fpga/reports/key1_reset_20261023/tb_key1_reset.v(51)
+#    Time: 47480 ns  Iteration: 1  Instance: /tb_key1_reset

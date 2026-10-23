@@ -1,0 +1,55 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_audio_menu.log} -lib timing_opt_main_work_v2 -c tb_audio_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 27, found 11.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_dn'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_up'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_dn'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_up'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_mute'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_dn'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_up'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_mute'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_dn'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_up'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_menu.v(5): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_menu(fast)
+# run -all 
+# ALL PASS tb_audio_menu
+# ** Note: $finish    : E:/fpga/sim/tb_audio_menu.v(15)
+#    Time: 22980 ns  Iteration: 1  Instance: /tb_audio_menu

@@ -1,0 +1,37 @@
+# vsim -do {run -all; quit -f} -l ../reports/avf_completion/tb_snake_controls.log -lib snake_work -c tb_snake_controls 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2685) [TFMPC] - Too few port connections for 'decoder'.  Expected 25, found 16.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'audio_pending'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_audio_select'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_image_select'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_digit'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_fps'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_res'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_osd'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_mute'.
+# 
+# ** Warning: tb_snake_controls.v(12): (vopt-2718) [TFMPC] - Missing connection for port 'ev_toggle_auto'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_snake_controls(fast)
+# run -all 
+# ALL PASS tb_snake_controls: G make/break, held arrows, CDC, priority, six-frame tick, media isolation
+# ** Note: $finish    : tb_snake_controls.v(51)
+#    Time: 20100 ns  Iteration: 1  Instance: /tb_snake_controls

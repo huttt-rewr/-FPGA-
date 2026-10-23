@@ -1,0 +1,190 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga\sim
+T_opt
+V<RQVFW8Z?n=4=`ZCTG@eh2
+04 20 4 work tb_menu_overlay_svga fast 0
+=1-bcfce7e1723c-6adb090e-1de-6f90
+Z1 o-quiet -auto_acc_if_foreign -work E:/fpga/reports/menu_submenu_20261023/menu_work
+n@_opt
+Z2 OL;O;10.1c;51
+T_opt1
+V]3CTj?UFz:zS_lV;8`=af0
+04 13 4 work tb_menu_popup fast 0
+=1-bcfce7e1723c-6adb08ff-1b7-c65c
+R1
+n@_opt1
+R2
+Z3 dE:\fpga\sim
+T_opt2
+V@D]VZmK;b9BdC7JAK`j9F2
+04 15 4 work tb_menu_overlay fast 0
+=1-bcfce7e1723c-6adb0903-3e6-224c
+R1
+n@_opt2
+R2
+R3
+vmenu_overlay
+I><@`aLe7GJkRCdCFloO^N1
+VZo_iLkf?9i`3Zz1L=7f9o1
+R3
+w1792738358
+8E:/fpga/src/modules/osd/menu_overlay.v
+FE:/fpga/src/modules/osd/menu_overlay.v
+L0 2
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792739577.417000
+Z6 !s107 E:/fpga/reports/menu_submenu_20261023/tb_menu_overlay_svga.v|E:/fpga/sim/tb_menu_popup.v|E:/fpga/sim/tb_menu_overlay.v|E:/fpga/sim/tb_chinese_menu.v|E:/fpga/src/modules/control/picture_controls.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/src/modules/osd/menu_overlay.v|E:/fpga/src/modules/osd/zh_font_rom.v|
+Z7 !s90 -work|E:/fpga/reports/menu_submenu_20261023/menu_work|E:/fpga/src/modules/osd/zh_font_rom.v|E:/fpga/src/modules/osd/menu_overlay.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/src/modules/control/picture_controls.v|E:/fpga/sim/tb_chinese_menu.v|E:/fpga/sim/tb_menu_overlay.v|E:/fpga/sim/tb_menu_popup.v|E:/fpga/reports/menu_submenu_20261023/tb_menu_overlay_svga.v|
+Z8 o-work E:/fpga/reports/menu_submenu_20261023/menu_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 i^6QFHA>mA:c6Te3@BL493
+!s85 0
+vpicture_controls
+IGOe9^`BL6Ah`n[f:SJ7k_1
+VF2hi_T@<`4>]5^gYRkb5_2
+R3
+Z9 w1792738515
+8E:/fpga/src/modules/control/picture_controls.v
+FE:/fpga/src/modules/control/picture_controls.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 C4VIBCnPb^BIQZ>:ki[hU3
+!s85 0
+vtb_chinese_menu
+IE1e0W]@NeL94XhR3b`OYg3
+VfKFjF8fGc9fW1geQ?cH0H1
+R3
+R9
+8E:/fpga/sim/tb_chinese_menu.v
+FE:/fpga/sim/tb_chinese_menu.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 aHXXo]NUC9Cmkn6W>4km:0
+!s85 0
+vtb_menu_overlay
+ILd9KRCDaT`P7KPR9?Wdmm0
+V;k6:SOhj01lC0W4W[UU>F3
+R3
+R9
+8E:/fpga/sim/tb_menu_overlay.v
+FE:/fpga/sim/tb_menu_overlay.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 d0W=l>PgGG]k16GmgW_4J2
+!s85 0
+vtb_menu_overlay_svga
+I^NA5ni1Hdfad06IjDlmFP2
+VR72T]CjgHi883k2iB[kK:3
+R3
+w1792739577
+8E:/fpga/reports/menu_submenu_20261023/tb_menu_overlay_svga.v
+FE:/fpga/reports/menu_submenu_20261023/tb_menu_overlay_svga.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 HLWNDT3DPDF15b8g4<^O03
+!s85 0
+vtb_menu_popup
+I_gPL3;]H4D4kPcb<VC4hG0
+V:0Fll=jUgS6EzA83k8PG^0
+R3
+w1792739573
+8E:/fpga/sim/tb_menu_popup.v
+FE:/fpga/sim/tb_menu_popup.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 41WAeCeF5ocX68YUU[oFT0
+!s85 0
+vvideo_coordinates
+I8K=@[mMY[9HbB1zG^<Idz1
+Vd30A[z2mOgG5AJ76zA;ZC3
+R3
+Z10 w1791648393
+Z11 8E:/fpga/src/modules/video/video_coordinates.v
+Z12 FE:/fpga/src/modules/video/video_coordinates.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 GmNk3>D`f67Wm8U?A6ONi3
+!s85 0
+vviewport_coordinates
+IoV32C<SS53GZNkUDl7LC_1
+V50z[NI;67@9<bHHc3Y=L>1
+R3
+R10
+R11
+R12
+L0 22
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 71YaCZd7=QFNN@YO2ek?I2
+!s85 0
+vzh_font_rom
+Ia[@<4F;^JRhW6]8nn6SjE1
+VLa0[lEiFEX[?X1k0]18K83
+R3
+w1792716798
+8E:/fpga/src/modules/osd/zh_font_rom.v
+FE:/fpga/src/modules/osd/zh_font_rom.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 hIi5z@zdVPK@fOVjLG55z1
+!s85 0

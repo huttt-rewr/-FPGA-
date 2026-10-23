@@ -1,0 +1,25 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/menu_media_20261023/tb_menu_popup.log -lib E:/fpga/reports/menu_media_20261023/menu_work -c tb_menu_popup 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_menu_popup.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 24, found 21.
+# 
+# ** Warning: E:\fpga\sim\tb_menu_popup.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_menu_popup.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'requested_resolution'.
+# 
+# ** Warning: E:\fpga\sim\tb_menu_popup.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'menu_page'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_menu_popup(fast)
+# run -all 
+# ALL PASS tb_menu_popup: VGA/SVGA exact two-second clocks, retrigger/latest value, simultaneous edits, menu suppression, expiry/reset
+# ** Note: $finish    : E:/fpga/sim/tb_menu_popup.v(49)
+#    Time: 1900 ns  Iteration: 1  Instance: /tb_menu_popup

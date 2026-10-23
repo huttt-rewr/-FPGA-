@@ -1,0 +1,27 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_svga_writer.log} -lib timing_opt_main_work_v2 -c tb_svga_writer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_svga_writer.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 21, found 19.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'fifo_aclr'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'O_wr_busy'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_writer(fast)
+# run -all 
+# ALL PASS tb_svga_writer: 480000 flipped addresses and writer abort/restart
+# ** Note: $finish    : E:/fpga/sim/tb_svga_writer.v(28)
+#    Time: 5100630 ns  Iteration: 1  Instance: /tb_svga_writer

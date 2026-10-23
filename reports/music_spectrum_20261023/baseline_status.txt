@@ -1,0 +1,605 @@
+ M .lock.f
+ M README.md
+ M docs/BUILD_STATUS.md
+ M docs/KEY_SW_OPERATION.md
+ M docs/SOURCE_MAP.md
+ M docs/UART_IR_ALBUM_20261020.md
+ D log/td_2026-10-19_18-18-43.log
+ M reports/build_manifest.json
+ M reports/design_sources.tcl
+ M reports/gate_area.txt
+ M reports/hold_finalization.log
+ M reports/implementation.log
+ M reports/physical_area.txt
+ D reports/previous_build/20261019_162050_449019/gate_area.txt
+ D reports/previous_build/20261019_162050_449019/rtl_area.txt
+ D reports/previous_build/20261019_162050_449019/synthesis.log
+ D reports/previous_build/20261019_162249_213407/implementation.log
+ D reports/previous_build/20261019_162249_213407/io.txt
+ D reports/previous_build/20261019_162249_213407/physical_area.txt
+ D reports/previous_build/20261019_162249_213407/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_162249_213407/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_162249_213407/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_162249_213407/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_162249_213407/routed_timing_paths20.txt
+ D reports/previous_build/20261019_162249_213407/timing_status.txt
+ D reports/previous_build/20261019_162249_213407/timing_summary.txt
+ D reports/previous_build/20261019_162659_898590/hold_finalization.log
+ D reports/previous_build/20261019_162659_898590/io.txt
+ D reports/previous_build/20261019_162659_898590/physical_area.txt
+ D reports/previous_build/20261019_162659_898590/routed_timing_paths20.txt
+ D reports/previous_build/20261019_162659_898590/timing_status.txt
+ D reports/previous_build/20261019_162659_898590/timing_summary.txt
+ D reports/previous_build/20261019_171830_658068/gate_area.txt
+ D reports/previous_build/20261019_171830_658068/rtl_area.txt
+ D reports/previous_build/20261019_171830_658068/synthesis.log
+ D reports/previous_build/20261019_172008_429235/implementation.log
+ D reports/previous_build/20261019_172008_429235/io.txt
+ D reports/previous_build/20261019_172008_429235/physical_area.txt
+ D reports/previous_build/20261019_172008_429235/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_172008_429235/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_172008_429235/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_172008_429235/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_172008_429235/routed_timing_paths20.txt
+ D reports/previous_build/20261019_172008_429235/timing_status.txt
+ D reports/previous_build/20261019_172008_429235/timing_summary.txt
+ D reports/previous_build/20261019_172257_605594/hold_finalization.log
+ D reports/previous_build/20261019_172257_605594/io.txt
+ D reports/previous_build/20261019_172257_605594/physical_area.txt
+ D reports/previous_build/20261019_172257_605594/routed_timing_paths20.txt
+ D reports/previous_build/20261019_172257_605594/timing_status.txt
+ D reports/previous_build/20261019_172257_605594/timing_summary.txt
+ D reports/previous_build/20261019_172727_456095/gate_area.txt
+ D reports/previous_build/20261019_172727_456095/rtl_area.txt
+ D reports/previous_build/20261019_172727_456095/synthesis.log
+ D reports/previous_build/20261019_172903_577828/implementation.log
+ D reports/previous_build/20261019_172903_577828/io.txt
+ D reports/previous_build/20261019_172903_577828/physical_area.txt
+ D reports/previous_build/20261019_172903_577828/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_172903_577828/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_172903_577828/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_172903_577828/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_172903_577828/routed_timing_paths20.txt
+ D reports/previous_build/20261019_172903_577828/timing_status.txt
+ D reports/previous_build/20261019_172903_577828/timing_summary.txt
+ D reports/previous_build/20261019_173154_018814/hold_finalization.log
+ D reports/previous_build/20261019_173154_018814/io.txt
+ D reports/previous_build/20261019_173154_018814/physical_area.txt
+ D reports/previous_build/20261019_173154_018814/routed_timing_paths20.txt
+ D reports/previous_build/20261019_173154_018814/timing_status.txt
+ D reports/previous_build/20261019_173154_018814/timing_summary.txt
+ D reports/previous_build/20261019_174111_330880/gate_area.txt
+ D reports/previous_build/20261019_174111_330880/rtl_area.txt
+ D reports/previous_build/20261019_174111_330880/synthesis.log
+ D reports/previous_build/20261019_174251_560597/implementation.log
+ D reports/previous_build/20261019_174251_560597/io.txt
+ D reports/previous_build/20261019_174251_560597/physical_area.txt
+ D reports/previous_build/20261019_174251_560597/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_174251_560597/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_174251_560597/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_174251_560597/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_174251_560597/routed_timing_paths20.txt
+ D reports/previous_build/20261019_174251_560597/timing_status.txt
+ D reports/previous_build/20261019_174251_560597/timing_summary.txt
+ D reports/previous_build/20261019_174505_428211/hold_finalization.log
+ D reports/previous_build/20261019_174505_428211/io.txt
+ D reports/previous_build/20261019_174505_428211/physical_area.txt
+ D reports/previous_build/20261019_174505_428211/routed_timing_paths20.txt
+ D reports/previous_build/20261019_174505_428211/timing_status.txt
+ D reports/previous_build/20261019_174505_428211/timing_summary.txt
+ D reports/previous_build/20261019_193403_414491/gate_area.txt
+ D reports/previous_build/20261019_193403_414491/rtl_area.txt
+ D reports/previous_build/20261019_193403_414491/synthesis.log
+ D reports/previous_build/20261019_193603_527730/implementation.log
+ D reports/previous_build/20261019_193603_527730/io.txt
+ D reports/previous_build/20261019_193603_527730/physical_area.txt
+ D reports/previous_build/20261019_193603_527730/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_193603_527730/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_193603_527730/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_193603_527730/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_193603_527730/routed_timing_paths20.txt
+ D reports/previous_build/20261019_193603_527730/timing_status.txt
+ D reports/previous_build/20261019_193603_527730/timing_summary.txt
+ D reports/previous_build/20261019_200311_154100/gate_area.txt
+ D reports/previous_build/20261019_200311_154100/rtl_area.txt
+ D reports/previous_build/20261019_200311_154100/synthesis.log
+ D reports/previous_build/20261019_200507_173581/implementation.log
+ D reports/previous_build/20261019_200507_173581/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_200507_173581/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_200749_241162/hold_finalization.log
+ D reports/previous_build/20261019_200749_241162/io.txt
+ D reports/previous_build/20261019_200749_241162/physical_area.txt
+ D reports/previous_build/20261019_200749_241162/routed_timing_paths20.txt
+ D reports/previous_build/20261019_200749_241162/timing_status.txt
+ D reports/previous_build/20261019_200749_241162/timing_summary.txt
+ D reports/previous_build/20261019_215016_178980/gate_area.txt
+ D reports/previous_build/20261019_215016_178980/rtl_area.txt
+ D reports/previous_build/20261019_215016_178980/synthesis.log
+ D reports/previous_build/20261019_215202_086103/implementation.log
+ D reports/previous_build/20261019_215202_086103/io.txt
+ D reports/previous_build/20261019_215202_086103/physical_area.txt
+ D reports/previous_build/20261019_215202_086103/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261019_215202_086103/prior_opt_timing_status.txt
+ D reports/previous_build/20261019_215202_086103/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_215202_086103/rebound_placed_timing_status.txt
+ D reports/previous_build/20261019_215202_086103/routed_timing_paths20.txt
+ D reports/previous_build/20261019_215202_086103/timing_status.txt
+ D reports/previous_build/20261019_215202_086103/timing_summary.txt
+ D reports/previous_build/20261019_220954_417177/gate_area.txt
+ D reports/previous_build/20261019_220954_417177/rtl_area.txt
+ D reports/previous_build/20261019_220954_417177/synthesis.log
+ D reports/previous_build/20261019_221129_685363/implementation.log
+ D reports/previous_build/20261019_221129_685363/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261019_221129_685363/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_151831_070060/gate_area.txt
+ D reports/previous_build/20261020_151831_070060/rtl_area.txt
+ D reports/previous_build/20261020_151831_070060/synthesis.log
+ D reports/previous_build/20261020_152020_809668/implementation.log
+ D reports/previous_build/20261020_152020_809668/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_152020_809668/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_182836_179104/gate_area.txt
+ D reports/previous_build/20261020_182836_179104/rtl_area.txt
+ D reports/previous_build/20261020_182836_179104/synthesis.log
+ D reports/previous_build/20261020_183045_829844/implementation.log
+ D reports/previous_build/20261020_183045_829844/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_183045_829844/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_183341_983179/hold_finalization.log
+ D reports/previous_build/20261020_183341_983179/io.txt
+ D reports/previous_build/20261020_183341_983179/physical_area.txt
+ D reports/previous_build/20261020_183341_983179/routed_timing_paths20.txt
+ D reports/previous_build/20261020_183341_983179/timing_status.txt
+ D reports/previous_build/20261020_183341_983179/timing_summary.txt
+ D reports/previous_build/20261020_183502_543147/gate_area.txt
+ D reports/previous_build/20261020_183502_543147/rtl_area.txt
+ D reports/previous_build/20261020_183502_543147/synthesis.log
+ D reports/previous_build/20261020_183653_090049/implementation.log
+ D reports/previous_build/20261020_183653_090049/io.txt
+ D reports/previous_build/20261020_183653_090049/physical_area.txt
+ D reports/previous_build/20261020_183653_090049/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_183653_090049/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_183653_090049/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_183653_090049/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_183653_090049/routed_timing_paths20.txt
+ D reports/previous_build/20261020_183653_090049/timing_status.txt
+ D reports/previous_build/20261020_183653_090049/timing_summary.txt
+ D reports/previous_build/20261020_184257_377139/gate_area.txt
+ D reports/previous_build/20261020_184257_377139/rtl_area.txt
+ D reports/previous_build/20261020_184257_377139/synthesis.log
+ D reports/previous_build/20261020_184453_035249/implementation.log
+ D reports/previous_build/20261020_184453_035249/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_184453_035249/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_184747_653280/hold_finalization.log
+ D reports/previous_build/20261020_184747_653280/io.txt
+ D reports/previous_build/20261020_184747_653280/physical_area.txt
+ D reports/previous_build/20261020_184747_653280/routed_timing_paths20.txt
+ D reports/previous_build/20261020_184747_653280/timing_status.txt
+ D reports/previous_build/20261020_184747_653280/timing_summary.txt
+ D reports/previous_build/20261020_185054_801874/gate_area.txt
+ D reports/previous_build/20261020_185054_801874/rtl_area.txt
+ D reports/previous_build/20261020_185054_801874/synthesis.log
+ D reports/previous_build/20261020_185241_576927/implementation.log
+ D reports/previous_build/20261020_185241_576927/io.txt
+ D reports/previous_build/20261020_185241_576927/physical_area.txt
+ D reports/previous_build/20261020_185241_576927/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_185241_576927/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_185241_576927/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_185241_576927/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_185241_576927/routed_timing_paths20.txt
+ D reports/previous_build/20261020_185241_576927/timing_status.txt
+ D reports/previous_build/20261020_185241_576927/timing_summary.txt
+ D reports/previous_build/20261020_190059_631975/gate_area.txt
+ D reports/previous_build/20261020_190059_631975/rtl_area.txt
+ D reports/previous_build/20261020_190059_631975/synthesis.log
+ D reports/previous_build/20261020_190254_127615/implementation.log
+ D reports/previous_build/20261020_190254_127615/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_190254_127615/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_190548_805045/hold_finalization.log
+ D reports/previous_build/20261020_190548_805045/io.txt
+ D reports/previous_build/20261020_190548_805045/physical_area.txt
+ D reports/previous_build/20261020_190548_805045/routed_timing_paths20.txt
+ D reports/previous_build/20261020_190548_805045/timing_status.txt
+ D reports/previous_build/20261020_190548_805045/timing_summary.txt
+ D reports/previous_build/20261020_190905_671375/gate_area.txt
+ D reports/previous_build/20261020_190905_671375/rtl_area.txt
+ D reports/previous_build/20261020_190905_671375/synthesis.log
+ D reports/previous_build/20261020_191051_941989/implementation.log
+ D reports/previous_build/20261020_191051_941989/io.txt
+ D reports/previous_build/20261020_191051_941989/physical_area.txt
+ D reports/previous_build/20261020_191051_941989/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_191051_941989/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_191051_941989/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_191051_941989/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_191051_941989/routed_timing_paths20.txt
+ D reports/previous_build/20261020_191051_941989/timing_status.txt
+ D reports/previous_build/20261020_191051_941989/timing_summary.txt
+ D reports/previous_build/20261020_191446_243929/hold_finalization.log
+ D reports/previous_build/20261020_191446_243929/io.txt
+ D reports/previous_build/20261020_191446_243929/physical_area.txt
+ D reports/previous_build/20261020_191446_243929/routed_timing_paths20.txt
+ D reports/previous_build/20261020_191446_243929/timing_status.txt
+ D reports/previous_build/20261020_191446_243929/timing_summary.txt
+ D reports/previous_build/20261020_192312_265307/gate_area.txt
+ D reports/previous_build/20261020_192312_265307/rtl_area.txt
+ D reports/previous_build/20261020_192312_265307/synthesis.log
+ D reports/previous_build/20261020_192505_340696/implementation.log
+ D reports/previous_build/20261020_192505_340696/io.txt
+ D reports/previous_build/20261020_192505_340696/physical_area.txt
+ D reports/previous_build/20261020_192505_340696/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_192505_340696/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_192505_340696/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_192505_340696/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_192505_340696/routed_timing_paths20.txt
+ D reports/previous_build/20261020_192505_340696/timing_status.txt
+ D reports/previous_build/20261020_192505_340696/timing_summary.txt
+ D reports/previous_build/20261020_192948_635525/hold_finalization.log
+ D reports/previous_build/20261020_192948_635525/io.txt
+ D reports/previous_build/20261020_192948_635525/physical_area.txt
+ D reports/previous_build/20261020_192948_635525/routed_timing_paths20.txt
+ D reports/previous_build/20261020_192948_635525/timing_status.txt
+ D reports/previous_build/20261020_192948_635525/timing_summary.txt
+ D reports/previous_build/20261020_193207_723241/gate_area.txt
+ D reports/previous_build/20261020_193207_723241/rtl_area.txt
+ D reports/previous_build/20261020_193207_723241/synthesis.log
+ D reports/previous_build/20261020_193410_939013/implementation.log
+ D reports/previous_build/20261020_193410_939013/io.txt
+ D reports/previous_build/20261020_193410_939013/physical_area.txt
+ D reports/previous_build/20261020_193410_939013/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_193410_939013/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_193410_939013/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_193410_939013/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_193410_939013/routed_timing_paths20.txt
+ D reports/previous_build/20261020_193410_939013/timing_status.txt
+ D reports/previous_build/20261020_193410_939013/timing_summary.txt
+ D reports/previous_build/20261020_194228_887464/hold_finalization.log
+ D reports/previous_build/20261020_194228_887464/io.txt
+ D reports/previous_build/20261020_194228_887464/physical_area.txt
+ D reports/previous_build/20261020_194228_887464/routed_timing_paths20.txt
+ D reports/previous_build/20261020_194228_887464/timing_status.txt
+ D reports/previous_build/20261020_194228_887464/timing_summary.txt
+ D reports/previous_build/20261020_200907_184384/gate_area.txt
+ D reports/previous_build/20261020_200907_184384/rtl_area.txt
+ D reports/previous_build/20261020_200907_184384/synthesis.log
+ D reports/previous_build/20261020_201101_217132/implementation.log
+ D reports/previous_build/20261020_201101_217132/io.txt
+ D reports/previous_build/20261020_201101_217132/physical_area.txt
+ D reports/previous_build/20261020_201101_217132/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_201101_217132/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_201101_217132/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_201101_217132/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_201101_217132/routed_timing_paths20.txt
+ D reports/previous_build/20261020_201101_217132/timing_status.txt
+ D reports/previous_build/20261020_201101_217132/timing_summary.txt
+ D reports/previous_build/20261020_201433_804202/hold_finalization.log
+ D reports/previous_build/20261020_201433_804202/io.txt
+ D reports/previous_build/20261020_201433_804202/physical_area.txt
+ D reports/previous_build/20261020_201433_804202/routed_timing_paths20.txt
+ D reports/previous_build/20261020_201433_804202/timing_status.txt
+ D reports/previous_build/20261020_201433_804202/timing_summary.txt
+ D reports/previous_build/20261020_203932_038637/gate_area.txt
+ D reports/previous_build/20261020_203932_038637/rtl_area.txt
+ D reports/previous_build/20261020_203932_038637/synthesis.log
+ D reports/previous_build/20261020_204134_966203/implementation.log
+ D reports/previous_build/20261020_204134_966203/io.txt
+ D reports/previous_build/20261020_204134_966203/physical_area.txt
+ D reports/previous_build/20261020_204134_966203/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_204134_966203/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_204134_966203/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_204134_966203/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_204134_966203/routed_timing_paths20.txt
+ D reports/previous_build/20261020_204134_966203/timing_status.txt
+ D reports/previous_build/20261020_204134_966203/timing_summary.txt
+ D reports/previous_build/20261020_204756_646981/hold_finalization.log
+ D reports/previous_build/20261020_204756_646981/io.txt
+ D reports/previous_build/20261020_204756_646981/physical_area.txt
+ D reports/previous_build/20261020_204756_646981/routed_timing_paths20.txt
+ D reports/previous_build/20261020_204756_646981/timing_status.txt
+ D reports/previous_build/20261020_204756_646981/timing_summary.txt
+ D reports/previous_build/20261020_210113_710743/gate_area.txt
+ D reports/previous_build/20261020_210113_710743/rtl_area.txt
+ D reports/previous_build/20261020_210113_710743/synthesis.log
+ D reports/previous_build/20261020_210327_209528/implementation.log
+ D reports/previous_build/20261020_210327_209528/io.txt
+ D reports/previous_build/20261020_210327_209528/physical_area.txt
+ D reports/previous_build/20261020_210327_209528/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_210327_209528/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_210327_209528/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_210327_209528/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_210327_209528/routed_timing_paths20.txt
+ D reports/previous_build/20261020_210327_209528/timing_status.txt
+ D reports/previous_build/20261020_210327_209528/timing_summary.txt
+ D reports/previous_build/20261020_211303_492404/hold_finalization.log
+ D reports/previous_build/20261020_211303_492404/io.txt
+ D reports/previous_build/20261020_211303_492404/physical_area.txt
+ D reports/previous_build/20261020_211303_492404/routed_timing_paths20.txt
+ D reports/previous_build/20261020_211303_492404/timing_status.txt
+ D reports/previous_build/20261020_211303_492404/timing_summary.txt
+ D reports/previous_build/20261020_213335_313737/gate_area.txt
+ D reports/previous_build/20261020_213335_313737/rtl_area.txt
+ D reports/previous_build/20261020_213335_313737/synthesis.log
+ D reports/previous_build/20261020_213542_595880/implementation.log
+ D reports/previous_build/20261020_213542_595880/io.txt
+ D reports/previous_build/20261020_213542_595880/physical_area.txt
+ D reports/previous_build/20261020_213542_595880/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_213542_595880/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_213542_595880/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_213542_595880/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_213542_595880/routed_timing_paths20.txt
+ D reports/previous_build/20261020_213542_595880/timing_status.txt
+ D reports/previous_build/20261020_213542_595880/timing_summary.txt
+ D reports/previous_build/20261020_220725_919755/gate_area.txt
+ D reports/previous_build/20261020_220725_919755/rtl_area.txt
+ D reports/previous_build/20261020_220725_919755/synthesis.log
+ D reports/previous_build/20261020_220934_173798/implementation.log
+ D reports/previous_build/20261020_220934_173798/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_220934_173798/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_220934_173798/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_220934_173798/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_221722_030678/hold_finalization.log
+ D reports/previous_build/20261020_221722_030678/io.txt
+ D reports/previous_build/20261020_221722_030678/physical_area.txt
+ D reports/previous_build/20261020_221722_030678/routed_timing_paths20.txt
+ D reports/previous_build/20261020_221722_030678/timing_status.txt
+ D reports/previous_build/20261020_221722_030678/timing_summary.txt
+ D reports/previous_build/20261020_224610_419692/gate_area.txt
+ D reports/previous_build/20261020_224610_419692/rtl_area.txt
+ D reports/previous_build/20261020_224610_419692/synthesis.log
+ D reports/previous_build/20261020_224757_039502/implementation.log
+ D reports/previous_build/20261020_224757_039502/io.txt
+ D reports/previous_build/20261020_224757_039502/physical_area.txt
+ D reports/previous_build/20261020_224757_039502/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_224757_039502/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_224757_039502/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_224757_039502/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_224757_039502/routed_timing_paths20.txt
+ D reports/previous_build/20261020_224757_039502/timing_status.txt
+ D reports/previous_build/20261020_224757_039502/timing_summary.txt
+ D reports/previous_build/20261020_225313_059016/hold_finalization.log
+ D reports/previous_build/20261020_225313_059016/io.txt
+ D reports/previous_build/20261020_225313_059016/physical_area.txt
+ D reports/previous_build/20261020_225313_059016/routed_timing_paths20.txt
+ D reports/previous_build/20261020_225313_059016/timing_status.txt
+ D reports/previous_build/20261020_225313_059016/timing_summary.txt
+ D reports/previous_build/20261020_230528_866411/gate_area.txt
+ D reports/previous_build/20261020_230528_866411/rtl_area.txt
+ D reports/previous_build/20261020_230528_866411/synthesis.log
+ D reports/previous_build/20261020_230728_919064/implementation.log
+ D reports/previous_build/20261020_230728_919064/io.txt
+ D reports/previous_build/20261020_230728_919064/physical_area.txt
+ D reports/previous_build/20261020_230728_919064/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_230728_919064/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_230728_919064/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_230728_919064/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_230728_919064/routed_timing_paths20.txt
+ D reports/previous_build/20261020_230728_919064/timing_status.txt
+ D reports/previous_build/20261020_230728_919064/timing_summary.txt
+ D reports/previous_build/20261020_231455_293211/hold_finalization.log
+ D reports/previous_build/20261020_231455_293211/io.txt
+ D reports/previous_build/20261020_231455_293211/physical_area.txt
+ D reports/previous_build/20261020_231455_293211/routed_timing_paths20.txt
+ D reports/previous_build/20261020_231455_293211/timing_status.txt
+ D reports/previous_build/20261020_231455_293211/timing_summary.txt
+ D reports/previous_build/20261020_232818_103342/gate_area.txt
+ D reports/previous_build/20261020_232818_103342/rtl_area.txt
+ D reports/previous_build/20261020_232818_103342/synthesis.log
+ D reports/previous_build/20261020_233032_460648/implementation.log
+ D reports/previous_build/20261020_233032_460648/io.txt
+ D reports/previous_build/20261020_233032_460648/physical_area.txt
+ D reports/previous_build/20261020_233032_460648/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_233032_460648/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_233032_460648/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_233032_460648/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_233032_460648/routed_timing_paths20.txt
+ D reports/previous_build/20261020_233032_460648/timing_status.txt
+ D reports/previous_build/20261020_233032_460648/timing_summary.txt
+ D reports/previous_build/20261020_233431_682734/hold_finalization.log
+ D reports/previous_build/20261020_233431_682734/io.txt
+ D reports/previous_build/20261020_233431_682734/physical_area.txt
+ D reports/previous_build/20261020_233431_682734/routed_timing_paths20.txt
+ D reports/previous_build/20261020_233431_682734/timing_status.txt
+ D reports/previous_build/20261020_233431_682734/timing_summary.txt
+ D reports/previous_build/20261020_234551_225585/gate_area.txt
+ D reports/previous_build/20261020_234551_225585/rtl_area.txt
+ D reports/previous_build/20261020_234551_225585/synthesis.log
+ D reports/previous_build/20261020_234741_228844/implementation.log
+ D reports/previous_build/20261020_234741_228844/io.txt
+ D reports/previous_build/20261020_234741_228844/physical_area.txt
+ D reports/previous_build/20261020_234741_228844/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261020_234741_228844/prior_opt_timing_status.txt
+ D reports/previous_build/20261020_234741_228844/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261020_234741_228844/rebound_placed_timing_status.txt
+ D reports/previous_build/20261020_234741_228844/routed_timing_paths20.txt
+ D reports/previous_build/20261020_234741_228844/timing_status.txt
+ D reports/previous_build/20261020_234741_228844/timing_summary.txt
+ D reports/previous_build/20261020_235207_861189/hold_finalization.log
+ D reports/previous_build/20261020_235207_861189/io.txt
+ D reports/previous_build/20261020_235207_861189/physical_area.txt
+ D reports/previous_build/20261020_235207_861189/routed_timing_paths20.txt
+ D reports/previous_build/20261020_235207_861189/timing_status.txt
+ D reports/previous_build/20261020_235207_861189/timing_summary.txt
+ D reports/previous_build/20261021_000348_480222/gate_area.txt
+ D reports/previous_build/20261021_000348_480222/rtl_area.txt
+ D reports/previous_build/20261021_000348_480222/synthesis.log
+ D reports/previous_build/20261021_000542_989765/implementation.log
+ D reports/previous_build/20261021_000542_989765/io.txt
+ D reports/previous_build/20261021_000542_989765/physical_area.txt
+ D reports/previous_build/20261021_000542_989765/prior_opt_timing_paths20.txt
+ D reports/previous_build/20261021_000542_989765/prior_opt_timing_status.txt
+ D reports/previous_build/20261021_000542_989765/rebound_placed_timing_paths20.txt
+ D reports/previous_build/20261021_000542_989765/rebound_placed_timing_status.txt
+ D reports/previous_build/20261021_000542_989765/routed_timing_paths20.txt
+ D reports/previous_build/20261021_000542_989765/timing_status.txt
+ D reports/previous_build/20261021_000542_989765/timing_summary.txt
+ D reports/previous_build/20261021_000858_091139/hold_finalization.log
+ D reports/previous_build/20261021_000858_091139/io.txt
+ D reports/previous_build/20261021_000858_091139/physical_area.txt
+ D reports/previous_build/20261021_000858_091139/routed_timing_paths20.txt
+ D reports/previous_build/20261021_000858_091139/timing_status.txt
+ D reports/previous_build/20261021_000858_091139/timing_summary.txt
+ M reports/prior_opt_timing_paths20.txt
+ M reports/prior_opt_timing_status.txt
+ M reports/rebound_placed_timing_paths20.txt
+ M reports/rebound_placed_timing_status.txt
+ M reports/routed_timing_paths20.txt
+ M reports/rtl_area.txt
+ M reports/synthesis.log
+ M reports/tb_audio_menu.log
+ M reports/tb_board_menu.log
+ M reports/tb_commit_timeout.log
+ M reports/tb_fat32_compare.log
+ M reports/tb_fat32_indexed.log
+ M reports/tb_fat32_mount.log
+ M reports/tb_fat32_player.log
+ M reports/tb_fat32_schedule.log
+ M reports/tb_fat32_stream.log
+ M reports/tb_image_index_equivalence.log
+ M reports/tb_indexed_player.log
+ M reports/tb_load_recovery.log
+ M reports/tb_mode_reload.log
+ M reports/tb_picture_controls.log
+ M reports/tb_ps2_controls.log
+ M reports/tb_rate_player.log
+ M reports/tb_remote_ir.log
+ M reports/tb_remote_uart.log
+ M reports/tb_sd_highspeed_player.log
+ M reports/tb_sd_native_fat32.log
+ M reports/tb_sd_native_integrated.log
+ M reports/tb_sd_native_player.log
+ M reports/tb_upgrade.log
+ M reports/tb_zh_overlay.log
+ M reports/timing_status.txt
+ M reports/timing_summary.txt
+ D scripts/backup_team_merge.py
+ M scripts/design_files.txt
+ D scripts/review_team_merge.py
+ D scripts/run_audio_tests.ps1
+ D scripts/run_board_tests.ps1
+ M scripts/run_build.py
+ D scripts/run_fat32_tests.ps1
+ D scripts/run_indexed_tests.ps1
+ D scripts/run_keyboard_tests.ps1
+ D scripts/run_pll_test.ps1
+ D scripts/run_refresh_test.ps1
+ D scripts/run_sd_native_tests.ps1
+ M scripts/run_tests.ps1
+ M sim/sd_native_card_model.v
+ M sim/tb_picture_controls.v
+ M sim/tb_remote_ir.v
+ M sim/tb_remote_uart.v
+ M sim/tb_upgrade.v
+ M src/modules/audio/audio_async_fifo.v
+ M src/modules/bmp/sd_card_bmp.v
+ M src/modules/control/picture_controls.v
+ M src/modules/control/player_control.v
+ M src/modules/control/remote_controls.v
+ M src/modules/display/seg_scan.v
+ M src/modules/hdmi/hdmi_tmds_vga.v
+ M src/modules/hdmi/tmds_encoder.v
+ M src/modules/osd/zh_font.mem
+ M src/modules/osd/zh_font_rom.v
+ M src/modules/osd/zh_overlay.v
+ M src/modules/sd/sd_fat32.v
+ M src/td_project/video_improve.al
+ M src/top.v
+ M top_inst.bid
+ M video_improve.al
+ M video_improve_Runs/phy_1/.opt_place.begin.f
+ M video_improve_Runs/phy_1/.temp.f
+ M video_improve_Runs/phy_1/run.log
+ M video_improve_Runs/phy_1/settings.cfg
+ M video_improve_Runs/phy_1/video_improve.prj
+ M video_improve_Runs/syn_1/.opt_gate.begin.f
+ M video_improve_Runs/syn_1/.opt_rtl.begin.f
+ M video_improve_Runs/syn_1/.read_design.begin.f
+ M video_improve_Runs/syn_1/.temp.f
+ M video_improve_Runs/syn_1/flow.status
+ M video_improve_Runs/syn_1/run.log
+ M video_improve_Runs/syn_1/settings.cfg
+ M video_improve_Runs/syn_1/video_improve.prj
+ M video_improve_Runs/syn_1/video_improve_gate.area
+ M video_improve_Runs/syn_1/video_improve_gate.timing
+ M video_improve_Runs/syn_1/video_improve_gate.ts
+ M video_improve_Runs/syn_1/video_improve_rtl.area
+?? docs/CHINESE_MENU_20261023.md
+?? docs/F_DRIVE_VIDEO_MERGE_20261021.md
+?? docs/KEY_RESET_MAPPING_20261023.md
+?? docs/MENU_MEDIA_20261023.md
+?? docs/MENU_SUBMENU_20261023.md
+?? log/td_2026-10-23_13-58-07.log
+?? log/td_2026-10-23_14-07-38.log
+?? log/td_2026-10-23_14-26-37.log
+?? reports/av_20261013/
+?? reports/av_fast_scaler/
+?? reports/av_fast_scaler_20261021/
+?? reports/av_sync/
+?? reports/av_sync_step3_20261021.log
+?? reports/av_sync_step3_retry_20261021.log
+?? reports/avf_completion/
+?? reports/avf_step1_regression_20261021.log
+?? reports/avf_step1_retry_20261021.log
+?? reports/avf_step1_top_before_20261021_232225_0378933.v
+?? reports/bitstream_20261022/
+?? reports/chinese_menu_20261023/
+?? reports/f_drive_merge_20261021/
+?? reports/key1_reset_20261023/
+?? reports/menu_gradient_20261023/
+?? reports/menu_media_20261023/
+?? reports/menu_smooth_left_20261023/
+?? reports/menu_submenu_20261023/
+?? reports/mode_popup_20261023/
+?? reports/music_spectrum_20261023/
+?? reports/native640_20261022/
+?? reports/previous_build/20261023_083115_740268/
+?? reports/previous_build/20261023_083840_396099/
+?? reports/previous_build/20261023_084850_787213/
+?? reports/previous_build/20261023_085436_442467/
+?? reports/previous_build/20261023_090116_486792/
+?? reports/previous_build/20261023_091224_615736/
+?? reports/previous_build/20261023_132359_187298/
+?? reports/previous_build/20261023_133036_385857/
+?? reports/previous_build/20261023_134135_122903/
+?? reports/previous_build/20261023_142938_243191/
+?? reports/previous_build/20261023_143509_299870/
+?? reports/previous_build/20261023_144047_641596/
+?? reports/previous_build/20261023_151440_357119/
+?? reports/previous_build/20261023_152204_063978/
+?? reports/previous_build/20261023_153035_062368/
+?? reports/previous_build/20261023_173313_120286/
+?? reports/previous_build/20261023_173449_408458/
+?? reports/previous_build/20261023_173723_067085/
+?? reports/previous_build/20261023_185519_347103/
+?? reports/previous_build/20261023_190057_334651/
+?? reports/previous_build/20261023_191143_184963/
+?? reports/remote_final_regression_20261021.log
+?? reports/sd_50mhz_20261022/
+?? reports/tb_chinese_menu.log
+?? reports/tb_hdmi_video_stage.log
+?? reports/tb_menu_media.log
+?? reports/tb_menu_media_pixels.log
+?? reports/tb_menu_mode_popup.log
+?? reports/tb_menu_overlay.log
+?? reports/tb_menu_popup.log
+?? reports/tb_seg_scan_timing.log
+?? reports/tb_snake_bram.log
+?? reports/timing_fix_20261022/
+?? reports/timing_opt_20261022/
+?? scripts/gen_zh_font.py
+?? scripts/prepare_video.py
+?? scripts/test_prepare_video.py
+?? scripts/test_zh_font.py
+?? sim/tb_av_native.v
+?? sim/tb_chinese_menu.v
+?? sim/tb_hdmi_video_stage.v
+?? sim/tb_menu_media.v
+?? sim/tb_menu_media_pixels.v
+?? sim/tb_menu_mode_popup.v
+?? sim/tb_menu_overlay.v
+?? sim/tb_menu_popup.v
+?? sim/tb_seg_scan_timing.v
+?? sim/tb_snake_bram.v
+?? src/modules/audio/av_audio_gain.v
+?? src/modules/control/boot_media_select.v
+?? src/modules/game/snake_game_bram.v
+?? src/modules/osd/menu_overlay.v
+?? src/modules/sd/sd_av_reader.v
+?? src/modules/video/av_fast_scaler.v
+?? src/modules/video/av_sync_player.v

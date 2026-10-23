@@ -1,0 +1,131 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_load_recovery.log} -lib timing_opt_main_work_v2 -c tb_load_recovery 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 17.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sector_room'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_enable'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'pixel_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'disp_buf_idx'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'display_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# ** Warning: E:\fpga\sim\tb_load_recovery.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_req_toggle'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_load_recovery(fast)
+# run -all 
+# ALL PASS tb_load_recovery: timeout releases busy, scan survives, retry starts
+# ** Note: $finish    : E:/fpga/sim/tb_load_recovery.v(46)
+#    Time: 60685 ns  Iteration: 2  Instance: /tb_load_recovery

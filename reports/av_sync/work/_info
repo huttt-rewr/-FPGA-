@@ -1,0 +1,85 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+Z1 VB=3zAXi^==AmJb41I5CX]0
+Z2 04 10 4 work tb_av_sync fast 0
+Z3 =1-bcfce7e1723c-6ad8df50-149-b9c8
+Z4 o-quiet -auto_acc_if_foreign -work reports/av_sync/work
+Z5 n@_opt
+Z6 OL;O;10.1c;51
+Z7 dE:\fpga
+vav_sync_player
+!i10b 1
+Z8 !s100 <ZEKJAQW52jl7>GO^iA^;3
+Z9 IG9?C[?0?bFVQ9jN>D9dX22
+Z10 V?S6h;hTB]IXDbgUZ:]E9G0
+R7
+Z11 w1792597816
+Z12 8src/modules/video/av_sync_player.v
+Z13 Fsrc/modules/video/av_sync_player.v
+L0 3
+Z14 OL;L;10.1c;51
+r1
+!s85 0
+31
+Z15 !s108 1792598128.218000
+Z16 !s107 legacy/f_drive_video_reference/sim/tb_av_phase.v|legacy/f_drive_video_reference/sim/tb_av_controls.v|legacy/f_drive_video_reference/sim/tb_av_sync.v|src/modules/video/av_sync_player.v|
+Z17 !s90 -work|reports/av_sync/work|src/modules/video/av_sync_player.v|legacy/f_drive_video_reference/sim/tb_av_sync.v|legacy/f_drive_video_reference/sim/tb_av_controls.v|legacy/f_drive_video_reference/sim/tb_av_phase.v|
+Z18 o-work reports/av_sync/work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+vtb_av_controls
+!i10b 1
+Z19 !s100 LEaol[;RS``9FAJaZGZ=H3
+Z20 IHa<k7:`oQZ]6ge[mejIOL3
+Z21 VfZjh@3:B7eXzOj?AHnG^[2
+R7
+Z22 w1792573486
+Z23 8legacy/f_drive_video_reference/sim/tb_av_controls.v
+Z24 Flegacy/f_drive_video_reference/sim/tb_av_controls.v
+L0 4
+R14
+r1
+!s85 0
+31
+R15
+R16
+R17
+R18
+vtb_av_phase
+!i10b 1
+Z25 !s100 GnlfXMiS?V91X]oXA2LZ:0
+Z26 IIo=3GEQ]a`<1HPN;H=>Wk3
+Z27 VWA:BAQ9K`4H;AYIFR7b7?0
+R7
+Z28 w1792573487
+Z29 8legacy/f_drive_video_reference/sim/tb_av_phase.v
+Z30 Flegacy/f_drive_video_reference/sim/tb_av_phase.v
+L0 5
+R14
+r1
+!s85 0
+31
+R15
+R16
+R17
+R18
+vtb_av_sync
+!i10b 1
+Z31 !s100 j;cannLGUAKNLzml9M`Qj1
+Z32 IcTR2]bA9B<JKLEYQ1eW]m1
+Z33 VTk<HaVNS26Df^nFDn_?EO2
+R7
+R28
+Z34 8legacy/f_drive_video_reference/sim/tb_av_sync.v
+Z35 Flegacy/f_drive_video_reference/sim/tb_av_sync.v
+L0 2
+R14
+r1
+!s85 0
+31
+R15
+R16
+R17
+R18

@@ -1,0 +1,21 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/music_spectrum_20261023/avf/tb_media_mode_switch.log -lib E:/fpga/reports/music_spectrum_20261023/avf/avf_work -c tb_media_mode_switch 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\reports\native640_20261022\adapted_contracts\tb_media_mode_switch.v(31): (vopt-2685) [TFMPC] - Too few port connections for 'buttons'.  Expected 8, found 7.
+# 
+# ** Warning: E:\fpga\reports\native640_20261022\adapted_contracts\tb_media_mode_switch.v(31): (vopt-2718) [TFMPC] - Missing connection for port 'select_toggle'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_media_mode_switch(fast)
+# run -all 
+# ALL PASS tb_media_mode_switch: real PS2 P/V, repeated keys, break/E0/parity rejection, CDC, reset hold, watchdog retention, user/PLL reset, KEY1 compatibility
+# ** Note: $finish    : E:/fpga/reports/native640_20261022/adapted_contracts/tb_media_mode_switch.v(98)
+#    Time: 38522760 ns  Iteration: 1  Instance: /tb_media_mode_switch

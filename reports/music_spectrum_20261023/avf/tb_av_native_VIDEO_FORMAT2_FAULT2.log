@@ -1,0 +1,18 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/music_spectrum_20261023/avf/tb_av_native_VIDEO_FORMAT2_FAULT2.log -lib E:/fpga/reports/music_spectrum_20261023/avf/avf_work -c -gFAULT=2 -gVIDEO_FORMAT=2 tb_av_native 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_av_native(fast)
+# Loading work.av_fast_scaler(fast)
+# run -all 
+# ALL PASS tb_av_native format=          2 fault=          2: exact RGB/PCM, sequential sectors, two banks, backpressure
+# ** Note: $finish    : E:/fpga/sim/tb_av_native.v(146)
+#    Time: 6570 ns  Iteration: 1  Instance: /tb_av_native

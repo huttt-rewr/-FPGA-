@@ -1,0 +1,3472 @@
+--- before/src/modules/control/picture_controls.v
++++ after/src/modules/control/picture_controls.v
+@@ -2,12 +2,12 @@
+ // B1 cycles PLAY -> BRIGHTNESS -> CONTRAST -> PLAY. No UART dependency.
+ module picture_controls #(parameter DEBOUNCE_CYCLES=2000000,
+  parameter BOARD_MENU=0,parameter AUDIO_MENU=0,parameter LONG_PRESS_CYCLES=100000000,
+- parameter KEYBOARD_CONTROLS=0,parameter AUDIO_MUTE_DEFAULT=1)(
++ parameter KEYBOARD_CONTROLS=0,parameter AUDIO_MUTE_DEFAULT=1,parameter CHINESE_MENU=0)(
+  input clk,input rst,input key1_n,input key2_n,input key3_n,
+  output reg next_pulse,output reg toggle_pulse,
+  output reg signed [7:0] brightness,output reg [3:0] contrast,
+  output reg [1:0] edit_mode,
+- output reg menu_open,output reg [2:0] menu_item,
++ output reg menu_open,output reg [2:0] menu_item,output reg menu_edit,
+  output reg gamma_enable,output reg debug_enable,output reg [1:0] debug_page,
+  output reg [4:0] audio_volume,output reg audio_mute,
+  input kb_vol_up,kb_vol_dn,kb_mute,
+@@ -65,27 +65,46 @@
+  end
+  wire key3_action=BOARD_MENU?short3:pulse[2];
+  wire menu_audio_action=BOARD_MENU && menu_open && key3_action && !long3 && AUDIO_MENU;
+- wire volume_up=(menu_audio_action && menu_item==6) || (KEYBOARD_CONTROLS && kb_vol_up) || (ir_vol_up===1'b1);
+- wire volume_down=(menu_audio_action && menu_item==5) || (KEYBOARD_CONTROLS && kb_vol_dn) || (ir_vol_dn===1'b1);
+- wire mute_toggle=(menu_audio_action && menu_item==4) || (KEYBOARD_CONTROLS && kb_mute) || (ir_mute===1'b1);
++ wire menu_down=CHINESE_MENU && menu_open && menu_edit && pulse[1:0]==1;
++ wire menu_up=CHINESE_MENU && menu_open && menu_edit && pulse[1:0]==2;
++ wire menu_confirm=CHINESE_MENU && menu_open && !menu_edit && key3_action;
++ wire volume_up=(!CHINESE_MENU && menu_audio_action && menu_item==6) || (menu_up && menu_item==4) || (KEYBOARD_CONTROLS && kb_vol_up) || (ir_vol_up===1'b1);
++ wire volume_down=(!CHINESE_MENU && menu_audio_action && menu_item==5) || (menu_down && menu_item==4) || (KEYBOARD_CONTROLS && kb_vol_dn) || (ir_vol_dn===1'b1);
++ wire mute_toggle=(!CHINESE_MENU && menu_audio_action && menu_item==4) || (menu_confirm && menu_item==5) || (KEYBOARD_CONTROLS && kb_mute) || (ir_mute===1'b1);
+  // Merge events before changing the single parameter register bank. Opposite
+  // directions cancel; simultaneous requests in one direction take one step.
+  wire key_edit=!(BOARD_MENU && (menu_open || long3)) && !key3_action;
+  wire key_down=key_edit && pulse[1:0]==1;
+  wire key_up=key_edit && pulse[1:0]==2;
+- wire brightness_up=(key_up && edit_mode==1) || (ir_bri_up===1'b1);
+- wire brightness_down=(key_down && edit_mode==1) || (ir_bri_dn===1'b1);
+- wire contrast_up=(key_up && edit_mode==2) || (ir_con_up===1'b1);
+- wire contrast_down=(key_down && edit_mode==2) || (ir_con_dn===1'b1);
++ wire brightness_up=(key_up && edit_mode==1) || (menu_up && menu_item==1) || (ir_bri_up===1'b1);
++ wire brightness_down=(key_down && edit_mode==1) || (menu_down && menu_item==1) || (ir_bri_dn===1'b1);
++ wire contrast_up=(key_up && edit_mode==2) || (menu_up && menu_item==2) || (ir_con_up===1'b1);
++ wire contrast_down=(key_down && edit_mode==2) || (menu_down && menu_item==2) || (ir_con_dn===1'b1);
+  always @(posedge clk)begin
+   if(rst)begin
+    next_pulse<=0;toggle_pulse<=0;brightness<=0;contrast<=4;edit_mode<=0;
+-   menu_open<=0;menu_item<=0;gamma_enable<=0;debug_enable<=0;debug_page<=0;
++   menu_open<=0;menu_item<=0;menu_edit<=0;gamma_enable<=0;debug_enable<=0;debug_page<=0;
+    audio_volume<=8;audio_mute<=AUDIO_MUTE_DEFAULT;
+   end
+   else begin
+    next_pulse<=0;toggle_pulse<=0;
+-   if(BOARD_MENU && long3)menu_open<=~menu_open;
++   if(BOARD_MENU && long3)begin menu_open<=~menu_open;menu_edit<=0;if(CHINESE_MENU)menu_item<=0;end
++   else if(BOARD_MENU && CHINESE_MENU && menu_open)begin
++    if(key3_action)begin
++     if(menu_edit)menu_edit<=0;
++     else case(menu_item)
++      0:toggle_pulse<=1;
++      1,2,4:menu_edit<=1;
++      3:gamma_enable<=~gamma_enable;
++      6:debug_enable<=~debug_enable;
++      7:begin menu_open<=0;menu_edit<=0;end
++      default:begin end
++     endcase
++    end else if(!menu_edit)begin
++     if(pulse[1:0]==1)menu_item<=menu_item-1'b1;
++     else if(pulse[1:0]==2)menu_item<=menu_item+1'b1;
++    end
++   end
+    else if(BOARD_MENU && menu_open)begin
+     if(key3_action)begin
+      case(menu_item)
+@@ -107,11 +126,17 @@
+    if(mute_toggle)audio_mute<=~audio_mute;
+    // Opposite requests in the same cycle cancel; same-direction requests
+    // produce one step. KEY/menu and keyboard never keep divergent volumes.
+-   if(volume_up && !volume_down && audio_volume!=31)audio_volume<=audio_volume+1'b1;
++   if(volume_up && !volume_down && audio_volume<(CHINESE_MENU?16:31))audio_volume<=audio_volume+1'b1;
+    else if(volume_down && !volume_up && audio_volume!=0)audio_volume<=audio_volume-1'b1;
+    // IR and KEY edit actions update the same brightness/contrast registers.
+-   if(brightness_up && !brightness_down && brightness<64)brightness<=brightness+8'sd8;
+-   else if(brightness_down && !brightness_up && brightness> -64)brightness<=brightness-8'sd8;
++   if(brightness_up && !brightness_down && brightness<(CHINESE_MENU?63:64))begin
++    if(CHINESE_MENU && brightness>55)brightness<=63;
++    else brightness<=brightness+8'sd8;
++   end
++   else if(brightness_down && !brightness_up && brightness> -64)begin
++    if(CHINESE_MENU && brightness< -56)brightness<= -64;
++    else brightness<=brightness-8'sd8;
++   end
+    if(contrast_up && !contrast_down && contrast<8)contrast<=contrast+1'b1;
+    else if(contrast_down && !contrast_up && contrast>2)contrast<=contrast-1'b1;
+   end
+--- before/src/modules/osd/zh_font_rom.v
++++ after/src/modules/osd/zh_font_rom.v
+@@ -1,7 +1,7 @@
+-// SimHei 16x16 fixed message. Generated from Windows installed font.
+-// Embedded initialization avoids working-directory dependent readmemh paths.
+-module zh_font_rom(input clk,input [4:0] char_idx,input [3:0] row,output reg [15:0] bits);
+- (* ram_style="bram" *) reg [15:0] mem[0:511];
++// SimHei 16x16: original 32 glyphs preserved; menu indices 32..76.
++// Generated by scripts/gen_zh_font.py; bit15 is the left pixel.
++module zh_font_rom #(parameter BANK=0)(input clk,input [6:0] char_idx,input [3:0] row,output reg [15:0] bits);
++ (* ram_style="bram" *) reg [15:0] mem[0:1231];
+  initial begin
+   mem[0]=16'h00c0;
+   mem[1]=16'h00c0;
+@@ -515,6 +515,1973 @@
+   mem[509]=16'h0000;
+   mem[510]=16'h0000;
+   mem[511]=16'h0000;
++  mem[512]=16'h0000;
++  mem[513]=16'h0420;
++  mem[514]=16'h7ffe;
++  mem[515]=16'h7ffe;
++  mem[516]=16'h0420;
++  mem[517]=16'h3ffc;
++  mem[518]=16'h0108;
++  mem[519]=16'h1998;
++  mem[520]=16'h0990;
++  mem[521]=16'h0180;
++  mem[522]=16'h7ffe;
++  mem[523]=16'h07e0;
++  mem[524]=16'h0db0;
++  mem[525]=16'h198c;
++  mem[526]=16'h6186;
++  mem[527]=16'h0180;
++  mem[528]=16'h0c20;
++  mem[529]=16'h0420;
++  mem[530]=16'h0440;
++  mem[531]=16'h1ff8;
++  mem[532]=16'h1188;
++  mem[533]=16'h1ff8;
++  mem[534]=16'h1ff8;
++  mem[535]=16'h1188;
++  mem[536]=16'h1ff8;
++  mem[537]=16'h0180;
++  mem[538]=16'h0180;
++  mem[539]=16'h7ffe;
++  mem[540]=16'h0180;
++  mem[541]=16'h0180;
++  mem[542]=16'h0180;
++  mem[543]=16'h0000;
++  mem[544]=16'h0000;
++  mem[545]=16'h100c;
++  mem[546]=16'h13fc;
++  mem[547]=16'h112c;
++  mem[548]=16'h7928;
++  mem[549]=16'h13fe;
++  mem[550]=16'h10b0;
++  mem[551]=16'h11a8;
++  mem[552]=16'h3b26;
++  mem[553]=16'h77fe;
++  mem[554]=16'h1324;
++  mem[555]=16'h13fc;
++  mem[556]=16'h1324;
++  mem[557]=16'h1324;
++  mem[558]=16'h73fc;
++  mem[559]=16'h0304;
++  mem[560]=16'h1020;
++  mem[561]=16'h1820;
++  mem[562]=16'h0840;
++  mem[563]=16'h7f7e;
++  mem[564]=16'h104c;
++  mem[565]=16'h10cc;
++  mem[566]=16'h1ec8;
++  mem[567]=16'h1248;
++  mem[568]=16'h1228;
++  mem[569]=16'h1228;
++  mem[570]=16'h3230;
++  mem[571]=16'h2230;
++  mem[572]=16'h6268;
++  mem[573]=16'h4fc6;
++  mem[574]=16'h0002;
++  mem[575]=16'h0000;
++  mem[576]=16'h0000;
++  mem[577]=16'h0804;
++  mem[578]=16'h087c;
++  mem[579]=16'h3740;
++  mem[580]=16'h347c;
++  mem[581]=16'h3f58;
++  mem[582]=16'h0458;
++  mem[583]=16'h7fd8;
++  mem[584]=16'h0498;
++  mem[585]=16'h0000;
++  mem[586]=16'h1ff8;
++  mem[587]=16'h1008;
++  mem[588]=16'h1ff8;
++  mem[589]=16'h1008;
++  mem[590]=16'h1ff8;
++  mem[591]=16'h0000;
++  mem[592]=16'h1860;
++  mem[593]=16'h17fe;
++  mem[594]=16'h1000;
++  mem[595]=16'h33f8;
++  mem[596]=16'h3208;
++  mem[597]=16'h53f8;
++  mem[598]=16'h5000;
++  mem[599]=16'h17fe;
++  mem[600]=16'h1402;
++  mem[601]=16'h13fc;
++  mem[602]=16'h1020;
++  mem[603]=16'h1020;
++  mem[604]=16'h1020;
++  mem[605]=16'h10e0;
++  mem[606]=16'h0080;
++  mem[607]=16'h0000;
++  mem[608]=16'h0100;
++  mem[609]=16'h7ffe;
++  mem[610]=16'h0000;
++  mem[611]=16'h0ff0;
++  mem[612]=16'h0810;
++  mem[613]=16'h0ff0;
++  mem[614]=16'h0000;
++  mem[615]=16'h7ffe;
++  mem[616]=16'h7ffe;
++  mem[617]=16'h4002;
++  mem[618]=16'h07e0;
++  mem[619]=16'h0460;
++  mem[620]=16'h0c62;
++  mem[621]=16'h387e;
++  mem[622]=16'h2000;
++  mem[623]=16'h0000;
++  mem[624]=16'h0080;
++  mem[625]=16'h0080;
++  mem[626]=16'h3ffc;
++  mem[627]=16'h2210;
++  mem[628]=16'h2210;
++  mem[629]=16'h2ffc;
++  mem[630]=16'h2210;
++  mem[631]=16'h23f0;
++  mem[632]=16'h2000;
++  mem[633]=16'h2ff8;
++  mem[634]=16'h2310;
++  mem[635]=16'h21a0;
++  mem[636]=16'h60c0;
++  mem[637]=16'h473e;
++  mem[638]=16'h0802;
++  mem[639]=16'h0000;
++  mem[640]=16'h0000;
++  mem[641]=16'h0008;
++  mem[642]=16'h0008;
++  mem[643]=16'h7e08;
++  mem[644]=16'h0208;
++  mem[645]=16'h03fe;
++  mem[646]=16'h2408;
++  mem[647]=16'h3488;
++  mem[648]=16'h1c88;
++  mem[649]=16'h0c48;
++  mem[650]=16'h0c48;
++  mem[651]=16'h1608;
++  mem[652]=16'h3208;
++  mem[653]=16'h6008;
++  mem[654]=16'h4038;
++  mem[655]=16'h0000;
++  mem[656]=16'h0000;
++  mem[657]=16'h0080;
++  mem[658]=16'h2080;
++  mem[659]=16'h2080;
++  mem[660]=16'h2084;
++  mem[661]=16'h209c;
++  mem[662]=16'h3ef0;
++  mem[663]=16'h20c0;
++  mem[664]=16'h2080;
++  mem[665]=16'h2080;
++  mem[666]=16'h2080;
++  mem[667]=16'h2280;
++  mem[668]=16'h2e86;
++  mem[669]=16'h78c6;
++  mem[670]=16'h207c;
++  mem[671]=16'h0000;
++  mem[672]=16'h0a00;
++  mem[673]=16'h1a00;
++  mem[674]=16'h1200;
++  mem[675]=16'h17de;
++  mem[676]=16'h32d2;
++  mem[677]=16'h72d2;
++  mem[678]=16'h52d2;
++  mem[679]=16'h12d2;
++  mem[680]=16'h12d2;
++  mem[681]=16'h12d2;
++  mem[682]=16'h16d2;
++  mem[683]=16'h14de;
++  mem[684]=16'h1492;
++  mem[685]=16'h1d92;
++  mem[686]=16'h0000;
++  mem[687]=16'h0000;
++  mem[688]=16'h0000;
++  mem[689]=16'h3ff0;
++  mem[690]=16'h0010;
++  mem[691]=16'h0c10;
++  mem[692]=16'h0830;
++  mem[693]=16'h0830;
++  mem[694]=16'h0830;
++  mem[695]=16'h0ffc;
++  mem[696]=16'h0004;
++  mem[697]=16'h0004;
++  mem[698]=16'h7ff4;
++  mem[699]=16'h0004;
++  mem[700]=16'h000c;
++  mem[701]=16'h0038;
++  mem[702]=16'h0000;
++  mem[703]=16'h0000;
++  mem[704]=16'h0100;
++  mem[705]=16'h0180;
++  mem[706]=16'h3ffc;
++  mem[707]=16'h0c30;
++  mem[708]=16'h0420;
++  mem[709]=16'h0460;
++  mem[710]=16'h7ffe;
++  mem[711]=16'h0000;
++  mem[712]=16'h1ff8;
++  mem[713]=16'h1818;
++  mem[714]=16'h1ff8;
++  mem[715]=16'h1818;
++  mem[716]=16'h1818;
++  mem[717]=16'h1ff8;
++  mem[718]=16'h1818;
++  mem[719]=16'h0000;
++  mem[720]=16'h0000;
++  mem[721]=16'h1ff8;
++  mem[722]=16'h1ff8;
++  mem[723]=16'h1008;
++  mem[724]=16'h1ff8;
++  mem[725]=16'h7ffe;
++  mem[726]=16'h0000;
++  mem[727]=16'h1ff8;
++  mem[728]=16'h1ff8;
++  mem[729]=16'h1188;
++  mem[730]=16'h1ff8;
++  mem[731]=16'h3ff8;
++  mem[732]=16'h0180;
++  mem[733]=16'h7ffe;
++  mem[734]=16'h0000;
++  mem[735]=16'h0000;
++  mem[736]=16'h1860;
++  mem[737]=16'h1840;
++  mem[738]=16'h7ff8;
++  mem[739]=16'h7e98;
++  mem[740]=16'h19f0;
++  mem[741]=16'h7e3c;
++  mem[742]=16'h0034;
++  mem[743]=16'h7eff;
++  mem[744]=16'h4234;
++  mem[745]=16'h7e34;
++  mem[746]=16'h42fc;
++  mem[747]=16'h7e30;
++  mem[748]=16'h4230;
++  mem[749]=16'h4660;
++  mem[750]=16'h0000;
++  mem[751]=16'h0000;
++  mem[752]=16'h2060;
++  mem[753]=16'h3060;
++  mem[754]=16'h18b0;
++  mem[755]=16'h0198;
++  mem[756]=16'h010c;
++  mem[757]=16'h7666;
++  mem[758]=16'h10c0;
++  mem[759]=16'h1198;
++  mem[760]=16'h1130;
++  mem[761]=16'h1064;
++  mem[762]=16'h15ce;
++  mem[763]=16'h1c18;
++  mem[764]=16'h1830;
++  mem[765]=16'h13c0;
++  mem[766]=16'h0100;
++  mem[767]=16'h0000;
++  mem[768]=16'h0000;
++  mem[769]=16'h0400;
++  mem[770]=16'h74fe;
++  mem[771]=16'h7520;
++  mem[772]=16'h7d20;
++  mem[773]=16'h6420;
++  mem[774]=16'h7fbe;
++  mem[775]=16'h6424;
++  mem[776]=16'h6d24;
++  mem[777]=16'h6da4;
++  mem[778]=16'h74e4;
++  mem[779]=16'h6444;
++  mem[780]=16'h6044;
++  mem[781]=16'h7f44;
++  mem[782]=16'h0084;
++  mem[783]=16'h0000;
++  mem[784]=16'h0000;
++  mem[785]=16'h23fc;
++  mem[786]=16'h320c;
++  mem[787]=16'h120c;
++  mem[788]=16'h03fc;
++  mem[789]=16'h020c;
++  mem[790]=16'h03fc;
++  mem[791]=16'h7200;
++  mem[792]=16'h12cc;
++  mem[793]=16'h1278;
++  mem[794]=16'h1238;
++  mem[795]=16'h13cc;
++  mem[796]=16'h1304;
++  mem[797]=16'h3c00;
++  mem[798]=16'h47fe;
++  mem[799]=16'h4000;
++  mem[800]=16'h0000;
++  mem[801]=16'h0180;
++  mem[802]=16'h0180;
++  mem[803]=16'h3188;
++  mem[804]=16'h3188;
++  mem[805]=16'h3188;
++  mem[806]=16'h3188;
++  mem[807]=16'h3ff8;
++  mem[808]=16'h0180;
++  mem[809]=16'h2184;
++  mem[810]=16'h2184;
++  mem[811]=16'h2184;
++  mem[812]=16'h2184;
++  mem[813]=16'h3ffc;
++  mem[814]=16'h3ffc;
++  mem[815]=16'h0004;
++  mem[816]=16'h0000;
++  mem[817]=16'h0c60;
++  mem[818]=16'h0c28;
++  mem[819]=16'h4c2c;
++  mem[820]=16'h6c24;
++  mem[821]=16'h2c20;
++  mem[822]=16'h0ffe;
++  mem[823]=16'h0c60;
++  mem[824]=16'h1c60;
++  mem[825]=16'h3c70;
++  mem[826]=16'h6c50;
++  mem[827]=16'h4cd0;
++  mem[828]=16'h0c88;
++  mem[829]=16'h0d8c;
++  mem[830]=16'h0f06;
++  mem[831]=16'h0c00;
++  mem[832]=16'h0100;
++  mem[833]=16'h0100;
++  mem[834]=16'h7ffe;
++  mem[835]=16'h0240;
++  mem[836]=16'h0660;
++  mem[837]=16'h0420;
++  mem[838]=16'h1b18;
++  mem[839]=16'h310e;
++  mem[840]=16'h6000;
++  mem[841]=16'h0080;
++  mem[842]=16'h248c;
++  mem[843]=16'h2406;
++  mem[844]=16'h6412;
++  mem[845]=16'h47f0;
++  mem[846]=16'h0000;
++  mem[847]=16'h0000;
++  mem[848]=16'h0000;
++  mem[849]=16'h3ffc;
++  mem[850]=16'h0620;
++  mem[851]=16'h0620;
++  mem[852]=16'h0620;
++  mem[853]=16'h0620;
++  mem[854]=16'h7ffe;
++  mem[855]=16'h7ffe;
++  mem[856]=16'h0620;
++  mem[857]=16'h0420;
++  mem[858]=16'h0420;
++  mem[859]=16'h0c20;
++  mem[860]=16'h1820;
++  mem[861]=16'h7020;
++  mem[862]=16'h0000;
++  mem[863]=16'h0000;
++  mem[864]=16'h0000;
++  mem[865]=16'h0420;
++  mem[866]=16'h0420;
++  mem[867]=16'h0660;
++  mem[868]=16'h3ffc;
++  mem[869]=16'h3ffc;
++  mem[870]=16'h0180;
++  mem[871]=16'h0180;
++  mem[872]=16'h0180;
++  mem[873]=16'h7ffe;
++  mem[874]=16'h0180;
++  mem[875]=16'h0340;
++  mem[876]=16'h0670;
++  mem[877]=16'h0c1c;
++  mem[878]=16'h700e;
++  mem[879]=16'h0000;
++  mem[880]=16'h0000;
++  mem[881]=16'h2004;
++  mem[882]=16'h33fc;
++  mem[883]=16'h1300;
++  mem[884]=16'h0300;
++  mem[885]=16'h03fc;
++  mem[886]=16'h0308;
++  mem[887]=16'h7348;
++  mem[888]=16'h1368;
++  mem[889]=16'h1238;
++  mem[890]=16'h1238;
++  mem[891]=16'h166c;
++  mem[892]=16'h14c4;
++  mem[893]=16'h3800;
++  mem[894]=16'h67fe;
++  mem[895]=16'h0000;
++  mem[896]=16'h0000;
++  mem[897]=16'h3ffc;
++  mem[898]=16'h2004;
++  mem[899]=16'h2004;
++  mem[900]=16'h27e4;
++  mem[901]=16'h2424;
++  mem[902]=16'h2424;
++  mem[903]=16'h2424;
++  mem[904]=16'h27e4;
++  mem[905]=16'h27e4;
++  mem[906]=16'h2004;
++  mem[907]=16'h2004;
++  mem[908]=16'h3ffc;
++  mem[909]=16'h2004;
++  mem[910]=16'h0000;
++  mem[911]=16'h0000;
++  mem[912]=16'h0000;
++  mem[913]=16'h0100;
++  mem[914]=16'h0100;
++  mem[915]=16'h0100;
++  mem[916]=16'h0100;
++  mem[917]=16'h0100;
++  mem[918]=16'h01fc;
++  mem[919]=16'h0100;
++  mem[920]=16'h0100;
++  mem[921]=16'h0100;
++  mem[922]=16'h0100;
++  mem[923]=16'h0100;
++  mem[924]=16'h0100;
++  mem[925]=16'h7ffe;
++  mem[926]=16'h7ffe;
++  mem[927]=16'h0000;
++  mem[928]=16'h0000;
++  mem[929]=16'h0000;
++  mem[930]=16'h7ffe;
++  mem[931]=16'h0100;
++  mem[932]=16'h0100;
++  mem[933]=16'h0100;
++  mem[934]=16'h0100;
++  mem[935]=16'h0160;
++  mem[936]=16'h0130;
++  mem[937]=16'h0118;
++  mem[938]=16'h010c;
++  mem[939]=16'h0100;
++  mem[940]=16'h0100;
++  mem[941]=16'h0100;
++  mem[942]=16'h0100;
++  mem[943]=16'h0000;
++  mem[944]=16'h0040;
++  mem[945]=16'h7ec0;
++  mem[946]=16'h10b8;
++  mem[947]=16'h1110;
++  mem[948]=16'h10fe;
++  mem[949]=16'h30b2;
++  mem[950]=16'h3cb2;
++  mem[951]=16'h64fe;
++  mem[952]=16'h64b2;
++  mem[953]=16'h24b2;
++  mem[954]=16'h24fe;
++  mem[955]=16'h3db2;
++  mem[956]=16'h2532;
++  mem[957]=16'h233e;
++  mem[958]=16'h0004;
++  mem[959]=16'h0000;
++  mem[960]=16'h0000;
++  mem[961]=16'h1060;
++  mem[962]=16'h1860;
++  mem[963]=16'h0c60;
++  mem[964]=16'h0060;
++  mem[965]=16'h0060;
++  mem[966]=16'h7060;
++  mem[967]=16'h1060;
++  mem[968]=16'h1060;
++  mem[969]=16'h10f0;
++  mem[970]=16'h1690;
++  mem[971]=16'h1d90;
++  mem[972]=16'h1908;
++  mem[973]=16'h130c;
++  mem[974]=16'h0606;
++  mem[975]=16'h0000;
++  mem[976]=16'h0000;
++  mem[977]=16'h0c00;
++  mem[978]=16'h0c30;
++  mem[979]=16'h0c60;
++  mem[980]=16'h0cc0;
++  mem[981]=16'h0d80;
++  mem[982]=16'h0d00;
++  mem[983]=16'h7ffe;
++  mem[984]=16'h0c80;
++  mem[985]=16'h0cc0;
++  mem[986]=16'h0c40;
++  mem[987]=16'h0c20;
++  mem[988]=16'h0db8;
++  mem[989]=16'h0e1e;
++  mem[990]=16'h0c04;
++  mem[991]=16'h0000;
++  mem[992]=16'h1060;
++  mem[993]=16'h1020;
++  mem[994]=16'h13fe;
++  mem[995]=16'h7b02;
++  mem[996]=16'h1362;
++  mem[997]=16'h1040;
++  mem[998]=16'h1040;
++  mem[999]=16'h1ffe;
++  mem[1000]=16'h7088;
++  mem[1001]=16'h5188;
++  mem[1002]=16'h11d0;
++  mem[1003]=16'h1070;
++  mem[1004]=16'h107c;
++  mem[1005]=16'h3786;
++  mem[1006]=16'h0000;
++  mem[1007]=16'h0000;
++  mem[1008]=16'h0000;
++  mem[1009]=16'h0000;
++  mem[1010]=16'h3c00;
++  mem[1011]=16'h6400;
++  mem[1012]=16'h4200;
++  mem[1013]=16'h4200;
++  mem[1014]=16'h4200;
++  mem[1015]=16'h4200;
++  mem[1016]=16'h4200;
++  mem[1017]=16'h4200;
++  mem[1018]=16'h4600;
++  mem[1019]=16'h2c00;
++  mem[1020]=16'h1800;
++  mem[1021]=16'h0000;
++  mem[1022]=16'h0000;
++  mem[1023]=16'h0000;
++  mem[1024]=16'h0000;
++  mem[1025]=16'h0000;
++  mem[1026]=16'h0800;
++  mem[1027]=16'h1800;
++  mem[1028]=16'h7800;
++  mem[1029]=16'h5800;
++  mem[1030]=16'h1800;
++  mem[1031]=16'h1800;
++  mem[1032]=16'h1800;
++  mem[1033]=16'h1800;
++  mem[1034]=16'h1800;
++  mem[1035]=16'h1800;
++  mem[1036]=16'h1800;
++  mem[1037]=16'h0000;
++  mem[1038]=16'h0000;
++  mem[1039]=16'h0000;
++  mem[1040]=16'h0000;
++  mem[1041]=16'h0000;
++  mem[1042]=16'h3c00;
++  mem[1043]=16'h6600;
++  mem[1044]=16'h4200;
++  mem[1045]=16'h0600;
++  mem[1046]=16'h0400;
++  mem[1047]=16'h0c00;
++  mem[1048]=16'h0800;
++  mem[1049]=16'h1000;
++  mem[1050]=16'h2000;
++  mem[1051]=16'h7e00;
++  mem[1052]=16'h7e00;
++  mem[1053]=16'h0000;
++  mem[1054]=16'h0000;
++  mem[1055]=16'h0000;
++  mem[1056]=16'h0000;
++  mem[1057]=16'h0000;
++  mem[1058]=16'h3c00;
++  mem[1059]=16'h6600;
++  mem[1060]=16'h4200;
++  mem[1061]=16'h0600;
++  mem[1062]=16'h0c00;
++  mem[1063]=16'h0c00;
++  mem[1064]=16'h0600;
++  mem[1065]=16'h0200;
++  mem[1066]=16'h4200;
++  mem[1067]=16'h6400;
++  mem[1068]=16'h1800;
++  mem[1069]=16'h0000;
++  mem[1070]=16'h0000;
++  mem[1071]=16'h0000;
++  mem[1072]=16'h0000;
++  mem[1073]=16'h0000;
++  mem[1074]=16'h0400;
++  mem[1075]=16'h0c00;
++  mem[1076]=16'h1c00;
++  mem[1077]=16'h1400;
++  mem[1078]=16'h2400;
++  mem[1079]=16'h6400;
++  mem[1080]=16'h4400;
++  mem[1081]=16'hff00;
++  mem[1082]=16'h0400;
++  mem[1083]=16'h0400;
++  mem[1084]=16'h0400;
++  mem[1085]=16'h0000;
++  mem[1086]=16'h0000;
++  mem[1087]=16'h0000;
++  mem[1088]=16'h0000;
++  mem[1089]=16'h0000;
++  mem[1090]=16'h0000;
++  mem[1091]=16'h3e00;
++  mem[1092]=16'h6000;
++  mem[1093]=16'h4000;
++  mem[1094]=16'h5000;
++  mem[1095]=16'h7c00;
++  mem[1096]=16'h4600;
++  mem[1097]=16'h0200;
++  mem[1098]=16'h0200;
++  mem[1099]=16'hc600;
++  mem[1100]=16'h6c00;
++  mem[1101]=16'h3800;
++  mem[1102]=16'h0000;
++  mem[1103]=16'h0000;
++  mem[1104]=16'h0000;
++  mem[1105]=16'h0000;
++  mem[1106]=16'h0800;
++  mem[1107]=16'h1800;
++  mem[1108]=16'h1000;
++  mem[1109]=16'h3000;
++  mem[1110]=16'h7c00;
++  mem[1111]=16'h6200;
++  mem[1112]=16'h4300;
++  mem[1113]=16'h4300;
++  mem[1114]=16'h4200;
++  mem[1115]=16'h6600;
++  mem[1116]=16'h3c00;
++  mem[1117]=16'h0000;
++  mem[1118]=16'h0000;
++  mem[1119]=16'h0000;
++  mem[1120]=16'h0000;
++  mem[1121]=16'h0000;
++  mem[1122]=16'h0000;
++  mem[1123]=16'h7e00;
++  mem[1124]=16'h0200;
++  mem[1125]=16'h0600;
++  mem[1126]=16'h0400;
++  mem[1127]=16'h0c00;
++  mem[1128]=16'h0800;
++  mem[1129]=16'h1800;
++  mem[1130]=16'h1000;
++  mem[1131]=16'h1000;
++  mem[1132]=16'h3000;
++  mem[1133]=16'h3000;
++  mem[1134]=16'h0000;
++  mem[1135]=16'h0000;
++  mem[1136]=16'h0000;
++  mem[1137]=16'h0000;
++  mem[1138]=16'h3c00;
++  mem[1139]=16'h4600;
++  mem[1140]=16'h4200;
++  mem[1141]=16'h4600;
++  mem[1142]=16'h7c00;
++  mem[1143]=16'h7c00;
++  mem[1144]=16'h4200;
++  mem[1145]=16'hc200;
++  mem[1146]=16'h4200;
++  mem[1147]=16'h6600;
++  mem[1148]=16'h3c00;
++  mem[1149]=16'h0000;
++  mem[1150]=16'h0000;
++  mem[1151]=16'h0000;
++  mem[1152]=16'h0000;
++  mem[1153]=16'h0000;
++  mem[1154]=16'h3c00;
++  mem[1155]=16'h4600;
++  mem[1156]=16'hc200;
++  mem[1157]=16'hc200;
++  mem[1158]=16'hc600;
++  mem[1159]=16'h6c00;
++  mem[1160]=16'h3c00;
++  mem[1161]=16'h0800;
++  mem[1162]=16'h1800;
++  mem[1163]=16'h1000;
++  mem[1164]=16'h3000;
++  mem[1165]=16'h0000;
++  mem[1166]=16'h0000;
++  mem[1167]=16'h0000;
++  mem[1168]=16'h0000;
++  mem[1169]=16'h0000;
++  mem[1170]=16'h0000;
++  mem[1171]=16'h0000;
++  mem[1172]=16'h0000;
++  mem[1173]=16'h0000;
++  mem[1174]=16'h0000;
++  mem[1175]=16'h0000;
++  mem[1176]=16'h0000;
++  mem[1177]=16'h0000;
++  mem[1178]=16'h0000;
++  mem[1179]=16'h0000;
++  mem[1180]=16'h0000;
++  mem[1181]=16'h0000;
++  mem[1182]=16'h0000;
++  mem[1183]=16'h0000;
++  mem[1184]=16'h0000;
++  mem[1185]=16'h0000;
++  mem[1186]=16'h0000;
++  mem[1187]=16'h0000;
++  mem[1188]=16'h1000;
++  mem[1189]=16'h1000;
++  mem[1190]=16'h1000;
++  mem[1191]=16'hff00;
++  mem[1192]=16'h1000;
++  mem[1193]=16'h1000;
++  mem[1194]=16'h1000;
++  mem[1195]=16'h0000;
++  mem[1196]=16'h0000;
++  mem[1197]=16'h0000;
++  mem[1198]=16'h0000;
++  mem[1199]=16'h0000;
++  mem[1200]=16'h0000;
++  mem[1201]=16'h0000;
++  mem[1202]=16'h0000;
++  mem[1203]=16'h0000;
++  mem[1204]=16'h0000;
++  mem[1205]=16'h0000;
++  mem[1206]=16'h0000;
++  mem[1207]=16'hfe00;
++  mem[1208]=16'h0000;
++  mem[1209]=16'h0000;
++  mem[1210]=16'h0000;
++  mem[1211]=16'h0000;
++  mem[1212]=16'h0000;
++  mem[1213]=16'h0000;
++  mem[1214]=16'h0000;
++  mem[1215]=16'h0000;
++  mem[1216]=16'h0000;
++  mem[1217]=16'h0000;
++  mem[1218]=16'h0000;
++  mem[1219]=16'h0000;
++  mem[1220]=16'h0000;
++  mem[1221]=16'h0000;
++  mem[1222]=16'h1800;
++  mem[1223]=16'h0000;
++  mem[1224]=16'h0000;
++  mem[1225]=16'h0000;
++  mem[1226]=16'h0000;
++  mem[1227]=16'h1800;
++  mem[1228]=16'h1800;
++  mem[1229]=16'h0000;
++  mem[1230]=16'h0000;
++  mem[1231]=16'h0000;
+  end
+- always @(posedge clk)bits<=mem[{char_idx,row}];
++ generate
++ if(BANK==1)begin:legacy_font
++  (* ram_style="bram" *) reg [15:0] legacy_words[0:511];
++  initial begin
++   legacy_words[0]=16'h00c0;
++   legacy_words[1]=16'h00c0;
++   legacy_words[2]=16'h7e80;
++   legacy_words[3]=16'h04fe;
++   legacy_words[4]=16'h0484;
++   legacy_words[5]=16'h2524;
++   legacy_words[6]=16'h1520;
++   legacy_words[7]=16'h1820;
++   legacy_words[8]=16'h0c20;
++   legacy_words[9]=16'h1470;
++   legacy_words[10]=16'h1650;
++   legacy_words[11]=16'h20d8;
++   legacy_words[12]=16'h618c;
++   legacy_words[13]=16'h0702;
++   legacy_words[14]=16'h0200;
++   legacy_words[15]=16'h0000;
++   legacy_words[16]=16'h2180;
++   legacy_words[17]=16'h273c;
++   legacy_words[18]=16'h2624;
++   legacy_words[19]=16'h2624;
++   legacy_words[20]=16'h0624;
++   legacy_words[21]=16'h7624;
++   legacy_words[22]=16'h3624;
++   legacy_words[23]=16'h3624;
++   legacy_words[24]=16'h36a4;
++   legacy_words[25]=16'h372c;
++   legacy_words[26]=16'h3420;
++   legacy_words[27]=16'h3020;
++   legacy_words[28]=16'h3c00;
++   legacy_words[29]=16'h47fe;
++   legacy_words[30]=16'h4000;
++   legacy_words[31]=16'h0000;
++   legacy_words[32]=16'h0180;
++   legacy_words[33]=16'h0180;
++   legacy_words[34]=16'h118c;
++   legacy_words[35]=16'h1998;
++   legacy_words[36]=16'h0db0;
++   legacy_words[37]=16'h0180;
++   legacy_words[38]=16'h7ffe;
++   legacy_words[39]=16'h0240;
++   legacy_words[40]=16'h0240;
++   legacy_words[41]=16'h0640;
++   legacy_words[42]=16'h0440;
++   legacy_words[43]=16'h0c42;
++   legacy_words[44]=16'h1846;
++   legacy_words[45]=16'h707c;
++   legacy_words[46]=16'h0000;
++   legacy_words[47]=16'h0000;
++   legacy_words[48]=16'h0840;
++   legacy_words[49]=16'h08c0;
++   legacy_words[50]=16'h6880;
++   legacy_words[51]=16'h49fe;
++   legacy_words[52]=16'h4960;
++   legacy_words[53]=16'h4a30;
++   legacy_words[54]=16'h4810;
++   legacy_words[55]=16'h49fe;
++   legacy_words[56]=16'h4922;
++   legacy_words[57]=16'h4922;
++   legacy_words[58]=16'h4922;
++   legacy_words[59]=16'h4922;
++   legacy_words[60]=16'h69fe;
++   legacy_words[61]=16'h0902;
++   legacy_words[62]=16'h0000;
++   legacy_words[63]=16'h0000;
++   legacy_words[64]=16'h0100;
++   legacy_words[65]=16'h0100;
++   legacy_words[66]=16'h0100;
++   legacy_words[67]=16'h3ff8;
++   legacy_words[68]=16'h2108;
++   legacy_words[69]=16'h2108;
++   legacy_words[70]=16'h3ff8;
++   legacy_words[71]=16'h2108;
++   legacy_words[72]=16'h2108;
++   legacy_words[73]=16'h3ff8;
++   legacy_words[74]=16'h3ff8;
++   legacy_words[75]=16'h2100;
++   legacy_words[76]=16'h0102;
++   legacy_words[77]=16'h01fe;
++   legacy_words[78]=16'h0000;
++   legacy_words[79]=16'h0000;
++   legacy_words[80]=16'h3ffc;
++   legacy_words[81]=16'h0038;
++   legacy_words[82]=16'h0060;
++   legacy_words[83]=16'h0180;
++   legacy_words[84]=16'h0180;
++   legacy_words[85]=16'h7ffe;
++   legacy_words[86]=16'h7ff8;
++   legacy_words[87]=16'h0180;
++   legacy_words[88]=16'h0180;
++   legacy_words[89]=16'h0180;
++   legacy_words[90]=16'h0180;
++   legacy_words[91]=16'h0180;
++   legacy_words[92]=16'h0700;
++   legacy_words[93]=16'h0000;
++   legacy_words[94]=16'h0000;
++   legacy_words[95]=16'h0000;
++   legacy_words[96]=16'h1800;
++   legacy_words[97]=16'h18fe;
++   legacy_words[98]=16'h1886;
++   legacy_words[99]=16'h7e86;
++   legacy_words[100]=16'h7e86;
++   legacy_words[101]=16'h18fe;
++   legacy_words[102]=16'h1c86;
++   legacy_words[103]=16'h3e86;
++   legacy_words[104]=16'h3afe;
++   legacy_words[105]=16'h7886;
++   legacy_words[106]=16'h5886;
++   legacy_words[107]=16'h1886;
++   legacy_words[108]=16'h18fe;
++   legacy_words[109]=16'h1886;
++   legacy_words[110]=16'h1880;
++   legacy_words[111]=16'h0000;
++   legacy_words[112]=16'h1e7c;
++   legacy_words[113]=16'h124c;
++   legacy_words[114]=16'h124c;
++   legacy_words[115]=16'h124c;
++   legacy_words[116]=16'h124c;
++   legacy_words[117]=16'h124c;
++   legacy_words[118]=16'h7ffe;
++   legacy_words[119]=16'h124c;
++   legacy_words[120]=16'h324c;
++   legacy_words[121]=16'h324c;
++   legacy_words[122]=16'h22cc;
++   legacy_words[123]=16'h228c;
++   legacy_words[124]=16'h6698;
++   legacy_words[125]=16'h0080;
++   legacy_words[126]=16'h0000;
++   legacy_words[127]=16'h0000;
++   legacy_words[128]=16'h0100;
++   legacy_words[129]=16'h0240;
++   legacy_words[130]=16'h0430;
++   legacy_words[131]=16'h1ff8;
++   legacy_words[132]=16'h0308;
++   legacy_words[133]=16'h7ffe;
++   legacy_words[134]=16'h0620;
++   legacy_words[135]=16'h0890;
++   legacy_words[136]=16'h730e;
++   legacy_words[137]=16'h4c64;
++   legacy_words[138]=16'h0388;
++   legacy_words[139]=16'h0e30;
++   legacy_words[140]=16'h00c0;
++   legacy_words[141]=16'h3f00;
++   legacy_words[142]=16'h0000;
++   legacy_words[143]=16'h0000;
++   legacy_words[144]=16'h0080;
++   legacy_words[145]=16'h3ffe;
++   legacy_words[146]=16'h2426;
++   legacy_words[147]=16'h1ffe;
++   legacy_words[148]=16'h0420;
++   legacy_words[149]=16'h1ff8;
++   legacy_words[150]=16'h0420;
++   legacy_words[151]=16'h7ffe;
++   legacy_words[152]=16'h1830;
++   legacy_words[153]=16'h7ffe;
++   legacy_words[154]=16'h0990;
++   legacy_words[155]=16'h0910;
++   legacy_words[156]=16'h0360;
++   legacy_words[157]=16'h3c18;
++   legacy_words[158]=16'h0000;
++   legacy_words[159]=16'h0000;
++   legacy_words[160]=16'h0cc0;
++   legacy_words[161]=16'h0880;
++   legacy_words[162]=16'h1980;
++   legacy_words[163]=16'h11fe;
++   legacy_words[164]=16'h3340;
++   legacy_words[165]=16'h3640;
++   legacy_words[166]=16'h507c;
++   legacy_words[167]=16'h5040;
++   legacy_words[168]=16'h1040;
++   legacy_words[169]=16'h1040;
++   legacy_words[170]=16'h107e;
++   legacy_words[171]=16'h1040;
++   legacy_words[172]=16'h1040;
++   legacy_words[173]=16'h1040;
++   legacy_words[174]=16'h1040;
++   legacy_words[175]=16'h0000;
++   legacy_words[176]=16'h0ff0;
++   legacy_words[177]=16'h0810;
++   legacy_words[178]=16'h0810;
++   legacy_words[179]=16'h0810;
++   legacy_words[180]=16'h0ff0;
++   legacy_words[181]=16'h0000;
++   legacy_words[182]=16'h7e7e;
++   legacy_words[183]=16'h6246;
++   legacy_words[184]=16'h6246;
++   legacy_words[185]=16'h6246;
++   legacy_words[186]=16'h6246;
++   legacy_words[187]=16'h7e7e;
++   legacy_words[188]=16'h6246;
++   legacy_words[189]=16'h0000;
++   legacy_words[190]=16'h0000;
++   legacy_words[191]=16'h0000;
++   legacy_words[192]=16'h0200;
++   legacy_words[193]=16'h0600;
++   legacy_words[194]=16'h0ff8;
++   legacy_words[195]=16'h1030;
++   legacy_words[196]=16'h2260;
++   legacy_words[197]=16'h0180;
++   legacy_words[198]=16'h0760;
++   legacy_words[199]=16'h38fe;
++   legacy_words[200]=16'h0304;
++   legacy_words[201]=16'h060c;
++   legacy_words[202]=16'h1898;
++   legacy_words[203]=16'h0070;
++   legacy_words[204]=16'h00c0;
++   legacy_words[205]=16'h3f00;
++   legacy_words[206]=16'h3000;
++   legacy_words[207]=16'h0000;
++   legacy_words[208]=16'h1108;
++   legacy_words[209]=16'h13fe;
++   legacy_words[210]=16'h1108;
++   legacy_words[211]=16'h1108;
++   legacy_words[212]=16'h7df8;
++   legacy_words[213]=16'h2508;
++   legacy_words[214]=16'h25f8;
++   legacy_words[215]=16'h2820;
++   legacy_words[216]=16'h4bfe;
++   legacy_words[217]=16'h3870;
++   legacy_words[218]=16'h18b0;
++   legacy_words[219]=16'h1da8;
++   legacy_words[220]=16'h2326;
++   legacy_words[221]=16'h4622;
++   legacy_words[222]=16'h0020;
++   legacy_words[223]=16'h0000;
++   legacy_words[224]=16'h0040;
++   legacy_words[225]=16'h1840;
++   legacy_words[226]=16'h1040;
++   legacy_words[227]=16'h17fe;
++   legacy_words[228]=16'h30e0;
++   legacy_words[229]=16'h30d0;
++   legacy_words[230]=16'h51d0;
++   legacy_words[231]=16'h5158;
++   legacy_words[232]=16'h1348;
++   legacy_words[233]=16'h1646;
++   legacy_words[234]=16'h1dfa;
++   legacy_words[235]=16'h1040;
++   legacy_words[236]=16'h1040;
++   legacy_words[237]=16'h1040;
++   legacy_words[238]=16'h0000;
++   legacy_words[239]=16'h0000;
++   legacy_words[240]=16'h3ffc;
++   legacy_words[241]=16'h3ffc;
++   legacy_words[242]=16'h200c;
++   legacy_words[243]=16'h3ffc;
++   legacy_words[244]=16'h2220;
++   legacy_words[245]=16'h2224;
++   legacy_words[246]=16'h2ffc;
++   legacy_words[247]=16'h2220;
++   legacy_words[248]=16'h3ffe;
++   legacy_words[249]=16'h2688;
++   legacy_words[250]=16'h2648;
++   legacy_words[251]=16'h2670;
++   legacy_words[252]=16'h67b0;
++   legacy_words[253]=16'h460e;
++   legacy_words[254]=16'h0000;
++   legacy_words[255]=16'h0000;
++   legacy_words[256]=16'h1ff8;
++   legacy_words[257]=16'h0000;
++   legacy_words[258]=16'h0000;
++   legacy_words[259]=16'h0000;
++   legacy_words[260]=16'h7ffe;
++   legacy_words[261]=16'h0082;
++   legacy_words[262]=16'h0080;
++   legacy_words[263]=16'h0c90;
++   legacy_words[264]=16'h1898;
++   legacy_words[265]=16'h1088;
++   legacy_words[266]=16'h3084;
++   legacy_words[267]=16'h6084;
++   legacy_words[268]=16'h0380;
++   legacy_words[269]=16'h0200;
++   legacy_words[270]=16'h0000;
++   legacy_words[271]=16'h0000;
++   legacy_words[272]=16'h0000;
++   legacy_words[273]=16'h0000;
++   legacy_words[274]=16'h0000;
++   legacy_words[275]=16'h0000;
++   legacy_words[276]=16'h0000;
++   legacy_words[277]=16'h0000;
++   legacy_words[278]=16'h0000;
++   legacy_words[279]=16'h0000;
++   legacy_words[280]=16'h0000;
++   legacy_words[281]=16'h0000;
++   legacy_words[282]=16'h0000;
++   legacy_words[283]=16'h0000;
++   legacy_words[284]=16'h0000;
++   legacy_words[285]=16'h0000;
++   legacy_words[286]=16'h0000;
++   legacy_words[287]=16'h0000;
++   legacy_words[288]=16'h0000;
++   legacy_words[289]=16'h0000;
++   legacy_words[290]=16'h0000;
++   legacy_words[291]=16'h0000;
++   legacy_words[292]=16'h0000;
++   legacy_words[293]=16'h0000;
++   legacy_words[294]=16'h0000;
++   legacy_words[295]=16'h0000;
++   legacy_words[296]=16'h0000;
++   legacy_words[297]=16'h0000;
++   legacy_words[298]=16'h0000;
++   legacy_words[299]=16'h0000;
++   legacy_words[300]=16'h0000;
++   legacy_words[301]=16'h0000;
++   legacy_words[302]=16'h0000;
++   legacy_words[303]=16'h0000;
++   legacy_words[304]=16'h0000;
++   legacy_words[305]=16'h0000;
++   legacy_words[306]=16'h0000;
++   legacy_words[307]=16'h0000;
++   legacy_words[308]=16'h0000;
++   legacy_words[309]=16'h0000;
++   legacy_words[310]=16'h0000;
++   legacy_words[311]=16'h0000;
++   legacy_words[312]=16'h0000;
++   legacy_words[313]=16'h0000;
++   legacy_words[314]=16'h0000;
++   legacy_words[315]=16'h0000;
++   legacy_words[316]=16'h0000;
++   legacy_words[317]=16'h0000;
++   legacy_words[318]=16'h0000;
++   legacy_words[319]=16'h0000;
++   legacy_words[320]=16'h0000;
++   legacy_words[321]=16'h0000;
++   legacy_words[322]=16'h0000;
++   legacy_words[323]=16'h0000;
++   legacy_words[324]=16'h0000;
++   legacy_words[325]=16'h0000;
++   legacy_words[326]=16'h0000;
++   legacy_words[327]=16'h0000;
++   legacy_words[328]=16'h0000;
++   legacy_words[329]=16'h0000;
++   legacy_words[330]=16'h0000;
++   legacy_words[331]=16'h0000;
++   legacy_words[332]=16'h0000;
++   legacy_words[333]=16'h0000;
++   legacy_words[334]=16'h0000;
++   legacy_words[335]=16'h0000;
++   legacy_words[336]=16'h0000;
++   legacy_words[337]=16'h0000;
++   legacy_words[338]=16'h0000;
++   legacy_words[339]=16'h0000;
++   legacy_words[340]=16'h0000;
++   legacy_words[341]=16'h0000;
++   legacy_words[342]=16'h0000;
++   legacy_words[343]=16'h0000;
++   legacy_words[344]=16'h0000;
++   legacy_words[345]=16'h0000;
++   legacy_words[346]=16'h0000;
++   legacy_words[347]=16'h0000;
++   legacy_words[348]=16'h0000;
++   legacy_words[349]=16'h0000;
++   legacy_words[350]=16'h0000;
++   legacy_words[351]=16'h0000;
++   legacy_words[352]=16'h0000;
++   legacy_words[353]=16'h0000;
++   legacy_words[354]=16'h0000;
++   legacy_words[355]=16'h0000;
++   legacy_words[356]=16'h0000;
++   legacy_words[357]=16'h0000;
++   legacy_words[358]=16'h0000;
++   legacy_words[359]=16'h0000;
++   legacy_words[360]=16'h0000;
++   legacy_words[361]=16'h0000;
++   legacy_words[362]=16'h0000;
++   legacy_words[363]=16'h0000;
++   legacy_words[364]=16'h0000;
++   legacy_words[365]=16'h0000;
++   legacy_words[366]=16'h0000;
++   legacy_words[367]=16'h0000;
++   legacy_words[368]=16'h0000;
++   legacy_words[369]=16'h0000;
++   legacy_words[370]=16'h0000;
++   legacy_words[371]=16'h0000;
++   legacy_words[372]=16'h0000;
++   legacy_words[373]=16'h0000;
++   legacy_words[374]=16'h0000;
++   legacy_words[375]=16'h0000;
++   legacy_words[376]=16'h0000;
++   legacy_words[377]=16'h0000;
++   legacy_words[378]=16'h0000;
++   legacy_words[379]=16'h0000;
++   legacy_words[380]=16'h0000;
++   legacy_words[381]=16'h0000;
++   legacy_words[382]=16'h0000;
++   legacy_words[383]=16'h0000;
++   legacy_words[384]=16'h0000;
++   legacy_words[385]=16'h0000;
++   legacy_words[386]=16'h0000;
++   legacy_words[387]=16'h0000;
++   legacy_words[388]=16'h0000;
++   legacy_words[389]=16'h0000;
++   legacy_words[390]=16'h0000;
++   legacy_words[391]=16'h0000;
++   legacy_words[392]=16'h0000;
++   legacy_words[393]=16'h0000;
++   legacy_words[394]=16'h0000;
++   legacy_words[395]=16'h0000;
++   legacy_words[396]=16'h0000;
++   legacy_words[397]=16'h0000;
++   legacy_words[398]=16'h0000;
++   legacy_words[399]=16'h0000;
++   legacy_words[400]=16'h0000;
++   legacy_words[401]=16'h0000;
++   legacy_words[402]=16'h0000;
++   legacy_words[403]=16'h0000;
++   legacy_words[404]=16'h0000;
++   legacy_words[405]=16'h0000;
++   legacy_words[406]=16'h0000;
++   legacy_words[407]=16'h0000;
++   legacy_words[408]=16'h0000;
++   legacy_words[409]=16'h0000;
++   legacy_words[410]=16'h0000;
++   legacy_words[411]=16'h0000;
++   legacy_words[412]=16'h0000;
++   legacy_words[413]=16'h0000;
++   legacy_words[414]=16'h0000;
++   legacy_words[415]=16'h0000;
++   legacy_words[416]=16'h0000;
++   legacy_words[417]=16'h0000;
++   legacy_words[418]=16'h0000;
++   legacy_words[419]=16'h0000;
++   legacy_words[420]=16'h0000;
++   legacy_words[421]=16'h0000;
++   legacy_words[422]=16'h0000;
++   legacy_words[423]=16'h0000;
++   legacy_words[424]=16'h0000;
++   legacy_words[425]=16'h0000;
++   legacy_words[426]=16'h0000;
++   legacy_words[427]=16'h0000;
++   legacy_words[428]=16'h0000;
++   legacy_words[429]=16'h0000;
++   legacy_words[430]=16'h0000;
++   legacy_words[431]=16'h0000;
++   legacy_words[432]=16'h0000;
++   legacy_words[433]=16'h0000;
++   legacy_words[434]=16'h0000;
++   legacy_words[435]=16'h0000;
++   legacy_words[436]=16'h0000;
++   legacy_words[437]=16'h0000;
++   legacy_words[438]=16'h0000;
++   legacy_words[439]=16'h0000;
++   legacy_words[440]=16'h0000;
++   legacy_words[441]=16'h0000;
++   legacy_words[442]=16'h0000;
++   legacy_words[443]=16'h0000;
++   legacy_words[444]=16'h0000;
++   legacy_words[445]=16'h0000;
++   legacy_words[446]=16'h0000;
++   legacy_words[447]=16'h0000;
++   legacy_words[448]=16'h0000;
++   legacy_words[449]=16'h0000;
++   legacy_words[450]=16'h0000;
++   legacy_words[451]=16'h0000;
++   legacy_words[452]=16'h0000;
++   legacy_words[453]=16'h0000;
++   legacy_words[454]=16'h0000;
++   legacy_words[455]=16'h0000;
++   legacy_words[456]=16'h0000;
++   legacy_words[457]=16'h0000;
++   legacy_words[458]=16'h0000;
++   legacy_words[459]=16'h0000;
++   legacy_words[460]=16'h0000;
++   legacy_words[461]=16'h0000;
++   legacy_words[462]=16'h0000;
++   legacy_words[463]=16'h0000;
++   legacy_words[464]=16'h0000;
++   legacy_words[465]=16'h0000;
++   legacy_words[466]=16'h0000;
++   legacy_words[467]=16'h0000;
++   legacy_words[468]=16'h0000;
++   legacy_words[469]=16'h0000;
++   legacy_words[470]=16'h0000;
++   legacy_words[471]=16'h0000;
++   legacy_words[472]=16'h0000;
++   legacy_words[473]=16'h0000;
++   legacy_words[474]=16'h0000;
++   legacy_words[475]=16'h0000;
++   legacy_words[476]=16'h0000;
++   legacy_words[477]=16'h0000;
++   legacy_words[478]=16'h0000;
++   legacy_words[479]=16'h0000;
++   legacy_words[480]=16'h0000;
++   legacy_words[481]=16'h0000;
++   legacy_words[482]=16'h0000;
++   legacy_words[483]=16'h0000;
++   legacy_words[484]=16'h0000;
++   legacy_words[485]=16'h0000;
++   legacy_words[486]=16'h0000;
++   legacy_words[487]=16'h0000;
++   legacy_words[488]=16'h0000;
++   legacy_words[489]=16'h0000;
++   legacy_words[490]=16'h0000;
++   legacy_words[491]=16'h0000;
++   legacy_words[492]=16'h0000;
++   legacy_words[493]=16'h0000;
++   legacy_words[494]=16'h0000;
++   legacy_words[495]=16'h0000;
++   legacy_words[496]=16'h0000;
++   legacy_words[497]=16'h0000;
++   legacy_words[498]=16'h0000;
++   legacy_words[499]=16'h0000;
++   legacy_words[500]=16'h0000;
++   legacy_words[501]=16'h0000;
++   legacy_words[502]=16'h0000;
++   legacy_words[503]=16'h0000;
++   legacy_words[504]=16'h0000;
++   legacy_words[505]=16'h0000;
++   legacy_words[506]=16'h0000;
++   legacy_words[507]=16'h0000;
++   legacy_words[508]=16'h0000;
++   legacy_words[509]=16'h0000;
++   legacy_words[510]=16'h0000;
++   legacy_words[511]=16'h0000;
++  end
++  always @(posedge clk)bits<=legacy_words[{char_idx[4:0],row}];
++ end else if(BANK==2)begin:menu_font
++  (* ram_style="bram" *) reg [15:0] menu_words[0:719];
++  wire [5:0] menu_index=char_idx-7'd32;
++  initial begin
++   menu_words[0]=16'h0000;
++   menu_words[1]=16'h0420;
++   menu_words[2]=16'h7ffe;
++   menu_words[3]=16'h7ffe;
++   menu_words[4]=16'h0420;
++   menu_words[5]=16'h3ffc;
++   menu_words[6]=16'h0108;
++   menu_words[7]=16'h1998;
++   menu_words[8]=16'h0990;
++   menu_words[9]=16'h0180;
++   menu_words[10]=16'h7ffe;
++   menu_words[11]=16'h07e0;
++   menu_words[12]=16'h0db0;
++   menu_words[13]=16'h198c;
++   menu_words[14]=16'h6186;
++   menu_words[15]=16'h0180;
++   menu_words[16]=16'h0c20;
++   menu_words[17]=16'h0420;
++   menu_words[18]=16'h0440;
++   menu_words[19]=16'h1ff8;
++   menu_words[20]=16'h1188;
++   menu_words[21]=16'h1ff8;
++   menu_words[22]=16'h1ff8;
++   menu_words[23]=16'h1188;
++   menu_words[24]=16'h1ff8;
++   menu_words[25]=16'h0180;
++   menu_words[26]=16'h0180;
++   menu_words[27]=16'h7ffe;
++   menu_words[28]=16'h0180;
++   menu_words[29]=16'h0180;
++   menu_words[30]=16'h0180;
++   menu_words[31]=16'h0000;
++   menu_words[32]=16'h0000;
++   menu_words[33]=16'h100c;
++   menu_words[34]=16'h13fc;
++   menu_words[35]=16'h112c;
++   menu_words[36]=16'h7928;
++   menu_words[37]=16'h13fe;
++   menu_words[38]=16'h10b0;
++   menu_words[39]=16'h11a8;
++   menu_words[40]=16'h3b26;
++   menu_words[41]=16'h77fe;
++   menu_words[42]=16'h1324;
++   menu_words[43]=16'h13fc;
++   menu_words[44]=16'h1324;
++   menu_words[45]=16'h1324;
++   menu_words[46]=16'h73fc;
++   menu_words[47]=16'h0304;
++   menu_words[48]=16'h1020;
++   menu_words[49]=16'h1820;
++   menu_words[50]=16'h0840;
++   menu_words[51]=16'h7f7e;
++   menu_words[52]=16'h104c;
++   menu_words[53]=16'h10cc;
++   menu_words[54]=16'h1ec8;
++   menu_words[55]=16'h1248;
++   menu_words[56]=16'h1228;
++   menu_words[57]=16'h1228;
++   menu_words[58]=16'h3230;
++   menu_words[59]=16'h2230;
++   menu_words[60]=16'h6268;
++   menu_words[61]=16'h4fc6;
++   menu_words[62]=16'h0002;
++   menu_words[63]=16'h0000;
++   menu_words[64]=16'h0000;
++   menu_words[65]=16'h0804;
++   menu_words[66]=16'h087c;
++   menu_words[67]=16'h3740;
++   menu_words[68]=16'h347c;
++   menu_words[69]=16'h3f58;
++   menu_words[70]=16'h0458;
++   menu_words[71]=16'h7fd8;
++   menu_words[72]=16'h0498;
++   menu_words[73]=16'h0000;
++   menu_words[74]=16'h1ff8;
++   menu_words[75]=16'h1008;
++   menu_words[76]=16'h1ff8;
++   menu_words[77]=16'h1008;
++   menu_words[78]=16'h1ff8;
++   menu_words[79]=16'h0000;
++   menu_words[80]=16'h1860;
++   menu_words[81]=16'h17fe;
++   menu_words[82]=16'h1000;
++   menu_words[83]=16'h33f8;
++   menu_words[84]=16'h3208;
++   menu_words[85]=16'h53f8;
++   menu_words[86]=16'h5000;
++   menu_words[87]=16'h17fe;
++   menu_words[88]=16'h1402;
++   menu_words[89]=16'h13fc;
++   menu_words[90]=16'h1020;
++   menu_words[91]=16'h1020;
++   menu_words[92]=16'h1020;
++   menu_words[93]=16'h10e0;
++   menu_words[94]=16'h0080;
++   menu_words[95]=16'h0000;
++   menu_words[96]=16'h0100;
++   menu_words[97]=16'h7ffe;
++   menu_words[98]=16'h0000;
++   menu_words[99]=16'h0ff0;
++   menu_words[100]=16'h0810;
++   menu_words[101]=16'h0ff0;
++   menu_words[102]=16'h0000;
++   menu_words[103]=16'h7ffe;
++   menu_words[104]=16'h7ffe;
++   menu_words[105]=16'h4002;
++   menu_words[106]=16'h07e0;
++   menu_words[107]=16'h0460;
++   menu_words[108]=16'h0c62;
++   menu_words[109]=16'h387e;
++   menu_words[110]=16'h2000;
++   menu_words[111]=16'h0000;
++   menu_words[112]=16'h0080;
++   menu_words[113]=16'h0080;
++   menu_words[114]=16'h3ffc;
++   menu_words[115]=16'h2210;
++   menu_words[116]=16'h2210;
++   menu_words[117]=16'h2ffc;
++   menu_words[118]=16'h2210;
++   menu_words[119]=16'h23f0;
++   menu_words[120]=16'h2000;
++   menu_words[121]=16'h2ff8;
++   menu_words[122]=16'h2310;
++   menu_words[123]=16'h21a0;
++   menu_words[124]=16'h60c0;
++   menu_words[125]=16'h473e;
++   menu_words[126]=16'h0802;
++   menu_words[127]=16'h0000;
++   menu_words[128]=16'h0000;
++   menu_words[129]=16'h0008;
++   menu_words[130]=16'h0008;
++   menu_words[131]=16'h7e08;
++   menu_words[132]=16'h0208;
++   menu_words[133]=16'h03fe;
++   menu_words[134]=16'h2408;
++   menu_words[135]=16'h3488;
++   menu_words[136]=16'h1c88;
++   menu_words[137]=16'h0c48;
++   menu_words[138]=16'h0c48;
++   menu_words[139]=16'h1608;
++   menu_words[140]=16'h3208;
++   menu_words[141]=16'h6008;
++   menu_words[142]=16'h4038;
++   menu_words[143]=16'h0000;
++   menu_words[144]=16'h0000;
++   menu_words[145]=16'h0080;
++   menu_words[146]=16'h2080;
++   menu_words[147]=16'h2080;
++   menu_words[148]=16'h2084;
++   menu_words[149]=16'h209c;
++   menu_words[150]=16'h3ef0;
++   menu_words[151]=16'h20c0;
++   menu_words[152]=16'h2080;
++   menu_words[153]=16'h2080;
++   menu_words[154]=16'h2080;
++   menu_words[155]=16'h2280;
++   menu_words[156]=16'h2e86;
++   menu_words[157]=16'h78c6;
++   menu_words[158]=16'h207c;
++   menu_words[159]=16'h0000;
++   menu_words[160]=16'h0a00;
++   menu_words[161]=16'h1a00;
++   menu_words[162]=16'h1200;
++   menu_words[163]=16'h17de;
++   menu_words[164]=16'h32d2;
++   menu_words[165]=16'h72d2;
++   menu_words[166]=16'h52d2;
++   menu_words[167]=16'h12d2;
++   menu_words[168]=16'h12d2;
++   menu_words[169]=16'h12d2;
++   menu_words[170]=16'h16d2;
++   menu_words[171]=16'h14de;
++   menu_words[172]=16'h1492;
++   menu_words[173]=16'h1d92;
++   menu_words[174]=16'h0000;
++   menu_words[175]=16'h0000;
++   menu_words[176]=16'h0000;
++   menu_words[177]=16'h3ff0;
++   menu_words[178]=16'h0010;
++   menu_words[179]=16'h0c10;
++   menu_words[180]=16'h0830;
++   menu_words[181]=16'h0830;
++   menu_words[182]=16'h0830;
++   menu_words[183]=16'h0ffc;
++   menu_words[184]=16'h0004;
++   menu_words[185]=16'h0004;
++   menu_words[186]=16'h7ff4;
++   menu_words[187]=16'h0004;
++   menu_words[188]=16'h000c;
++   menu_words[189]=16'h0038;
++   menu_words[190]=16'h0000;
++   menu_words[191]=16'h0000;
++   menu_words[192]=16'h0100;
++   menu_words[193]=16'h0180;
++   menu_words[194]=16'h3ffc;
++   menu_words[195]=16'h0c30;
++   menu_words[196]=16'h0420;
++   menu_words[197]=16'h0460;
++   menu_words[198]=16'h7ffe;
++   menu_words[199]=16'h0000;
++   menu_words[200]=16'h1ff8;
++   menu_words[201]=16'h1818;
++   menu_words[202]=16'h1ff8;
++   menu_words[203]=16'h1818;
++   menu_words[204]=16'h1818;
++   menu_words[205]=16'h1ff8;
++   menu_words[206]=16'h1818;
++   menu_words[207]=16'h0000;
++   menu_words[208]=16'h0000;
++   menu_words[209]=16'h1ff8;
++   menu_words[210]=16'h1ff8;
++   menu_words[211]=16'h1008;
++   menu_words[212]=16'h1ff8;
++   menu_words[213]=16'h7ffe;
++   menu_words[214]=16'h0000;
++   menu_words[215]=16'h1ff8;
++   menu_words[216]=16'h1ff8;
++   menu_words[217]=16'h1188;
++   menu_words[218]=16'h1ff8;
++   menu_words[219]=16'h3ff8;
++   menu_words[220]=16'h0180;
++   menu_words[221]=16'h7ffe;
++   menu_words[222]=16'h0000;
++   menu_words[223]=16'h0000;
++   menu_words[224]=16'h1860;
++   menu_words[225]=16'h1840;
++   menu_words[226]=16'h7ff8;
++   menu_words[227]=16'h7e98;
++   menu_words[228]=16'h19f0;
++   menu_words[229]=16'h7e3c;
++   menu_words[230]=16'h0034;
++   menu_words[231]=16'h7eff;
++   menu_words[232]=16'h4234;
++   menu_words[233]=16'h7e34;
++   menu_words[234]=16'h42fc;
++   menu_words[235]=16'h7e30;
++   menu_words[236]=16'h4230;
++   menu_words[237]=16'h4660;
++   menu_words[238]=16'h0000;
++   menu_words[239]=16'h0000;
++   menu_words[240]=16'h2060;
++   menu_words[241]=16'h3060;
++   menu_words[242]=16'h18b0;
++   menu_words[243]=16'h0198;
++   menu_words[244]=16'h010c;
++   menu_words[245]=16'h7666;
++   menu_words[246]=16'h10c0;
++   menu_words[247]=16'h1198;
++   menu_words[248]=16'h1130;
++   menu_words[249]=16'h1064;
++   menu_words[250]=16'h15ce;
++   menu_words[251]=16'h1c18;
++   menu_words[252]=16'h1830;
++   menu_words[253]=16'h13c0;
++   menu_words[254]=16'h0100;
++   menu_words[255]=16'h0000;
++   menu_words[256]=16'h0000;
++   menu_words[257]=16'h0400;
++   menu_words[258]=16'h74fe;
++   menu_words[259]=16'h7520;
++   menu_words[260]=16'h7d20;
++   menu_words[261]=16'h6420;
++   menu_words[262]=16'h7fbe;
++   menu_words[263]=16'h6424;
++   menu_words[264]=16'h6d24;
++   menu_words[265]=16'h6da4;
++   menu_words[266]=16'h74e4;
++   menu_words[267]=16'h6444;
++   menu_words[268]=16'h6044;
++   menu_words[269]=16'h7f44;
++   menu_words[270]=16'h0084;
++   menu_words[271]=16'h0000;
++   menu_words[272]=16'h0000;
++   menu_words[273]=16'h23fc;
++   menu_words[274]=16'h320c;
++   menu_words[275]=16'h120c;
++   menu_words[276]=16'h03fc;
++   menu_words[277]=16'h020c;
++   menu_words[278]=16'h03fc;
++   menu_words[279]=16'h7200;
++   menu_words[280]=16'h12cc;
++   menu_words[281]=16'h1278;
++   menu_words[282]=16'h1238;
++   menu_words[283]=16'h13cc;
++   menu_words[284]=16'h1304;
++   menu_words[285]=16'h3c00;
++   menu_words[286]=16'h47fe;
++   menu_words[287]=16'h4000;
++   menu_words[288]=16'h0000;
++   menu_words[289]=16'h0180;
++   menu_words[290]=16'h0180;
++   menu_words[291]=16'h3188;
++   menu_words[292]=16'h3188;
++   menu_words[293]=16'h3188;
++   menu_words[294]=16'h3188;
++   menu_words[295]=16'h3ff8;
++   menu_words[296]=16'h0180;
++   menu_words[297]=16'h2184;
++   menu_words[298]=16'h2184;
++   menu_words[299]=16'h2184;
++   menu_words[300]=16'h2184;
++   menu_words[301]=16'h3ffc;
++   menu_words[302]=16'h3ffc;
++   menu_words[303]=16'h0004;
++   menu_words[304]=16'h0000;
++   menu_words[305]=16'h0c60;
++   menu_words[306]=16'h0c28;
++   menu_words[307]=16'h4c2c;
++   menu_words[308]=16'h6c24;
++   menu_words[309]=16'h2c20;
++   menu_words[310]=16'h0ffe;
++   menu_words[311]=16'h0c60;
++   menu_words[312]=16'h1c60;
++   menu_words[313]=16'h3c70;
++   menu_words[314]=16'h6c50;
++   menu_words[315]=16'h4cd0;
++   menu_words[316]=16'h0c88;
++   menu_words[317]=16'h0d8c;
++   menu_words[318]=16'h0f06;
++   menu_words[319]=16'h0c00;
++   menu_words[320]=16'h0100;
++   menu_words[321]=16'h0100;
++   menu_words[322]=16'h7ffe;
++   menu_words[323]=16'h0240;
++   menu_words[324]=16'h0660;
++   menu_words[325]=16'h0420;
++   menu_words[326]=16'h1b18;
++   menu_words[327]=16'h310e;
++   menu_words[328]=16'h6000;
++   menu_words[329]=16'h0080;
++   menu_words[330]=16'h248c;
++   menu_words[331]=16'h2406;
++   menu_words[332]=16'h6412;
++   menu_words[333]=16'h47f0;
++   menu_words[334]=16'h0000;
++   menu_words[335]=16'h0000;
++   menu_words[336]=16'h0000;
++   menu_words[337]=16'h3ffc;
++   menu_words[338]=16'h0620;
++   menu_words[339]=16'h0620;
++   menu_words[340]=16'h0620;
++   menu_words[341]=16'h0620;
++   menu_words[342]=16'h7ffe;
++   menu_words[343]=16'h7ffe;
++   menu_words[344]=16'h0620;
++   menu_words[345]=16'h0420;
++   menu_words[346]=16'h0420;
++   menu_words[347]=16'h0c20;
++   menu_words[348]=16'h1820;
++   menu_words[349]=16'h7020;
++   menu_words[350]=16'h0000;
++   menu_words[351]=16'h0000;
++   menu_words[352]=16'h0000;
++   menu_words[353]=16'h0420;
++   menu_words[354]=16'h0420;
++   menu_words[355]=16'h0660;
++   menu_words[356]=16'h3ffc;
++   menu_words[357]=16'h3ffc;
++   menu_words[358]=16'h0180;
++   menu_words[359]=16'h0180;
++   menu_words[360]=16'h0180;
++   menu_words[361]=16'h7ffe;
++   menu_words[362]=16'h0180;
++   menu_words[363]=16'h0340;
++   menu_words[364]=16'h0670;
++   menu_words[365]=16'h0c1c;
++   menu_words[366]=16'h700e;
++   menu_words[367]=16'h0000;
++   menu_words[368]=16'h0000;
++   menu_words[369]=16'h2004;
++   menu_words[370]=16'h33fc;
++   menu_words[371]=16'h1300;
++   menu_words[372]=16'h0300;
++   menu_words[373]=16'h03fc;
++   menu_words[374]=16'h0308;
++   menu_words[375]=16'h7348;
++   menu_words[376]=16'h1368;
++   menu_words[377]=16'h1238;
++   menu_words[378]=16'h1238;
++   menu_words[379]=16'h166c;
++   menu_words[380]=16'h14c4;
++   menu_words[381]=16'h3800;
++   menu_words[382]=16'h67fe;
++   menu_words[383]=16'h0000;
++   menu_words[384]=16'h0000;
++   menu_words[385]=16'h3ffc;
++   menu_words[386]=16'h2004;
++   menu_words[387]=16'h2004;
++   menu_words[388]=16'h27e4;
++   menu_words[389]=16'h2424;
++   menu_words[390]=16'h2424;
++   menu_words[391]=16'h2424;
++   menu_words[392]=16'h27e4;
++   menu_words[393]=16'h27e4;
++   menu_words[394]=16'h2004;
++   menu_words[395]=16'h2004;
++   menu_words[396]=16'h3ffc;
++   menu_words[397]=16'h2004;
++   menu_words[398]=16'h0000;
++   menu_words[399]=16'h0000;
++   menu_words[400]=16'h0000;
++   menu_words[401]=16'h0100;
++   menu_words[402]=16'h0100;
++   menu_words[403]=16'h0100;
++   menu_words[404]=16'h0100;
++   menu_words[405]=16'h0100;
++   menu_words[406]=16'h01fc;
++   menu_words[407]=16'h0100;
++   menu_words[408]=16'h0100;
++   menu_words[409]=16'h0100;
++   menu_words[410]=16'h0100;
++   menu_words[411]=16'h0100;
++   menu_words[412]=16'h0100;
++   menu_words[413]=16'h7ffe;
++   menu_words[414]=16'h7ffe;
++   menu_words[415]=16'h0000;
++   menu_words[416]=16'h0000;
++   menu_words[417]=16'h0000;
++   menu_words[418]=16'h7ffe;
++   menu_words[419]=16'h0100;
++   menu_words[420]=16'h0100;
++   menu_words[421]=16'h0100;
++   menu_words[422]=16'h0100;
++   menu_words[423]=16'h0160;
++   menu_words[424]=16'h0130;
++   menu_words[425]=16'h0118;
++   menu_words[426]=16'h010c;
++   menu_words[427]=16'h0100;
++   menu_words[428]=16'h0100;
++   menu_words[429]=16'h0100;
++   menu_words[430]=16'h0100;
++   menu_words[431]=16'h0000;
++   menu_words[432]=16'h0040;
++   menu_words[433]=16'h7ec0;
++   menu_words[434]=16'h10b8;
++   menu_words[435]=16'h1110;
++   menu_words[436]=16'h10fe;
++   menu_words[437]=16'h30b2;
++   menu_words[438]=16'h3cb2;
++   menu_words[439]=16'h64fe;
++   menu_words[440]=16'h64b2;
++   menu_words[441]=16'h24b2;
++   menu_words[442]=16'h24fe;
++   menu_words[443]=16'h3db2;
++   menu_words[444]=16'h2532;
++   menu_words[445]=16'h233e;
++   menu_words[446]=16'h0004;
++   menu_words[447]=16'h0000;
++   menu_words[448]=16'h0000;
++   menu_words[449]=16'h1060;
++   menu_words[450]=16'h1860;
++   menu_words[451]=16'h0c60;
++   menu_words[452]=16'h0060;
++   menu_words[453]=16'h0060;
++   menu_words[454]=16'h7060;
++   menu_words[455]=16'h1060;
++   menu_words[456]=16'h1060;
++   menu_words[457]=16'h10f0;
++   menu_words[458]=16'h1690;
++   menu_words[459]=16'h1d90;
++   menu_words[460]=16'h1908;
++   menu_words[461]=16'h130c;
++   menu_words[462]=16'h0606;
++   menu_words[463]=16'h0000;
++   menu_words[464]=16'h0000;
++   menu_words[465]=16'h0c00;
++   menu_words[466]=16'h0c30;
++   menu_words[467]=16'h0c60;
++   menu_words[468]=16'h0cc0;
++   menu_words[469]=16'h0d80;
++   menu_words[470]=16'h0d00;
++   menu_words[471]=16'h7ffe;
++   menu_words[472]=16'h0c80;
++   menu_words[473]=16'h0cc0;
++   menu_words[474]=16'h0c40;
++   menu_words[475]=16'h0c20;
++   menu_words[476]=16'h0db8;
++   menu_words[477]=16'h0e1e;
++   menu_words[478]=16'h0c04;
++   menu_words[479]=16'h0000;
++   menu_words[480]=16'h1060;
++   menu_words[481]=16'h1020;
++   menu_words[482]=16'h13fe;
++   menu_words[483]=16'h7b02;
++   menu_words[484]=16'h1362;
++   menu_words[485]=16'h1040;
++   menu_words[486]=16'h1040;
++   menu_words[487]=16'h1ffe;
++   menu_words[488]=16'h7088;
++   menu_words[489]=16'h5188;
++   menu_words[490]=16'h11d0;
++   menu_words[491]=16'h1070;
++   menu_words[492]=16'h107c;
++   menu_words[493]=16'h3786;
++   menu_words[494]=16'h0000;
++   menu_words[495]=16'h0000;
++   menu_words[496]=16'h0000;
++   menu_words[497]=16'h0000;
++   menu_words[498]=16'h3c00;
++   menu_words[499]=16'h6400;
++   menu_words[500]=16'h4200;
++   menu_words[501]=16'h4200;
++   menu_words[502]=16'h4200;
++   menu_words[503]=16'h4200;
++   menu_words[504]=16'h4200;
++   menu_words[505]=16'h4200;
++   menu_words[506]=16'h4600;
++   menu_words[507]=16'h2c00;
++   menu_words[508]=16'h1800;
++   menu_words[509]=16'h0000;
++   menu_words[510]=16'h0000;
++   menu_words[511]=16'h0000;
++   menu_words[512]=16'h0000;
++   menu_words[513]=16'h0000;
++   menu_words[514]=16'h0800;
++   menu_words[515]=16'h1800;
++   menu_words[516]=16'h7800;
++   menu_words[517]=16'h5800;
++   menu_words[518]=16'h1800;
++   menu_words[519]=16'h1800;
++   menu_words[520]=16'h1800;
++   menu_words[521]=16'h1800;
++   menu_words[522]=16'h1800;
++   menu_words[523]=16'h1800;
++   menu_words[524]=16'h1800;
++   menu_words[525]=16'h0000;
++   menu_words[526]=16'h0000;
++   menu_words[527]=16'h0000;
++   menu_words[528]=16'h0000;
++   menu_words[529]=16'h0000;
++   menu_words[530]=16'h3c00;
++   menu_words[531]=16'h6600;
++   menu_words[532]=16'h4200;
++   menu_words[533]=16'h0600;
++   menu_words[534]=16'h0400;
++   menu_words[535]=16'h0c00;
++   menu_words[536]=16'h0800;
++   menu_words[537]=16'h1000;
++   menu_words[538]=16'h2000;
++   menu_words[539]=16'h7e00;
++   menu_words[540]=16'h7e00;
++   menu_words[541]=16'h0000;
++   menu_words[542]=16'h0000;
++   menu_words[543]=16'h0000;
++   menu_words[544]=16'h0000;
++   menu_words[545]=16'h0000;
++   menu_words[546]=16'h3c00;
++   menu_words[547]=16'h6600;
++   menu_words[548]=16'h4200;
++   menu_words[549]=16'h0600;
++   menu_words[550]=16'h0c00;
++   menu_words[551]=16'h0c00;
++   menu_words[552]=16'h0600;
++   menu_words[553]=16'h0200;
++   menu_words[554]=16'h4200;
++   menu_words[555]=16'h6400;
++   menu_words[556]=16'h1800;
++   menu_words[557]=16'h0000;
++   menu_words[558]=16'h0000;
++   menu_words[559]=16'h0000;
++   menu_words[560]=16'h0000;
++   menu_words[561]=16'h0000;
++   menu_words[562]=16'h0400;
++   menu_words[563]=16'h0c00;
++   menu_words[564]=16'h1c00;
++   menu_words[565]=16'h1400;
++   menu_words[566]=16'h2400;
++   menu_words[567]=16'h6400;
++   menu_words[568]=16'h4400;
++   menu_words[569]=16'hff00;
++   menu_words[570]=16'h0400;
++   menu_words[571]=16'h0400;
++   menu_words[572]=16'h0400;
++   menu_words[573]=16'h0000;
++   menu_words[574]=16'h0000;
++   menu_words[575]=16'h0000;
++   menu_words[576]=16'h0000;
++   menu_words[577]=16'h0000;
++   menu_words[578]=16'h0000;
++   menu_words[579]=16'h3e00;
++   menu_words[580]=16'h6000;
++   menu_words[581]=16'h4000;
++   menu_words[582]=16'h5000;
++   menu_words[583]=16'h7c00;
++   menu_words[584]=16'h4600;
++   menu_words[585]=16'h0200;
++   menu_words[586]=16'h0200;
++   menu_words[587]=16'hc600;
++   menu_words[588]=16'h6c00;
++   menu_words[589]=16'h3800;
++   menu_words[590]=16'h0000;
++   menu_words[591]=16'h0000;
++   menu_words[592]=16'h0000;
++   menu_words[593]=16'h0000;
++   menu_words[594]=16'h0800;
++   menu_words[595]=16'h1800;
++   menu_words[596]=16'h1000;
++   menu_words[597]=16'h3000;
++   menu_words[598]=16'h7c00;
++   menu_words[599]=16'h6200;
++   menu_words[600]=16'h4300;
++   menu_words[601]=16'h4300;
++   menu_words[602]=16'h4200;
++   menu_words[603]=16'h6600;
++   menu_words[604]=16'h3c00;
++   menu_words[605]=16'h0000;
++   menu_words[606]=16'h0000;
++   menu_words[607]=16'h0000;
++   menu_words[608]=16'h0000;
++   menu_words[609]=16'h0000;
++   menu_words[610]=16'h0000;
++   menu_words[611]=16'h7e00;
++   menu_words[612]=16'h0200;
++   menu_words[613]=16'h0600;
++   menu_words[614]=16'h0400;
++   menu_words[615]=16'h0c00;
++   menu_words[616]=16'h0800;
++   menu_words[617]=16'h1800;
++   menu_words[618]=16'h1000;
++   menu_words[619]=16'h1000;
++   menu_words[620]=16'h3000;
++   menu_words[621]=16'h3000;
++   menu_words[622]=16'h0000;
++   menu_words[623]=16'h0000;
++   menu_words[624]=16'h0000;
++   menu_words[625]=16'h0000;
++   menu_words[626]=16'h3c00;
++   menu_words[627]=16'h4600;
++   menu_words[628]=16'h4200;
++   menu_words[629]=16'h4600;
++   menu_words[630]=16'h7c00;
++   menu_words[631]=16'h7c00;
++   menu_words[632]=16'h4200;
++   menu_words[633]=16'hc200;
++   menu_words[634]=16'h4200;
++   menu_words[635]=16'h6600;
++   menu_words[636]=16'h3c00;
++   menu_words[637]=16'h0000;
++   menu_words[638]=16'h0000;
++   menu_words[639]=16'h0000;
++   menu_words[640]=16'h0000;
++   menu_words[641]=16'h0000;
++   menu_words[642]=16'h3c00;
++   menu_words[643]=16'h4600;
++   menu_words[644]=16'hc200;
++   menu_words[645]=16'hc200;
++   menu_words[646]=16'hc600;
++   menu_words[647]=16'h6c00;
++   menu_words[648]=16'h3c00;
++   menu_words[649]=16'h0800;
++   menu_words[650]=16'h1800;
++   menu_words[651]=16'h1000;
++   menu_words[652]=16'h3000;
++   menu_words[653]=16'h0000;
++   menu_words[654]=16'h0000;
++   menu_words[655]=16'h0000;
++   menu_words[656]=16'h0000;
++   menu_words[657]=16'h0000;
++   menu_words[658]=16'h0000;
++   menu_words[659]=16'h0000;
++   menu_words[660]=16'h0000;
++   menu_words[661]=16'h0000;
++   menu_words[662]=16'h0000;
++   menu_words[663]=16'h0000;
++   menu_words[664]=16'h0000;
++   menu_words[665]=16'h0000;
++   menu_words[666]=16'h0000;
++   menu_words[667]=16'h0000;
++   menu_words[668]=16'h0000;
++   menu_words[669]=16'h0000;
++   menu_words[670]=16'h0000;
++   menu_words[671]=16'h0000;
++   menu_words[672]=16'h0000;
++   menu_words[673]=16'h0000;
++   menu_words[674]=16'h0000;
++   menu_words[675]=16'h0000;
++   menu_words[676]=16'h1000;
++   menu_words[677]=16'h1000;
++   menu_words[678]=16'h1000;
++   menu_words[679]=16'hff00;
++   menu_words[680]=16'h1000;
++   menu_words[681]=16'h1000;
++   menu_words[682]=16'h1000;
++   menu_words[683]=16'h0000;
++   menu_words[684]=16'h0000;
++   menu_words[685]=16'h0000;
++   menu_words[686]=16'h0000;
++   menu_words[687]=16'h0000;
++   menu_words[688]=16'h0000;
++   menu_words[689]=16'h0000;
++   menu_words[690]=16'h0000;
++   menu_words[691]=16'h0000;
++   menu_words[692]=16'h0000;
++   menu_words[693]=16'h0000;
++   menu_words[694]=16'h0000;
++   menu_words[695]=16'hfe00;
++   menu_words[696]=16'h0000;
++   menu_words[697]=16'h0000;
++   menu_words[698]=16'h0000;
++   menu_words[699]=16'h0000;
++   menu_words[700]=16'h0000;
++   menu_words[701]=16'h0000;
++   menu_words[702]=16'h0000;
++   menu_words[703]=16'h0000;
++   menu_words[704]=16'h0000;
++   menu_words[705]=16'h0000;
++   menu_words[706]=16'h0000;
++   menu_words[707]=16'h0000;
++   menu_words[708]=16'h0000;
++   menu_words[709]=16'h0000;
++   menu_words[710]=16'h1800;
++   menu_words[711]=16'h0000;
++   menu_words[712]=16'h0000;
++   menu_words[713]=16'h0000;
++   menu_words[714]=16'h0000;
++   menu_words[715]=16'h1800;
++   menu_words[716]=16'h1800;
++   menu_words[717]=16'h0000;
++   menu_words[718]=16'h0000;
++   menu_words[719]=16'h0000;
++  end
++  always @(posedge clk)bits<=menu_words[{menu_index,row}];
++ end else begin:full_font
++  always @(posedge clk)bits<=mem[{char_idx,row}];
++ end
++ endgenerate
+ endmodule
+--- before/src/modules/osd/zh_font.mem
++++ after/src/modules/osd/zh_font.mem
+@@ -510,3 +510,723 @@
+ 0000
+ 0000
+ 0000
++0000
++0420
++7ffe
++7ffe
++0420
++3ffc
++0108
++1998
++0990
++0180
++7ffe
++07e0
++0db0
++198c
++6186
++0180
++0c20
++0420
++0440
++1ff8
++1188
++1ff8
++1ff8
++1188
++1ff8
++0180
++0180
++7ffe
++0180
++0180
++0180
++0000
++0000
++100c
++13fc
++112c
++7928
++13fe
++10b0
++11a8
++3b26
++77fe
++1324
++13fc
++1324
++1324
++73fc
++0304
++1020
++1820
++0840
++7f7e
++104c
++10cc
++1ec8
++1248
++1228
++1228
++3230
++2230
++6268
++4fc6
++0002
++0000
++0000
++0804
++087c
++3740
++347c
++3f58
++0458
++7fd8
++0498
++0000
++1ff8
++1008
++1ff8
++1008
++1ff8
++0000
++1860
++17fe
++1000
++33f8
++3208
++53f8
++5000
++17fe
++1402
++13fc
++1020
++1020
++1020
++10e0
++0080
++0000
++0100
++7ffe
++0000
++0ff0
++0810
++0ff0
++0000
++7ffe
++7ffe
++4002
++07e0
++0460
++0c62
++387e
++2000
++0000
++0080
++0080
++3ffc
++2210
++2210
++2ffc
++2210
++23f0
++2000
++2ff8
++2310
++21a0
++60c0
++473e
++0802
++0000
++0000
++0008
++0008
++7e08
++0208
++03fe
++2408
++3488
++1c88
++0c48
++0c48
++1608
++3208
++6008
++4038
++0000
++0000
++0080
++2080
++2080
++2084
++209c
++3ef0
++20c0
++2080
++2080
++2080
++2280
++2e86
++78c6
++207c
++0000
++0a00
++1a00
++1200
++17de
++32d2
++72d2
++52d2
++12d2
++12d2
++12d2
++16d2
++14de
++1492
++1d92
++0000
++0000
++0000
++3ff0
++0010
++0c10
++0830
++0830
++0830
++0ffc
++0004
++0004
++7ff4
++0004
++000c
++0038
++0000
++0000
++0100
++0180
++3ffc
++0c30
++0420
++0460
++7ffe
++0000
++1ff8
++1818
++1ff8
++1818
++1818
++1ff8
++1818
++0000
++0000
++1ff8
++1ff8
++1008
++1ff8
++7ffe
++0000
++1ff8
++1ff8
++1188
++1ff8
++3ff8
++0180
++7ffe
++0000
++0000
++1860
++1840
++7ff8
++7e98
++19f0
++7e3c
++0034
++7eff
++4234
++7e34
++42fc
++7e30
++4230
++4660
++0000
++0000
++2060
++3060
++18b0
++0198
++010c
++7666
++10c0
++1198
++1130
++1064
++15ce
++1c18
++1830
++13c0
++0100
++0000
++0000
++0400
++74fe
++7520
++7d20
++6420
++7fbe
++6424
++6d24
++6da4
++74e4
++6444
++6044
++7f44
++0084
++0000
++0000
++23fc
++320c
++120c
++03fc
++020c
++03fc
++7200
++12cc
++1278
++1238
++13cc
++1304
++3c00
++47fe
++4000
++0000
++0180
++0180
++3188
++3188
++3188
++3188
++3ff8
++0180
++2184
++2184
++2184
++2184
++3ffc
++3ffc
++0004
++0000
++0c60
++0c28
++4c2c
++6c24
++2c20
++0ffe
++0c60
++1c60
++3c70
++6c50
++4cd0
++0c88
++0d8c
++0f06
++0c00
++0100
++0100
++7ffe
++0240
++0660
++0420
++1b18
++310e
++6000
++0080
++248c
++2406
++6412
++47f0
++0000
++0000
++0000
++3ffc
++0620
++0620
++0620
++0620
++7ffe
++7ffe
++0620
++0420
++0420
++0c20
++1820
++7020
++0000
++0000
++0000
++0420
++0420
++0660
++3ffc
++3ffc
++0180
++0180
++0180
++7ffe
++0180
++0340
++0670
++0c1c
++700e
++0000
++0000
++2004
++33fc
++1300
++0300
++03fc
++0308
++7348
++1368
++1238
++1238
++166c
++14c4
++3800
++67fe
++0000
++0000
++3ffc
++2004
++2004
++27e4
++2424
++2424
++2424
++27e4
++27e4
++2004
++2004
++3ffc
++2004
++0000
++0000
++0000
++0100
++0100
++0100
++0100
++0100
++01fc
++0100
++0100
++0100
++0100
++0100
++0100
++7ffe
++7ffe
++0000
++0000
++0000
++7ffe
++0100
++0100
++0100
++0100
++0160
++0130
++0118
++010c
++0100
++0100
++0100
++0100
++0000
++0040
++7ec0
++10b8
++1110
++10fe
++30b2
++3cb2
++64fe
++64b2
++24b2
++24fe
++3db2
++2532
++233e
++0004
++0000
++0000
++1060
++1860
++0c60
++0060
++0060
++7060
++1060
++1060
++10f0
++1690
++1d90
++1908
++130c
++0606
++0000
++0000
++0c00
++0c30
++0c60
++0cc0
++0d80
++0d00
++7ffe
++0c80
++0cc0
++0c40
++0c20
++0db8
++0e1e
++0c04
++0000
++1060
++1020
++13fe
++7b02
++1362
++1040
++1040
++1ffe
++7088
++5188
++11d0
++1070
++107c
++3786
++0000
++0000
++0000
++0000
++3c00
++6400
++4200
++4200
++4200
++4200
++4200
++4200
++4600
++2c00
++1800
++0000
++0000
++0000
++0000
++0000
++0800
++1800
++7800
++5800
++1800
++1800
++1800
++1800
++1800
++1800
++1800
++0000
++0000
++0000
++0000
++0000
++3c00
++6600
++4200
++0600
++0400
++0c00
++0800
++1000
++2000
++7e00
++7e00
++0000
++0000
++0000
++0000
++0000
++3c00
++6600
++4200
++0600
++0c00
++0c00
++0600
++0200
++4200
++6400
++1800
++0000
++0000
++0000
++0000
++0000
++0400
++0c00
++1c00
++1400
++2400
++6400
++4400
++ff00
++0400
++0400
++0400
++0000
++0000
++0000
++0000
++0000
++0000
++3e00
++6000
++4000
++5000
++7c00
++4600
++0200
++0200
++c600
++6c00
++3800
++0000
++0000
++0000
++0000
++0800
++1800
++1000
++3000
++7c00
++6200
++4300
++4300
++4200
++6600
++3c00
++0000
++0000
++0000
++0000
++0000
++0000
++7e00
++0200
++0600
++0400
++0c00
++0800
++1800
++1000
++1000
++3000
++3000
++0000
++0000
++0000
++0000
++3c00
++4600
++4200
++4600
++7c00
++7c00
++4200
++c200
++4200
++6600
++3c00
++0000
++0000
++0000
++0000
++0000
++3c00
++4600
++c200
++c200
++c600
++6c00
++3c00
++0800
++1800
++1000
++3000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++1000
++1000
++1000
++ff00
++1000
++1000
++1000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++fe00
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++0000
++1800
++0000
++0000
++0000
++0000
++1800
++1800
++0000
++0000
++0000
+--- before/src/modules/osd/zh_overlay.v
++++ after/src/modules/osd/zh_overlay.v
+@@ -7,7 +7,7 @@
+  wire [9:0] local_x=x-WIN_X,local_y=y-WIN_Y;
+  wire in_window=(x>=WIN_X && x<WIN_X+CHARS*16 && y>=WIN_Y && y<WIN_Y+16);
+  wire [15:0] glyph;
+- zh_font_rom font(clk,local_x[8:4],local_y[3:0],glyph);
++ zh_font_rom #(.BANK(1)) font(clk,{2'b00,local_x[8:4]},local_y[3:0],glyph);
+  reg v1,d1,draw1;reg [9:0]x1,y1;reg [23:0]rgb1;reg [3:0]column1;
+  always @(posedge clk or posedge rst)begin
+   if(rst)begin
+--- before/src/top.v
++++ after/src/top.v
+@@ -61,7 +61,7 @@
+ (* keep="true" *) reg [7:0] image_index,audio_index;
+ (* keep="true" *) reg [1:0] res_mode;
+ (* keep="true" *) reg [3:0] fps_mode;
+-wire menu_open,gamma_enable,debug_enable;
++wire menu_open,gamma_enable,debug_enable,menu_edit,menu_edit_video;
+ wire [2:0] menu_item;
+ wire [1:0] debug_page;
+ wire [19:0] debug_mem_status;
+@@ -825,10 +825,10 @@
+   else if(ir_transition_toggle)ir_transition_offset<=ir_transition_offset+1'b1;
+  end
+ end
+-picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0)) buttons(.clk(sd_card_clk),.rst(rst_controls),
++picture_controls #(.BOARD_MENU(1),.AUDIO_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0),.CHINESE_MENU(1)) buttons(.clk(sd_card_clk),.rst(rst_controls),
+  .key1_n(key1),.key2_n(key2),.key3_n(key3),.next_pulse(board_next),.toggle_pulse(board_toggle),
+  .brightness(brightness),.contrast(contrast),.edit_mode(edit_mode),
+- .menu_open(menu_open),.menu_item(menu_item),.gamma_enable(gamma_enable),
++ .menu_open(menu_open),.menu_item(menu_item),.menu_edit(menu_edit),.gamma_enable(gamma_enable),
+  .debug_enable(debug_enable),.debug_page(debug_page),.audio_volume(volume),.audio_mute(mute),
+  .kb_vol_up(kb_vol_up),.kb_vol_dn(kb_vol_dn),.kb_mute(kb_mute),
+  .ir_vol_up(ir_vol_up),.ir_vol_dn(ir_vol_dn),.ir_mute(ir_mute),.ir_bri_up(ir_bri_up),.ir_bri_dn(ir_bri_dn),
+@@ -912,11 +912,13 @@
+ end else begin
+  assign zh_vs=caption_vs;assign zh_de=caption_de;assign zh_rgb=caption_rgb;
+ end endgenerate
+-status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(osd_vs),.out_de(osd_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(zh_vs),.de(zh_de),.rgb(zh_rgb),
+- .enable(frame_osd),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
++wire status_layer_vs,status_layer_de;wire [23:0] status_layer_rgb;
++wire [9:0] menu_x,menu_y;
++status_osd #(.ENHANCED_UI(1),.ADAPTIVE(1),.PIPELINED(1),.BOARD_UI(1),.AUDIO_UI(1),.AUDIO_DIAGNOSTICS(1),.FILE_UI(1),.RATE_UI(1)) osd(.out_vs(status_layer_vs),.out_de(status_layer_de),.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(zh_vs),.de(zh_de),.rgb(zh_rgb),
++ .enable(1'b0),.auto_play(video_auto),.image_index(video_index),.image_count(video_count),
+  .volume(video_volume),.mute(video_mute),.busy(video_busy),
+  .error(video_error | memory_underflow | memory_overflow_video[1]),.edid_ok(edid_good_vff[1]),
+- .result(osd_rgb),.pixel_x(),.pixel_y(),
++ .result(status_layer_rgb),.pixel_x(),.pixel_y(),
+  .brightness(frame_brightness),.contrast(frame_contrast),.edit_mode(frame_edit_mode),
+  .source_width(frame_source_width),.source_height(frame_source_height),
+  .menu_open(frame_ui[0]),.menu_item(frame_ui[3:1]),.gamma_enable(frame_ui[4]),
+@@ -925,6 +927,15 @@
+  .audio_error_code(frame_audio_error_code),.audio_underflow(frame_audio_underflow),
+  .file_image_index(frame_media[13:7]),.file_image_count(frame_media[6:0]),
+  .file_audio_index(frame_media[27:21]),.file_audio_count(frame_media[20:14]),.file_table_truncated(frame_media[28]),.slide_rate_mode(frame_rate[3:0]),.slide_rate_limited(frame_rate[4]),.requested_res_mode(frame_rate[6:5]));
++// Menu edit state is independent of the historical 70-bit status layout.
++cdc_snapshot #(.WIDTH(1)) menu_edit_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
++ .src_data(menu_edit),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(menu_edit_video));
++viewport_coordinates menu_coordinates(video_clk,rst_video,status_layer_vs,status_layer_de,mode_video,menu_x,menu_y,,);
++menu_overlay chinese_menu(.clk(video_clk),.rst(rst_video),.vs(status_layer_vs),.de(status_layer_de),
++ .x(menu_x),.y(menu_y),.rgb(status_layer_rgb),.menu_open(frame_ui[0]),.menu_item(frame_ui[3:1]),
++ .edit_mode(menu_edit_video),.auto_play(video_auto),.brightness(frame_brightness),.contrast(frame_contrast),
++ .volume(video_volume),.mute(video_mute),.gamma_enable(frame_ui[4]),.debug_enable(frame_ui[5]),
++ .out_vs(osd_vs),.out_de(osd_de),.out_rgb(osd_rgb));
+ // Separate game control snapshot: historical 70-bit status layout is fixed.
+ cdc_snapshot #(.WIDTH(5)) game_control_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+  .src_data({kb_game_on,kb_held_up,kb_held_down,kb_held_left,kb_held_right}),
+--- before/scripts/design_files.txt
++++ after/scripts/design_files.txt
+@@ -85,6 +85,7 @@
+ src/modules/control/slideshow_timer.v
+ src/modules/osd/zh_overlay.v
+ src/modules/osd/zh_font_rom.v
++src/modules/osd/menu_overlay.v
+ src/modules/video/av_fast_scaler.v
+ src/modules/video/av_sync_player.v
+ src/modules/sd/sd_av_reader.v
+--- before/scripts/run_tests.ps1
++++ after/scripts/run_tests.ps1
+@@ -11,6 +11,8 @@
+  if($LASTEXITCODE -ne 0) { throw 'Indexed media fixture generation failed' }
+  & python ../scripts/test_prepare_video.py
+  if($LASTEXITCODE -ne 0) { throw 'AVF conversion/packing tests failed' }
++ & python ../scripts/test_zh_font.py
++ if($LASTEXITCODE -ne 0) { throw 'Chinese menu font test failed' }
+  if(!(Test-Path 'msim_work')) { & "$ModelSim\vlib.exe" msim_work; if($LASTEXITCODE -ne 0) { throw 'Cannot create simulation library' } }
+  $files=@('../src/modules/common/*.v','../src/modules/control/*.v','../src/modules/osd/*.v','../src/modules/video/*.v','../src/modules/audio/*.v','../src/modules/optional/*.v','../src/modules/bmp/bmp_read.v','../src/modules/bmp/sd_card_bmp.v','../src/modules/sd/sd_card_top.v','../src/modules/sd/sd_card_sec_read_write.v','../src/modules/sd/sd_card_cmd.v','../src/modules/sd/spi_master.v','tb_uart_rx.v','tb_ir_nec_rx.v','tb_video_scaler.v','tb_upgrade.v','tb_cdc.v','tb_stream_queue.v','tb_uart_queue.v','tb_sd_address.v','tb_load_recovery.v','tb_bmp_stream.v','../src/modules/memory/frame_fifo_write.v','../src/ip/fifo/afifo_16_32_256.v','tb_fifo_boundary.v','tb_frame_writer.v','../src/modules/memory/frame_fifo_read.v','../src/modules/memory/frame_read_write.v','../src/ip/fifo/afifo_32_16_256.v','tb_frame_tail.v','tb_osd_text.v')
+  $files += @('tb_bmp_headers.v','tb_hdmi_line_contract.v','tb_sd_watchdog.v')
+@@ -53,6 +55,7 @@
+  $mergeTests += @('tb_album_timer','tb_zh_overlay','tb_album_clock')
+  $files += @('../src/modules/display/seg_scan.v')
+  $mergeTests += @('tb_seg_scan_timing','tb_hdmi_video_stage')
++ $mergeTests += @('tb_chinese_menu','tb_menu_overlay')
+  $files += @($mergeTests | ForEach-Object { "$_.v" })
+  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
+  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
+--- before/video_improve.al
++++ after/video_improve.al
+@@ -707,6 +707,14 @@
+                     <Attr Name="UsedInP&R" Val="true"/>
+                     <Attr Name="BelongTo" Val="design_1"/>
+                     <Attr Name="CompileOrder" Val="86"/>
++                </FileInfo>
++            </File>
++            <File Path="src/modules/osd/menu_overlay.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&amp;R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="94"/>
+                 </FileInfo>
+             </File>
+             <File Path="src/modules/osd/zh_font_rom.v">
+--- before/src/td_project/video_improve.al
++++ after/src/td_project/video_improve.al
+@@ -699,6 +699,14 @@
+                     <Attr Name="UsedInP&amp;R" Val="true"/>
+                     <Attr Name="BelongTo" Val="design_1"/>
+                     <Attr Name="CompileOrder" Val="86"/>
++                </FileInfo>
++            </File>
++            <File Path="../../src/modules/osd/menu_overlay.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&amp;R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="94"/>
+                 </FileInfo>
+             </File>
+             <File Path="../../src/modules/osd/zh_font_rom.v">
+--- before/README.md
++++ after/README.md
+@@ -1,4 +1,6 @@
+ # EG4S20 HDMI 图片、WAV 与 AVF 视频播放器
++
++> **2026-10-23 当前版本：中文分级菜单完成，综合/P&R/内部STA及全量回归通过。** 默认关闭旧英文常显面板，长按KEY3开关中文八项菜单；KEY1/KEY2导航或减/增，KEY3短按确认/返回，选中行两倍放大并显示当前值。94源/40 IO静态检查、113项RTL主回归、10项Python测试通过；另有800×600菜单逐像素验证和AVF三档补充仿真。最终SWNS **+0.156ns**、HWNS **+0.024ns**、STNS/HTNS均0，主控仍100MHz；物理LUT **16281/19600**、BRAM **57/64**、DSP **23/29**。原32字、原70位状态总线、SD/音频/存储/官方IP及约束不变。操作见[中文菜单手册](docs/CHINESE_MENU_20261023.md)，证据见[本轮验收报告](reports/chinese_menu_20261023/RESULT.md)。**未生成包含菜单的新bit、未上板；以下2026-10-22及更早记录均是对应历史版本，旧候选bit不含本次菜单。** 内部STA不等于HDMI管脚签核，仍未达到整体+0.5ns，既有PHY警告仍保留。
+ 
+ > **2026-10-22 当前构建：AVF 三档已接入，新增 native 640×480，综合/P&R/内部 STA 通过，已生成新候选 bit。** SWNS +0.038ns、HWNS +0.024ns、STNS/HTNS 均为0；111项主回归、29场景AVF专项、9项转换工具测试通过，93源/40 IO静态检查通过。物理资源 LUT 17018/19600、BRAM 55/64、DSP 23/29；AVF 默认开启。主控100MHz，报告 Fmax 100.381MHz。时序余量较小，未达整体 +0.5ns，HWNS 不能据此认定为 HDMI 管脚 hold；未上板，PHY-7002/PHY-5079警告仍保留。**[含 native 功能的新候选 bit](reports/native640_20261022/bitstream/video_improve_native640_20261022.bit)为645920字节，生成前后STA及源码/数据库校验一致；[旧候选 bit](reports/bitstream_20261022/video_improve_20261022.bit)保留且不含此次 native 修改。** 详情见[本轮结果与完整差异](reports/native640_20261022/RESULT.md)、[bit生成记录](reports/native640_20261022/bitstream/RESULT.md)及最新 build_manifest；以下较早记录只适用其历史版本。
+ 
+@@ -28,6 +30,7 @@
+ 
+ ## 从哪里开始
+ 
++- [中文分级菜单与KEY操作](docs/CHINESE_MENU_20261023.md)：长按KEY3开关，KEY1/KEY2导航或调节，选中行两倍放大，八项状态就地显示。
+ - [键盘与新功能逐步使用](docs/KEYBOARD_USAGE_20261016.md)：接线、每个键、R/F、目标频率与实际速度的区别。
+ - [KEY与SW详细操作](docs/KEY_SW_OPERATION.md)：不接键盘也能换图、调亮度/对比度、静音/音量、字幕和转场。
+ - [完整接线教程](docs/CONNECTION_AND_USAGE.md)、[用户手册](docs/USER_GUIDE.md)、[FAT32复制文件](docs/FAT32_USAGE_20261015.md)。
+@@ -47,8 +50,8 @@
+ | 多文件 | FAT32根目录BMP+WAV合计最多64份，按目录项顺序；支持碎片和有效28bit簇号，不按名称排序 |
+ | 选择 | 左右遍历全部图片；数字0～9选前十图；A后2秒内数字选前十WAV，Esc取消 |
+ | 自动换图 | 空格/KEY开关；F循环目标1/2/5/10/15/30次每秒，默认5；忙时等一次，不积压连跳；TARGET/L显示目标及受限记录 |
+-| 画面调节 | KEY亮度−64～+64、步长8；对比度0.50～2.00、步长0.25；菜单可选暗部伽马提亮 |
+-| OSD与字幕 | 文件计数、装载与音频错误、欠载；O整帧开关状态OSD；SW独立控制内置字幕、滚动、运行时间和转场 |
++| 画面调节 | 正式顶层启用中文LIST/EDIT菜单：亮度−64～+63、步长8且端点饱和；对比度0.50～2.00、步长0.25；可选暗部伽马提亮 |
++| OSD与字幕 | 默认关闭旧四行英文状态面板；长按KEY3打开中文八项菜单，O控制原波形层；SW独立控制内置字幕、滚动、运行时间和转场 |
+ | WAV（仅实际800输出声音） | 48kHz/16bit/单声道PCM，≤16MiB；HDMI左右同声；默认不静音、音量08；上下/M或KEY菜单控制 |
+ | 音频恢复 | 格式/SD/长度/chunk错误可区分；失败等待1秒再解析，错误历史到真实PCM恢复才清；切WAV排空旧事务、清FIFO和音效历史 |
+ | 可选音效 | FIR低频/高频增益与单次延迟回声固定参数profile；默认增益0，保持等延迟旁路，不新增运行调参或硬件音频口 |
+--- before/docs/BUILD_STATUS.md
++++ after/docs/BUILD_STATUS.md
+@@ -1,4 +1,8 @@
+ # 构建状态
++
++> **2026-10-23 当前构建（北京时间09:15完成）：中文分级菜单已接入，综合/P&R/内部STA通过。** SWNS +0.156ns、HWNS +0.024ns、STNS/HTNS均0；100MHz主控，报告Fmax 101.585MHz。94源/40 IO静态检查、113项RTL主回归、10项Python测试全部通过；另有VGA/SVGA中文菜单像素及AVF三档补充仿真。最终物理LUT16281/19600、BRAM57/64、DSP23/29，较上一版LUT减少737、BRAM增加2、DSP不变。setup裕量较+0.038ns基线提高，hold保持+0.024ns，没有改时序约束。原115份测试台、44份媒体/存储/IP/约束源码和70位status_source布局核对不变。见[中文菜单操作说明](CHINESE_MENU_20261023.md)与[本轮验收及完整差异](../reports/chinese_menu_20261023/RESULT.md)。**本轮没有新bit、未上板；旧native640候选bit不含中文菜单。** board_signoff=false，未达到整体+0.5ns；PHY-7002/PHY-5079及外部IO验收仍待处理，内部HWNS不能当作HDMI管脚hold。
++
++## 2026-10-22及以前的历史记录
+ 
+ > **2026-10-22 当前构建（北京时间23:20完成）：AVF 三档已接入，新增 native 640×480，综合/P&R/内部 STA 通过。** SWNS +0.038ns、HWNS +0.024ns、STNS/HTNS 均为0；111项主回归、29场景AVF专项、9项转换工具测试通过，93源/40 IO静态检查通过。物理资源 LUT 17018/19600、BRAM 55/64、DSP 23/29；AVF 默认开启。主控100MHz，报告 Fmax 100.381MHz。未达到整体 +0.5ns，board_signoff=false；未上板，PHY-7002/PHY-5079警告仍保留，不能把全局 HWNS 当作 HDMI 管脚 hold 签核。**北京时间23:39已生成[含 native 功能的新候选 bit](../reports/native640_20261022/bitstream/video_improve_native640_20261022.bit)，645920字节，生成前后STA及源码/数据库校验一致；[旧候选 bit](../reports/bitstream_20261022/video_improve_20261022.bit)不含此次 native 修改。** 详情见[本轮结果](../reports/native640_20261022/RESULT.md)、[bit生成记录](../reports/native640_20261022/bitstream/RESULT.md)及最新 build_manifest，以下记录只适用各自历史版本。
+ 
+--- before/src/modules/osd/menu_overlay.v
++++ after/src/modules/osd/menu_overlay.v
+@@ -0,0 +1,126 @@
++// Chinese menu in the common logical 640x480 viewport. Two-cycle RGB/VS/DE.
++module menu_overlay(
++ input clk,input rst,input vs,input de,input [9:0] x,y,input [23:0] rgb,
++ input menu_open,input [2:0] menu_item,input edit_mode,input auto_play,
++ input signed [7:0] brightness,input [3:0] contrast,input [4:0] volume,
++ input mute,input gamma_enable,input debug_enable,
++ output reg out_vs,output reg out_de,output reg [23:0] out_rgb);
++ reg vs_last,opened,editing,playing,muted,gamma_on,debug_on;
++ reg [2:0] selected;
++ reg negative;
++ reg [3:0] bright_tens,bright_units,vol_tens,vol_units,contrast_q;
++ wire [7:0] magnitude=brightness[7]?-brightness:brightness;
++ function [7:0] decimal2;
++  input [7:0] value;integer i;reg [7:0] bcd;
++  begin
++   bcd=0;
++   for(i=7;i>=0;i=i-1)begin
++    if(bcd[3:0]>=5)bcd[3:0]=bcd[3:0]+4'd3;
++    if(bcd[7:4]>=5)bcd[7:4]=bcd[7:4]+4'd3;
++    bcd={bcd[6:0],value[i]};
++   end
++   decimal2=bcd;
++  end
++ endfunction
++ always @(posedge clk)begin
++  if(rst)begin
++   vs_last<=1;opened<=0;selected<=0;editing<=0;playing<=0;muted<=0;
++   gamma_on<=0;debug_on<=0;negative<=0;bright_tens<=0;bright_units<=0;
++   vol_tens<=0;vol_units<=0;contrast_q<=4;
++  end else begin
++   vs_last<=vs;
++   if(vs_last && !vs)begin
++    opened<=menu_open;selected<=menu_item;editing<=edit_mode;
++    playing<=auto_play;muted<=mute;gamma_on<=gamma_enable;debug_on<=debug_enable;
++    negative<=brightness[7];{bright_tens,bright_units}<=decimal2(magnitude);
++    {vol_tens,vol_units}<=decimal2({3'b0,volume});contrast_q<=contrast;
++   end
++  end
++ end
++ function [6:0] label_char;
++  input [2:0] item;input [3:0] col;
++  begin
++   label_char=73;
++   case(item)
++    0:case(col)0:label_char=34;1:label_char=35;endcase
++    1:case(col)0:label_char=38;1:label_char=39;endcase
++    2:case(col)0:label_char=40;1:label_char=41;2:label_char=39;endcase
++    3:case(col)0:label_char=42;1:label_char=43;endcase
++    4:case(col)0:label_char=44;1:label_char=45;endcase
++    5:case(col)0:label_char=46;1:label_char=44;endcase
++    6:case(col)0:label_char=47;1:label_char=48;endcase
++    7:case(col)0:label_char=49;1:label_char=50;endcase
++   endcase
++  end
++ endfunction
++ reg [6:0] char_idx;
++ reg [3:0] glyph_row,column;
++ reg panel,selected_band,selected_text;
++ reg [9:0] local_x,local_y;
++ reg [3:0] cell_col;
++ reg [2:0] item;
++ integer k;
++ always @* begin
++  panel=opened && x>=48 && x<592 && y>=16 && y<448;
++  selected_band=0;selected_text=0;char_idx=73;glyph_row=0;column=0;
++  local_x=0;local_y=0;cell_col=0;item=0;
++  if(x>=64 && x<96 && y>=40 && y<56)begin
++   local_x=x-64;local_y=y-40;glyph_row=local_y[3:0];column=local_x[3:0];
++   char_idx=local_x[4]?7'd33:7'd32;
++  end
++  for(k=0;k<8;k=k+1)begin
++   if(y>=88+k*40 && y<120+k*40)begin
++    item=k;local_y=y-(88+k*40);
++    selected_band=(selected==k);selected_text=selected_band;
++    if(selected_band)begin
++     glyph_row=local_y[4:1];local_x=x-64;column=local_x[4:1];cell_col=local_x[8:5];
++     if(x>=64 && x<160)char_idx=label_char(item,cell_col);
++     else if(x>=288 && x<416)begin
++      local_x=x-288;column=local_x[4:1];cell_col=local_x[8:5];
++      case(item)
++       0:case(cell_col)0:char_idx=playing?34:36;1:char_idx=playing?35:37;default:char_idx=73;endcase
++       1:case(cell_col)0:char_idx=negative?75:74;1:char_idx=63+bright_tens;2:char_idx=63+bright_units;default:char_idx=73;endcase
++       2:if(cell_col==0)char_idx=63+contrast_q;
++       3:if(cell_col==0)char_idx=gamma_on?53:54;
++       4:case(cell_col)0:char_idx=63+vol_tens;1:char_idx=63+vol_units;default:char_idx=73;endcase
++       5:if(cell_col==0)char_idx=muted?53:54;
++       6:if(cell_col==0)char_idx=debug_on?53:54;
++       default:char_idx=73;
++      endcase
++     end else if(x>=480 && x<544)begin
++      local_x=x-480;column=local_x[4:1];
++      char_idx=editing?(local_x[5]?56:55):(local_x[5]?60:59);
++     end
++    end else if(local_y<16 && x>=64 && x<112)begin
++     local_x=x-64;column=local_x[3:0];glyph_row=local_y[3:0];
++     char_idx=label_char(item,{2'b0,local_x[5:4]});
++    end
++   end
++  end
++  if(x>=64 && x<288 && y>=416 && y<432)begin
++   local_x=x-64;local_y=y-416;column=local_x[3:0];glyph_row=local_y[3:0];
++   case(local_x[7:4])
++    0:char_idx=57;1:char_idx=58;2:char_idx=73;3:char_idx=59;4:char_idx=60;
++    5:char_idx=73;6:char_idx=55;7:char_idx=56;8:char_idx=73;
++    9:char_idx=61;10:char_idx=62;11:char_idx=49;12:char_idx=50;default:char_idx=73;
++   endcase
++  end
++ end
++ wire [15:0] glyph;
++ zh_font_rom #(.BANK(2)) font(.clk(clk),.char_idx(char_idx),.row(glyph_row),.bits(glyph));
++ reg v1,d1,panel1,band1,highlight1;reg [3:0] column1;reg [23:0] rgb1;
++ always @(posedge clk)begin
++  if(rst)begin
++   v1<=0;d1<=0;panel1<=0;band1<=0;highlight1<=0;column1<=0;rgb1<=0;
++   out_vs<=0;out_de<=0;out_rgb<=0;
++  end else begin
++   v1<=vs;d1<=de;panel1<=panel;band1<=selected_band;highlight1<=selected_text;
++   column1<=column;rgb1<=rgb;
++   out_vs<=v1;out_de<=d1;
++   if(!d1)out_rgb<=0;
++   else if(!panel1)out_rgb<=rgb1;
++   else if(glyph[15-column1])out_rgb<=highlight1?24'hffff00:24'h808080;
++   else out_rgb<=band1?24'h243040:24'h101820;
++  end
++ end
++endmodule
+--- before/scripts/gen_zh_font.py
++++ after/scripts/gen_zh_font.py
+@@ -0,0 +1,69 @@
++"""Rebuild the embedded SimHei menu font without changing the first 32 glyphs."""
++from pathlib import Path
++import argparse
++import re
++from PIL import Image, ImageDraw, ImageFont
++
++ROOT = Path(__file__).resolve().parent.parent
++ORIGINAL_CHARS = '欢迎光临电子相册参赛作品多媒体展示' + ' ' * 15
++MENU_CHARS = '菜单播放暂停亮度对比伽马音量静诊断退出状态开关返回上下确认长按'
++SYMBOLS = '0123456789 +-:'
++CHARS = ORIGINAL_CHARS + MENU_CHARS + SYMBOLS
++
++
++def glyph(ch, font):
++    img = Image.new('1', (16, 16), 0)
++    ImageDraw.Draw(img).text((0, 0), ch, font=font, fill=1)
++    return [sum((img.getpixel((x, y)) & 1) << (15-x) for x in range(16))
++            for y in range(16)]
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--font', default=r'C:\Windows\Fonts\simhei.ttf')
++    parser.add_argument('--preview', type=Path)
++    args = parser.parse_args()
++    target = ROOT / 'src/modules/osd'
++    mem_file, rtl_file = target/'zh_font.mem', target/'zh_font_rom.v'
++    old = [int(word, 16) for word in mem_file.read_text().split()]
++    embedded = {int(i): int(v, 16) for i, v in re.findall(
++        r"mem\[(\d+)\]=16'h([0-9a-fA-F]+);", rtl_file.read_text())}
++    assert len(old) >= 512 and all(old[i] == embedded[i] for i in range(512))
++    assert len(ORIGINAL_CHARS) == 32 and len(MENU_CHARS) == 31 and len(CHARS) == 77
++    font = ImageFont.truetype(args.font, 16)
++    # Existing artwork is authoritative, including blank reserved characters.
++    words = old[:512] + [w for ch in CHARS[32:] for w in glyph(ch, font)]
++    mem_file.write_text(''.join(f'{w:04x}\n' for w in words), encoding='ascii')
++    lines = ['// SimHei 16x16: original 32 glyphs preserved; menu indices 32..76.',
++             '// Generated by scripts/gen_zh_font.py; bit15 is the left pixel.',
++             'module zh_font_rom #(parameter BANK=0)(input clk,input [6:0] char_idx,input [3:0] row,output reg [15:0] bits);',
++             ' (* ram_style="bram" *) reg [15:0] mem[0:1231];', ' initial begin']
++    lines += [f"  mem[{i}]=16'h{w:04x};" for i, w in enumerate(words)]
++    lines += [' end', ' generate', ' if(BANK==1)begin:legacy_font',
++              '  (* ram_style="bram" *) reg [15:0] legacy_words[0:511];',
++              '  initial begin']
++    lines += [f"   legacy_words[{i}]=16'h{w:04x};" for i,w in enumerate(words[:512])]
++    lines += ['  end', '  always @(posedge clk)bits<=legacy_words[{char_idx[4:0],row}];',
++              ' end else if(BANK==2)begin:menu_font',
++              '  (* ram_style="bram" *) reg [15:0] menu_words[0:719];',
++              "  wire [5:0] menu_index=char_idx-7'd32;", '  initial begin']
++    lines += [f"   menu_words[{i}]=16'h{w:04x};" for i,w in enumerate(words[512:])]
++    lines += ['  end', '  always @(posedge clk)bits<=menu_words[{menu_index,row}];',
++              ' end else begin:full_font',
++              '  always @(posedge clk)bits<=mem[{char_idx,row}];',
++              ' end', ' endgenerate', 'endmodule']
++    rtl_file.write_text('\n'.join(lines)+'\n', encoding='ascii')
++    if args.preview:
++        preview = Image.new('RGB', (16*10, 16*8), '#101010')
++        for i in range(77):
++            for y in range(16):
++                for x in range(16):
++                    if words[i*16+y] & (1 << (15-x)):
++                        preview.putpixel(((i % 10)*16+x, (i//10)*16+y), (255,255,0))
++        args.preview.parent.mkdir(parents=True, exist_ok=True)
++        preview.resize((640,512), Image.Resampling.NEAREST).save(args.preview)
++    print('ALL PASS gen_zh_font: 77 glyphs, 1232 words; first 512 words unchanged')
++
++
++if __name__ == '__main__':
++    main()
+--- before/scripts/test_zh_font.py
++++ after/scripts/test_zh_font.py
+@@ -0,0 +1,34 @@
++"""Verify generated menu glyphs and immutable legacy artwork."""
++from pathlib import Path
++import hashlib
++import re
++import unittest
++import gen_zh_font as font
++
++ROOT = Path(__file__).resolve().parent.parent
++
++
++class FontTests(unittest.TestCase):
++    def test_legacy_and_embedded_words(self):
++        base = ROOT/'src/modules/osd'
++        words = [int(w,16) for w in (base/'zh_font.mem').read_text().split()]
++        self.assertEqual(len(words), 1232)
++        self.assertEqual(hashlib.sha256(b''.join(w.to_bytes(2,'big') for w in words[:512])).hexdigest(),
++                         'fdb922b8775a74f73ebc471632e15ac5f8bb2d8c96658a2b908b8a6ed026a736')
++        rtl = (base/'zh_font_rom.v').read_text()
++        embedded = {int(i):int(v,16) for i,v in re.findall(r"mem\[(\d+)\]=16'h([0-9a-f]+);",rtl)}
++        self.assertEqual([embedded[i] for i in range(1232)], words)
++        for name,expected in [('legacy_words',words[:512]),('menu_words',words[512:])]:
++            bank = {int(i):int(v,16) for i,v in re.findall(
++                name+r"\[(\d+)\]=16'h([0-9a-f]+);",rtl)}
++            self.assertEqual([bank[i] for i in range(len(expected))],expected)
++        self.assertNotIn('$readmem',rtl)
++        self.assertEqual(len(font.CHARS),77)
++        self.assertEqual(font.CHARS[32:34], '菜单')
++        for index,ch in enumerate(font.CHARS[32:],32):
++            if ch!=' ':
++                self.assertTrue(any(words[index*16:index*16+16]),ch)
++
++
++if __name__ == '__main__':
++    unittest.main(verbosity=2)
+--- before/sim/tb_chinese_menu.v
++++ after/sim/tb_chinese_menu.v
+@@ -0,0 +1,50 @@
++`timescale 1ns/1ps
++module tb_chinese_menu;
++ reg clk=0,rst=1;always #5 clk=~clk;
++ reg [2:0] keys=0;reg vu=0,vd=0,mt=0;
++ wire opened,editing,gamma,debug,mute,n,p;wire [2:0] item;
++ wire signed [7:0] brightness;wire [3:0] contrast;wire [4:0] volume;
++ integer errors=0,nexts=0,toggles=0,i;
++ picture_controls #(.DEBOUNCE_CYCLES(3),.LONG_PRESS_CYCLES(30),
++  .BOARD_MENU(1),.AUDIO_MENU(1),.CHINESE_MENU(1),.KEYBOARD_CONTROLS(1),.AUDIO_MUTE_DEFAULT(0)) dut(
++  .clk(clk),.rst(rst),.key1_n(keys[0]),.key2_n(keys[1]),.key3_n(keys[2]),
++  .next_pulse(n),.toggle_pulse(p),.brightness(brightness),.contrast(contrast),
++  .menu_open(opened),.menu_item(item),.menu_edit(editing),.gamma_enable(gamma),
++  .debug_enable(debug),.audio_volume(volume),.audio_mute(mute),
++  .kb_vol_up(vu),.kb_vol_dn(vd),.kb_mute(mt),
++  .ir_vol_up(1'b0),.ir_vol_dn(1'b0),.ir_mute(1'b0),.ir_bri_up(1'b0),.ir_bri_dn(1'b0),.ir_con_up(1'b0),.ir_con_dn(1'b0));
++ always @(posedge clk)begin if(n)nexts=nexts+1;if(p)toggles=toggles+1;end
++ task settle;begin repeat(12)@(negedge clk);end endtask
++ task press;input integer k;begin keys[k]=0;settle;keys[k]=1;settle;end endtask
++ task hold3;begin keys[2]=0;repeat(90)@(negedge clk);keys[2]=1;settle;end endtask
++ task check;input ok;input [511:0] message;begin
++  if(ok!==1)begin errors=errors+1;$display("FAILED Chinese menu %0s item=%d edit=%b",message,item,editing);end
++ end endtask
++ initial begin
++  settle;rst=0;repeat(100)@(negedge clk);check(!opened && !editing,"reset held keys suppressed");
++  keys=7;settle;press(0);press(1);check(nexts==1 && toggles==1,"closed legacy playback");
++  hold3;check(opened && item==0 && !editing,"long open LIST once");
++  press(0);check(item==7,"up wraps eight entries");press(2);check(!opened,"exit item");
++  hold3;press(2);check(toggles==2 && !editing,"play direct toggle");
++  press(1);press(2);check(item==1 && editing,"brightness EDIT");
++  repeat(20)press(1);check(brightness==63 && item==1,"brightness upper saturation");
++  repeat(30)press(0);check(brightness== -64,"brightness lower saturation after nonmultiple upper limit");
++  press(1);check(brightness== -56,"brightness step eight");
++  press(2);check(!editing && item==1,"short returns LIST without moving");
++  press(1);press(2);repeat(12)press(1);check(contrast==8 && item==2,"contrast upper");
++  repeat(12)press(0);check(contrast==2,"contrast lower");press(2);
++  press(1);press(2);check(gamma && !editing,"gamma direct toggle");press(2);check(!gamma,"gamma off");
++  press(1);press(2);repeat(25)press(1);check(volume==16 && item==4,"volume upper sixteen");
++  repeat(25)press(0);check(volume==0,"volume lower");
++  vu=1;@(negedge clk);vu=0;settle;check(volume==1,"keyboard shares owner in EDIT");
++  keys[0]=0;keys[1]=0;settle;keys=7;settle;check(volume==1 && item==4,"opposing keys ignored");
++  hold3;check(!opened && !editing && volume==1,"long exit EDIT retains value");
++  hold3;repeat(5)press(1);press(2);check(mute && !editing,"mute direct toggle");
++  press(1);press(2);check(debug && item==6,"diagnostics direct toggle");
++  hold3;check(!opened && debug && mute,"long close LIST retains settings");
++  rst=1;settle;check(!opened && !editing && brightness==0 && volume==8 && !mute,"reset defaults");
++  if(errors==0)$display("ALL PASS tb_chinese_menu: eight-item LIST/EDIT, debounce, long/short, saturation, shared controls");
++  else $display("FAILED tb_chinese_menu %0d",errors);$finish;
++ end
++ initial begin #300000;$display("FAILED Chinese menu watchdog");$finish;end
++endmodule
+--- before/sim/tb_menu_overlay.v
++++ after/sim/tb_menu_overlay.v
+@@ -0,0 +1,126 @@
++`timescale 1ns/1ps
++module tb_menu_overlay;
++ reg clk=0,rst=1,vs=1,de=0,opened=0,editing=0,playing=0,mute=0,gamma=0,debug=0;
++ always #5 clk=~clk;
++ reg [9:0] x=0,y=0;reg [23:0] rgb=24'h305070;
++ reg [2:0] item=0;reg signed [7:0] brightness=0;reg [3:0] contrast=4;reg [4:0] volume=8;
++ wire ov,od;wire [23:0] result;
++ menu_overlay dut(clk,rst,vs,de,x,y,rgb,opened,item,editing,playing,brightness,contrast,volume,mute,gamma,debug,ov,od,result);
++ reg [15:0] words[0:1231];reg [25:0] expected[0:1];
++ reg ref_open=0,ref_edit=0,ref_play=0,ref_mute=0,ref_gamma=0,ref_debug=0,last_vs=1;
++ integer ref_item=0,ref_brightness=0,ref_contrast=4,ref_volume=8;
++ integer errors=0,pixels=0,highlight=0,normal=0,bypass=0,f,xx,yy,fd=0;
++ function integer label_code;
++  input integer row,col;
++  begin
++   label_code=73;
++   case(row)
++    0:if(col<2)label_code=34+col;
++    1:if(col<2)label_code=38+col;
++    2:case(col)0:label_code=40;1:label_code=41;2:label_code=39;endcase
++    3:if(col<2)label_code=42+col;
++    4:if(col<2)label_code=44+col;
++    5:case(col)0:label_code=46;1:label_code=44;endcase
++    6:if(col<2)label_code=47+col;
++    7:if(col<2)label_code=49+col;
++   endcase
++  end
++ endfunction
++ function [23:0] reference;
++  input integer px,py;input [23:0] background;
++  integer row,dy,dx,scale,code,gx,gy,col,magnitude,i;reg band;
++  begin
++   reference=background;
++   if(ref_open && px>=48 && px<592 && py>=16 && py<448)begin
++    band=0;code=73;gx=0;gy=0;
++    if(px>=64 && px<96 && py>=40 && py<56)begin
++     code=32+(px-64)/16;gx=(px-64)%16;gy=py-40;
++    end
++    for(row=0;row<8;row=row+1)begin
++     dy=py-(88+row*40);
++     if(dy>=0 && dy<32)begin
++      band=row==ref_item;scale=band?2:1;gy=(dy/scale)%16;
++      if(px>=64 && px<(band?160:112) && dy<16*scale)begin
++       dx=px-64;col=dx/(16*scale);gx=(dx/scale)%16;code=label_code(row,col);
++      end
++      if(band && px>=288 && px<416)begin
++       dx=px-288;col=dx/32;gx=(dx/2)%16;
++       case(row)
++        0:if(col<2)code=(ref_play?34:36)+col;
++        1:begin
++         magnitude=ref_brightness<0?-ref_brightness:ref_brightness;
++         case(col)0:code=ref_brightness<0?75:74;1:code=63+magnitude/10;2:code=63+magnitude%10;endcase
++        end
++        2:if(col==0)code=63+ref_contrast;
++        3:if(col==0)code=ref_gamma?53:54;
++        4:case(col)0:code=63+ref_volume/10;1:code=63+ref_volume%10;endcase
++        5:if(col==0)code=ref_mute?53:54;
++        6:if(col==0)code=ref_debug?53:54;
++       endcase
++      end
++      if(band && px>=480 && px<544)begin
++       dx=px-480;code=(ref_edit?55:59)+dx/32;gx=(dx/2)%16;
++      end
++     end
++    end
++    if(px>=64 && px<288 && py>=416 && py<432)begin
++     col=(px-64)/16;gx=(px-64)%16;gy=py-416;
++     case(col)
++      0:code=57;1:code=58;2:code=73;3:code=59;4:code=60;5:code=73;
++      6:code=55;7:code=56;8:code=73;9:code=61;10:code=62;11:code=49;12:code=50;default:code=73;
++     endcase
++    end
++    if(words[code*16+gy][15-gx])reference=band?24'hffff00:24'h808080;
++    else reference=band?24'h243040:24'h101820;
++   end
++  end
++ endfunction
++ always @(posedge clk)begin
++  if(rst)begin expected[0]=0;expected[1]=0;ref_open=0;last_vs=1;end
++  else begin
++   expected[1]=expected[0];expected[0]={vs,de,de?reference(x,y,rgb):24'd0};
++   if(last_vs && !vs)begin
++    ref_open=opened;ref_item=item;ref_edit=editing;ref_play=playing;
++    ref_brightness=brightness;ref_contrast=contrast;ref_volume=volume;
++    ref_mute=mute;ref_gamma=gamma;ref_debug=debug;
++   end
++   last_vs=vs;
++  end
++  #1;
++  if(!rst && {ov,od,result}!==expected[1])begin
++   if(errors<10)$display("FAILED menu pixel x=%d y=%d got=%h expected=%h",x,y,{ov,od,result},expected[1]);
++   errors=errors+1;
++  end
++  if(!rst && od)begin
++   pixels=pixels+1;
++   if(result==24'hffff00)highlight=highlight+1;
++   if(result==24'h808080)normal=normal+1;
++   if(!ref_open)bypass=bypass+1;
++   if(fd!=0)$fwrite(fd,"%c%c%c",result[23:16],result[15:8],result[7:0]);
++  end
++ end
++ initial begin
++  $readmemh("../src/modules/osd/zh_font.mem",words);
++  repeat(5)@(negedge clk);rst=0;
++  for(f=0;f<10;f=f+1)begin
++   opened=(f!=0 && f!=9);item=(f-1)%8;editing=(f==2 || f==5);
++   brightness=f==2?-64:63;volume=16;contrast=8;playing=1;mute=1;gamma=1;debug=1;
++   vs=0;repeat(8)@(negedge clk);vs=1;repeat(8)@(negedge clk);
++   if(f==2)begin fd=$fopen("../reports/chinese_menu_20261023/menu_edit.ppm","wb");$fwrite(fd,"P6\n640 480\n255\n");end
++   for(yy=0;yy<480;yy=yy+1)begin
++    if(f==2 && yy==200)begin opened=0;item=7;brightness=0;end
++    for(xx=0;xx<640;xx=xx+1)begin x=xx;y=yy;de=1;@(negedge clk);end
++    de=0;repeat(5)@(negedge clk);
++   end
++   repeat(4)@(negedge clk);
++   if(fd!=0)begin $fclose(fd);fd=0;end
++  end
++  rst=1;repeat(4)@(negedge clk);
++  if({ov,od,result}!==0)errors=errors+1;
++  if(errors==0 && pixels==3072000 && highlight>1000 && normal>1000 && bypass==614400)
++   $display("ALL PASS tb_menu_overlay: 10 complete frames, eight selections, 2x glyphs/status, closed bypass, frame-atomic settings, RGB/VS/DE latency");
++  else $display("FAILED tb_menu_overlay errors=%d pixels=%d highlight=%d normal=%d bypass=%d",errors,pixels,highlight,normal,bypass);
++  $finish;
++ end
++ initial begin #40000000;$display("FAILED menu overlay watchdog");$finish;end
++endmodule
+--- before/docs/CHINESE_MENU_20261023.md
++++ after/docs/CHINESE_MENU_20261023.md
+@@ -0,0 +1,70 @@
++# 中文分级菜单操作与实现
++
++## 使用方法
++
++菜单默认关闭，不再在照片或视频上常显四行英文状态面板。原有字幕、中文标语、音频波形、媒体播放和蛇游戏保留各自控制。
++
++1. 长按KEY3约1秒，达到门限即打开菜单；打开时选中“播放”，处于列表状态。松开不会额外执行一次确认。
++2. 列表状态下，KEY1向上、KEY2向下，八项循环选择。选中行的文字、数值及操作提示按2倍显示，黄色高亮；其他行是灰色16×16字。
++3. 在“播放、伽马、静音、诊断”上短按KEY3，直接切换，不进入数值编辑。
++4. 在“亮度、对比度、音量”上短按KEY3，进入编辑；KEY1减小、KEY2增大，选中行保持不动，右侧提示变为“返回”。再短按KEY3回到列表。
++5. 在列表或编辑状态长按KEY3约1秒，关闭菜单。选中“退出”短按KEY3也能关闭。
++
++长按不会额外触发短按，按住KEY1/KEY2不会自动连发。两键同时按下不移动、不调值。菜单关闭后，原有KEY3短按切换播放/亮度/对比度快捷模式仍保留。
++
++| 菜单项 | 显示/操作 | 范围或含义 |
++|---|---|---|
++| 播放 | 播放/暂停 | KEY3切换自动播放状态，仍由原播放器消费请求 |
++| 亮度 | 带符号两位数 | -64～+63，每次8；端点饱和，不回绕 |
++| 对比度 | 数字 | 原寄存器2～8，对应0.50～2.00倍，步进0.25倍 |
++| 伽马 | 开/关 | 切换原有暗部提亮LUT |
++| 音量 | 两位数字 | 0～16，和键盘/红外共用唯一音量寄存器 |
++| 静音 | 开/关 | 切换唯一静音寄存器，不另存菜单副本 |
++| 诊断 | 开/关 | 切换原有板载数码管诊断显示使能，不恢复旧英文状态面板 |
++| 退出 | 确认 | 短按退出；也可在任何项长按KEY3退出 |
++
++参数复位后恢复默认值，不做断电保存。新菜单不改变WAV或AVF支持的格式；实际640输出模式仍为纯视频，声音沿用实际800×600模式。
++
++键盘O键和对应红外OSD键继续控制原音频波形层。中文菜单独立由KEY3控制，O键不会阻止打开菜单；SW原有像素效果、字幕、滚动和转场控制保持原样。
++
++## 画面和显示器适配
++
++菜单在逻辑640×480视口内绘制。实际输出800×600时，复用已有viewport_coordinates按floor(raw×4/5)产生逻辑坐标，菜单随屏幕等比适配。选中行在逻辑视口中严格由16×16点阵复制为32×32，每个原像素对应2×2输出像素。
++
++菜单标题是“菜单”，底部提示为“上下 确认 返回 长按退出”。菜单所有文字和状态均来自中文字模；数值、正负号使用同一16×16字库中的ASCII符号。以下是实际RTL仿真输出，不是手工效果图：
++
++![亮度编辑状态仿真](../reports/chinese_menu_20261023/menu_edit.png)
++
++## 文件职责
++
++| 文件 | 职责 |
++|---|---|
++| src/modules/control/picture_controls.v | 消抖、长短按识别、LIST/EDIT、唯一参数寄存器；CHINESE_MENU=1启用新模式 |
++| src/modules/osd/menu_overlay.v | 标题、八行菜单、选中行状态、2倍像素复制、同步ROM读取及视频流水 |
++| src/modules/osd/zh_font_rom.v | 77字同步点阵ROM，内嵌initial，无运行目录依赖；BANK参数允许按用途裁剪硬件副本 |
++| src/modules/osd/zh_font.mem | 1232行16bit字模，与RTL内嵌数据一一对应 |
++| scripts/gen_zh_font.py | 从Windows SimHei16生成新增45字，保留旧32字原位；同时输出mem和RTL |
++| src/modules/osd/zh_overlay.v | 原17字中文标语，地址零扩展为7位并选择原32字bank，字形与渲染保持原样 |
++| src/top.v | 关闭旧英文面板的绘制，保留原延迟后串入中文菜单；编辑状态用独立CDC |
++| sim/tb_chinese_menu.v | 实际按键激励、八项导航、编辑和限幅测试 |
++| sim/tb_menu_overlay.v | 十个完整帧的独立像素参考、2倍文字/状态、帧锁存及流水线对齐 |
++| scripts/test_zh_font.py | 原512字模word的SHA-256、1232word一致性、字符覆盖及无readmemh检查 |
++
++原70位status_source的位宽、拼接顺序和既有取位不改。原picture_controls兼容配置CHINESE_MENU=0保留，用于已有模块契约；正式顶层明确选择CHINESE_MENU=1，并以新增测试验证新交互。status_osd模块接口及其旧测试保留，但正式顶层把旧面板enable接0，新菜单不会依赖旧英文菜单行。
++
++## 字库再生成
++
++在工程根目录执行：
++
++```powershell
++python scripts/gen_zh_font.py --preview reports/chinese_menu_20261023/font_preview.png
++python scripts/test_zh_font.py
++```
++
++默认字体是C:\Windows\Fonts\simhei.ttf，可用--font明确指定。像素格式为每字16行、每行16bit，bit15是最左像素。0～31保持原始字形和预留空白，32～62是31个中文字符，63～72是数字，73是空格，74/75/76为+/-/:。
++
++脚本读取现有mem的原512word并与旧RTL初始化交叉核对，再追加新字，不会重新绘制原标语。字库内容全部内嵌在zh_font_rom.v；仿真里的参考数据文件不参与硬件运行时加载。
++
++默认BANK=0保留完整77字、1232word及原始索引。正式标语实例用BANK=1，只实例化旧32字；菜单用BANK=2，只实例化新增45字，外部索引仍为32～76。生成脚本同时生成三个bank的常量，字体测试逐word核对裁剪bank与完整表一致，避免两个使用者都占一份完整字库。所有bank均同步读取一拍，不增加视频流水延迟。
++
++完整静态、回归、资源及时序结果见[本轮验收报告](../reports/chinese_menu_20261023/RESULT.md)。旧native640候选bit不包含本次中文菜单修改，不能当作本轮菜单的上板验证结果。

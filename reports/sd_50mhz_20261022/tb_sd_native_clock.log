@@ -1,0 +1,22 @@
+# vsim -do {run -all; quit -f} -l ../reports/sd_50mhz_20261022/tb_sd_native_clock.log -lib sd_50mhz_verify_work -c tb_sd_native_clock 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_sd_native_clock.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_clock.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_clock(fast)
+# Loading work.sd_bus_phy(fast)
+# run -all 
+# ALL PASS tb_sd_native_clock: default 200kHz init, >=80 startup clocks, open-drain ID, glitch-free switch to 25MHz
+# ** Note: $finish    : tb_sd_native_clock.v(41)
+#    Time: 6957065 ns  Iteration: 3  Instance: /tb_sd_native_clock

@@ -1,0 +1,61 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_indexed_player.log} -lib timing_opt_main_work_v2 -c tb_indexed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 52.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: E:\fpga\sim\tb_indexed_player.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_indexed_player(fast)
+# run -all 
+# ALL PASS tb_indexed_player: 12BMP/3WAV, exact scaled frames/PCM, next/prev/direct/busy selection, audio cancel/drain/reset
+# ** Note: $finish    : E:/fpga/sim/tb_indexed_player.v(89)
+#    Time: 185365320 ns  Iteration: 1  Instance: /tb_indexed_player

@@ -1,0 +1,37 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_sd_crc.log} -lib timing_opt_main_work_v2 -c tb_sd_crc 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 18.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'spi_data_in'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'clk_div'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'nCS_ctrl'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_req_ack'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data_rd'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_crc.v(17): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_crc(fast)
+# run -all 
+# ALL PASS tb_sd_crc: valid block, flipped payload bit rejected, next valid block recovers
+# ** Note: $finish    : E:/fpga/sim/tb_sd_crc.v(49)
+#    Time: 62440 ns  Iteration: 1  Instance: /tb_sd_crc

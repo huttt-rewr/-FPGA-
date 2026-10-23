@@ -1,0 +1,82 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_sd_native_player.log -lib msim_work -c tb_sd_native_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: ../src/modules/bmp/sd_card_bmp.v(159): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: ../src/modules/sd/sd_fat32.v(12).
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 43.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: tb_sd_native_player.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# ** Warning: tb_sd_native_player.v(38): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 10.
+# 
+# ** Warning: tb_sd_native_player.v(38): (vopt-2718) [TFMPC] - Missing connection for port 'hs_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_native_player(fast)
+# Loading work.sd_card_top_native(fast)
+# run -all 
+# ALL PASS tb_sd_native_player: 4-bit physical transport/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : tb_sd_native_player.v(80)
+#    Time: 55487780 ns  Iteration: 1  Instance: /tb_sd_native_player

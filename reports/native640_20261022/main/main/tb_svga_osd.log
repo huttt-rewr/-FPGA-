@@ -1,0 +1,61 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_svga_osd.log} -lib timing_opt_main_work_v2 -c tb_svga_osd 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 42, found 23.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'requested_res_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_limited'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'slide_rate_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_table_truncated'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_audio_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'file_image_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_underflow'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'menu_open'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_de'.
+# 
+# ** Warning: E:\fpga\sim\tb_svga_osd.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'out_vs'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_svga_osd(fast)
+# run -all 
+# ALL PASS tb_svga_osd: 40 columns, resolution, signed brightness, fractional contrast, mode hints
+# ** Note: $finish    : E:/fpga/sim/tb_svga_osd.v(46)
+#    Time: 2412130 ns  Iteration: 1  Instance: /tb_svga_osd

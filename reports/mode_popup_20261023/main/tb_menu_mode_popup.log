@@ -1,0 +1,73 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_menu_mode_popup.log -lib msim_work -c tb_menu_mode_popup 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2685) [TFMPC] - Too few port connections for 'controls'.  Expected 34, found 7.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'res_up'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'res_down'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'wav_next'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'movie_next'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'image_next'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'menu_page'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_dn'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_con_up'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_dn'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_bri_up'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_mute'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_dn'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'ir_vol_up'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'kb_mute'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_dn'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'kb_vol_up'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_mute'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_volume'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'debug_enable'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'gamma_enable'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'menu_edit'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'menu_item'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'contrast'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'brightness'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'toggle_pulse'.
+# 
+# ** Warning: tb_menu_mode_popup.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'next_pulse'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_menu_mode_popup(fast)
+# run -all 
+# ALL PASS tb_menu_mode_popup: real keys/CDC, 3 modes, yellow 2x glyphs, 68544 pixels, exact VGA/SVGA timeout, retrigger, frame atomicity, value/menu/reset priority
+# ** Note: $finish    : tb_menu_mode_popup.v(129)
+#    Time: 704050 ns  Iteration: 1  Instance: /tb_menu_mode_popup

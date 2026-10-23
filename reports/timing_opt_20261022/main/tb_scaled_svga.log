@@ -1,0 +1,44 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_scaled_svga.log} -lib timing_opt_main_work_v2 -c tb_scaled_svga 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 28.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'read_granted'.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_scaled_svga.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_scaled_svga(fast)
+# run -all 
+# case 0: 320x240 -> 800x600, pixels=480000 errors=0
+# case 1: 321x241 -> 800x600, pixels=480000 errors=0
+# case 2: 480x800 -> 800x600, pixels=480000 errors=0
+# case 3: 640x480 -> 800x600, pixels=480000 errors=0
+# case 4: 800x600 -> 800x600, pixels=480000 errors=0
+# case 5: 1280x720 -> 800x600, pixels=480000 errors=0
+# case 6: 1920x1080 -> 800x600, pixels=480000 errors=0
+# case 7: 1x1 -> 800x600, pixels=480000 errors=0
+# case 8: 17x13 -> 800x600, pixels=480000 errors=0
+# ALL PASS tb_scaled_svga: 9 full frames, bilinear RGB reference, padding, extended offsets, scan, backpressure, abort/reload, truncated sector
+# ** Note: $finish    : E:/fpga/sim/tb_scaled_svga.v(77)
+#    Time: 1033912687 ns  Iteration: 0  Instance: /tb_scaled_svga

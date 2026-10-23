@@ -1,0 +1,1137 @@
+--- baseline/src/top.v
++++ current/src/top.v
+@@ -917,7 +917,7 @@
+  .mode_sel(video_effect),.out_vs(fx_vs),.out_de(fx_de),.out_rgb(fx_rgb),
+  .out_luma_sum(fx_luma_sum),.out_luma(fx_luma),.out_window_valid(fx_window_valid),.out_sobel(fx_sobel));
+ viewport_coordinates waveform_coordinates(video_clk,rst_video,fx_vs,fx_de,mode_video,wave_x,wave_y,,);
+-audio_visualizer #(.BRAM_HISTORY(1)) waveform(.clk(video_clk),.rst(rst_video),.vs(fx_vs),.de(fx_de),.x(wave_x),.y(wave_y),
++music_spectrum_overlay waveform(.clk(video_clk),.rst(rst_video),.vs(fx_vs),.de(fx_de),.x(wave_x),.y(wave_y),
+  .rgb(fx_rgb),.audio_valid(audio_valid),.audio_left(audio_left),.enable(video_osd),
+  .out_vs(wave_vs),.out_de(wave_de),.out_rgb(wave_rgb));
+ caption_overlay #(.ADAPTIVE(1),.PIPELINED(1)) captions(.mode_800(mode_video),.clk(video_clk),.rst(rst_video),.vs(wave_vs),.de(wave_de),
+--- baseline/src/td_project/video_improve.al
++++ current/src/td_project/video_improve.al
+@@ -729,6 +729,38 @@
+         </File>
+         <File Path="../../src/modules/game/snake_game_bram.v">
+         </File>
++            <File Path="../../src/modules/audio/spectrum_coefficients.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="95"/>
++                </FileInfo>
++            </File>
++            <File Path="../../src/modules/audio/spectrum_fft256.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="96"/>
++                </FileInfo>
++            </File>
++            <File Path="../../src/modules/audio/spectrum_analyzer.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="97"/>
++                </FileInfo>
++            </File>
++            <File Path="../../src/modules/video/music_spectrum.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="98"/>
++                </FileInfo>
++            </File>
+ </Verilog>
+         <ADC_FILE>
+             <File Path="../../src/constraints/pin.adc">
+--- baseline/scripts/design_files.txt
++++ current/scripts/design_files.txt
+@@ -92,3 +92,7 @@
+ src/modules/audio/av_audio_gain.v
+ src/modules/control/boot_media_select.v
+ src/modules/game/snake_game_bram.v
++src/modules/audio/spectrum_coefficients.v
++src/modules/audio/spectrum_fft256.v
++src/modules/audio/spectrum_analyzer.v
++src/modules/video/music_spectrum.v
+--- baseline/scripts/implement.tcl
++++ current/scripts/implement.tcl
+@@ -13,7 +13,7 @@
+ # Prefer LUT pairs: avoid wasting slice sites beside distributed line RAM.
+ set_param place pack_mode more_lut_pair
+ set_param place pr_strategy 1
+-set_param place seed 25
++set_param place seed 26
+ place
+ # The registered SDC survives timer rebuilds. Refresh before reporting and
+ # optimizing, without adding duplicate generated-clock definitions.
+--- baseline/scripts/run_tests.ps1
++++ current/scripts/run_tests.ps1
+@@ -13,6 +13,8 @@
+  if($LASTEXITCODE -ne 0) { throw 'AVF conversion/packing tests failed' }
+  & python ../scripts/test_zh_font.py
+  if($LASTEXITCODE -ne 0) { throw 'Chinese menu font test failed' }
++ & python ../scripts/make_spectrum_vectors.py
++ if($LASTEXITCODE -ne 0) { throw 'Independent spectrum DFT vector generation failed' }
+  if(!(Test-Path 'msim_work')) { & "$ModelSim\vlib.exe" msim_work; if($LASTEXITCODE -ne 0) { throw 'Cannot create simulation library' } }
+  $files=@('../src/modules/common/*.v','../src/modules/control/*.v','../src/modules/osd/*.v','../src/modules/video/*.v','../src/modules/audio/*.v','../src/modules/optional/*.v','../src/modules/bmp/bmp_read.v','../src/modules/bmp/sd_card_bmp.v','../src/modules/sd/sd_card_top.v','../src/modules/sd/sd_card_sec_read_write.v','../src/modules/sd/sd_card_cmd.v','../src/modules/sd/spi_master.v','tb_uart_rx.v','tb_ir_nec_rx.v','tb_video_scaler.v','tb_upgrade.v','tb_cdc.v','tb_stream_queue.v','tb_uart_queue.v','tb_sd_address.v','tb_load_recovery.v','tb_bmp_stream.v','../src/modules/memory/frame_fifo_write.v','../src/ip/fifo/afifo_16_32_256.v','tb_fifo_boundary.v','tb_frame_writer.v','../src/modules/memory/frame_fifo_read.v','../src/modules/memory/frame_read_write.v','../src/ip/fifo/afifo_32_16_256.v','tb_frame_tail.v','tb_osd_text.v')
+  $files += @('tb_bmp_headers.v','tb_hdmi_line_contract.v','tb_sd_watchdog.v')
+@@ -56,6 +58,7 @@
+  $files += @('../src/modules/display/seg_scan.v')
+  $mergeTests += @('tb_seg_scan_timing','tb_hdmi_video_stage')
+  $mergeTests += @('tb_chinese_menu','tb_menu_overlay','tb_menu_popup','tb_menu_mode_popup','tb_menu_media','tb_menu_media_pixels')
++ $mergeTests += @('tb_spectrum_fft','tb_spectrum_bands','tb_music_waveform','tb_music_spectrum')
+  $files += @($mergeTests | ForEach-Object { "$_.v" })
+  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
+  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
+--- baseline/docs/BUILD_STATUS.md
++++ current/docs/BUILD_STATUS.md
+@@ -1,4 +1,6 @@
+ # 构建状态
++
++> **2026-10-23 当前：彩虹频谱与稳定波形已接入，新候选 bit 已生成。** 用真实 256 点定点 FFT、32 频段柱条、缓降峰值和过零触发波形替换顶层原波形显示；原 SD/媒体读取、音频播放、HDMI、菜单、KEY/SW、游戏和官方 IP 保持原通路。98 源/40 IO 静态检查、121 项 RTL 主回归、10 项原 Python 测试、29 场景 AVF 专项通过；综合/P&R/最终 STA 通过，SWNS +0.036ns、HWNS +0.020ns，STNS/HTNS 均为 0；LUT 17965/19600、BRAM 63/64、DSP 24/29。尚未上板、board_signoff=false，未达到整体 +0.5ns；全局 HWNS 不代表 HDMI 管脚 hold。 [新候选 bit](../reports/music_spectrum_20261023/bitstream/video_improve_music_spectrum_20261023.bit)，[操作](MUSIC_SPECTRUM_20261023.md)，[验收证据](../reports/music_spectrum_20261023/RESULT.md)。下文为历史记录。
+ 
+ > **2026-10-23 最新：媒体菜单版bit已生成。** 116项RTL、10项Python、94源/40 IO静态检查及综合/P&R/最终STA通过；SWNS +0.160ns、HWNS +0.022ns，STNS/HTNS均0；LUT 16618/19600、BRAM 57/64、DSP 23/29。[新bit](../reports/menu_media_20261023/bitstream/video_improve_menu_media_20261023.bit)为648248字节，前后STA与源码/数据库匹配。操作见[媒体菜单](MENU_MEDIA_20261023.md)，证据见[结果](../reports/menu_media_20261023/RESULT.md)。board_signoff=false，未上板、未达整体+0.5ns；全局HWNS不是HDMI管脚hold签核。下文为历史记录。
+ 
+--- baseline/docs/KEY_SW_OPERATION.md
++++ current/docs/KEY_SW_OPERATION.md
+@@ -1,4 +1,6 @@
+ # KEY 与 SW 详细操作教程
++
++> **2026-10-23 频谱显示更新：** 已替换为彩虹 FFT 频谱和稳定波形，使用正在播放的 WAV/AVF 音频，不需新接线；KEY/SW 功能不变。长按代码 KEY3（B1）仍打开原媒体/参数菜单，音量/静音在原子菜单调节。显示随原 OSD 总开关，复位默认开启；SW 不新增音频用途。操作与限制见[频谱手册](MUSIC_SPECTRUM_20261023.md)；当前菜单以[媒体菜单](MENU_MEDIA_20261023.md)为准，下文含旧菜单历史说明。
+ 
+ > **2026-10-21 UART/红外/画质/相册：四阶段已通过静态、全量仿真与内部物理门禁；没有本轮新bit，未上板。** 108项ModelSim通过；SWNS +0.142ns、HWNS +0.024ns，STNS/HTNS均0。默认保留KEY/SW/PS/2；新增选项默认关闭。当前用法与限制见 [本轮操作手册](UART_IR_ALBUM_20261020.md)。历史数值只代表各自冻结版本，不能验收当前源码；没有整体+0.5ns签核。
+ > **2026-10-19 转场扩充：仅第一阶段已通过软件/内部时序门禁，尚未实板验收。** 80源/40IO静态检查、102项ModelSim通过；SWNS +0.116ns、HWNS +0.030ns，STNS/HTNS均0。SW第3、4路同时ON后，每次换图依次轮播淡入淡出、滑动、擦除、圆形、棋盘。二维Ken-Burns受两行缓存与禁止修改SDRAM的约束冲突而未实现，FFT按指定顺序尚未启动；本轮无新bit，旧bit不含这些修改。见[操作、原理与未完成项](TRANSITIONS_ZOOM_FFT_20261019.md)。
+--- baseline/docs/SOURCE_MAP.md
++++ current/docs/SOURCE_MAP.md
+@@ -121,3 +121,16 @@
+ | [zh_overlay.v](../src/modules/osd/zh_overlay.v) | 两级中文取字/叠加，半透明背景和RGB/VS/DE/XY同步寄存。 |
+ 
+ auto_enhance_scale.mem、zh_font.mem用于审计和激励参考；生产RTL内嵌同值常量，不依赖启动目录readmemh。主机脚本scripts/album_remote.py不能加入TD综合。状态与冻结证据见[本轮手册](UART_IR_ALBUM_20261020.md)。
++
++## 2026-10-23 音频频谱旁路
++
++顶层原 audio_visualizer 实例已替换为 music_spectrum_overlay，旧模块仍保留作兼容测试。
++
++| 文件 | 功能 |
++|---|---|
++| src/modules/audio/spectrum_fft256.v | 共享乘法器的 256 点定点 Hann FFT |
++| src/modules/audio/spectrum_coefficients.v | 可复现生成的小型同步逻辑系数表 |
++| src/modules/audio/spectrum_analyzer.v | 32 频段归并、双快照、帧边界发布、缓降/峰值包络 |
++| src/modules/video/music_spectrum.v | 彩虹柱条、稳定触发波形、两拍光栅叠加 |
++
++操作与完整文件清单见[频谱手册](MUSIC_SPECTRUM_20261023.md)。
+--- baseline/README.md
++++ current/README.md
+@@ -1,4 +1,6 @@
+ # EG4S20 HDMI 图片、WAV 与 AVF 视频播放器
++
++> **2026-10-23 当前：彩虹频谱与稳定波形已接入，新候选 bit 已生成。** 用真实 256 点定点 FFT、32 频段柱条、缓降峰值和过零触发波形替换顶层原波形显示；原 SD/媒体读取、音频播放、HDMI、菜单、KEY/SW、游戏和官方 IP 保持原通路。98 源/40 IO 静态检查、121 项 RTL 主回归、10 项原 Python 测试、29 场景 AVF 专项通过；综合/P&R/最终 STA 通过，SWNS +0.036ns、HWNS +0.020ns，STNS/HTNS 均为 0；LUT 17965/19600、BRAM 63/64、DSP 24/29。尚未上板、board_signoff=false，未达到整体 +0.5ns；全局 HWNS 不代表 HDMI 管脚 hold。 操作见[频谱手册](docs/MUSIC_SPECTRUM_20261023.md)，[新候选 bit](reports/music_spectrum_20261023/bitstream/video_improve_music_spectrum_20261023.bit)，[验证结果](reports/music_spectrum_20261023/RESULT.md)。下文较早版本数据为历史记录。
+ 
+ > **按键编号提醒：本工程KEY1=B2、KEY2=C1、KEY3=B1，A2为整机复位。** 若实物按官方四键顺序编号，第1个按钮可能是本工程的复位键，按下熄屏属于预期复位；操作菜单请用B2/C1/B1对应按钮，见[按键与复位对照](docs/KEY_RESET_MAPPING_20261023.md)。
+ 
+--- baseline/video_improve.al
++++ current/video_improve.al
+@@ -772,6 +772,38 @@
+                     <Attr Name="UsedInP&R" Val="true"/>
+                     <Attr Name="BelongTo" Val="design_1"/>
+                     <Attr Name="CompileOrder" Val="94"/>
++                </FileInfo>
++            </File>
++            <File Path="src/modules/audio/spectrum_coefficients.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="95"/>
++                </FileInfo>
++            </File>
++            <File Path="src/modules/audio/spectrum_fft256.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="96"/>
++                </FileInfo>
++            </File>
++            <File Path="src/modules/audio/spectrum_analyzer.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="97"/>
++                </FileInfo>
++            </File>
++            <File Path="src/modules/video/music_spectrum.v">
++                <FileInfo>
++                    <Attr Name="UsedInSyn" Val="true"/>
++                    <Attr Name="UsedInP&R" Val="true"/>
++                    <Attr Name="BelongTo" Val="design_1"/>
++                    <Attr Name="CompileOrder" Val="98"/>
+                 </FileInfo>
+             </File>
+         </Verilog>
+--- /dev/null
++++ current/src/modules/audio/spectrum_coefficients.v
+@@ -0,0 +1,336 @@
++// Generated by scripts/gen_spectrum_coefficients.py; Q1.15.
++module spectrum_coefficients(input clk,input [6:0] tw_address,
++ input [7:0] window_address,output reg signed [15:0] tw_real,tw_imag,window);
++ // Small 16-entry logic tables avoid TD promoting a wide ROM to BRAM.
++ wire [6:0] wa=window_address[7]?~window_address[6:0]:window_address[6:0];
++ function [31:0] tw0;
++  input [3:0] a;begin case(a)
++   4'd0:tw0=32'h7fff0000;
++   4'd1:tw0=32'h7ff6fcdc;
++   4'd2:tw0=32'h7fd9f9b8;
++   4'd3:tw0=32'h7fa7f695;
++   4'd4:tw0=32'h7f62f374;
++   4'd5:tw0=32'h7f0af055;
++   4'd6:tw0=32'h7e9ded38;
++   4'd7:tw0=32'h7e1eea1e;
++   4'd8:tw0=32'h7d8ae707;
++   4'd9:tw0=32'h7ce4e3f4;
++   4'd10:tw0=32'h7c2ae0e6;
++   4'd11:tw0=32'h7b5ddddc;
++   4'd12:tw0=32'h7a7ddad8;
++   4'd13:tw0=32'h798ad7d9;
++   4'd14:tw0=32'h7885d4e1;
++   4'd15:tw0=32'h776cd1ef;
++  endcase end endfunction
++ function [31:0] tw1;
++  input [3:0] a;begin case(a)
++   4'd0:tw1=32'h7642cf04;
++   4'd1:tw1=32'h7505cc21;
++   4'd2:tw1=32'h73b6c946;
++   4'd3:tw1=32'h7255c673;
++   4'd4:tw1=32'h70e3c3a9;
++   4'd5:tw1=32'h6f5fc0e9;
++   4'd6:tw1=32'h6dcabe32;
++   4'd7:tw1=32'h6c24bb85;
++   4'd8:tw1=32'h6a6eb8e3;
++   4'd9:tw1=32'h68a7b64c;
++   4'd10:tw1=32'h66d0b3c0;
++   4'd11:tw1=32'h64e9b140;
++   4'd12:tw1=32'h62f2aecc;
++   4'd13:tw1=32'h60ecac65;
++   4'd14:tw1=32'h5ed7aa0a;
++   4'd15:tw1=32'h5cb4a7bd;
++  endcase end endfunction
++ function [31:0] tw2;
++  input [3:0] a;begin case(a)
++   4'd0:tw2=32'h5a82a57e;
++   4'd1:tw2=32'h5843a34c;
++   4'd2:tw2=32'h55f6a129;
++   4'd3:tw2=32'h539b9f14;
++   4'd4:tw2=32'h51349d0e;
++   4'd5:tw2=32'h4ec09b17;
++   4'd6:tw2=32'h4c409930;
++   4'd7:tw2=32'h49b49759;
++   4'd8:tw2=32'h471d9592;
++   4'd9:tw2=32'h447b93dc;
++   4'd10:tw2=32'h41ce9236;
++   4'd11:tw2=32'h3f1790a1;
++   4'd12:tw2=32'h3c578f1d;
++   4'd13:tw2=32'h398d8dab;
++   4'd14:tw2=32'h36ba8c4a;
++   4'd15:tw2=32'h33df8afb;
++  endcase end endfunction
++ function [31:0] tw3;
++  input [3:0] a;begin case(a)
++   4'd0:tw3=32'h30fc89be;
++   4'd1:tw3=32'h2e118894;
++   4'd2:tw3=32'h2b1f877b;
++   4'd3:tw3=32'h28278676;
++   4'd4:tw3=32'h25288583;
++   4'd5:tw3=32'h222484a3;
++   4'd6:tw3=32'h1f1a83d6;
++   4'd7:tw3=32'h1c0c831c;
++   4'd8:tw3=32'h18f98276;
++   4'd9:tw3=32'h15e281e2;
++   4'd10:tw3=32'h12c88163;
++   4'd11:tw3=32'h0fab80f6;
++   4'd12:tw3=32'h0c8c809e;
++   4'd13:tw3=32'h096b8059;
++   4'd14:tw3=32'h06488027;
++   4'd15:tw3=32'h0324800a;
++  endcase end endfunction
++ function [31:0] tw4;
++  input [3:0] a;begin case(a)
++   4'd0:tw4=32'h00008000;
++   4'd1:tw4=32'hfcdc800a;
++   4'd2:tw4=32'hf9b88027;
++   4'd3:tw4=32'hf6958059;
++   4'd4:tw4=32'hf374809e;
++   4'd5:tw4=32'hf05580f6;
++   4'd6:tw4=32'hed388163;
++   4'd7:tw4=32'hea1e81e2;
++   4'd8:tw4=32'he7078276;
++   4'd9:tw4=32'he3f4831c;
++   4'd10:tw4=32'he0e683d6;
++   4'd11:tw4=32'hdddc84a3;
++   4'd12:tw4=32'hdad88583;
++   4'd13:tw4=32'hd7d98676;
++   4'd14:tw4=32'hd4e1877b;
++   4'd15:tw4=32'hd1ef8894;
++  endcase end endfunction
++ function [31:0] tw5;
++  input [3:0] a;begin case(a)
++   4'd0:tw5=32'hcf0489be;
++   4'd1:tw5=32'hcc218afb;
++   4'd2:tw5=32'hc9468c4a;
++   4'd3:tw5=32'hc6738dab;
++   4'd4:tw5=32'hc3a98f1d;
++   4'd5:tw5=32'hc0e990a1;
++   4'd6:tw5=32'hbe329236;
++   4'd7:tw5=32'hbb8593dc;
++   4'd8:tw5=32'hb8e39592;
++   4'd9:tw5=32'hb64c9759;
++   4'd10:tw5=32'hb3c09930;
++   4'd11:tw5=32'hb1409b17;
++   4'd12:tw5=32'haecc9d0e;
++   4'd13:tw5=32'hac659f14;
++   4'd14:tw5=32'haa0aa129;
++   4'd15:tw5=32'ha7bda34c;
++  endcase end endfunction
++ function [31:0] tw6;
++  input [3:0] a;begin case(a)
++   4'd0:tw6=32'ha57ea57e;
++   4'd1:tw6=32'ha34ca7bd;
++   4'd2:tw6=32'ha129aa0a;
++   4'd3:tw6=32'h9f14ac65;
++   4'd4:tw6=32'h9d0eaecc;
++   4'd5:tw6=32'h9b17b140;
++   4'd6:tw6=32'h9930b3c0;
++   4'd7:tw6=32'h9759b64c;
++   4'd8:tw6=32'h9592b8e3;
++   4'd9:tw6=32'h93dcbb85;
++   4'd10:tw6=32'h9236be32;
++   4'd11:tw6=32'h90a1c0e9;
++   4'd12:tw6=32'h8f1dc3a9;
++   4'd13:tw6=32'h8dabc673;
++   4'd14:tw6=32'h8c4ac946;
++   4'd15:tw6=32'h8afbcc21;
++  endcase end endfunction
++ function [31:0] tw7;
++  input [3:0] a;begin case(a)
++   4'd0:tw7=32'h89becf04;
++   4'd1:tw7=32'h8894d1ef;
++   4'd2:tw7=32'h877bd4e1;
++   4'd3:tw7=32'h8676d7d9;
++   4'd4:tw7=32'h8583dad8;
++   4'd5:tw7=32'h84a3dddc;
++   4'd6:tw7=32'h83d6e0e6;
++   4'd7:tw7=32'h831ce3f4;
++   4'd8:tw7=32'h8276e707;
++   4'd9:tw7=32'h81e2ea1e;
++   4'd10:tw7=32'h8163ed38;
++   4'd11:tw7=32'h80f6f055;
++   4'd12:tw7=32'h809ef374;
++   4'd13:tw7=32'h8059f695;
++   4'd14:tw7=32'h8027f9b8;
++   4'd15:tw7=32'h800afcdc;
++  endcase end endfunction
++ reg [31:0] tw_value;
++ always @*begin case(tw_address[6:4])
++  3'd0:tw_value=tw0(tw_address[3:0]);
++  3'd1:tw_value=tw1(tw_address[3:0]);
++  3'd2:tw_value=tw2(tw_address[3:0]);
++  3'd3:tw_value=tw3(tw_address[3:0]);
++  3'd4:tw_value=tw4(tw_address[3:0]);
++  3'd5:tw_value=tw5(tw_address[3:0]);
++  3'd6:tw_value=tw6(tw_address[3:0]);
++  3'd7:tw_value=tw7(tw_address[3:0]);
++ endcase end
++ function [15:0] win0;
++  input [3:0] a;begin case(a)
++   4'd0:win0=16'h0000;
++   4'd1:win0=16'h0005;
++   4'd2:win0=16'h0014;
++   4'd3:win0=16'h002d;
++   4'd4:win0=16'h0050;
++   4'd5:win0=16'h007c;
++   4'd6:win0=16'h00b3;
++   4'd7:win0=16'h00f3;
++   4'd8:win0=16'h013d;
++   4'd9:win0=16'h0191;
++   4'd10:win0=16'h01ef;
++   4'd11:win0=16'h0256;
++   4'd12:win0=16'h02c7;
++   4'd13:win0=16'h0341;
++   4'd14:win0=16'h03c5;
++   4'd15:win0=16'h0452;
++  endcase end endfunction
++ function [15:0] win1;
++  input [3:0] a;begin case(a)
++   4'd0:win1=16'h04e9;
++   4'd1:win1=16'h0588;
++   4'd2:win1=16'h0631;
++   4'd3:win1=16'h06e3;
++   4'd4:win1=16'h079d;
++   4'd5:win1=16'h0861;
++   4'd6:win1=16'h092d;
++   4'd7:win1=16'h0a01;
++   4'd8:win1=16'h0ade;
++   4'd9:win1=16'h0bc3;
++   4'd10:win1=16'h0cb1;
++   4'd11:win1=16'h0da6;
++   4'd12:win1=16'h0ea3;
++   4'd13:win1=16'h0fa8;
++   4'd14:win1=16'h10b4;
++   4'd15:win1=16'h11c8;
++  endcase end endfunction
++ function [15:0] win2;
++  input [3:0] a;begin case(a)
++   4'd0:win2=16'h12e2;
++   4'd1:win2=16'h1404;
++   4'd2:win2=16'h152d;
++   4'd3:win2=16'h165c;
++   4'd4:win2=16'h1792;
++   4'd5:win2=16'h18ce;
++   4'd6:win2=16'h1a10;
++   4'd7:win2=16'h1b58;
++   4'd8:win2=16'h1ca6;
++   4'd9:win2=16'h1df9;
++   4'd10:win2=16'h1f52;
++   4'd11:win2=16'h20af;
++   4'd12:win2=16'h2212;
++   4'd13:win2=16'h2379;
++   4'd14:win2=16'h24e5;
++   4'd15:win2=16'h2654;
++  endcase end endfunction
++ function [15:0] win3;
++  input [3:0] a;begin case(a)
++   4'd0:win3=16'h27c8;
++   4'd1:win3=16'h2940;
++   4'd2:win3=16'h2abb;
++   4'd3:win3=16'h2c39;
++   4'd4:win3=16'h2dbb;
++   4'd5:win3=16'h2f3f;
++   4'd6:win3=16'h30c6;
++   4'd7:win3=16'h324f;
++   4'd8:win3=16'h33da;
++   4'd9:win3=16'h3568;
++   4'd10:win3=16'h36f6;
++   4'd11:win3=16'h3887;
++   4'd12:win3=16'h3a18;
++   4'd13:win3=16'h3bab;
++   4'd14:win3=16'h3d3e;
++   4'd15:win3=16'h3ed1;
++  endcase end endfunction
++ function [15:0] win4;
++  input [3:0] a;begin case(a)
++   4'd0:win4=16'h4065;
++   4'd1:win4=16'h41f9;
++   4'd2:win4=16'h438c;
++   4'd3:win4=16'h451f;
++   4'd4:win4=16'h46b1;
++   4'd5:win4=16'h4842;
++   4'd6:win4=16'h49d1;
++   4'd7:win4=16'h4b5f;
++   4'd8:win4=16'h4cec;
++   4'd9:win4=16'h4e76;
++   4'd10:win4=16'h4ffe;
++   4'd11:win4=16'h5184;
++   4'd12:win4=16'h5307;
++   4'd13:win4=16'h5487;
++   4'd14:win4=16'h5603;
++   4'd15:win4=16'h577d;
++  endcase end endfunction
++ function [15:0] win5;
++  input [3:0] a;begin case(a)
++   4'd0:win5=16'h58f2;
++   4'd1:win5=16'h5a64;
++   4'd2:win5=16'h5bd2;
++   4'd3:win5=16'h5d3b;
++   4'd4:win5=16'h5ea0;
++   4'd5:win5=16'h6000;
++   4'd6:win5=16'h615b;
++   4'd7:win5=16'h62b1;
++   4'd8:win5=16'h6402;
++   4'd9:win5=16'h654c;
++   4'd10:win5=16'h6692;
++   4'd11:win5=16'h67d1;
++   4'd12:win5=16'h690a;
++   4'd13:win5=16'h6a3c;
++   4'd14:win5=16'h6b68;
++   4'd15:win5=16'h6c8d;
++  endcase end endfunction
++ function [15:0] win6;
++  input [3:0] a;begin case(a)
++   4'd0:win6=16'h6dac;
++   4'd1:win6=16'h6ec3;
++   4'd2:win6=16'h6fd3;
++   4'd3:win6=16'h70dc;
++   4'd4:win6=16'h71dc;
++   4'd5:win6=16'h72d6;
++   4'd6:win6=16'h73c7;
++   4'd7:win6=16'h74b0;
++   4'd8:win6=16'h7591;
++   4'd9:win6=16'h766a;
++   4'd10:win6=16'h773a;
++   4'd11:win6=16'h7802;
++   4'd12:win6=16'h78c1;
++   4'd13:win6=16'h7977;
++   4'd14:win6=16'h7a24;
++   4'd15:win6=16'h7ac8;
++  endcase end endfunction
++ function [15:0] win7;
++  input [3:0] a;begin case(a)
++   4'd0:win7=16'h7b64;
++   4'd1:win7=16'h7bf5;
++   4'd2:win7=16'h7c7e;
++   4'd3:win7=16'h7cfd;
++   4'd4:win7=16'h7d73;
++   4'd5:win7=16'h7ddf;
++   4'd6:win7=16'h7e41;
++   4'd7:win7=16'h7e9a;
++   4'd8:win7=16'h7ee9;
++   4'd9:win7=16'h7f2e;
++   4'd10:win7=16'h7f6a;
++   4'd11:win7=16'h7f9b;
++   4'd12:win7=16'h7fc3;
++   4'd13:win7=16'h7fe1;
++   4'd14:win7=16'h7ff5;
++   4'd15:win7=16'h7fff;
++  endcase end endfunction
++ reg [15:0] win_value;
++ always @*begin case(wa[6:4])
++  3'd0:win_value=win0(wa[3:0]);
++  3'd1:win_value=win1(wa[3:0]);
++  3'd2:win_value=win2(wa[3:0]);
++  3'd3:win_value=win3(wa[3:0]);
++  3'd4:win_value=win4(wa[3:0]);
++  3'd5:win_value=win5(wa[3:0]);
++  3'd6:win_value=win6(wa[3:0]);
++  3'd7:win_value=win7(wa[3:0]);
++ endcase end
++ always @(posedge clk)begin
++  {tw_real,tw_imag}<=tw_value;
++  window<=win_value;
++ end
++endmodule
+--- /dev/null
++++ current/src/modules/audio/spectrum_fft256.v
+@@ -0,0 +1,116 @@
++// Portable 256-point real-input FFT. No vendor FFT/float IP is required.
++// One shared signed 16x16 multiplier, Q1.15 Hann/twiddles, /2 at each stage.
++// PCM is only observed: busy FFT cycles never stall the actual audio player.
++// A block is captured, transformed, then published in NATURAL bin order.
++module spectrum_fft256(
++ input clk, input rst, input sample_valid, input signed [15:0] sample,
++ output reg bin_valid, output reg [7:0] bin_index,
++ output reg signed [15:0] bin_real, bin_imag,
++ output reg block_done, output wire busy);
++ localparam CAP=0,C_WINDOW=1,C_PIPE=2,C_STORE=3,FETCH=4,READ=5,
++            M0=6,M1=7,M2=8,M3=9,M4=10,BUTTERFLY=11,WRITE=12,
++            SCAN_FETCH=13,SCAN_OUT=14,READ_B=15,WRITE_B=16;
++ reg [4:0] state;
++ reg [7:0] capture_index,a_index,b_index,scan_index;
++ reg [7:0] half_size,j,tw_step;
++ reg [8:0] span,group_base;
++ reg [6:0] tw_index;
++ reg [2:0] stage;
++ reg signed [15:0] held_sample,ar,ai,br,bi,mul_x,mul_y;
++ reg signed [31:0] product,p0,p1,p2;
++ reg signed [16:0] tr,ti;
++ reg [31:0] write_a,write_b;
++ wire signed [15:0] tw_real,tw_imag,window;
++ spectrum_coefficients coefficients(clk,tw_index,capture_index,tw_real,tw_imag,window);
++ function [7:0] reverse8;
++  input [7:0] v;
++  begin reverse8={v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]};end
++ endfunction
++ // Time-share one synchronous RAM port: read A, read B, write A, write B.
++ // EG4 true-dual-port width splitting wastes BRAM for a 32-bit complex word.
++ // This schedule keeps the same arithmetic while using the wide single port.
++ (* ram_style="bram" *) reg [31:0] memory[0:255];
++ reg [31:0] qa;
++ wire [7:0] addr_a=(state==C_STORE)?reverse8(capture_index):
++                        ((state==SCAN_FETCH || state==SCAN_OUT)?scan_index:
++                        ((state==READ || state==WRITE_B)?b_index:a_index));
++ wire we_a=!rst && (state==C_STORE || state==WRITE || state==WRITE_B);
++ wire [31:0] data_a=(state==C_STORE)?{product[30:15],16'b0}:
++                                  (state==WRITE?write_a:write_b);
++ always @(posedge clk)begin
++  if(we_a)memory[addr_a]<=data_a;
++  qa<=memory[addr_a];
++ end
++ // Deliberately only one multiplication expression in the entire FFT.
++ always @(posedge clk)product<=mul_x*mul_y;
++ wire signed [32:0] real_product=$signed({p0[31],p0})-$signed({p1[31],p1});
++ wire signed [32:0] imag_product=$signed({p2[31],p2})+$signed({product[31],product});
++ wire signed [17:0] sum_r=$signed({{2{ar[15]}},ar})+$signed({tr[16],tr});
++ wire signed [17:0] sum_i=$signed({{2{ai[15]}},ai})+$signed({ti[16],ti});
++ wire signed [17:0] dif_r=$signed({{2{ar[15]}},ar})-$signed({tr[16],tr});
++ wire signed [17:0] dif_i=$signed({{2{ai[15]}},ai})-$signed({ti[16],ti});
++ assign busy=state!=CAP;
++ always @(posedge clk or posedge rst)begin
++  if(rst)begin
++   state<=CAP;capture_index<=0;a_index<=0;b_index<=1;scan_index<=0;
++   half_size<=1;j<=0;tw_step<=128;span<=2;group_base<=0;tw_index<=0;stage<=0;
++   held_sample<=0;ar<=0;ai<=0;br<=0;bi<=0;mul_x<=0;mul_y<=0;
++   p0<=0;p1<=0;p2<=0;tr<=0;ti<=0;write_a<=0;write_b<=0;
++   bin_valid<=0;bin_index<=0;bin_real<=0;bin_imag<=0;block_done<=0;
++  end else begin
++   bin_valid<=0;block_done<=0;
++   case(state)
++    CAP:if(sample_valid)begin held_sample<=sample;state<=C_WINDOW;end
++    C_WINDOW:begin mul_x<=held_sample;mul_y<=window;state<=C_PIPE;end
++    C_PIPE:state<=C_STORE;
++    C_STORE:begin
++     if(capture_index==255)begin
++      capture_index<=0;a_index<=0;b_index<=1;half_size<=1;j<=0;
++      tw_step<=128;span<=2;group_base<=0;tw_index<=0;stage<=0;state<=FETCH;
++     end else begin capture_index<=capture_index+1'b1;state<=CAP;end
++    end
++    FETCH:state<=READ;
++    READ:begin ar<=qa[31:16];ai<=qa[15:0];state<=READ_B;end
++    READ_B:begin
++     br<=qa[31:16];bi<=qa[15:0];
++     mul_x<=qa[31:16];mul_y<=tw_real;state<=M0;
++    end
++    M0:begin mul_x<=bi;mul_y<=tw_imag;state<=M1;end
++    M1:begin p0<=product;mul_x<=br;mul_y<=tw_imag;state<=M2;end
++    M2:begin p1<=product;mul_x<=bi;mul_y<=tw_real;state<=M3;end
++    M3:begin p2<=product;state<=M4;end
++    M4:begin tr<=real_product>>>15;ti<=imag_product>>>15;state<=BUTTERFLY;end
++    BUTTERFLY:begin
++     write_a<={sum_r[16:1],sum_i[16:1]};
++     write_b<={dif_r[16:1],dif_i[16:1]};state<=WRITE;
++    end
++    WRITE:state<=WRITE_B;
++    WRITE_B:begin
++     if(j==half_size-1'b1)begin
++      j<=0;tw_index<=0;
++      if(group_base+span>=256)begin
++       if(stage==7)begin scan_index<=0;state<=SCAN_FETCH;end
++       else begin
++        stage<=stage+1'b1;half_size<=half_size<<1;span<=span<<1;tw_step<=tw_step>>1;
++        group_base<=0;a_index<=0;b_index<=half_size<<1;state<=FETCH;
++       end
++      end else begin
++       group_base<=group_base+span;
++       a_index<=group_base+span;b_index<=group_base+span+half_size;state<=FETCH;
++      end
++     end else begin
++      j<=j+1'b1;tw_index<=tw_index+tw_step;
++      a_index<=a_index+1'b1;b_index<=b_index+1'b1;state<=FETCH;
++     end
++    end
++    SCAN_FETCH:state<=SCAN_OUT;
++    SCAN_OUT:begin
++     bin_valid<=1;bin_index<=scan_index;bin_real<=qa[31:16];bin_imag<=qa[15:0];
++     if(scan_index==255)begin block_done<=1;state<=CAP;end
++     else begin scan_index<=scan_index+1'b1;state<=SCAN_FETCH;end
++    end
++    default:state<=CAP;
++   endcase
++  end
++ end
++endmodule
+--- /dev/null
++++ current/src/modules/audio/spectrum_analyzer.v
+@@ -0,0 +1,107 @@
++// 32 low-dense/high-sparse bands, max aggregation (not isolated FFT sampling).
++// Completed spectra are committed only at vertical blank. Envelopes and peak
++// markers share a synchronous dual-port BRAM with the two result snapshots.
++module spectrum_analyzer(
++ input clk,input rst,input frame_start,input audio_valid,
++ input signed [23:0] audio_left,input [4:0] display_band,
++ output reg [6:0] display_height,display_peak);
++ wire bin_valid,block_done,fft_busy;
++ wire [7:0] bin;wire signed [15:0] re,im;
++ reg pending,write_bank,frame_bank,have_spectrum;
++ reg [3:0] age;
++ reg [2:0] update_state;
++ reg [4:0] update_index,previous_band;
++ reg [6:0] target_height;
++ reg [13:0] updated_envelope;
++ reg update_bank,update_available;
++ reg [1:0] decay_phase;
++ reg [15:0] accumulator;
++ localparam INIT=0,IDLE=1,TARGET=2,OLD=3,MATH=4,STORE=5;
++ spectrum_fft256 fft(clk,rst,audio_valid && !pending && update_state!=INIT,
++                    audio_left[23:8],bin_valid,bin,re,im,block_done,fft_busy);
++ function [4:0] band_for;
++  input [7:0] k;
++  begin
++   if(k<=16)band_for=k-1'b1;
++   else if(k<18)band_for=16;else if(k<20)band_for=17;
++   else if(k<23)band_for=18;else if(k<26)band_for=19;
++   else if(k<30)band_for=20;else if(k<35)band_for=21;
++   else if(k<41)band_for=22;else if(k<48)band_for=23;
++   else if(k<56)band_for=24;else if(k<65)band_for=25;
++   else if(k<75)band_for=26;else if(k<86)band_for=27;
++   else if(k<98)band_for=28;else if(k<111)band_for=29;
++   else if(k<120)band_for=30;else band_for=31;
++  end
++ endfunction
++ function [6:0] compress;
++  input [15:0] amplitude;
++  integer bit_index;reg [4:0] exponent;reg [15:0] fraction;
++  reg [7:0] result;
++  begin
++   exponent=0;
++   for(bit_index=0;bit_index<16;bit_index=bit_index+1)
++    if(amplitude[bit_index])exponent=bit_index;
++   fraction=amplitude>>(exponent>=2?exponent-2:0);
++   // Approximate log2 with four substeps. Values <8 are a noise floor.
++   result=exponent>=3?((exponent-3)<<3)+{fraction[1:0],1'b0}:0;
++   compress=result>96?96:result[6:0];
++  end
++ endfunction
++ wire [4:0] current_band=band_for(bin);
++ wire [15:0] abs_re=re[15]?(16'd0-re):re;
++ wire [15:0] abs_im=im[15]?(16'd0-im):im;
++ wire [16:0] magnitude={1'b0,abs_re}+{1'b0,abs_im};
++ wire [15:0] amplitude=magnitude[16]?16'hffff:magnitude[15:0];
++ wire flush_band=bin_valid && !pending && bin>1 && bin<=128 &&
++                       (bin==128 || current_band!=previous_band);
++ (* ram_style="bram" *) reg [13:0] levels[0:127];
++ reg [13:0] qa,qdisplay;
++ wire [6:0] address_a=flush_band?{1'b1,write_bank,previous_band}:
++                       (update_state==TARGET?{1'b1,update_bank,update_index}:{2'b0,update_index});
++ wire write_a=!rst && (flush_band || update_state==INIT || update_state==STORE);
++ wire [13:0] data_a=flush_band?{7'b0,compress(accumulator)}:
++                        (update_state==INIT?14'b0:updated_envelope);
++ always @(posedge clk)begin
++  qa<=levels[address_a];
++  if(write_a)levels[address_a]<=data_a;
++ end
++ always @(posedge clk)qdisplay<=levels[{2'b0,display_band}];
++ always @*begin display_height=qdisplay[6:0];display_peak=qdisplay[13:7];end
++ wire [6:0] next_height=target_height>=qa[6:0]?target_height:
++                                  (qa[6:0]>2?qa[6:0]-7'd2:7'd0);
++ wire [6:0] decayed_peak=(decay_phase==0 && qa[13:7]!=0)?qa[13:7]-1'b1:qa[13:7];
++ wire [6:0] next_peak=next_height>=decayed_peak?next_height:decayed_peak;
++ always @(posedge clk or posedge rst)begin
++  if(rst)begin
++   pending<=0;write_bank<=0;frame_bank<=1;have_spectrum<=0;age<=15;
++   update_state<=INIT;update_index<=0;previous_band<=0;target_height<=0;
++   updated_envelope<=0;update_bank<=0;update_available<=0;decay_phase<=0;accumulator<=0;
++  end else begin
++   if(bin_valid && !pending && bin>=1 && bin<128)begin
++    previous_band<=current_band;
++    if(bin==1 || current_band!=previous_band)accumulator<=amplitude;
++    else if(amplitude>accumulator)accumulator<=amplitude;
++   end
++   if(bin_valid && bin==128 && !pending)pending<=1;
++   case(update_state)
++    INIT:if(update_index==31)begin update_index<=0;update_state<=IDLE;end
++         else update_index<=update_index+1'b1;
++    IDLE:if(frame_start)begin
++     update_index<=0;update_state<=TARGET;
++     update_bank<=pending?write_bank:frame_bank;
++     update_available<=pending || (have_spectrum && age<8);
++     decay_phase<=decay_phase+1'b1;
++     if(pending)begin
++      frame_bank<=write_bank;write_bank<=!write_bank;pending<=0;have_spectrum<=1;age<=0;
++     end else if(age!=15)age<=age+1'b1;
++    end
++    TARGET:update_state<=OLD;
++    OLD:begin target_height<=update_available?qa[6:0]:7'd0;update_state<=MATH;end
++    MATH:begin updated_envelope<={next_peak,next_height};update_state<=STORE;end
++    STORE:if(update_index==31)begin update_index<=0;update_state<=IDLE;end
++          else begin update_index<=update_index+1'b1;update_state<=TARGET;end
++    default:update_state<=INIT;
++   endcase
++  end
++ end
++endmodule
+--- /dev/null
++++ current/src/modules/video/music_spectrum.v
+@@ -0,0 +1,129 @@
++// Music-Spectrum-inspired rendering, implemented independently for Anlogic.
++// No codec, DDR framebuffer, Vivado IP, floating-point core or new IO is used.
++// Logical 640x480 coordinates also follow the existing SVGA viewport mapping.
++module music_spectrum_overlay(
++ input clk,input rst,input vs,input de,input [9:0] x,y,input [23:0] rgb,
++ input audio_valid,input signed [23:0] audio_left,input enable,
++ output reg out_vs,output reg out_de,output reg [23:0] out_rgb);
++ reg vs_last,enabled;
++ wire frame_start=vs_last && !vs;
++ wire [9:0] dx=x-10'd64;
++ wire [4:0] band_index=dx[8:4];
++ wire [6:0] height,peak;
++ spectrum_analyzer analyzer(clk,rst,frame_start,audio_valid,audio_left,band_index,height,peak);
++ wire [5:0] wave_a,wave_b;wire wave_known;
++ music_wave_capture waveform(clk,rst,frame_start,audio_valid,audio_left,dx[8:1],wave_a,wave_b,wave_known);
++ reg [4:0] color_phase;reg [2:0] color_timer;
++ reg v1,d1,panel1,columns1,wave1;
++ reg [23:0] rgb1;
++ reg [9:0] y1;
++ reg [4:0] band1;
++ reg [3:0] gap1;
++ wire panel=x>=48 && x<592 && y>=256 && y<448;
++ wire columns=x>=64 && x<576;
++ wire [9:0] bar_distance=10'd376-y1;
++ wire bar=columns1 && gap1<14 && y1>=280 && y1<376 && bar_distance<=height && height!=0;
++ wire cap=columns1 && gap1<14 && peak!=0 && y1>=278 && y1<376 &&
++                         bar_distance>=peak && bar_distance<=peak+1'b1;
++ wire [9:0] wy=y1-10'd384;
++ wire [5:0] lo=wave_a<wave_b?wave_a:wave_b;
++ wire [5:0] hi=wave_a>wave_b?wave_a:wave_b;
++ wire trace=wave1 && wave_known && wy>=lo && wy<=({4'b0,hi}+1'b1);
++ function [23:0] rainbow;
++  input [4:0] index;
++  begin
++   case(index)
++    0:rainbow=24'hf04242;1:rainbow=24'hf06242;2:rainbow=24'hf08342;3:rainbow=24'hf0a442;
++    4:rainbow=24'hf0c442;5:rainbow=24'hf0e542;6:rainbow=24'hdaf042;7:rainbow=24'hb9f042;
++    8:rainbow=24'h99f042;9:rainbow=24'h78f042;10:rainbow=24'h57f042;11:rainbow=24'h42f04d;
++    12:rainbow=24'h42f06e;13:rainbow=24'h42f08e;14:rainbow=24'h42f0af;15:rainbow=24'h42f0d0;
++    16:rainbow=24'h42f0f0;17:rainbow=24'h42d0f0;18:rainbow=24'h42aff0;19:rainbow=24'h428ef0;
++    20:rainbow=24'h426ef0;21:rainbow=24'h424df0;22:rainbow=24'h5742f0;23:rainbow=24'h7842f0;
++    24:rainbow=24'h9942f0;25:rainbow=24'hb942f0;26:rainbow=24'hda42f0;27:rainbow=24'hf042e5;
++    28:rainbow=24'hf042c4;29:rainbow=24'hf042a4;30:rainbow=24'hf04283;31:rainbow=24'hf04262;
++   endcase
++  end
++ endfunction
++ wire [23:0] color=rainbow(band1+color_phase);
++ // Synchronous RAM read and metadata stage, followed by RGB composition:
++ // exactly TWO pixel clocks, matching the replaced audio_visualizer instance.
++ always @(posedge clk or posedge rst)begin
++  if(rst)begin
++   vs_last<=1;enabled<=0;color_phase<=0;color_timer<=0;
++   v1<=0;d1<=0;panel1<=0;columns1<=0;wave1<=0;rgb1<=0;y1<=0;band1<=0;gap1<=0;
++   out_vs<=0;out_de<=0;out_rgb<=0;
++  end else begin
++   vs_last<=vs;
++   if(frame_start)begin
++    enabled<=enable;
++    if(color_timer==4)begin color_timer<=0;color_phase<=color_phase+1'b1;end
++    else color_timer<=color_timer+1'b1;
++   end
++   v1<=vs;d1<=de;panel1<=enabled && panel;columns1<=columns;
++   wave1<=columns && y>=384 && y<448;rgb1<=rgb;y1<=y;band1<=band_index;gap1<=dx[3:0];
++   out_vs<=v1;out_de<=d1;
++   if(!d1)out_rgb<=0;
++   else if(!panel1)out_rgb<=rgb1;
++   else if(cap)out_rgb<=24'hfff4dc;
++   else if(bar)out_rgb<=color;
++   else if(trace)out_rgb<=24'hbfffee;
++   else if(y1==376 || y1==416)out_rgb<=24'h284858;
++   else out_rgb<={2'b0,rgb1[23:18],2'b0,rgb1[15:10],2'b0,rgb1[7:2]};
++  end
++ end
++endmodule
++
++// Four-sample moving-average waveform, positive zero-cross trigger with
++// hysteresis and 1024-sample timeout (DC/silence still refresh). Frozen banks
++// prevent the raster reading a capture being overwritten underneath it.
++module music_wave_capture(
++ input clk,input rst,input frame_start,input audio_valid,input signed [23:0] audio_left,
++ input [7:0] display_index,output wire [5:0] wave_a,wave_b,output wire known);
++ reg signed [7:0] h0,h1,h2;
++ wire signed [9:0] sum=$signed({{2{audio_left[23]}},audio_left[23:16]})+
++                         $signed({{2{h0[7]}},h0})+$signed({{2{h1[7]}},h1})+$signed({{2{h2[7]}},h2});
++ wire signed [7:0] filtered=sum>>>2;
++ wire [7:0] magnitude=filtered[7]?(8'd0-filtered):filtered;
++ wire [12:0] scale=({5'd0,magnitude}<<4)+({5'd0,magnitude}<<3);
++ wire [5:0] ordinate=filtered[7]?6'd32+scale[12:7]:6'd32-scale[12:7];
++ reg armed,capturing,pending,write_bank,frame_bank,have_wave;
++ reg [9:0] timeout;
++ reg [7:0] capture_index;
++ reg [5:0] previous;
++ reg [3:0] age;
++ wire trigger=(armed && !filtered[7]) || timeout==1023;
++ wire store=audio_valid && !pending && (capturing || trigger);
++ (* ram_style="bram" *) reg [11:0] history[0:511];
++ reg [11:0] q;
++ always @(posedge clk)begin
++  if(!rst && store)history[{write_bank,capture_index}]<={capturing?previous:ordinate,ordinate};
++  q<=history[{frame_bank,display_index}];
++ end
++ assign wave_a=q[11:6];assign wave_b=q[5:0];assign known=have_wave && age<8;
++ always @(posedge clk or posedge rst)begin
++  if(rst)begin
++   h0<=0;h1<=0;h2<=0;armed<=0;capturing<=0;pending<=0;
++   write_bank<=0;frame_bank<=1;have_wave<=0;timeout<=0;capture_index<=0;previous<=32;age<=15;
++  end else begin
++   if(audio_valid)begin
++    h0<=audio_left[23:16];h1<=h0;h2<=h1;
++    if(!pending)begin
++     if(!capturing)begin
++      if(filtered < -2)armed<=1;
++      if(timeout!=1023)timeout<=timeout+1'b1;
++     end
++     if(store)begin
++      previous<=ordinate;armed<=0;timeout<=0;
++      if(capture_index==255)begin capture_index<=0;capturing<=0;pending<=1;end
++      else begin capture_index<=capture_index+1'b1;capturing<=1;end
++     end
++    end
++   end
++   if(frame_start)begin
++    if(pending)begin
++     frame_bank<=write_bank;write_bank<=!write_bank;pending<=0;have_wave<=1;age<=0;
++    end else if(age!=15)age<=age+1'b1;
++   end
++  end
++ end
++endmodule
+--- /dev/null
++++ current/scripts/gen_spectrum_coefficients.py
+@@ -0,0 +1,40 @@
++"""Reproducible, embedded Q1.15 FFT coefficients. No runtime file reads."""
++from pathlib import Path
++import math
++
++ROOT = Path(__file__).resolve().parents[1]
++def q15(value):
++    return max(-32768, min(32767, round(value*32768))) & 0xffff
++
++def generate():
++    lines = ['// Generated by scripts/gen_spectrum_coefficients.py; Q1.15.',
++             'module spectrum_coefficients(input clk,input [6:0] tw_address,',
++             ' input [7:0] window_address,output reg signed [15:0] tw_real,tw_imag,window);',
++             ' // Small 16-entry logic tables avoid TD promoting a wide ROM to BRAM.',
++             " wire [6:0] wa=window_address[7]?~window_address[6:0]:window_address[6:0];"]
++    twiddle=[]
++    for i in range(128):
++        angle = -2*math.pi*i/256
++        twiddle.append((q15(math.cos(angle))<<16)|q15(math.sin(angle)))
++    hann=[q15((1-math.cos(2*math.pi*i/255))/2) for i in range(128)]
++    for name,width,values,address in [('tw',32,twiddle,'tw_address'),('win',16,hann,'wa')]:
++        for group in range(8):
++            fn=f'{name}{group}'
++            lines += [f' function [{width-1}:0] {fn};', '  input [3:0] a;begin case(a)']
++            for offset in range(16):
++                lines.append(f"   4'd{offset}:{fn}={width}'h{values[group*16+offset]:0{width//4}x};")
++            lines += ['  endcase end endfunction']
++        lines += [f' reg [{width-1}:0] {name}_value;',f' always @*begin case({address}[6:4])']
++        for group in range(8):
++            lines.append(f"  3'd{group}:{name}_value={name}{group}({address}[3:0]);")
++        lines += [' endcase end']
++    lines += [' always @(posedge clk)begin',
++              '  {tw_real,tw_imag}<=tw_value;',
++              '  window<=win_value;',
++              ' end', 'endmodule', '']
++    return '\n'.join(lines)
++
++if __name__ == '__main__':
++    path = ROOT/'src/modules/audio/spectrum_coefficients.v'
++    path.write_text(generate(), encoding='ascii')
++    print('Generated',path)
+--- /dev/null
++++ current/scripts/make_spectrum_vectors.py
+@@ -0,0 +1,28 @@
++from pathlib import Path
++import cmath
++import math
++import random
++
++OUT=Path(__file__).resolve().parents[1]/'reports/music_spectrum_20261023'
++OUT.mkdir(parents=True,exist_ok=True)
++rng=random.Random(72351)
++vectors=[
++ [0]*256,[10000]*256,[-10000]*256,
++ [32767 if n==70 else 0 for n in range(256)],
++ [round(24000*math.sin(2*math.pi*8*n/256)) for n in range(256)],
++ [round(16000*math.cos(2*math.pi*41*n/256)) for n in range(256)],
++ [round(14000*math.sin(2*math.pi*3*n/256)+7000*math.cos(2*math.pi*28*n/256)
++        +3000*math.sin(2*math.pi*100*n/256)) for n in range(256)],
++ [32767 if n%2 else -32768 for n in range(256)],
++ [rng.randint(-32768,32767) for _ in range(256)]]
++samples=[];reference=[]
++for block in vectors:
++ samples.extend(f'{v&0xffff:04x}' for v in block)
++ # Independent double-precision O(N^2) DFT: no copied RTL butterfly or LUT.
++ windowed=[v*(1-math.cos(2*math.pi*n/255))/2 for n,v in enumerate(block)]
++ for k in range(256):
++  z=sum(v*cmath.exp(-2j*math.pi*k*n/256) for n,v in enumerate(windowed))/256
++  reference.append(f'{round(z.real)&0xffff:04x}{round(z.imag)&0xffff:04x}')
++(OUT/'fft_samples.mem').write_text('\n'.join(samples)+'\n',encoding='ascii')
++(OUT/'fft_dft.mem').write_text('\n'.join(reference)+'\n',encoding='ascii')
++print('Prepared 9 independent DFT cases (2304 complex bins).')
+--- /dev/null
++++ current/sim/tb_spectrum_fft.v
+@@ -0,0 +1,40 @@
++`timescale 1ns/1ps
++module tb_spectrum_fft;
++ reg clk=0,rst=1,valid=0;reg signed [15:0] sample=0;
++ always #20 clk=~clk;
++ wire bin_valid,done,busy;wire [7:0] bin_index;wire signed [15:0] re,im;
++ spectrum_fft256 dut(clk,rst,valid,sample,bin_valid,bin_index,re,im,done,busy);
++ reg [15:0] samples[0:2303];reg [31:0] expected[0:2303];
++ integer block,n,seen=0,errors=0,difference,reference_re,reference_im,max_difference=0;
++ always @(posedge clk)begin
++  #1;
++  if(!rst && bin_valid)begin
++   if(bin_index!==seen[7:0])begin $display("FAILED bin ordering %d %d",bin_index,seen);$finish;end
++   reference_re=$signed(expected[seen][31:16]);reference_im=$signed(expected[seen][15:0]);
++   difference=$signed(re)-reference_re;if(difference<0)difference=-difference;
++   if(difference>max_difference)max_difference=difference;
++   if(difference>12)begin $display("FAILED real bin=%d rtl=%d DFT=%d",seen,re,reference_re);$finish;end
++   difference=$signed(im)-reference_im;if(difference<0)difference=-difference;
++   if(difference>max_difference)max_difference=difference;
++   if(difference>12)begin $display("FAILED imag bin=%d rtl=%d DFT=%d",seen,im,reference_im);$finish;end
++   seen=seen+1;
++  end
++ end
++ initial begin
++  $readmemh("../reports/music_spectrum_20261023/fft_samples.mem",samples);
++  $readmemh("../reports/music_spectrum_20261023/fft_dft.mem",expected);
++  repeat(5)@(negedge clk);rst=0;
++  for(block=0;block<9;block=block+1)begin
++   for(n=0;n<256;n=n+1)begin
++    @(negedge clk);sample=samples[block*256+n];valid=1;
++    @(negedge clk);valid=0;
++    // Both realistic 48kHz/25MHz and accelerated cadence are exercised.
++    if(block==4)repeat(519)@(negedge clk);else repeat(7)@(negedge clk);
++   end
++   wait(done);@(negedge clk);
++   if(seen!=(block+1)*256)begin $display("FAILED incomplete spectrum %d",seen);$finish;end
++  end
++  $display("ALL PASS tb_spectrum_fft: 9 DFT cases, %0d bins, max error=%0d LSB",seen,max_difference);$finish;
++ end
++ initial begin #30000000;$display("FAILED tb_spectrum_fft timeout");$finish;end
++endmodule
+--- /dev/null
++++ current/sim/tb_spectrum_bands.v
+@@ -0,0 +1,44 @@
++`timescale 1ns/1ps
++module tb_spectrum_bands;
++ reg clk=0,rst=1,frame=0,valid=0;reg signed [23:0] sample=0;reg [4:0] address=0;
++ always #20 clk=~clk;
++ wire [6:0] height,peak;
++ spectrum_analyzer dut(clk,rst,frame,valid,sample,address,height,peak);
++ integer i,k,max_height,max_band,before_height;real angle;
++ task check;input ok;input [511:0] message;begin if(ok!==1)begin $display("FAILED %s",message);$finish;end end endtask
++ task vblank;begin
++  @(negedge clk);frame=1;@(negedge clk);frame=0;repeat(140)@(negedge clk);
++ end endtask
++ task tone;input integer bin_number;input integer amplitude;begin
++  wait(!dut.fft_busy && !dut.pending && dut.update_state==1);
++  for(i=0;i<256;i=i+1)begin
++   angle=6.283185307179586*bin_number*i/256;
++   @(negedge clk);sample=$rtoi(amplitude*$sin(angle))*256;valid=1;
++   @(negedge clk);valid=0;repeat(519)@(negedge clk);
++  end
++  wait(dut.pending);@(negedge clk);
++ end endtask
++ initial begin
++  repeat(5)@(negedge clk);rst=0;repeat(40)@(negedge clk);
++  tone(8,24000);
++  check(dut.levels[7]==0,"uncommitted FFT changed displayed envelope");
++  vblank;
++  max_height=0;max_band=0;
++  for(k=0;k<32;k=k+1)begin
++   address=k;repeat(2)@(negedge clk);
++   if(height>max_height)begin max_height=height;max_band=k;end
++  end
++  check(max_band==7 && max_height>=72 && max_height<=96,"tone did not select its real frequency band");
++  before_height=dut.levels[7]&127;
++  tone(41,20000);
++  check((dut.levels[7]&127)==before_height,"spectrum changed before vertical blank");
++  vblank;
++  check((dut.levels[23]&127)>=72,"upper bands did not aggregate bin 41");
++  check((dut.levels[7]&127)==before_height-2,"bars must fall by two pixels/frame");
++  // Stop PCM: stale targets must disappear rather than stick forever.
++  repeat(65)vblank;
++  for(k=0;k<32;k=k+1)check((dut.levels[k]&127)==0,"silence/no-samples did not decay to zero");
++  $display("ALL PASS tb_spectrum_bands: real tones, grouped bands, vblank publish, decay, no-audio timeout");$finish;
++ end
++ initial begin #25000000;$display("FAILED tb_spectrum_bands timeout");$finish;end
++endmodule
+--- /dev/null
++++ current/sim/tb_music_waveform.v
+@@ -0,0 +1,40 @@
++`timescale 1ns/1ps
++module tb_music_waveform;
++ reg clk=0,rst=1,frame=0,valid=0;reg signed [23:0] sample=0;reg [7:0] address=0;
++ always #20 clk=~clk;
++ wire [5:0] a,b;wire known;
++ music_wave_capture dut(clk,rst,frame,valid,sample,address,a,b,known);
++ integer n,k,have_positive=0,have_negative=0;reg bank_before;real angle;
++ task check;input ok;input [511:0] message;begin if(ok!==1)begin $display("FAILED %s",message);$finish;end end endtask
++ task feed;input integer value;begin
++  @(negedge clk);sample=value*65536;valid=1;
++  @(negedge clk);valid=0;repeat(7)@(negedge clk);
++ end endtask
++ task vblank;begin @(negedge clk);frame=1;@(negedge clk);frame=0;end endtask
++ initial begin
++  repeat(5)@(negedge clk);rst=0;
++  for(n=0;n<400;n=n+1)begin
++   angle=6.283185307179586*(n-12)/64;feed($rtoi(120*$sin(angle)));
++  end
++  check(dut.pending && !known,"triggered capture must wait for vertical blank");
++  bank_before=dut.frame_bank;
++  repeat(30)feed(127);
++  check(dut.frame_bank==bank_before,"displayed waveform bank changed inside frame");
++  vblank;repeat(3)@(negedge clk);
++  check(known,"completed waveform not published");
++  for(k=0;k<256;k=k+1)begin
++   address=k;repeat(2)@(negedge clk);
++   check(a>=8 && a<=56 && b>=8 && b<=56,"signed waveform escaped its panel");
++   if(b>38)have_negative=1;if(b<26)have_positive=1;
++  end
++  check(have_positive && have_negative,"waveform lost bipolar amplitude");
++  repeat(9)vblank;repeat(2)@(negedge clk);check(!known,"stale waveform did not expire");
++  // Reset and feed DC: timeout capture must work without a zero crossing.
++  rst=1;@(negedge clk);rst=0;
++  repeat(1290)feed(32);
++  check(dut.pending,"DC waveform timeout did not complete capture");
++  vblank;repeat(2)@(negedge clk);check(known,"DC waveform not published");
++  $display("ALL PASS tb_music_waveform: trigger, filtering, polarity, bank freeze, timeout/DC");$finish;
++ end
++ initial begin #5000000;$display("FAILED tb_music_waveform timeout");$finish;end
++endmodule
+--- /dev/null
++++ current/sim/tb_music_spectrum.v
+@@ -0,0 +1,48 @@
++`timescale 1ns/1ps
++module tb_music_spectrum;
++ reg clk=0,rst=1,vs=1,de=0,enable=0;reg [9:0] x=0,y=0;reg [23:0] rgb=0;
++ reg audio_valid=0;reg signed [23:0] audio_left=0;
++ wire out_vs,out_de;wire [23:0] out_rgb;
++ always #20 clk=~clk;
++ music_spectrum_overlay dut(clk,rst,vs,de,x,y,rgb,audio_valid,audio_left,enable,out_vs,out_de,out_rgb);
++ reg pv,pd;reg [23:0] pr;reg checking=0;integer n,k;
++ task check;input ok;input [511:0] message;begin if(ok!==1)begin $display("FAILED %s",message);$finish;end end endtask
++ always @(posedge clk)begin
++  #1;
++  if(!rst && checking)begin
++   check(out_vs===pv && out_de===pd,"two-cycle VS/DE alignment changed");
++   check(out_rgb===(pd?pr:24'b0),"disabled overlay damaged pixels");
++  end
++  pv=vs;pd=de;pr=rgb;
++ end
++ task point;input [9:0] xx,yy;input [23:0] expected;begin
++  @(negedge clk);x=xx;y=yy;de=1;rgb=24'h8090a0;
++  repeat(2)@(negedge clk);
++  if(out_rgb!==expected)$display("pixel (%0d,%0d) expected=%06x got=%06x height=%0d peak=%0d phase=%0d",xx,yy,expected,out_rgb,dut.height,dut.peak,dut.color_phase);
++  check(out_rgb===expected,"pixel composition or RAM alignment wrong");
++ end endtask
++ initial begin
++  repeat(5)@(negedge clk);rst=0;repeat(4)@(negedge clk);checking=1;
++  // Full logical VGA and SVGA coordinate extents: no DE loss/extra latency.
++  for(n=0;n<640*480+800;n=n+1)begin
++   @(negedge clk);x=n%800;y=(n/800)%600;rgb=n*17821;de=(n%19)!=0;vs=n[10];
++  end
++  checking=0;rst=1;enable=1;de=0;vs=1;
++  repeat(5)@(negedge clk);rst=0;repeat(40)@(negedge clk);vs=0;
++  repeat(150)@(negedge clk);
++  // Pixel renderer tested independently from numerics: known display RAM.
++  for(k=0;k<32;k=k+1)dut.analyzer.levels[k]={7'd78,7'd80};
++  point(64,320,24'hf04242);
++  point(64,298,24'hfff4dc);
++  point(78,320,24'h202428); // two-pixel gaps between adjacent bars
++  point(64,376,24'h284858);
++  point(20,320,24'h8090a0);
++  point(64,270,24'h202428);
++  // Freeze/enable changes only at frame boundaries.
++  enable=0;point(64,320,24'hf04242);
++  de=0;vs=1;repeat(2)@(negedge clk);vs=0;repeat(150)@(negedge clk);
++  point(64,320,24'h8090a0);
++  $display("ALL PASS tb_music_spectrum: two-cycle pipeline, disabled passthrough, colors/gaps/peaks, frame enable");$finish;
++ end
++ initial begin #20000000;$display("FAILED tb_music_spectrum timeout");$finish;end
++endmodule

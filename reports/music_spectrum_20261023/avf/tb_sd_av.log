@@ -1,0 +1,26 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/music_spectrum_20261023/avf/tb_sd_av.log -lib E:/fpga/reports/music_spectrum_20261023/avf/avf_work -c tb_sd_av 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\reports\native640_20261022\adapted_contracts\tb_sd_av.v(32): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 30, found 29.
+# 
+# ** Warning: E:\fpga\reports\native640_20261022\adapted_contracts\tb_sd_av.v(32): (vopt-2718) [TFMPC] - Missing connection for port 'video_format'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_av(fast)
+# run -all 
+# frame 0 published in 2429132 control cycles (24291 us)
+# frame 1 published in 3339458 control cycles (33394 us)
+# frame 1 ACK-to-publish load: 24085 us
+# frame 2 published in 5039996 control cycles (50399 us)
+# frame 2 ACK-to-publish load: 24085 us
+# ALL PASS tb_sd_av: 3 frames, exact PCM/pixels, 20 fps deadlines, sequential sectors, delayed completion, EOF, all header words/SD errors
+# ** Note: $finish    : E:/fpga/reports/native640_20261022/adapted_contracts/tb_sd_av.v(157)
+#    Time: 185092770 ns  Iteration: 1  Instance: /tb_sd_av

@@ -1,0 +1,69 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_sd_highspeed_player.log} -lib timing_opt_main_work_v2 -c tb_sd_highspeed_player 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\..\src\modules\bmp\sd_card_bmp.v(159): (vopt-2241) Connection width does not match width of port 'bmp_file_idx'. The port definition is at: E:\fpga\sim\..\src\modules\sd\sd_fat32.v(12).
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 49.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'fps_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'audio_select_index'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_highspeed_player.v(21): (vopt-2718) [TFMPC] - Missing connection for port 'image_select_index'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_highspeed_player(fast)
+# run -all 
+# ALL PASS tb_sd_highspeed_player: formal CMD6/50MHz with14ns delayed card, no force/real SD pins/real scheduler/two scaled fragmented BMP frames/exact PCM loops/commit
+# ** Note: $finish    : E:/fpga/sim/tb_sd_highspeed_player.v(66)
+#    Time: 61414730 ns  Iteration: 1  Instance: /tb_sd_highspeed_player

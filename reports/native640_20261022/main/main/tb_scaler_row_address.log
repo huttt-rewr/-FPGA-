@@ -1,0 +1,22 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_scaler_row_address.log} -lib timing_opt_main_work_v2 -c tb_scaler_row_address 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_scaler_row_address(fast)
+# run -all 
+# 1920x1080 last row: offset=00001000 y=1079 stride=5760 byte_address=005ee580 reference=005ee580
+# ALL PASS tb_scaler_row_address: 5437 checks, all 1080 source rows, low carry, high wrap, sector crossings, increment and reset
+# ** Note: $finish    : E:/fpga/sim/tb_scaler_row_address.v(68)
+#    Time: 32666 ns  Iteration: 0  Instance: /tb_scaler_row_address

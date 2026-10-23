@@ -1,0 +1,18 @@
+{
+  "status": "ALL PASS",
+  "changed": [
+    "scripts/run_tests.ps1",
+    "sim/tb_chinese_menu.v",
+    "sim/tb_menu_overlay.v",
+    "src/modules/control/picture_controls.v",
+    "src/modules/osd/menu_overlay.v",
+    "src/top.v"
+  ],
+  "added": [
+    "sim/tb_menu_popup.v"
+  ],
+  "status_source_70_bits_unchanged": true,
+  "top_only_change": "menu_overlay.mode_800(mode_video)",
+  "unchanged_files": 250,
+  "baseline": "baseline/reports/build_manifest.json"
+}

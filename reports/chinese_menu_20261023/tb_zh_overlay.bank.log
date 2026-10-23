@@ -1,0 +1,19 @@
+# vsim -do {run -all; quit -f} -l ../reports/chinese_menu_20261023/tb_zh_overlay.bank.log -lib msim_work -c tb_zh_overlay 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_zh_overlay(fast)
+# run -all 
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 513 of file "../src/modules/osd/zh_font.mem". (Current address [512], address range [0:511])    : tb_zh_overlay.v(28)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_zh_overlay
+# ALL PASS tb_zh_overlay: four complete VGA/SVGA frames, font pixels/background, exact bypass, VS DE XY RGB latency, frame enable, unused glyphs, reset
+# ** Note: $finish    : tb_zh_overlay.v(45)
+#    Time: 15939850 ns  Iteration: 1  Instance: /tb_zh_overlay

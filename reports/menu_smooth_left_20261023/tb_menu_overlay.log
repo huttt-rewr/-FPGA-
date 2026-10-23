@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/menu_smooth_left_20261023/tb_menu_overlay.log -lib E:/fpga/reports/menu_smooth_left_20261023/menu_work -c tb_menu_overlay 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_menu_overlay(fast)
+# run -all 
+# ALL PASS tb_menu_overlay: 10 complete frames, left 288px panel, per-row interpolated gradient, eight selections, 2x glyphs/status, closed bypass, frame-atomic settings, RGB/VS/DE latency
+# ** Note: $finish    : E:/fpga/sim/tb_menu_overlay.v(147)
+#    Time: 30962090 ns  Iteration: 1  Instance: /tb_menu_overlay

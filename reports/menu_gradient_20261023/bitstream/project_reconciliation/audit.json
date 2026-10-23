@@ -1,0 +1,13 @@
+{
+  "changed_snapshot_entry": "video_improve.al",
+  "original_normalized_sha256": "6f4613d2c325ec12a4a2775d786d226d7f671cf673c309b5978d78110a58504e",
+  "current_normalized_sha256": "746d0df871d7c3ee267461fcc3fc9fbf8568cd0217bf3c3ea6be14859ddd880b",
+  "original_project_bytes_not_available": true,
+  "exact_xml_difference_not_reconstructed": true,
+  "project_xml_consumed_by_synthesis": false,
+  "direct_hdl_manifest_matches_current_root_and_nested_projects": true,
+  "actual_src_scripts_sim_hashes_unchanged": true,
+  "gate_database_sha256": "eed57141baf0de9f941eff1f77e8d013e9748ef3014c0f40c6375da63d32b50a",
+  "original_build_manifest_sha256": "b8d2c31bb025a29601905a6905ca6daee0dfb1961e93832b613368f363f33903",
+  "explanation": "Only the GUI project snapshot differs. Direct synthesis reads design_sources.tcl and unchanged ADC/SDC, not the GUI project. All src/scripts/sim snapshot entries and the original synthesized gate database match exactly. The current GUI source list, device and top were revalidated. The original manifest is retained; the current manifest binds the reviewed project state explicitly."
+}

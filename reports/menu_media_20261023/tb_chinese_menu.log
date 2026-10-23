@@ -1,0 +1,35 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/menu_media_20261023/tb_chinese_menu.log -lib E:/fpga/reports/menu_media_20261023/menu_work -c tb_chinese_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 34, found 26.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'res_up'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'res_down'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'wav_next'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'movie_next'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'image_next'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'menu_page'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: E:\fpga\sim\tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_chinese_menu(fast)
+# run -all 
+# ALL PASS tb_chinese_menu: eight-item LIST/SUBMENU, no action on entry, debounce, long/short, saturation, shared controls
+# ** Note: $finish    : E:/fpga/sim/tb_chinese_menu.v(51)
+#    Time: 44510 ns  Iteration: 1  Instance: /tb_chinese_menu

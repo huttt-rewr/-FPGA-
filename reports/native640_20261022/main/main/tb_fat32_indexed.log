@@ -1,0 +1,25 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_fat32_indexed.log} -lib timing_opt_main_work_v2 -c tb_fat32_indexed 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_indexed.v(20): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 44, found 43.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_indexed.v(20): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_indexed(fast)
+# run -all 
+# ALL PASS tb_fat32_indexed: 12BMP/3WAV, 64 total cap, high clusters, fragmented streams, audio cursor/safe cancellation, bounds
+# ** Note: $finish    : E:/fpga/sim/tb_fat32_indexed.v(119)
+#    Time: 291710 ns  Iteration: 1  Instance: /tb_fat32_indexed

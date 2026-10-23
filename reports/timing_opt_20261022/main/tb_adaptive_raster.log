@@ -1,0 +1,21 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_adaptive_raster.log} -lib timing_opt_main_work_v2 -c tb_adaptive_raster 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_adaptive_raster(fast)
+# run -all 
+# ALL PASS tb_adaptive_raster: complete VGA/SVGA frame periods, sync widths, coordinates and active pixel counts
+# ** Note: $finish    : E:/fpga/sim/tb_adaptive_raster.v(29)
+#    Time: 10831760 ns  Iteration: 1  Instance: /tb_adaptive_raster

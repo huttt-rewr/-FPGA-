@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l reports/av_fast_scaler_20261021/hq1.log -lib reports/av_fast_scaler_20261021/work -c -gHQ=1 tb_av_fast_scaler 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_av_fast_scaler(fast)
+# run -all 
+# ALL PASS tb_av_fast_scaler HQ=          1: 307200 pixels, sequential sectors, long backpressure, simultaneous final byte/end, short/oversized rejection
+# ** Note: $finish    : legacy/f_drive_video_reference/sim/tb_av_fast_scaler.v(85)
+#    Time: 14082036 ns  Iteration: 0  Instance: /tb_av_fast_scaler

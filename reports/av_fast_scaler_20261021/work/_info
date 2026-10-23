@@ -1,0 +1,56 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VE?<1ELd[=^]W08N41IZE>3
+Z1 04 17 4 work tb_av_fast_scaler fast 0
+=1-bcfce7e1723c-6ad8d440-295-36ec
+o-quiet -auto_acc_if_foreign -work reports/av_fast_scaler_20261021/work -g HQ=0
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+VlGB8dnJzNHCobNDWiDmjj2
+R1
+=1-bcfce7e1723c-6ad8d444-189-ad4c
+o-quiet -auto_acc_if_foreign -work reports/av_fast_scaler_20261021/work -g HQ=1
+n@_opt1
+R2
+vav_fast_scaler
+Ia65LB`VEL1RTGQljfU>[;0
+VTb0G;5b2:g>ELicXld<cJ1
+R3
+w1792594874
+8src/modules/video/av_fast_scaler.v
+Fsrc/modules/video/av_fast_scaler.v
+L0 4
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792595006.315000
+Z6 !s107 legacy/f_drive_video_reference/sim/tb_av_fast_scaler.v|src/modules/video/av_fast_scaler.v|
+Z7 !s90 -work|reports/av_fast_scaler_20261021/work|src/modules/video/av_fast_scaler.v|legacy/f_drive_video_reference/sim/tb_av_fast_scaler.v|
+Z8 o-work reports/av_fast_scaler_20261021/work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 h0kM:nknJ;>4Q1Aj>WEXK3
+!s85 0
+vtb_av_fast_scaler
+IHHWf@hOH]>6eEUHm2NAO[0
+VBhiRU7Yg=^oDoCd<fB:=O0
+R3
+w1792573486
+8legacy/f_drive_video_reference/sim/tb_av_fast_scaler.v
+Flegacy/f_drive_video_reference/sim/tb_av_fast_scaler.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 BL@jh@Dcc<B@BOlg<Wm383
+!s85 0

@@ -1,0 +1,262 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VWa[0P5<H`>a:5RIYn>08A0
+04 17 4 work tb_music_waveform fast 0
+=1-bcfce7e1723c-6adb59f7-290-1ca0
+Z1 o-quiet -auto_acc_if_foreign -work E:/fpga/reports/music_spectrum_20261023/spectrum_work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga
+T_opt1
+V10kNIB8XG=kNIOXRk2`hn2
+04 17 4 work tb_music_spectrum fast 0
+=1-bcfce7e1723c-6adb59fb-1c0-a32c
+R1
+n@_opt1
+R2
+R3
+T_opt2
+V_Q`WBV[MiRdmXKYc:jk=83
+04 16 4 work tb_music_preview fast 0
+=1-bcfce7e1723c-6adb5c55-286-b194
+R1
+n@_opt2
+R2
+vaudio_visualizer
+IO<WU[Zlm>7fQKz5V@fK`H2
+V6;o7J0X]Iao[<edbmL[390
+Z4 dE:\fpga\sim
+Z5 w1792260357
+8E:\fpga\src\modules\video\audio_visualizer.v
+FE:\fpga\src\modules\video\audio_visualizer.v
+L0 2
+Z6 OL;L;10.1c;51
+r1
+31
+Z7 !s108 1792760301.515000
+Z8 !s107 E:\fpga\sim\tb_music_spectrum.v|E:\fpga\sim\tb_music_waveform.v|E:\fpga\sim\tb_spectrum_bands.v|E:\fpga\sim\tb_spectrum_fft.v|E:\fpga\src\modules\video\audio_visualizer.v|E:\fpga\src\modules\video\music_spectrum.v|E:\fpga\src\modules\audio\spectrum_fft256.v|E:\fpga\src\modules\audio\spectrum_coefficients.v|E:\fpga\src\modules\audio\spectrum_analyzer.v|
+Z9 !s90 -work|E:\fpga\reports\music_spectrum_20261023\spectrum_work|E:\fpga\src\modules\audio\spectrum_analyzer.v|E:\fpga\src\modules\audio\spectrum_coefficients.v|E:\fpga\src\modules\audio\spectrum_fft256.v|E:\fpga\src\modules\video\music_spectrum.v|E:\fpga\src\modules\video\audio_visualizer.v|E:\fpga\sim\tb_spectrum_fft.v|E:\fpga\sim\tb_spectrum_bands.v|E:\fpga\sim\tb_music_waveform.v|E:\fpga\sim\tb_music_spectrum.v|
+Z10 o-work {E:\fpga\reports\music_spectrum_20261023\spectrum_work} -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 aD=>J7;3YOgNOBB97`9]e3
+!i10b 1
+!s85 0
+vmusic_spectrum_overlay
+IJC0R^`[jRC>1Nedg9f>hf3
+VYn:;T8@6ggdlLiXT8zMz:1
+R4
+Z11 w1792757085
+Z12 8E:\fpga\src\modules\video\music_spectrum.v
+Z13 FE:\fpga\src\modules\video\music_spectrum.v
+L0 4
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 I3kkT;<44ck[ZMhaOS^h]1
+!i10b 1
+!s85 0
+vmusic_wave_capture
+I5PXlnSTml9o[nSED5_WNE3
+V?ed@4V`]O5UMS_lJ17=c;0
+R4
+R11
+R12
+R13
+L0 79
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 P@BmiGHh4ncId8MhEAzW>2
+!i10b 1
+!s85 0
+vspectrum_analyzer
+ITY>3VdAWD:cE8TU>K`dUU3
+VHRRE^YMlTmYBj<be`HM=>0
+R4
+Z14 w1792757170
+8E:\fpga\src\modules\audio\spectrum_analyzer.v
+FE:\fpga\src\modules\audio\spectrum_analyzer.v
+L0 4
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 j=1D6Zmn5`In06I=WJgU22
+!i10b 1
+!s85 0
+vspectrum_coefficients
+INKoUD7gjSiPi3g>HZ]94Z0
+VR?b?jzL:RCk:7hQMkATjH1
+R4
+w1792760215
+8E:\fpga\src\modules\audio\spectrum_coefficients.v
+FE:\fpga\src\modules\audio\spectrum_coefficients.v
+L0 2
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 YPJ4^`zhjCB3fCU2Ec@5z1
+!i10b 1
+!s85 0
+vspectrum_fft256
+IL<<UXZH=<IG:2akh3jX>b1
+V=A5i7oKz`jzKEh`=CV1Lf1
+R4
+w1792758884
+8E:\fpga\src\modules\audio\spectrum_fft256.v
+FE:\fpga\src\modules\audio\spectrum_fft256.v
+L0 5
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 WPi0=PF>PQjiXj=kGi6bZ2
+!i10b 1
+!s85 0
+vtb_audio_visualizer
+IQh]WzLfd8fb3;EgP7cmhz0
+VkWIAQ50GWD7Zhe`N4NEH71
+R4
+w1792233694
+8E:\fpga\sim\tb_audio_visualizer.v
+FE:\fpga\sim\tb_audio_visualizer.v
+L0 2
+R6
+r1
+31
+Z15 !s108 1792757371.089000
+Z16 !s107 E:\fpga\sim\tb_bram_waveform.v|E:\fpga\sim\tb_audio_visualizer.v|E:\fpga\sim\tb_music_spectrum.v|E:\fpga\src\modules\video\audio_visualizer.v|E:\fpga\src\modules\video\music_spectrum.v|E:\fpga\src\modules\audio\spectrum_fft256.v|E:\fpga\src\modules\audio\spectrum_coefficients.v|E:\fpga\src\modules\audio\spectrum_analyzer.v|
+Z17 !s90 -work|E:\fpga\reports\music_spectrum_20261023\spectrum_work|E:\fpga\src\modules\audio\spectrum_analyzer.v|E:\fpga\src\modules\audio\spectrum_coefficients.v|E:\fpga\src\modules\audio\spectrum_fft256.v|E:\fpga\src\modules\video\music_spectrum.v|E:\fpga\src\modules\video\audio_visualizer.v|E:\fpga\sim\tb_music_spectrum.v|E:\fpga\sim\tb_audio_visualizer.v|E:\fpga\sim\tb_bram_waveform.v|
+R10
+!s100 f_e=Hg<dfAd1[^m8LddO_1
+!i10b 1
+!s85 0
+vtb_bram_waveform
+IE1GMBRdH1cfNz?<iebiVj3
+V:g^`T^YfbNad1?bl<5hgB1
+R4
+R5
+8E:\fpga\sim\tb_bram_waveform.v
+FE:\fpga\sim\tb_bram_waveform.v
+L0 2
+R6
+r1
+31
+R15
+R16
+R17
+R10
+!s100 eMbF88_Ga^0WDn0hkQaL10
+!i10b 1
+!s85 0
+vtb_music_preview
+I0f<`0j7=T797ELV?:SD2P1
+V57^O[BEazBbANEBmOQ_Dl2
+R4
+w1792757675
+8E:\fpga\reports\music_spectrum_20261023\tb_music_preview.v
+FE:\fpga\reports\music_spectrum_20261023\tb_music_preview.v
+L0 2
+R6
+r1
+31
+R10
+!s100 MeTa6i95U:Gn^hhNX?AW[0
+!s90 -work|E:\fpga\reports\music_spectrum_20261023\spectrum_work|E:\fpga\reports\music_spectrum_20261023\tb_music_preview.v|
+!i10b 1
+!s85 0
+!s108 1792760915.511000
+!s107 E:\fpga\reports\music_spectrum_20261023\tb_music_preview.v|
+vtb_music_spectrum
+I;IQYQPQ1V`NO17Fc81=lj2
+VfcJE?geO2jlITMn[`FKRd0
+R4
+w1792757370
+8E:\fpga\sim\tb_music_spectrum.v
+FE:\fpga\sim\tb_music_spectrum.v
+L0 2
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 4N?HK`X=oa:Wjd:B=6NAJ1
+!i10b 1
+!s85 0
+vtb_music_waveform
+I23K2N9J[UQbnO4<T^]gTo2
+VgJ4TVbWN1T@fhDk=C1[OC0
+R4
+R14
+8E:\fpga\sim\tb_music_waveform.v
+FE:\fpga\sim\tb_music_waveform.v
+L0 2
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 ^V<<e^71d3k8D1z[Dk0nO3
+!i10b 1
+!s85 0
+vtb_spectrum_bands
+IJ>QHh7LHN1G;6RK]9]EVm0
+V7X9k7H`jMj0QbHaQ51Ao11
+R4
+w1792757279
+8E:\fpga\sim\tb_spectrum_bands.v
+FE:\fpga\sim\tb_spectrum_bands.v
+L0 2
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 68zS?XSNkUL7VDW`GXWkH3
+!i10b 1
+!s85 0
+vtb_spectrum_fft
+IS27SH^o?ADk@@UGO^ZDN[2
+V@6=l8Ean5j67oZ05CR3ml0
+R4
+w1792756937
+8E:\fpga\sim\tb_spectrum_fft.v
+FE:\fpga\sim\tb_spectrum_fft.v
+L0 2
+R6
+r1
+31
+R7
+R8
+R9
+R10
+!s100 <_h[eN5bl:RF]1VBk=I`n3
+!i10b 1
+!s85 0

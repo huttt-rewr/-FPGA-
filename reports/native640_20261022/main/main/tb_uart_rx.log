@@ -1,0 +1,26 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_uart_rx.log} -lib timing_opt_main_work_v2 -c tb_uart_rx 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_uart_rx(fast)
+# run -all 
+# [PASS] ?????°????????????
+# [PASS] ??? ???????? == 0xA5
+# [PASS] ??? ???????? == 0x3C
+#    ?????° 2 ??????è?????a5 3c
+# 
+# === tb_uart_rx ALL PASS ===
+# ** Note: $finish    : E:/fpga/sim/tb_uart_rx.v(81)
+#    Time: 226700 ns  Iteration: 0  Instance: /tb_uart_rx

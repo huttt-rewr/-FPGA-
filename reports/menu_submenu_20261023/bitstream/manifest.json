@@ -1,0 +1,46 @@
+{
+  "status": "candidate_generated",
+  "started_utc": "2026-10-23T07:36:27.667423+00:00",
+  "device": "EG4S20BG256",
+  "source_build_finished_utc": "2026-10-23T07:32:31.373655+00:00",
+  "source_build_manifest_sha256": "4f5d3fac535ca4399ea0928adf32ac0f01f4b1fefabe9b074a9812a377ff33a5",
+  "routed_database_sha256": "e8460b609ceb7d43ceec65d82dd24878b2f2792fd472d6f509a6d4c1bb91465e",
+  "board_signoff": false,
+  "hardware_download_performed": false,
+  "bit_file": "E:\\fpga\\reports\\menu_submenu_20261023\\bitstream\\video_improve_menu_submenu_20261023.bit",
+  "resources": {
+    "lut": 16480,
+    "reg": 11129,
+    "bram": 57,
+    "dsp": 23
+  },
+  "rtl_tests": 114,
+  "bit_bytes": 648248,
+  "bit_sha256": "264aafdfaa9078b686cdd5cbe5d03044585ab3264a39089ba51d1731d15a508b",
+  "before_timing_ns": {
+    "SWNS": 0.11,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "after_timing_ns": {
+    "SWNS": 0.11,
+    "STNS": 0.0,
+    "HWNS": 0.021,
+    "HTNS": 0.0
+  },
+  "hold_margin_0_5ns_met": false,
+  "artifacts_sha256": {
+    "after_bit_timing_status.txt": "d5f41c70eab30fb0fffc8f7c7b75824e8d30d342f752b3dbd617cf723c2498ca",
+    "after_bit_timing_summary.txt": "0a05978550fd8b8b593097ea85aabe656aea53abf8a29fe1eec0bda77fb8b5d2",
+    "before_bit_timing_status.txt": "d5f41c70eab30fb0fffc8f7c7b75824e8d30d342f752b3dbd617cf723c2498ca",
+    "before_bit_timing_summary.txt": "b6ad4a4c4992af17290af4850e1596963e7b68df6e598d1d32a698789dec8c19",
+    "bitgen.log": "bfa347dae89ab01ecb70d924244f936b086d804883f3fe2bf392b4ee23994870",
+    "expected_timing.tcl": "a2e975ff24d17b8a369e434c2568104244e2afe2276a4cab073ab53da7bf0b02",
+    "generate_candidate.py": "2723d41f16f36765f482449d9f8ccc7aa1cca4b3a307d98ec8e57ae219d9eea5",
+    "generate_candidate.tcl": "b1358be61631eac778477d118e143c4a5b956c4451f6bd48b6f0553aacdff876",
+    "source_build_manifest.json": "4f5d3fac535ca4399ea0928adf32ac0f01f4b1fefabe9b074a9812a377ff33a5",
+    "video_improve_menu_submenu_20261023.bit": "264aafdfaa9078b686cdd5cbe5d03044585ab3264a39089ba51d1731d15a508b"
+  },
+  "finished_utc": "2026-10-23T07:37:50.328111+00:00"
+}

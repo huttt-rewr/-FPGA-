@@ -1,5 +1,7 @@
 # EG4S20 HDMI 图片、WAV 与 AVF 视频播放器
 
+> **2026-10-23 当前：彩虹频谱与稳定波形已接入，新候选 bit 已生成。** 用真实 256 点定点 FFT、32 频段柱条、缓降峰值和过零触发波形替换顶层原波形显示；原 SD/媒体读取、音频播放、HDMI、菜单、KEY/SW、游戏和官方 IP 保持原通路。98 源/40 IO 静态检查、121 项 RTL 主回归、10 项原 Python 测试、29 场景 AVF 专项通过；综合/P&R/最终 STA 通过，SWNS +0.036ns、HWNS +0.020ns，STNS/HTNS 均为 0；LUT 17965/19600、BRAM 63/64、DSP 24/29。尚未上板、board_signoff=false，未达到整体 +0.5ns；全局 HWNS 不代表 HDMI 管脚 hold。 操作见[频谱手册](docs/MUSIC_SPECTRUM_20261023.md)，[新候选 bit](reports/music_spectrum_20261023/bitstream/video_improve_music_spectrum_20261023.bit)，[验证结果](reports/music_spectrum_20261023/RESULT.md)。下文较早版本数据为历史记录。
+
 > **按键编号提醒：本工程KEY1=B2、KEY2=C1、KEY3=B1，A2为整机复位。** 若实物按官方四键顺序编号，第1个按钮可能是本工程的复位键，按下熄屏属于预期复位；操作菜单请用B2/C1/B1对应按钮，见[按键与复位对照](docs/KEY_RESET_MAPPING_20261023.md)。
 
 > **2026-10-23 最新：媒体/分辨率菜单完成，新候选bit已生成。** 新增第二页图片、视频、音乐、分辨率；KEY3进入，KEY1/KEY2执行。同模式下一文件，跨模式从首文件开始；相册模式支持请求640×480/800×600，AVF仍固定640×480，未支持EDID时回退。116项RTL、10项Python、94源/40 IO静态检查和综合/P&R/最终STA通过，SWNS +0.160ns、HWNS +0.022ns，STNS/HTNS均0；LUT 16618/19600、BRAM 57/64、DSP 23/29。[本轮新bit](reports/menu_media_20261023/bitstream/video_improve_menu_media_20261023.bit)为648248字节，生成前后STA及源码/数据库一致；见[操作手册](docs/MENU_MEDIA_20261023.md)、[本轮结果](reports/menu_media_20261023/RESULT.md)。未上板、未达整体+0.5ns，后文bit与数据为历史版本。

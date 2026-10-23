@@ -1,0 +1,148 @@
+--- before/scripts/run_tests.ps1
++++ after/scripts/run_tests.ps1
+@@ -55,7 +55,7 @@
+  $mergeTests += @('tb_album_timer','tb_zh_overlay','tb_album_clock')
+  $files += @('../src/modules/display/seg_scan.v')
+  $mergeTests += @('tb_seg_scan_timing','tb_hdmi_video_stage')
+- $mergeTests += @('tb_chinese_menu','tb_menu_overlay','tb_menu_popup','tb_menu_media','tb_menu_media_pixels')
++ $mergeTests += @('tb_chinese_menu','tb_menu_overlay','tb_menu_popup','tb_menu_mode_popup','tb_menu_media','tb_menu_media_pixels')
+  $files += @($mergeTests | ForEach-Object { "$_.v" })
+  & "$ModelSim\vlog.exe" -work msim_work +incdir+../src/modules/video @files
+  if($LASTEXITCODE -ne 0) { throw 'Verilog compilation failed' }
+--- before/src/modules/osd/menu_overlay.v
++++ after/src/modules/osd/menu_overlay.v
+@@ -1,12 +1,13 @@
+ // Narrow solid menu, two levels, two-second popup. RGB/VS/DE latency: 2 clocks.
+ module menu_overlay #(parameter VGA_CLOCK_HZ=25000000,parameter SVGA_CLOCK_HZ=40000000,
+- parameter POPUP_SECONDS=2,parameter MEDIA_MENU=0)(
++ parameter POPUP_SECONDS=2,parameter MEDIA_MENU=0,parameter MODE_POPUP=0)(
+  input clk,input rst,input vs,input de,input [9:0] x,y,input [23:0] rgb,
+  input menu_open,input [2:0] menu_item,input edit_mode,input auto_play,
+  input signed [7:0] brightness,input [3:0] contrast,input [4:0] volume,
+  input mute,input gamma_enable,input debug_enable,
+  output reg out_vs,output reg out_de,output reg [23:0] out_rgb,
+- input mode_800,input menu_page,input [1:0] requested_resolution,input movie_mode);
++ input mode_800,input menu_page,input [1:0] requested_resolution,input movie_mode,
++ input [1:0] shortcut_mode);
+  localparam VGA_TICKS=VGA_CLOCK_HZ*POPUP_SECONDS;
+  localparam SVGA_TICKS=SVGA_CLOCK_HZ*POPUP_SECONDS;
+  localparam MAX_TICKS=(VGA_TICKS>SVGA_TICKS)?VGA_TICKS:SVGA_TICKS;
+@@ -15,6 +16,8 @@
+  reg signed [7:0] previous_brightness;
+  reg [3:0] previous_contrast;
+  reg previous_menu;
++ reg [1:0] previous_mode,shortcut_q;
++ reg popup_kind,mode_notice;
+  reg vs_last,opened,editing,playing,muted,gamma_on,debug_on,popup_visible;
+  reg [2:0] selected;
+  reg page_q,movie_q;reg [1:0] resolution_q;
+@@ -23,15 +26,21 @@
+  wire [7:0] magnitude=brightness[7]?-brightness:brightness;
+  wire external_change=(brightness!=previous_brightness || contrast!=previous_contrast)
+                       && !menu_open && !previous_menu;
++ // The two-bit shortcut mode is independent of the menu's one-bit EDIT state.
++ wire mode_change=MODE_POPUP && shortcut_mode<=2 && shortcut_mode!=previous_mode
++                  && !menu_open && !previous_menu;
+  wire [TIMER_BITS-1:0] popup_duration=mode_800?SVGA_TICKS:VGA_TICKS;
+  // Observe shared registers. Suppress menu edits, including the closing edge.
+  always @(posedge clk)begin
+   if(rst)begin
+    popup_ticks<=0;previous_brightness<=0;previous_contrast<=4;previous_menu<=0;
++   previous_mode<=0;popup_kind<=0;
+   end else begin
+    previous_brightness<=brightness;previous_contrast<=contrast;previous_menu<=menu_open;
+-   if(menu_open)popup_ticks<=0;
+-   else if(external_change)popup_ticks<=popup_duration;
++   previous_mode<=shortcut_mode;
++   if(menu_open)begin popup_ticks<=0;popup_kind<=0;end
++   else if(mode_change)begin popup_ticks<=popup_duration;popup_kind<=1;end
++   else if(external_change)begin popup_ticks<=popup_duration;popup_kind<=0;end
+    else if(popup_ticks!=0)popup_ticks<=popup_ticks-1'b1;
+   end
+  end
+@@ -52,6 +61,7 @@
+    vs_last<=1;opened<=0;selected<=0;editing<=0;playing<=0;muted<=0;
+    gamma_on<=0;debug_on<=0;negative<=0;bright_tens<=0;bright_units<=0;
+    vol_tens<=0;vol_units<=0;contrast_q<=4;popup_visible<=0;page_q<=0;movie_q<=0;resolution_q<=1;
++   shortcut_q<=0;mode_notice<=0;
+   end else begin
+    vs_last<=vs;
+    if(vs_last && !vs)begin
+@@ -60,7 +70,9 @@
+     playing<=auto_play;muted<=mute;gamma_on<=gamma_enable;debug_on<=debug_enable;
+     negative<=brightness[7];{bright_tens,bright_units}<=decimal2(magnitude);
+     {vol_tens,vol_units}<=decimal2({3'b0,volume});contrast_q<=contrast;
+-    popup_visible<=!menu_open && (external_change || popup_ticks!=0);
++    popup_visible<=!menu_open && (mode_change || external_change || popup_ticks!=0);
++    mode_notice<=mode_change || (!external_change && popup_kind);
++    shortcut_q<=shortcut_mode;
+    end
+   end
+  end
+@@ -172,6 +184,16 @@
+     local_x=x-8;local_y=y-416;column=local_x[3:0];glyph_row=local_y[3:0];
+     case(local_x[5:4])0:char_idx=61;1:char_idx=62;2:char_idx=49;3:char_idx=50;endcase
+    end
++  end else if(popup_visible && mode_notice)begin
++   // Left-top highlight: doubled Chinese name of PLAY / BRIGHTNESS / CONTRAST.
++   // Reuse the existing glyph bank and pixel pipeline; no extra font RAM.
++   panel=x>=8 && x<152 && y>=8 && y<56;
++   selected_band=1;selected_text=1;
++   if(x>=16 && x<112 && y>=16 && y<48)begin
++    local_x=x-16;local_y=y-16;
++    column=local_x[4:1];glyph_row=local_y[4:1];
++    char_idx=label_char({1'b0,shortcut_q},local_x[8:5]);
++   end
+   end else if(popup_visible)begin
+    panel=x>=8 && x<152 && y>=8 && y<64;
+    if(((y>=16 && y<32)||(y>=40 && y<56)) && x>=16 && x<144)begin
+--- before/src/top.v
++++ after/src/top.v
+@@ -953,8 +953,8 @@
+ viewport_coordinates menu_coordinates(video_clk,rst_video,status_layer_vs,status_layer_de,mode_video,menu_x,menu_y,,);
+ cdc_snapshot #(.WIDTH(6)) menu_navigation_cdc(.src_clk(sd_card_clk),.src_rst(rst_controls),
+  .src_data({menu_open,menu_page,menu_item,menu_edit}),.dst_clk(video_clk),.dst_rst(rst_video),.dst_data(menu_navigation_video));
+-menu_overlay #(.MEDIA_MENU(1)) chinese_menu(.clk(video_clk),.rst(rst_video),.vs(status_layer_vs),.de(status_layer_de),
+- .mode_800(mode_video),
++menu_overlay #(.MEDIA_MENU(1),.MODE_POPUP(1)) chinese_menu(.clk(video_clk),.rst(rst_video),.vs(status_layer_vs),.de(status_layer_de),
++ .mode_800(mode_video),.shortcut_mode(status_video[35:34]),
+  .x(menu_x),.y(menu_y),.rgb(status_layer_rgb),.menu_open(menu_navigation_video[5]),.menu_item(menu_navigation_video[3:1]),
+  .edit_mode(menu_navigation_video[0]),.menu_page(menu_navigation_video[4]),
+  .requested_resolution(frame_rate[6:5]),.movie_mode(movie_video),.auto_play(video_auto),.brightness(frame_brightness),.contrast(frame_contrast),
+--- before/docs/MENU_SUBMENU_20261023.md
++++ after/docs/MENU_SUBMENU_20261023.md
+@@ -21,6 +21,21 @@
+ 进入子菜单本身不修改参数。子菜单用两行大字显示当前项名称与当前值，不再占用横向第二列。短按KEY3返回后保留原选中项；长按退出不会额外触发短按。
+ 
+ ## 菜单外亮度与对比度提示
++
++菜单关闭时，短按KEY3并松开，快捷模式按“播放→亮度→对比度→播放”循环。
++每次切换，左上角用黄色双倍字号显示“播放”“亮度”或“对比度”，表示刚切到的模式，约两秒后消失。
++两秒内再次切换会显示最新模式并重新计时；上电默认播放模式，不主动弹出提示。
++这里KEY3是B1对应的操作键，不是A2整机复位键。
++
++| 菜单外快捷模式 | KEY1 | KEY2 |
++|---|---|---|
++| 播放 | 下一图片/视频 | 图片自动轮播开关或视频播放/暂停 |
++| 亮度 | 减8 | 加8 |
++| 对比度 | 减1 | 加1 |
++
++提示期间实际调节亮度或对比度，会改为下面的参数数值浮窗，并从这次变化重新计时。
++打开菜单会取消模式提示；长按KEY3开关菜单、菜单内进入/返回子菜单都不会触发快捷模式提示。
++显示在帧边界更新，沿用640×480/800×600的坐标适配。实现与验证见[本轮记录](../reports/mode_popup_20261023/RESULT.md)；[快捷模式提示新bit](../reports/mode_popup_20261023/bitstream/video_improve_mode_popup_20261023.bit)已生成，旧bit不含此新增提示。
+ 
+ 菜单关闭时，原有KEY快捷模式、红外等操作仍修改原来的同一组参数寄存器。亮度或对比度实际数值变化时，左上角出现两行小浮窗，显示当前亮度和对比度。
+ 
+--- before/docs/MENU_MEDIA_20261023.md
++++ after/docs/MENU_MEDIA_20261023.md
+@@ -67,6 +67,10 @@
+ 
+ 菜单外调整亮度或对比度，左上角两秒提示继续保留；连续实际变化会更新数值并重新计时。即使最后停留在第二页后关闭菜单，这个提示仍显示亮度/对比度，而不是误显示媒体菜单文字。
+ 
++新增快捷模式提示：菜单关闭时，短按KEY3并松开循环切换“播放→亮度→对比度”，左上角用黄色双倍字号显示当前模式名称约两秒；连续切换刷新计时。
++实际调节参数后改显示原两秒数值浮窗；长按开关菜单不切换快捷模式，也不弹出该提示。
++本增量的构建/交付状态见[快捷模式提示记录](../reports/mode_popup_20261023/RESULT.md)，[快捷模式提示新bit](../reports/mode_popup_20261023/bitstream/video_improve_mode_popup_20261023.bit)已生成，上文媒体菜单旧bit不包含这次提示。
++
+ 原KEY快捷模式、SW、PS/2、红外和UART对时沿原通路保留。媒体模式选择采用最后一次明确请求，旧的键盘或组合键保持电平不会锁死新菜单选择；KEY1+KEY2组合键的重复请求通过独立事件标记传递。
+ 
+ ## 本轮画面与验证

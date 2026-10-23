@@ -1,0 +1,42 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\avf\tb_av_memory_HQ1.log} -lib timing_opt_avf_work -c -gHQ=1 tb_av_memory 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_16_32_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_16_32_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_32_16_256.v(244): (vopt-2685) [TFMPC] - Too few port connections for 'ram_inst'.  Expected 16, found 14.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'dib'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\..\..\..\src\ip\fifo\afifo_32_16_256.v(244): (vopt-2718) [TFMPC] - Missing connection for port 'doa'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\tb_av_memory.v(37): (vopt-2685) [TFMPC] - Too few port connections for 'memory'.  Expected 45, found 42.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\tb_av_memory.v(37): (vopt-2718) [TFMPC] - Missing connection for port 'debug_read_status'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\tb_av_memory.v(37): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mem_status'.
+# 
+# ** Warning: E:\fpga\legacy\f_drive_video_reference\sim\tb_av_memory.v(37): (vopt-2718) [TFMPC] - Missing connection for port 'rd_frame_invalid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_av_memory(fast)
+# run -all 
+# load_us=19502 stalled_cycles=844905 display_pixels=338757
+# ALL PASS tb_av_memory: 307200 exact flipped writes, simultaneous VGA display, 100/40/25 MHz clocks, actual FIFOs, bounded six-cycle SDRAM peer
+# ** Note: $finish    : E:/fpga/legacy/f_drive_video_reference/sim/tb_av_memory.v(108)
+#    Time: 19502575 ns  Iteration: 1  Instance: /tb_av_memory

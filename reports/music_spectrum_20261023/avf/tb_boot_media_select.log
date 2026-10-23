@@ -1,0 +1,17 @@
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/music_spectrum_20261023/avf/tb_boot_media_select.log -lib E:/fpga/reports/music_spectrum_20261023/avf/avf_work -c tb_boot_media_select 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_boot_media_select(fast)
+# run -all 
+# ALL PASS tb_boot_media_select: default video at consumer release, held-key photo override, normal reset, late keys, PLL restart, legacy polarity
+# ** Note: $finish    : E:/fpga/reports/native640_20261022/adapted_contracts/tb_boot_media_select.v(64)
+#    Time: 40247640 ns  Iteration: 1  Instance: /tb_boot_media_select

@@ -1,0 +1,18 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module spectrum_analyzer
+-- Compiling module spectrum_coefficients
+-- Compiling module spectrum_fft256
+-- Compiling module music_spectrum_overlay
+-- Compiling module music_wave_capture
+-- Compiling module audio_visualizer
+-- Compiling module tb_spectrum_fft
+-- Compiling module tb_spectrum_bands
+-- Compiling module tb_music_waveform
+-- Compiling module tb_music_spectrum
+
+Top level modules:
+	audio_visualizer
+	tb_spectrum_fft
+	tb_spectrum_bands
+	tb_music_waveform
+	tb_music_spectrum

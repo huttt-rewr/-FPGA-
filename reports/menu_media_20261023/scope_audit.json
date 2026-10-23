@@ -1,0 +1,23 @@
+{
+  "status": "ALL PASS",
+  "changed": [
+    "scripts/gen_zh_font.py",
+    "scripts/run_tests.ps1",
+    "scripts/test_zh_font.py",
+    "sim/tb_menu_overlay.v",
+    "src/modules/control/boot_media_select.v",
+    "src/modules/control/picture_controls.v",
+    "src/modules/osd/menu_overlay.v",
+    "src/modules/osd/zh_font_rom.v",
+    "src/top.v"
+  ],
+  "added": [
+    "sim/tb_menu_media.v",
+    "sim/tb_menu_media_pixels.v"
+  ],
+  "status_source_70_bits_unchanged": true,
+  "legacy_font_words_unchanged": 1232,
+  "font_words": 1440,
+  "unchanged_build_inputs": 248,
+  "media_data_paths_ip_pins_constraints_unchanged": true
+}

@@ -1,0 +1,297 @@
+============================================================
+   Tang Dynasty, V6.2.168116
+   Copyright (c) 2012-2025 Anlogic Inc.
+   Executable = J:/Anlogic/td.6.2.1/bin/td_commands_prompt.exe
+   Built at =   16:32:07 Jun 12 2025
+   Run by =     xiewe
+   Run Date =   Fri Oct 23 20:56:55 2026
+
+   Run on =     ROLIENT
+============================================================
+RUN-1002 : start command "import_device eagle_s20.db -package EG4S20BG256"
+RUN-1001 : Using default speed grade: NA
+ARC-1001 : Device Initialization.
+ARC-1001 : ------------------------------------------------------------------
+ARC-1001 :            OPTION            |          IO          |   SETTING   
+ARC-1001 : ------------------------------------------------------------------
+ARC-1001 :   cso_b/cclk/mosi/miso/dout  |  T3/R11/T10/P10/S11  |    gpio    
+ARC-1001 :             done             |         P13          |    gpio    
+ARC-1001 :           program_b          |          T2          |  dedicate  
+ARC-1001 :        tdi/tms/tck/tdo       |   C12/A15/C14/E14    |  dedicate  
+ARC-1001 : ------------------------------------------------------------------
+ARC-1004 : Device setting, marked 5 dedicate IOs in total.
+RUN-1002 : start command "read_verilog -file src/modules/audio/spectrum_coefficients.v src/modules/audio/spectrum_fft256.v -top spectrum_fft256"
+HDL-1007 : analyze verilog file src/modules/audio/spectrum_coefficients.v
+HDL-1007 : analyze verilog file src/modules/audio/spectrum_fft256.v
+HDL-1007 : elaborate module spectrum_fft256 in src/modules/audio/spectrum_fft256.v(5)
+HDL-1007 : extracting RAM for identifier 'memory' in src/modules/audio/spectrum_fft256.v(32)
+HDL-1007 : elaborate module spectrum_coefficients in src/modules/audio/spectrum_coefficients.v(2)
+HDL-1200 : Current top model is spectrum_fft256
+HDL-1100 : Inferred 1 RAMs.
+RUN-1002 : start command "set_param gate map_mode area_prior"
+RUN-1002 : start command "set_param gate opt_area high"
+RUN-1002 : start command "set_param gate pack_effort high"
+RUN-1002 : start command "optimize_rtl"
+RUN-1001 : Open license file J:/Anlogic/td.6.2.1/license/Anlogic.lic
+SYN-1001 : Stage 1 | Optimize RTL
+SYN-1001 : Stage 1.1 | Check Design Sanity
+SYN-1001 : End Stage 1.1 | Check Design Sanity; Time: 0.000373s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 99, reserved = 101, peak = 99;
+
+SYN-1079 : finish stage Check Design Sanity. Total instances: 1526, Total nets: 4054.
+
+SYN-1001 : Stage 1.2 | Initialize Design
+SYN-1001 : End Stage 1.2 | Initialize Design; Time: 0.067372s wall, 0.062500s user + 0.000000s system = 0.062500s CPU (92.8%); Memory(MB): used = 99, reserved = 101, peak = 99;
+
+SYN-1079 : finish stage Initialize Design. Total instances: 170, Total nets: 2192.
+
+SYN-1001 : Stage 1.3 | Flatten Module
+SYN-1011 : Flatten model spectrum_fft256
+SYN-1001 : End Stage 1.3 | Flatten Module; Time: 0.002890s wall, 0.015625s user + 0.000000s system = 0.015625s CPU (540.7%); Memory(MB): used = 99, reserved = 101, peak = 99;
+
+SYN-1079 : finish stage Flatten Module. Total instances: 169, Total nets: 2128.
+
+SYN-1001 : Stage 1.4 | Uniform Instance
+SYN-1001 : End Stage 1.4 | Uniform Instance; Time: 0.002052s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 99, reserved = 101, peak = 99;
+
+SYN-1079 : finish stage Uniform Instance. Total instances: 168, Total nets: 2127.
+
+SYN-1001 : Stage 1.5 | Optimize Design
+SYN-1066 : Inferred FSM for state register 'state_reg' in module 'spectrum_fft256'
+-------------------------------------------------
+     Previous Encoding          New Encoding
+-------------------------------------------------
+                 00000     00000000000000001
+                 00001     00000000000000010
+                 00010     00000000000000100
+                 00011     00000000000001000
+                 00100     00000000000010000
+                 00101     00000000000100000
+                 01111     00000000001000000
+                 00110     00000000010000000
+                 00111     00000000100000000
+                 01000     00000001000000000
+                 01001     00000010000000000
+                 01010     00000100000000000
+                 01011     00001000000000000
+                 01100     00010000000000000
+                 10000     00100000000000000
+                 01101     01000000000000000
+                 01110     10000000000000000
+-------------------------------------------------
+SYN-1067 : encoded FSM with state register 'state_reg' using encoding 'one_hot' in model 'spectrum_fft256'
+SYN-1057 : Inferred 1 FSM(s)
+SYN-1032 : 2217/5 useful/useless nets, 162/0 useful/useless insts
+SYN-1001 : Bypass 1 mux instances
+SYN-1016 : Merged 2 instances.
+SYN-1026 : Infer Logic BRAM(ramread0_syn_4)
+	 port mode: single port
+	 port a size: 256 x 32	 write mode: READBEFOREWRITE
+	 port b size: 256 x 32	 write mode: NORMAL
+SYN-1023 : Infer 0 Logic DRAMs, 1 Logic BRAMs.
+SYN-1016 : Merged 16 instances.
+SYN-1001 : End Stage 1.5 | Optimize Design; Time: 0.233155s wall, 0.218750s user + 0.015625s system = 0.234375s CPU (100.5%); Memory(MB): used = 109, reserved = 111, peak = 109;
+
+SYN-1079 : finish stage Optimize Design. Total instances: 1323, Total nets: 1555.
+
+SYN-1001 : Stage 1.6 | Optimize Iteratively
+SYN-1014 : Optimize round 1
+SYN-1017 : Remove 3 const input seq instances
+SYN-1020 : Optimized 5 distributor mux.
+SYN-1001 : Optimize 1 less-than instances
+SYN-1019 : Optimized 114 mux instances.
+SYN-1016 : Merged 20 instances.
+SYN-1015 : Optimize round 1, 3263 better
+SYN-1014 : Optimize round 2
+SYN-1044 : Optimized 1 inv instances.
+SYN-1016 : Merged 15 instances.
+SYN-1015 : Optimize round 2, 137 better
+SYN-3010 : Optimized 1 DFF(s)
+SYN-1014 : Optimize round 1
+SYN-1016 : Merged 1 instances.
+SYN-1015 : Optimize round 1, 2 better
+SYN-1014 : Optimize round 2
+SYN-1015 : Optimize round 2, 0 better
+SYN-1001 : End Stage 1.6 | Optimize Iteratively; Time: 1.235964s wall, 1.203125s user + 0.031250s system = 1.234375s CPU (99.9%); Memory(MB): used = 137, reserved = 135, peak = 153;
+
+SYN-1079 : finish stage Optimize Iteratively. Total instances: 4006, Total nets: 4236.
+
+SYN-1001 : Stage 1.7 | Check Design
+SYN-1001 : End Stage 1.7 | Check Design; Time: 0.000467s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 137, reserved = 135, peak = 153;
+
+SYN-1079 : finish stage Check Design. Total instances: 4006, Total nets: 4236.
+
+SYN-1001 : End Stage 1 | Optimize RTL; Time: 1.542950s wall, 1.500000s user + 0.046875s system = 1.546875s CPU (100.3%); Memory(MB): used = 137, reserved = 135, peak = 153;
+
+SYN-1079 : finish stage Optimize RTL. Total instances: 4006, Total nets: 4236.
+
+RUN-1003 : finish command "optimize_rtl" in  1.551364s wall, 1.515625s user + 0.046875s system = 1.562500s CPU (100.7%)
+
+RUN-1004 : used memory is 137 MB, reserved memory is 135 MB, peak memory is 153 MB
+RUN-1002 : start command "optimize_gate"
+RUN-1001 : Open license file J:/Anlogic/td.6.2.1/license/Anlogic.lic
+SYN-1001 : Stage 2 | Optimize Gate
+SYN-1001 : Stage 2.1 | Map Reg
+SYN-1001 : End Stage 2.1 | Map Reg; Time: 0.035996s wall, 0.046875s user + 0.000000s system = 0.046875s CPU (130.2%); Memory(MB): used = 137, reserved = 135, peak = 153;
+
+SYN-1079 : finish stage Map Reg. Total instances: 4006, Total nets: 4236.
+
+SYN-1001 : Stage 2.2 | Map IO
+SYN-2001 : Map 62 IOs to PADs of model 'spectrum_fft256'
+SYN-1001 : End Stage 2.2 | Map IO; Time: 0.053346s wall, 0.046875s user + 0.000000s system = 0.046875s CPU (87.9%); Memory(MB): used = 138, reserved = 135, peak = 153;
+
+SYN-1001 : Stage 2.3 | Map Macro
+RUN-1002 : start command "update_pll_param -module spectrum_fft256"
+SYN-2501 : Processed 0 LOGIC_BUF instances.
+SYN-6562 WARNING: The init value of "ramread0_syn_4(src/modules/audio/spectrum_fft256.v(42))" will be ignored since gate eram_init is set to off
+SYN-2571 : Map 1 macro multiplier
+SYN-2571 : Optimize after map_dsp, round 1
+SYN-2571 : Optimize after map_dsp, round 1, 0 better
+SYN-1001 : Throwback 8 control mux instances
+SYN-1001 : Optimize 1 adders
+SYN-2501 : Optimize round 1
+SYN-1016 : Merged 9 instances.
+SYN-2501 : Optimize round 1, 28 better
+SYN-2501 : Optimize round 2
+SYN-2501 : Optimize round 2, 0 better
+SYN-2501 : Optimize round 1
+SYN-2501 : Optimize round 1, 0 better
+SYN-2501 : Map 17 macro adder(s)
+SYN-1019 : Optimized 665 mux instances.
+SYN-1016 : Merged 1098 instances.
+SYN-1001 : End Stage 2.3 | Map Macro; Time: 0.206893s wall, 0.203125s user + 0.000000s system = 0.203125s CPU (98.2%); Memory(MB): used = 143, reserved = 141, peak = 153;
+
+SYN-1079 : finish stage Map Macro. Total instances: 4712, Total nets: 4938.
+
+SYN-1001 : Stage 2.4 | Map Gate
+SYN-2581 : Mapping with K=5, #lut = 588 (3.84), #lev = 4 (2.85), #crit_level = 0
+SYN-2551 : Post LUT mapping optimization.
+SYN-2581 : Mapping with K=5, #lut = 597 (3.84), #lev = 4 (2.99), #crit_level = 0
+SYN-3001 : Logic optimization opt = 0.17 sec, map = 0.11 sec, post map opt = 14.58 sec.
+SYN-1001 : End Stage 2.4 | Map Gate; Time: 15.252209s wall, 13.281250s user + 0.046875s system = 13.328125s CPU (87.4%); Memory(MB): used = 160, reserved = 153, peak = 160;
+
+SYN-1001 : Packing model "spectrum_fft256" ...
+SYN-4010 : Pack lib has 59 rtl pack models with 26 top pack blocks
+SYN-1014 : Optimize round 1
+SYN-1015 : Optimize round 1, 0 better
+SYN-4002 : Packing 403 DFF/LATCH to SEQ ...
+SYN-4009 : Pack 5 carry chain into lslice
+SYN-4007 : Packing 98 adder to BLE ...
+SYN-4008 : Packed 98 adder and 23 SEQ to BLE.
+SYN-4007 : Packing 0 gate4 to BLE ...
+SYN-4008 : Packed 0 gate4 and 0 SEQ to BLE.
+RUN-1002 : start command "report_qor -step gate -file gate.qor"
+RUN-1002 : start command "start_timer"
+-----------------------------------------------------------
+| QoR metrics               |         value               |
+-----------------------------------------------------------
+| Timing                    |                             |
+|     Setup WNS             |        12318                |
+|     Setup TNS             |            0                |
+|     Num of violated S-EP  |            0                |
+|     Hold WNS              |          732                |
+|     Hold TNS              |            0                |
+|     Num of violated H-EP  |            0                |
+-----------------------------------------------------------
+| Utilization               |                             |
+|     #registers            |          380                |
+|     #luts                 |          597                |
+|     #lut1                 |            2                |
+|     #lut1(~A)             |            2                |
+|     #slices               |           85                |
+|     slices percentage     |        0.87%                |
+|     #RAMs                 |            4                |
+|     #DSPs                 |            1                |
+|     #f7mux                |        0.00%                |
+|     #MACROs               |           15                |
+|     #insts in MACRO       |           85                |
+-----------------------------------------------------------
+| kept_net                  |                             |
+|     #syn_keep             |            0                |
+|     #keep_hier            |            0                |
+|     #dont_touch           |            0                |
+|     #mark_debug           |            0                |
+|     #max_fanout_keep      |            0                |
+|     #async_reg            |            0                |
+-----------------------------------------------------------
+| Top 10% datanet fanout#   |        78.50                |
+| dff(single fanout)->dff   |            0                |
+| dff(single fanout)->dram  |            0                |
+-----------------------------------------------------------
+| Over-quota path num*      |                             |
+|     Total                 |            0                |
+-----------------------------------------------------------
+| Rent**                    |                             |
+-----------------------------------------------------------
+Note*: Over-quota path shows the over-path-level-threshold path number of each clock.
+       The clock will not be shown if no path is with path level over the threshold.
+       The threshold is defined as worst path_margin / 800ps.
+Note**: Rent shows the rent exponent value of the modules whose rent value exceeds the threshold.
+        Only modules under top are reported, and the threshold is defined as 0.7.
+
+Logic Level Distribution
+---------------------------------------------------------------------------------
+  Clock        |  Period            |  0    |  1   |  2    |  3   |  4    |  6
+---------------------------------------------------------------------------------
+  DeriveClock  |  20.000ns (50MHz)  |  318  |  39  |  108  |  40  |  242  |  75
+---------------------------------------------------------------------------------
+Note: The table count the worst 100000 paths, each endpoint count only one time.(822 paths analyzed)
+
+Hierarchical Rent Exponent Report
++-----------------------------------------------------------------+
+|Inst     |Model           |Rent     |Cell     |Pin     |Term     |
++-----------------------------------------------------------------+
+|top      |spectrum_fft256 |0.11     |1129     |5353    |10       |
++-----------------------------------------------------------------+
+Note: Cell represents total number of cells inside module; Pin represents total number of pins
+      which have net connection inside module; Term represents total number of PIs and POs of module.
+      Rent represents the relationship between number of terms and number of cells in module.
+      A module with higher rent corresponds to highly connected logic and strong connectivity with others.
+Report gate stage QoR done.
+
+RUN-1003 : finish command "report_qor -step gate -file gate.qor" in  1.039854s wall, 0.984375s user + 0.046875s system = 1.031250s CPU (99.2%)
+
+RUN-1004 : used memory is 161 MB, reserved memory is 153 MB, peak memory is 161 MB
+SYN-1001 : End Stage 2 | Optimize Gate; Time: 16.648587s wall, 14.609375s user + 0.093750s system = 14.703125s CPU (88.3%); Memory(MB): used = 161, reserved = 153, peak = 161;
+
+RUN-1003 : finish command "optimize_gate" in  16.657187s wall, 14.609375s user + 0.093750s system = 14.703125s CPU (88.3%)
+
+RUN-1004 : used memory is 161 MB, reserved memory is 153 MB, peak memory is 161 MB
+RUN-1002 : start command "legalize_phy_inst"
+SYN-1001 : Stage 3 | Legalize Phy Inst
+SYN-1011 : Flatten model spectrum_fft256
+SYN-1001 : End Stage 3 | Legalize Phy Inst; Time: 0.011226s wall, 0.015625s user + 0.000000s system = 0.015625s CPU (139.2%); Memory(MB): used = 161, reserved = 153, peak = 161;
+
+RUN-1002 : start command "report_area -file reports/music_spectrum_20261023/fft_probe_area.txt"
+RUN-1001 : standard
+***Report Model: spectrum_fft256 Device: EG4S20BG256***
+
+IO Statistics
+#IO                        62   out of    188   32.98%
+  #input                   19
+  #output                  43
+  #inout                    0
+
+LUT Statistics
+#Total_luts               597
+  #lut4                   379
+  #lut5                   218
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b               0
+
+Utilization Statistics
+#lut                      767   out of  19600    3.91%
+#reg                      403   out of  19600    2.06%
+#bram                       4   out of     64    6.25%
+  #bram9k                   4
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#dsp                        1   out of     29    3.45%
+#pad                       62   out of    188   32.98%
+  #ireg                     0
+  #oreg                    42
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       0   out of     16    0.00%
+
+PROBE_COMPLETED

@@ -13,7 +13,7 @@ update_timing
 # Prefer LUT pairs: avoid wasting slice sites beside distributed line RAM.
 set_param place pack_mode more_lut_pair
 set_param place pr_strategy 1
-set_param place seed 25
+set_param place seed 26
 place
 # The registered SDC survives timer rebuilds. Refresh before reporting and
 # optimizing, without adding duplicate generated-clock definitions.

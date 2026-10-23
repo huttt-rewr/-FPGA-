@@ -1,0 +1,25 @@
+{
+  "changed_existing": [
+    "src/top.v",
+    "src/td_project/video_improve.al",
+    "scripts/design_files.txt",
+    "scripts/implement.tcl",
+    "scripts/run_tests.ps1",
+    "docs/BUILD_STATUS.md",
+    "docs/KEY_SW_OPERATION.md",
+    "docs/SOURCE_MAP.md",
+    "README.md",
+    "video_improve.al"
+  ],
+  "new_synthesis_sources": [
+    "src/modules/audio/spectrum_coefficients.v",
+    "src/modules/audio/spectrum_fft256.v",
+    "src/modules/audio/spectrum_analyzer.v",
+    "src/modules/video/music_spectrum.v"
+  ],
+  "protected_files_unchanged": 51,
+  "status_source_70_bits_unchanged": true,
+  "top_only_replaces_active_visualizer_instance": true,
+  "coefficient_reproducibility": true,
+  "reference_project_modified": false
+}

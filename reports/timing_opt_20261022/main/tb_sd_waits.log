@@ -1,0 +1,71 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_sd_waits.log} -lib timing_opt_main_work_v2 -c tb_sd_waits 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 25, found 18.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'spi_data_in'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'clk_div'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'nCS_ctrl'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'block_write_data_rd'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'block_read_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'response_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'response_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2685) [TFMPC] - Too few port connections for 'wrapper'.  Expected 25, found 9.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_end'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_write_data_req'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_end'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data_valid'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_sec_read_data'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_transfer_error'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'sd_init_done'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: E:\fpga\sim\tb_sd_waits.v(29): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_sd_waits(fast)
+# run -all 
+# ALL PASS tb_sd_waits: startup count, token/write waits, read recovery, wrapper retries
+# ** Note: $finish    : E:/fpga/sim/tb_sd_waits.v(61)
+#    Time: 42530 ns  Iteration: 1  Instance: /tb_sd_waits

@@ -1,0 +1,35 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_fat32_stream.log} -lib timing_opt_main_work_v2 -c tb_fat32_stream 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2685) [TFMPC] - Too few port connections for 'fs'.  Expected 44, found 38.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'files_truncated'.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'wav_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_idle'.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_abort'.
+# 
+# ** Warning: E:\fpga\sim\tb_fat32_mount.v(23): (vopt-2718) [TFMPC] - Missing connection for port 'aud_file_idx'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_stream(fast)
+# run -all 
+# ALL PASS tb_fat32_stream: exact fragmented bytes/BMP/WAV/bounds/loops/cache/bad cluster/SD errors/abort
+# ** Note: $finish    : E:/fpga/sim/tb_fat32_stream.v(93)
+#    Time: 1001230 ns  Iteration: 1  Instance: /tb_fat32_stream

@@ -1,0 +1,1979 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga\legacy\f_drive_video_reference\sim
+T_opt
+V[kCnQ6QL^EUTL64hmMcRY3
+04 15 4 work tb_menu_overlay fast 0
+=1-bcfce7e1723c-6adaaa08-c2-a338
+o-quiet -auto_acc_if_foreign -work ../reports/native640_20261022/video_work
+n@_opt
+Z1 OL;O;10.1c;51
+T_opt1
+Vif4iGIgcAA^EkbVL3CX9k0
+04 21 4 work tb_fat32_movie_native fast 0
+=1-bcfce7e1723c-6ada28c9-17-97f0
+o-quiet -auto_acc_if_foreign -work E:/fpga/reports/native640_20261022/video_work -g SCENARIO=3
+n@_opt1
+R1
+Z2 dE:\fpga\legacy\f_drive_video_reference\sim
+T_opt2
+VdTUJWl^;X=EEIfzg`zCF_2
+04 15 4 work tb_chinese_menu fast 0
+=1-bcfce7e1723c-6adaa97e-116-1110
+o-quiet -auto_acc_if_foreign -work reports/native640_20261022/video_work
+n@_opt2
+R1
+R2
+vadaptive_raster
+If[MjAFM5=m3mB?jV6bf_O3
+Vne_l4gB5[1nJSdBTk_<bD0
+R2
+Z3 w1791647380
+8E:/fpga/src/modules/video/adaptive_raster.v
+FE:/fpga/src/modules/video/adaptive_raster.v
+L0 3
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792682007.488000
+Z6 !s107 E:/fpga/global_def.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie_native.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory_native.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_media_mode_switch.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_boot_media_select.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_sd_av.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_faults.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_fast_scaler.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_phase.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_controls.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_sync.v|E:/fpga/sim/tb_av_native.v|E:/fpga/sim/sd_native_card_model.v|E:/fpga/src/ip/fifo/afifo_32_16_256.v|E:/fpga/src/ip/fifo/afifo_16_32_256.v|E:/fpga/src/modules/input/ps2_keyboard.v|E:/fpga/src/modules/input/ps2_controls.v|E:/fpga/src/modules/memory/sdram.v|E:/fpga/src/modules/memory/global_def.v|E:/fpga/src/modules/memory/frame_read_write.v|E:/fpga/src/modules/memory/frame_fifo_write.v|E:/fpga/src/modules/memory/frame_fifo_read.v|E:/fpga/src/modules/sd/native/sd_native_controller.v|E:/fpga/src/modules/sd/native/sd_card_top_native.v|E:/fpga/src/modules/sd/native/sd_bus_phy.v|E:/fpga/src/modules/sd/spi_master.v|E:/fpga/src/modules/sd/sd_read_arbiter.v|E:/fpga/src/modules/sd/sd_fat32.v|E:/fpga/src/modules/sd/sd_card_top.v|E:/fpga/src/modules/sd/sd_card_sec_read_write.v|E:/fpga/src/modules/sd/sd_card_cmd.v|E:/fpga/src/modules/sd/sd_av_reader.v|E:/fpga/src/modules/bmp/sd_card_bmp.v|E:/fpga/src/modules/bmp/bmp_read.v|E:/fpga/src/modules/audio/av_audio_gain.v|E:/fpga/src/modules/audio/audio_wav.v|E:/fpga/src/modules/audio/audio_test_source.v|E:/fpga/src/modules/audio/audio_playback.v|E:/fpga/src/modules/audio/audio_fifo_room.v|E:/fpga/src/modules/audio/audio_effects_stream.v|E:/fpga/src/modules/audio/audio_effects.v|E:/fpga/src/modules/audio/audio_async_fifo.v|E:/fpga/src/modules/video/video_timing_data.v|E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v|E:/fpga/src/modules/video/video_mode_control.v|E:/fpga/src/modules/video/video_luma_window_bram.v|E:/fpga/src/modules/video/video_enhance.v|E:/fpga/src/modules/video/video_delay.v|E:/fpga/src/modules/video/video_define.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/src/modules/video/transition_pixels.v|E:/fpga/src/modules/video/pixel_effects.v|E:/fpga/src/modules/video/picture_gamma.v|E:/fpga/src/modules/video/picture_adjust.v|E:/fpga/src/modules/video/glass_osd.v|E:/fpga/src/modules/video/frame_swap.v|E:/fpga/src/modules/video/edid_display_mode.v|E:/fpga/src/modules/video/edid_base_check.v|E:/fpga/src/modules/video/color_bar.v|E:/fpga/src/modules/video/bmp_scale_loader.v|E:/fpga/src/modules/video/av_sync_player.v|E:/fpga/src/modules/video/av_fast_scaler.v|E:/fpga/src/modules/video/auto_enhance_scale.v|E:/fpga/src/modules/video/auto_enhance.v|E:/fpga/src/modules/video/audio_visualizer.v|E:/fpga/src/modules/video/adaptive_video_clock.v|E:/fpga/src/modules/video/adaptive_raster.v|E:/fpga/src/modules/osd/zh_overlay.v|E:/fpga/src/modules/osd/zh_font_rom.v|E:/fpga/src/modules/osd/status_osd.v|E:/fpga/src/modules/osd/osd_char_rom.v|E:/fpga/src/modules/osd/caption_overlay.v|E:/fpga/src/modules/control/uart_tx_queue.v|E:/fpga/src/modules/control/uart_tx.v|E:/fpga/src/modules/control/uart_rx.v|E:/fpga/src/modules/control/time_cmd.v|E:/fpga/src/modules/control/switch_controls.v|E:/fpga/src/modules/control/slideshow_timer.v|E:/fpga/src/modules/control/remote_controls.v|E:/fpga/src/modules/control/player_control.v|E:/fpga/src/modules/control/picture_controls.v|E:/fpga/src/modules/control/ir_nec_rx.v|E:/fpga/src/modules/control/fps_control.v|E:/fpga/src/modules/control/boot_media_select.v|E:/fpga/src/modules/common/startup_pulse.v|E:/fpga/src/modules/common/reset_sync.v|E:/fpga/src/modules/common/cdc_snapshot.v|E:/fpga/src/modules/common/board_supervisor.v|E:/fpga/src/modules/common/board_debug.v|
+Z7 !s90 -work|E:/fpga/reports/native640_20261022/video_work|+incdir+E:/fpga/src/modules/video+E:/fpga|E:/fpga/src/modules/common/board_debug.v|E:/fpga/src/modules/common/board_supervisor.v|E:/fpga/src/modules/common/cdc_snapshot.v|E:/fpga/src/modules/common/reset_sync.v|E:/fpga/src/modules/common/startup_pulse.v|E:/fpga/src/modules/control/boot_media_select.v|E:/fpga/src/modules/control/fps_control.v|E:/fpga/src/modules/control/ir_nec_rx.v|E:/fpga/src/modules/control/picture_controls.v|E:/fpga/src/modules/control/player_control.v|E:/fpga/src/modules/control/remote_controls.v|E:/fpga/src/modules/control/slideshow_timer.v|E:/fpga/src/modules/control/switch_controls.v|E:/fpga/src/modules/control/time_cmd.v|E:/fpga/src/modules/control/uart_rx.v|E:/fpga/src/modules/control/uart_tx.v|E:/fpga/src/modules/control/uart_tx_queue.v|E:/fpga/src/modules/osd/caption_overlay.v|E:/fpga/src/modules/osd/osd_char_rom.v|E:/fpga/src/modules/osd/status_osd.v|E:/fpga/src/modules/osd/zh_font_rom.v|E:/fpga/src/modules/osd/zh_overlay.v|E:/fpga/src/modules/video/adaptive_raster.v|E:/fpga/src/modules/video/adaptive_video_clock.v|E:/fpga/src/modules/video/audio_visualizer.v|E:/fpga/src/modules/video/auto_enhance.v|E:/fpga/src/modules/video/auto_enhance_scale.v|E:/fpga/src/modules/video/av_fast_scaler.v|E:/fpga/src/modules/video/av_sync_player.v|E:/fpga/src/modules/video/bmp_scale_loader.v|E:/fpga/src/modules/video/color_bar.v|E:/fpga/src/modules/video/edid_base_check.v|E:/fpga/src/modules/video/edid_display_mode.v|E:/fpga/src/modules/video/frame_swap.v|E:/fpga/src/modules/video/glass_osd.v|E:/fpga/src/modules/video/picture_adjust.v|E:/fpga/src/modules/video/picture_gamma.v|E:/fpga/src/modules/video/pixel_effects.v|E:/fpga/src/modules/video/transition_pixels.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/src/modules/video/video_define.v|E:/fpga/src/modules/video/video_delay.v|E:/fpga/src/modules/video/video_enhance.v|E:/fpga/src/modules/video/video_luma_window_bram.v|E:/fpga/src/modules/video/video_mode_control.v|E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v|E:/fpga/src/modules/video/video_timing_data.v|E:/fpga/src/modules/audio/audio_async_fifo.v|E:/fpga/src/modules/audio/audio_effects.v|E:/fpga/src/modules/audio/audio_effects_stream.v|E:/fpga/src/modules/audio/audio_fifo_room.v|E:/fpga/src/modules/audio/audio_playback.v|E:/fpga/src/modules/audio/audio_test_source.v|E:/fpga/src/modules/audio/audio_wav.v|E:/fpga/src/modules/audio/av_audio_gain.v|E:/fpga/src/modules/bmp/bmp_read.v|E:/fpga/src/modules/bmp/sd_card_bmp.v|E:/fpga/src/modules/sd/sd_av_reader.v|E:/fpga/src/modules/sd/sd_card_cmd.v|E:/fpga/src/modules/sd/sd_card_sec_read_write.v|E:/fpga/src/modules/sd/sd_card_top.v|E:/fpga/src/modules/sd/sd_fat32.v|E:/fpga/src/modules/sd/sd_read_arbiter.v|E:/fpga/src/modules/sd/spi_master.v|E:/fpga/src/modules/sd/native/sd_bus_phy.v|E:/fpga/src/modules/sd/native/sd_card_top_native.v|E:/fpga/src/modules/sd/native/sd_native_controller.v|E:/fpga/src/modules/memory/frame_fifo_read.v|E:/fpga/src/modules/memory/frame_fifo_write.v|E:/fpga/src/modules/memory/frame_read_write.v|E:/fpga/src/modules/memory/global_def.v|E:/fpga/src/modules/memory/sdram.v|E:/fpga/src/modules/input/ps2_controls.v|E:/fpga/src/modules/input/ps2_keyboard.v|E:/fpga/src/ip/fifo/afifo_16_32_256.v|E:/fpga/src/ip/fifo/afifo_32_16_256.v|E:/fpga/sim/sd_native_card_model.v|E:/fpga/sim/tb_av_native.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_sync.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_controls.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_phase.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_fast_scaler.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_faults.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_sd_av.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_boot_media_select.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_media_mode_switch.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory_native.v|E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie_native.v|
+Z8 o-work E:/fpga/reports/native640_20261022/video_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+Z9 !s92 -work E:/fpga/reports/native640_20261022/video_work +incdir+E:/fpga/src/modules/video+E:/fpga -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 aXARg3EXgno4TR0L@d==b2
+!i10b 1
+!s85 0
+vadaptive_video_clock
+IUiXR8zjNhga;RIg5<Z:Ka0
+V8W;I^^3_JFJDaGRznOgIm0
+R2
+w1792162513
+8E:/fpga/src/modules/video/adaptive_video_clock.v
+FE:/fpga/src/modules/video/adaptive_video_clock.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 K=9zPmO9I^Jg8aY5bCFXJ1
+!i10b 1
+!s85 0
+vaudio_async_fifo
+I0^LZ;MFnF8ZzTkEIULDe^0
+VM9eViRGVW>?gUMCk<Z7jW0
+R2
+w1792678702
+8E:/fpga/src/modules/audio/audio_async_fifo.v
+FE:/fpga/src/modules/audio/audio_async_fifo.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 O>N3Q]6M?M8FkN]UU:8V<1
+!i10b 1
+!s85 0
+vaudio_effects
+I1gbIF6HgF^2QOhD^zVFIm3
+VR2YMe<j]YikaWdlM1Vj@C1
+R2
+w1791990963
+8E:/fpga/src/modules/audio/audio_effects.v
+FE:/fpga/src/modules/audio/audio_effects.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 S>MBXWBFjPCSN7k3l;;oK3
+!i10b 1
+!s85 0
+vaudio_effects_stream
+IEQM744Ii<^laB0lVea51[2
+V4?n5o>z?0kgSjLGjM=]nP0
+R2
+w1792135893
+8E:/fpga/src/modules/audio/audio_effects_stream.v
+FE:/fpga/src/modules/audio/audio_effects_stream.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 FTlIBYhe7Di[4ligklo`V1
+!i10b 1
+!s85 0
+vaudio_error_history
+I;<C634I9WE2f1C@VhQ4CG3
+V^l30PP>[=nHX_H]UNCU<Z1
+R2
+Z10 w1791968133
+Z11 8E:/fpga/src/modules/audio/audio_playback.v
+Z12 FE:/fpga/src/modules/audio/audio_playback.v
+L0 96
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 6jRBkHCjO`3TAfCFePdC11
+!i10b 1
+!s85 0
+vaudio_fifo_room
+I:eeSF:8X@3X^aN6CnV8CV2
+Vi1]?zV?I_E`P_J?LD1WkE2
+R2
+w1792141661
+8E:/fpga/src/modules/audio/audio_fifo_room.v
+FE:/fpga/src/modules/audio/audio_fifo_room.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 [KeN<:0?PF@HGjJmS413a0
+!i10b 1
+!s85 0
+vaudio_playback
+Iz3G37?0f<T7ld<TXPIH751
+V02GGXY_dPX^S<F?0LTMUJ1
+R2
+R10
+R11
+R12
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 g;=4?<aZ>N`Q``fio4AdK2
+!i10b 1
+!s85 0
+vaudio_test_source
+IR:GUCoA7cD?0z]AY1Vl3Q0
+Ve3YFC@IO@_=naj[?^CJaa0
+R2
+w1790933118
+8E:/fpga/src/modules/audio/audio_test_source.v
+FE:/fpga/src/modules/audio/audio_test_source.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ]<IbCLS;[be=5kFFUP]BE0
+!i10b 1
+!s85 0
+vaudio_visualizer
+I;QSgn>O^lcZ8k92RO5GMo1
+V6;o7J0X]Iao[<edbmL[390
+R2
+w1792260357
+8E:/fpga/src/modules/video/audio_visualizer.v
+FE:/fpga/src/modules/video/audio_visualizer.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 h@Da6@ZUil6fGc3MjTeCK1
+!i10b 1
+!s85 0
+vaudio_wav
+IT]F7?d7<Kl:k2Uo:1];m^3
+VYV[<;CBcJNCl`VEoAl>H02
+R2
+w1792336900
+8E:/fpga/src/modules/audio/audio_wav.v
+FE:/fpga/src/modules/audio/audio_wav.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ndJ:N7TTbJi@PMdIoAa]m3
+!i10b 1
+!s85 0
+vauto_enhance
+I<nn3iIg>TS`UXBV]Gcn7D1
+V9L0_]9gN9TK^MbY;B4C1R0
+R2
+Z13 w1792508118
+8E:/fpga/src/modules/video/auto_enhance.v
+FE:/fpga/src/modules/video/auto_enhance.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 YYDmXSal@Q`bNjVFS:KPh0
+!i10b 1
+!s85 0
+vauto_enhance_scale
+IOaz;n3bM2fIdHLnnnfUX:2
+VEV09eYRb<PFNAXM:[2@nd1
+R2
+R13
+8E:/fpga/src/modules/video/auto_enhance_scale.v
+FE:/fpga/src/modules/video/auto_enhance_scale.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ;W5mi4<0eK=InlIZ;[j?n3
+!i10b 1
+!s85 0
+vav_audio_gain
+IjVQzAITa>@zRk27jTQBWC3
+VFHKl@h@fF^VKC]Y:^`M?@0
+R2
+Z14 w1792661863
+8E:/fpga/src/modules/audio/av_audio_gain.v
+FE:/fpga/src/modules/audio/av_audio_gain.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 LMURb8eId[5cK_9<J8[Og2
+!i10b 1
+!s85 0
+vav_fast_scaler
+IklD85fPob^`VY1^[8a0bQ1
+VOU_:fn:O2?8ocU5dB[_2H0
+R2
+Z15 w1792681550
+8E:/fpga/src/modules/video/av_fast_scaler.v
+FE:/fpga/src/modules/video/av_fast_scaler.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 i3GAn@Jdd::=BjOLcJ`Li0
+!i10b 1
+!s85 0
+vav_sync_player
+I4jh04@hihK?PdkPTacTEZ0
+V?S6h;hTB]IXDbgUZ:]E9G0
+R2
+w1792659547
+8E:/fpga/src/modules/video/av_sync_player.v
+FE:/fpga/src/modules/video/av_sync_player.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 nf9:00DRUD0]U0:QPI3cA3
+!i10b 1
+!s85 0
+vbmp_read
+I_od][;3LHMeREmSOB23EW3
+VJd4H7c1>TQ?hXRE8mD4id2
+R2
+w1792253009
+8E:/fpga/src/modules/bmp/bmp_read.v
+FE:/fpga/src/modules/bmp/bmp_read.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 :<Ydn>e=Jem>REjTz8VO91
+!i10b 1
+!s85 0
+vbmp_scale_loader
+IG6VTP;Dj`We0YBjWfYbk]3
+VH0HUO[lNeD<Lj[hARD=J03
+R2
+Z16 w1792311893
+Z17 8E:/fpga/src/modules/video/bmp_scale_loader.v
+Z18 FE:/fpga/src/modules/video/bmp_scale_loader.v
+L0 6
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 g1anWWRja0R2G62K1gcc33
+!i10b 1
+!s85 0
+vboard_debug
+IAZUTSo[Ih>9kSheV07_Ef3
+VA3gIki1=FLR2J1Az1WN520
+R2
+w1791954365
+8E:/fpga/src/modules/common/board_debug.v
+FE:/fpga/src/modules/common/board_debug.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 1G`[33<6?I65aF<@7Ka1U0
+!i10b 1
+!s85 0
+vboard_supervisor
+I^aoN`zXjnA1R;Z`j2I4nP3
+VoM:dmQNcIVe27<^4S>9Fz3
+R2
+w1791964773
+8E:/fpga/src/modules/common/board_supervisor.v
+FE:/fpga/src/modules/common/board_supervisor.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 [J[G5Oa@l`d`8LB;hf@HP0
+!i10b 1
+!s85 0
+vboot_media_select
+I>TU0KG=`dnVfQBEQY3USK0
+V7YoN5484_QKUlG6[:S5D51
+R2
+R14
+Z19 8E:/fpga/src/modules/control/boot_media_select.v
+Z20 FE:/fpga/src/modules/control/boot_media_select.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Q8cFi]_^5MbB4oF[CH1A22
+!i10b 1
+!s85 0
+vcaption_overlay
+Id?SBf`zMR^@:TjElfUXVE3
+VHO`>`jmJKBb<=3Y[h`in60
+R2
+Z21 w1792510567
+8E:/fpga/src/modules/osd/caption_overlay.v
+FE:/fpga/src/modules/osd/caption_overlay.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ToAR10Fd6c:eC2`RFbA_92
+!i10b 1
+!s85 0
+vcdc_snapshot
+IQ4mjaCGL@M4eEPfbIao`g3
+VU8kc2KcDY?Z53L71bGSQN2
+R2
+w1792509550
+8E:/fpga/src/modules/common/cdc_snapshot.v
+FE:/fpga/src/modules/common/cdc_snapshot.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 lG?0P8BTcfmVnOk97Q:L^1
+!i10b 1
+!s85 0
+vcolor_bar
+Ie`]^4ag@4GHB3EPSRm5Io0
+V:PLi6mfO;4JCRSTZT<bDo3
+R2
+Z22 w1790931106
+8E:/fpga/src/modules/video/color_bar.v
+FE:/fpga/src/modules/video/color_bar.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 l<fJELfe`l]Qo3cWd>c6H0
+!i10b 1
+!s85 0
+vedid_base_check
+IdonfT_Ye;jMSN;JeO0f5L1
+VE_4moClS3Ih6dIgCo;E`i0
+R2
+w1791463020
+8E:/fpga/src/modules/video/edid_base_check.v
+FE:/fpga/src/modules/video/edid_base_check.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 `I`H2WejUEbYJ>3B]f0c32
+!i10b 1
+!s85 0
+vedid_display_mode
+IZbL0H8Nk<VXL@bD2NZ7Pf0
+V6C4Ya81U]f;jMTLhPe>k71
+R2
+R3
+8E:/fpga/src/modules/video/edid_display_mode.v
+FE:/fpga/src/modules/video/edid_display_mode.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 MhnTWd]NH>=CBQbjP>aE?0
+!i10b 1
+!s85 0
+vfifo_cross_domain_addr_process_al_rfifo_32_32_512
+IV992z7cng1IJSePa8;HLe1
+VKM1_4kLamYkEzJI>K_ec33
+R2
+Z23 w1790516142
+Z24 8E:/fpga/src/ip/fifo/afifo_32_16_256.v
+Z25 FE:/fpga/src/ip/fifo/afifo_32_16_256.v
+Z26 L0 250
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 N?J1IQ]<Tce`WBHiOme301
+!i10b 1
+!s85 0
+vfifo_cross_domain_addr_process_al_wfifo_32_32_512
+IP;]S_g<W>?=M7L`2jG0I11
+V`DXOBX>U4<EN^H0je2LST1
+R2
+Z27 w1790516141
+Z28 8E:/fpga/src/ip/fifo/afifo_16_32_256.v
+Z29 FE:/fpga/src/ip/fifo/afifo_16_32_256.v
+R26
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 iT]20US;AbJCLBChXmSAb1
+!i10b 1
+!s85 0
+vfps_control
+Iel85iPYWQO@o5EA[i5ljb2
+VAn[Se<Z`R=iM]_BG`J;W;0
+R2
+w1792325175
+8E:/fpga/src/modules/control/fps_control.v
+FE:/fpga/src/modules/control/fps_control.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 oZGNBPUjOMikVn?>12Rd00
+!i10b 1
+!s85 0
+vframe_fifo_read
+IXCc:WocVWg@5a5V?6JE5=3
+VYhQmbi>f6RT6l37Vam`Ll3
+R2
+Z30 w1791889236
+8E:/fpga/src/modules/memory/frame_fifo_read.v
+FE:/fpga/src/modules/memory/frame_fifo_read.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 =EYUY=JFRSRX@WEa5eSMo0
+!i10b 1
+!s85 0
+vframe_fifo_write
+I]PadN^3z3=M:XU3g;l>jj1
+V@=J[gXO`OdV?f8T[WB0_:2
+R2
+R30
+8E:/fpga/src/modules/memory/frame_fifo_write.v
+FE:/fpga/src/modules/memory/frame_fifo_write.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Zfcm[PmA3iOFmTKk2f5zm0
+!i10b 1
+!s85 0
+vframe_read_write
+IAPR09d8`;5O>a::36j6Jk0
+VJnl:8SGao89@UPIONAiRI3
+R2
+w1791956355
+8E:/fpga/src/modules/memory/frame_read_write.v
+FE:/fpga/src/modules/memory/frame_read_write.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 SKU?gm59nak4g@DQlJ:MR3
+!i10b 1
+!s85 0
+vframe_swap
+IdV9dG>gQP:jC]Tnz?Lm1@3
+VL`T8=:`H;_e8Z8O9dz:;L0
+R2
+Z31 w1792408871
+8E:/fpga/src/modules/video/frame_swap.v
+FE:/fpga/src/modules/video/frame_swap.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 TjPm0FY94WE1T1aDHmn>V2
+!i10b 1
+!s85 0
+vglass_osd
+IQm@=zBFNNbYGNg0Zi]k<Y0
+VQ9L7iz9ehmVK4ZnLAKJII2
+R2
+Z32 w1792255120
+Z33 8E:/fpga/src/modules/video/glass_osd.v
+Z34 FE:/fpga/src/modules/video/glass_osd.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 @^l`P602gOeL]KCo0zBWD3
+!i10b 1
+!s85 0
+vglass_title_row
+IXCiSK2XZ33zo16NUd0o:L1
+V4SSS7g8XmC7kPD<nfkL1`0
+R2
+R32
+R33
+R34
+L0 92
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 gE;lUL_Vi6OX8ljjM8b;70
+!i10b 1
+!s85 0
+vir_nec_rx
+IF@BBOlhTO`1mfBFO<3lc=2
+V^m4j3P7z0^34V8fC;Udml3
+R2
+w1792504637
+8E:/fpga/src/modules/control/ir_nec_rx.v
+FE:/fpga/src/modules/control/ir_nec_rx.v
+L0 16
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 GmECXP4G@7o<h9KXfdP5g3
+!i10b 1
+!s85 0
+vkey_press_debounce
+IKgNa4INbA4:4SOh;7i5lM1
+VFhkc<PRIIC7<S8WGnX8Cf2
+R2
+Z35 w1792673287
+Z36 8E:/fpga/src/modules/bmp/sd_card_bmp.v
+Z37 FE:/fpga/src/modules/bmp/sd_card_bmp.v
+L0 656
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 LORoLAKK;kR:@NTLbI49h0
+!i10b 1
+!s85 0
+vmedia_button_request
+IT9ToF>@MO:GDI3>kMTMMK0
+VOliWmAXO=:RVjoUK`SHYL1
+R2
+R14
+R19
+R20
+L0 47
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ?_YIZE3HMfD0_8LC71oj32
+!i10b 1
+!s85 0
+vmedia_keyboard_request
+IH;;N?U0HRWbCjKHI`=?jo0
+V4KzYU8M3a^5_8UTn[Pkz_1
+R2
+R14
+R19
+R20
+L0 30
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 IYCLamZh_5eSc3N5VVDgN2
+!i10b 1
+!s85 0
+vmenu_overlay
+INzC?QKgFlPAXUbO@b[k@:0
+VX;`e0_76R>XIElg@DeDV?2
+Z38 dE:\fpga
+w1792714618
+8src/modules/osd/menu_overlay.v
+Fsrc/modules/osd/menu_overlay.v
+L0 2
+R4
+r1
+31
+Z39 !s108 1792715231.465000
+Z40 !s107 sim/tb_menu_overlay.v|src/modules/osd/menu_overlay.v|src/modules/osd/zh_font_rom.v|
+Z41 !s90 -work|reports/native640_20261022/video_work|src/modules/osd/zh_font_rom.v|src/modules/osd/menu_overlay.v|sim/tb_menu_overlay.v|
+Z42 o-work reports/native640_20261022/video_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 7mJe37U:Ba:;:4CNU1W`o2
+!i10b 1
+!s85 0
+vosd_char_rom
+I]MOKB^7lnYnC9Sg_7fFR92
+VE=0iCSjJ1Oo2=;jmdgFDP2
+R2
+w1790409879
+8E:/fpga/src/modules/osd/osd_char_rom.v
+FE:/fpga/src/modules/osd/osd_char_rom.v
+L0 14
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 I^DVJPo;:T^ajTcPfCDk[0
+!i10b 1
+!s85 0
+vpicture_adjust
+I4WNhhBk5ZGoE@Uhh0_U6d3
+V`S=EBbnB7o7gS^Mn:kQdG1
+R2
+R31
+8E:/fpga/src/modules/video/picture_adjust.v
+FE:/fpga/src/modules/video/picture_adjust.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 KE:I=:eVJHd@a0eX82B963
+!i10b 1
+!s85 0
+vpicture_controls
+I58cO45e`TCcRATADDHcD41
+VF2hi_T@<`4>]5^gYRkb5_2
+R38
+Z43 w1792714701
+8src/modules/control/picture_controls.v
+Fsrc/modules/control/picture_controls.v
+L0 3
+R4
+r1
+31
+Z44 !s108 1792715131.270000
+Z45 !s107 sim/tb_chinese_menu.v|src/modules/control/picture_controls.v|
+Z46 !s90 -work|reports/native640_20261022/video_work|src/modules/control/picture_controls.v|sim/tb_chinese_menu.v|
+R42
+!s100 ROJ9Za`]9S^7I_NKHjj6o2
+!i10b 1
+!s85 0
+vpicture_gamma
+Ib=dGWWKOLCdol2[EV>iO=2
+Vb@=O=BfW_>;;a5;TdER2n2
+R2
+R31
+8E:/fpga/src/modules/video/picture_gamma.v
+FE:/fpga/src/modules/video/picture_gamma.v
+L0 6
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 @57O1^gR3N[;GCSWO^Bb43
+!i10b 1
+!s85 0
+vpixel_effects
+I9`O3SO_L]oWFjB?Ic2mlL3
+V@YA[CHXBPB0JF@B]9?BYl3
+R2
+Z47 w1792502288
+Z48 8E:/fpga/src/modules/video/pixel_effects.v
+Z49 FE:/fpga/src/modules/video/pixel_effects.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 <bP^chIcfHhB=10g0mS<G2
+!i10b 1
+!s85 0
+vplayer_control
+IMDn0U>C[5369^:mb5jzKl0
+Va5?^J;UDPMX2BHnfW`h;S2
+R2
+Z50 w1792592282
+8E:/fpga/src/modules/control/player_control.v
+FE:/fpga/src/modules/control/player_control.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 YV0PTgEamY;V^G:jXQ^X51
+!i10b 1
+!s85 0
+vps2_controls
+ID5]jO_bajhQn;SM^ZclXR3
+VDI_gVhjWN0M;fkh=;zk9j3
+R2
+w1792247822
+8E:/fpga/src/modules/input/ps2_controls.v
+FE:/fpga/src/modules/input/ps2_controls.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 dHS;4R1jz9k?TSRcEa:FR3
+!i10b 1
+!s85 0
+vps2_keyboard
+I?>jU<8SSizY57SX0j3[]S0
+VcD4`EhcX:N`;1;zLTFBE12
+R2
+w1792125973
+8E:/fpga/src/modules/input/ps2_keyboard.v
+FE:/fpga/src/modules/input/ps2_keyboard.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 @AWgDKUESYg3Y8odR;=mn1
+!i10b 1
+!s85 0
+vram_infer_rfifo_32_32_512
+I4`<l4;H7i3@2NdPWPEC`c2
+VZ1dlIggi3`3A1foWEU5S10
+R2
+R23
+R24
+R25
+Z51 L0 333
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 @ZlKXV^Az@f<;cdCLo0m43
+!i10b 1
+!s85 0
+vram_infer_wfifo_32_32_512
+IgZ[bmLTa_KKD_];c_4_fC0
+V5;FK8;9D@AX[<U1L;z;Ph2
+R2
+R27
+R28
+R29
+R51
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 n^YHo0Q2WQH^3aOI<YKY20
+!i10b 1
+!s85 0
+vremote_controls
+I5FFO_4WTNZHGZj5g6`Cn]1
+VPVLMXmAkf@@58AYeK>a:M1
+R2
+R50
+8E:/fpga/src/modules/control/remote_controls.v
+FE:/fpga/src/modules/control/remote_controls.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 c5YjTaojcm6Az>5Gb2<TT1
+!i10b 1
+!s85 0
+vreset_sync
+Ik;>:7LGFEBe[fZj=E=WAQ0
+VW<T=fO6YHXUTgF0a;U3bc2
+R2
+w1792160148
+8E:/fpga/src/modules/common/reset_sync.v
+FE:/fpga/src/modules/common/reset_sync.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ]bcOQR3NSoFRh7mLh;P5h1
+!i10b 1
+!s85 0
+vrfifo_32_32_512
+IRl=g2`Zgm_=94`9d9JXdn0
+V7V9L<3dUhe:zLUFZ6h89d0
+R2
+R23
+R24
+R25
+L0 13
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 d>l@L^2dBL?==dl<;Fkm63
+!i10b 1
+!s85 0
+vrgb_lerp_pipeline
+IjeCFegB@2mi3EXG`oY2Ga1
+V30:bSEleWYPbWz`P323YY3
+R2
+R16
+R17
+R18
+L0 331
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 jdL^S:]Lgb<EQ[z77J]8F2
+!i10b 1
+!s85 0
+vsd_av_reader
+IOlNN>0Feg6;z5X]PKFINT2
+V[2SHS=8[fdlOOofhmQER91
+R2
+R15
+8E:/fpga/src/modules/sd/sd_av_reader.v
+FE:/fpga/src/modules/sd/sd_av_reader.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ^WUF=YS3fD><[VS7CM52k2
+!i10b 1
+!s85 0
+vsd_bus_phy
+Ii7>6NDPT=9NCOlAc<8@D^2
+VB[Vg4e:5XVKnbW=HT97BV2
+R2
+Z52 w1792225681
+8E:/fpga/src/modules/sd/native/sd_bus_phy.v
+FE:/fpga/src/modules/sd/native/sd_bus_phy.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ]o[OX@YiNbY:c<<6kMNd=2
+!i10b 1
+!s85 0
+vsd_card_bmp
+INg`5K695_6zb=nC:[fNQA0
+VIO4Zmjee>B28cfZaH=`N]3
+R2
+R35
+R36
+R37
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ^i;X75e:5`aY4e=;CUECm3
+!i10b 1
+!s85 0
+vsd_card_cmd
+IRk>:_O6KnBa_J9HT?XNFa1
+VKbY@c4Ee`da7QZaI_eN^o2
+R2
+w1792221842
+8E:/fpga/src/modules/sd/sd_card_cmd.v
+FE:/fpga/src/modules/sd/sd_card_cmd.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 MiE<238i]BIJW<[BI1ae:1
+!i10b 1
+!s85 0
+vsd_card_sec_read_write
+I8EXOD7PQ6;MDhG_IgkIg=3
+VXmHfA=5k@05W:ijHkRW_?3
+R2
+Z53 w1791462972
+8E:/fpga/src/modules/sd/sd_card_sec_read_write.v
+FE:/fpga/src/modules/sd/sd_card_sec_read_write.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 YX]LnDU`D9YFoMVU3kzDU0
+!i10b 1
+!s85 0
+vsd_card_top
+IhCV8[@6<E1ej^J;Mg@D;C2
+Vl@>E?l5YMfgTmMQdaNj;k2
+R2
+R52
+8E:/fpga/src/modules/sd/sd_card_top.v
+FE:/fpga/src/modules/sd/sd_card_top.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 KB0<BTYXFAkIM:dzDP=:W2
+!i10b 1
+!s85 0
+vsd_card_top_native
+IYzj^Z>HzazF]ZkUf0dSeG3
+V^=eM`RnhA_VEUoQM2i2RO2
+R2
+R52
+8E:/fpga/src/modules/sd/native/sd_card_top_native.v
+FE:/fpga/src/modules/sd/native/sd_card_top_native.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ^22aB`E:=c?ToUbZSjYa20
+!i10b 1
+!s85 0
+vsd_fat32
+I_eB[Yn0;P1[XJlC8UMR:b3
+VeGZAC3le=NULbC^dB[@N70
+R2
+w1792677769
+8E:/fpga/src/modules/sd/sd_fat32.v
+FE:/fpga/src/modules/sd/sd_fat32.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Gme]eIYTOFlIdTE:7O0Z`1
+!i10b 1
+!s85 0
+vsd_native_card_model
+II[Md0aXM[k<ZgacgMQO`32
+VX@NccJ08E;^iJSoYDnTn=0
+R2
+w1792663601
+8E:/fpga/sim/sd_native_card_model.v
+FE:/fpga/sim/sd_native_card_model.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 h27Sgi[QgD:8PHBlU7lFI0
+!i10b 1
+!s85 0
+vsd_native_controller
+I`<PNd:i?zm9JnJN5jLdm80
+VL0AlNZk^@bGbaY[:2lh2a1
+R2
+w1792402839
+8E:/fpga/src/modules/sd/native/sd_native_controller.v
+FE:/fpga/src/modules/sd/native/sd_native_controller.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 9Kba2<8YPc^9?z?N5:;QI3
+!i10b 1
+!s85 0
+vsd_read_arbiter
+Ib^b?m8UKSCH<_FG6jzMZg3
+VF]IVR3:`X:i`g^[RN_hk52
+R2
+w1791965534
+8E:/fpga/src/modules/sd/sd_read_arbiter.v
+FE:/fpga/src/modules/sd/sd_read_arbiter.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ZhE93FV>70PLeYc=Pcc9>2
+!i10b 1
+!s85 0
+vsdram
+I0WWj@3T;Vhea><O9RR;^g1
+VAZ3[4iLf`8i7OXBM0nP`c2
+R2
+R22
+8E:/fpga/src/modules/memory/sdram.v
+FE:/fpga/src/modules/memory/sdram.v
+L0 12
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 hoRK4C=^BGl>MG_d@k[a_3
+!i10b 1
+!s85 0
+vslideshow_timer
+I6b<`z]SB?:IPESzoLWLGW0
+V<R_O`GIfD]D=8=UXABiRE3
+R2
+R21
+8E:/fpga/src/modules/control/slideshow_timer.v
+FE:/fpga/src/modules/control/slideshow_timer.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 @43K6Jh;YBZm@nGJl@TFf2
+!i10b 1
+!s85 0
+vspi_master
+ICWnOb@a_MVo7]^RE?@m4W1
+Vjla62CeYcfjOzeS9ka_1@1
+R2
+w1790516146
+8E:/fpga/src/modules/sd/spi_master.v
+FE:/fpga/src/modules/sd/spi_master.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 L^OSE1ECO>K4LO7IQDSdb2
+!i10b 1
+!s85 0
+vstartup_pulse
+IQ`og;^h=_OO;4L:_fLnRQ1
+Vjd;>DKUoGPRCHNLmf7HfQ1
+R2
+w1790516120
+8E:/fpga/src/modules/common/startup_pulse.v
+FE:/fpga/src/modules/common/startup_pulse.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 HalRUP1@Y;FR]]L8]?3I<1
+!i10b 1
+!s85 0
+vstatus_osd
+I@DDKWL5FUz7912zXL2[C>2
+V:ndK:N;DdbKa=OWHF@40a1
+R2
+w1792258191
+8E:/fpga/src/modules/osd/status_osd.v
+FE:/fpga/src/modules/osd/status_osd.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 c`d65mg`hUOCcKe<5g6C70
+!i10b 1
+!s85 0
+vswitch_controls
+IZc4VoFT8aHDIAzVGKC1BT0
+VXOnJUA@^PB`Cia1Qz1;Ff0
+R2
+w1791526104
+8E:/fpga/src/modules/control/switch_controls.v
+FE:/fpga/src/modules/control/switch_controls.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 P:AK_79kd[OmBHW@m8J[@1
+!i10b 1
+!s85 0
+vtb_av_controls
+I0@:UGIPlkZhbABzLU]?Xj0
+VfZjh@3:B7eXzOj?AHnG^[2
+R2
+Z54 w1792681996
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_controls.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_controls.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 haa<ENF0LjBWimYS;EEMz1
+!i10b 1
+!s85 0
+vtb_av_fast_scaler
+I;h3jMNBNTFgn9NhEgzSc_2
+VBhiRU7Yg=^oDoCd<fB:=O0
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_fast_scaler.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_fast_scaler.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 m[0>Ka@z7o5gelHhL_XX@1
+!i10b 1
+!s85 0
+vtb_av_faults
+InOEn9>7iTUPiXeD7W]>WC2
+VV]hTMbLRCYB_<?]7UA6m_2
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_faults.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_faults.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 [9m3noL^nzZ^Qo:QE:<212
+!i10b 1
+!s85 0
+vtb_av_memory
+IHd4gQbG;BiL:X=<QDc^T92
+V8T3Bd4O^SDITMYB0JT=cE1
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 AUDk3aZTN:JD:QLeE?XS@2
+!i10b 1
+!s85 0
+vtb_av_memory_native
+IEUIZzc3E>ARb0Wd;:A:D70
+Vjl;zh3hNVcN_fO19hWGZh3
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory_native.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_memory_native.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 n0:HJMi4]e2ck?XAGW:MT0
+!i10b 1
+!s85 0
+vtb_av_native
+I`NeoPmDECf@acMJfOBlQ;2
+V:0k[IhIM6dfSdY1=H>LR01
+R2
+w1792681494
+8E:/fpga/sim/tb_av_native.v
+FE:/fpga/sim/tb_av_native.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 PZ4TmU3@i8H>f2B5EVKUN3
+!i10b 1
+!s85 0
+vtb_av_phase
+IKeFODhLN:[?5zJ5JWhPNg2
+VWA:BAQ9K`4H;AYIFR7b7?0
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_phase.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_phase.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 4Gof?`MkN1L958RC4KT2I2
+!i10b 1
+!s85 0
+vtb_av_sync
+In@9[zjOe5^OmBd;VdeYXR1
+VTk<HaVNS26Df^nFDn_?EO2
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_av_sync.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_av_sync.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 LZzN5_aDi]GL;a1WBf`]i2
+!i10b 1
+!s85 0
+vtb_boot_media_select
+IS4o79TlH`?nCd^eJGlHKV2
+Vck?6?YIATmBXE?l`8WN=G2
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_boot_media_select.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_boot_media_select.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 eO]iDgS7`VAel7AB6SE`T1
+!i10b 1
+!s85 0
+vtb_chinese_menu
+Ig[RokhcjaNM?2T@GBlhhH1
+VfKFjF8fGc9fW1geQ?cH0H1
+R38
+R43
+8sim/tb_chinese_menu.v
+Fsim/tb_chinese_menu.v
+L0 2
+R4
+r1
+31
+R44
+R45
+R46
+R42
+!s100 cj:GeKCk>bY3Od<7lY[b^0
+!i10b 1
+!s85 0
+vtb_fat32_movie
+IeZT@K^:Y;A29dQ8NI7hPB0
+V3zW@GS2ZO:okU@7l>9FL<0
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 k@a8ojlWBz71998VdGa3o1
+!i10b 1
+!s85 0
+vtb_fat32_movie_native
+IjK2PO_MS4^aU8o=WXie013
+VKRA@n5G:GmVd@K[I9HimV2
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie_native.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie_native.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 A0Y^>hmRnmL`TR6O3@OdN1
+!i10b 1
+!s85 0
+vtb_media_mode_switch
+I7UH02Qf9M=Q0B5FcAbCI`1
+Vdo8U2;=cYcElTLM@DdiRc3
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_media_mode_switch.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_media_mode_switch.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 5;ROFL@Afh;7Rck;PlSf42
+!i10b 1
+!s85 0
+vtb_menu_overlay
+IOPf_lFk2W6G5[XFeN1gB30
+V;k6:SOhj01lC0W4W[UU>F3
+R38
+w1792715267
+8sim/tb_menu_overlay.v
+Fsim/tb_menu_overlay.v
+L0 2
+R4
+r1
+31
+R42
+!i10b 1
+!s100 UDbzeIKAnhZm`lk8hVTko2
+!s85 0
+!s108 1792715269.919000
+!s107 sim/tb_menu_overlay.v|
+!s90 -work|reports/native640_20261022/video_work|sim/tb_menu_overlay.v|
+vtb_sd_av
+I:S8`OmC^1VfBf715aiJD?1
+VK?Akm2CXNSdQJoPAlHCDM3
+R2
+R54
+8E:/fpga/reports/native640_20261022/adapted_contracts/tb_sd_av.v
+FE:/fpga/reports/native640_20261022/adapted_contracts/tb_sd_av.v
+L0 4
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 j56:DUUka01a_0RFPi8hJ2
+!i10b 1
+!s85 0
+vtime_cmd
+IOGPdzD[ol2`5:WE:ZT3^U2
+VMPciWA`Faf;n9NmRWGg1>2
+R2
+w1792417144
+8E:/fpga/src/modules/control/time_cmd.v
+FE:/fpga/src/modules/control/time_cmd.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Vk<QiB?ZIk`MDjzK4Ii693
+!i10b 1
+!s85 0
+vtransition_pixels
+I8beQ8[BRRkn2_=oBQ24kT2
+V;7hK6FYcT?R7Fck^PPSfJ3
+R2
+w1792411352
+8E:/fpga/src/modules/video/transition_pixels.v
+FE:/fpga/src/modules/video/transition_pixels.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Bo9LV;O1O;6FfAl97FdUK1
+!i10b 1
+!s85 0
+vuart_rx
+IcS?_[;Ec>`PW[BeQMF`_W1
+VLhzRX@iWR_F]j>^5fG71k3
+R2
+R53
+8E:/fpga/src/modules/control/uart_rx.v
+FE:/fpga/src/modules/control/uart_rx.v
+L0 11
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Rj<<=HUnMIejYenV<;OK70
+!i10b 1
+!s85 0
+vuart_tx
+I4S_9BREMJn@lECJb>[cBz1
+VCUbLP?`JIVQOaz3JV5Tmg2
+R2
+Z55 w1790587830
+8E:/fpga/src/modules/control/uart_tx.v
+FE:/fpga/src/modules/control/uart_tx.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 a7W[SWHcXe8o9]Y0]41Oe1
+!i10b 1
+!s85 0
+vuart_tx_queue
+IMm9Xg>f>;FU;zS3B>d7@N1
+VCNhKB9j`EDIQ4zE0<30[@2
+R2
+w1790931525
+8E:/fpga/src/modules/control/uart_tx_queue.v
+FE:/fpga/src/modules/control/uart_tx_queue.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 gEo`6]:@O<lM7iGZPlf8N3
+!i10b 1
+!s85 0
+vvideo_coordinates
+I`S4>TYKoAOdTDQ56iOe^a3
+Vd30A[z2mOgG5AJ76zA;ZC3
+R2
+Z56 w1791648393
+Z57 8E:/fpga/src/modules/video/video_coordinates.v
+Z58 FE:/fpga/src/modules/video/video_coordinates.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 GmNk3>D`f67Wm8U?A6ONi3
+!i10b 1
+!s85 0
+vvideo_delay
+I10Ml:z>J0OR8;?Mn0GYHP3
+VgFX5^C85z7HVm093QSAO32
+R2
+w1791889828
+8E:/fpga/src/modules/video/video_delay.v
+FE:/fpga/src/modules/video/video_delay.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 JTnSiV7SlLn4f];e0;;]a0
+!i10b 1
+!s85 0
+vvideo_enhance
+I4UGX;FIz@:7cWPGM?;9Z?3
+VjOzBcX=m=Qcm>LNEN[NVf0
+R2
+R55
+8E:/fpga/src/modules/video/video_enhance.v
+FE:/fpga/src/modules/video/video_enhance.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 Fo_e<]ZKf6Wb9=6V76=^A3
+!i10b 1
+!s85 0
+vvideo_luma_window
+I0NWm0Ig[1NzT<>92a4CZC3
+VGfF=PPn91z27jnX5IdJZ03
+R2
+R47
+R48
+R49
+L0 338
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 HeiJ9^LOd=cF3zNTY4@3d1
+!i10b 1
+!s85 0
+vvideo_luma_window_bram
+Iz3SDnDJ?Q[IoIV`[n:iM42
+VI5lnjlma>F:m94eY@bF_L2
+R2
+w1792255484
+8E:/fpga/src/modules/video/video_luma_window_bram.v
+FE:/fpga/src/modules/video/video_luma_window_bram.v
+L0 5
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 F<DIdQ9MhCZ:<7SCM:6N^2
+!i10b 1
+!s85 0
+vvideo_mode_control
+IR[Df`>_J]XDg<EYaBdE@N1
+Vojo^QI4g5YBmCWBcd6NK72
+R2
+w1792130789
+8E:/fpga/src/modules/video/video_mode_control.v
+FE:/fpga/src/modules/video/video_mode_control.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 N2TJbW]YGBGe45AP4;o_U1
+!i10b 1
+!s85 0
+vvideo_rgb_to_axis_640x480
+Id>KPzoddg09:S<loNTi[[0
+V2f6k`dz<=XlKi;5lQcYe13
+R2
+Z59 w1791647491
+8E:/fpga/src/modules/video/video_rgb_to_axis_640x480.v
+FE:/fpga/src/modules/video/video_rgb_to_axis_640x480.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 WgXgh:F4;ciiUaLGA[P7l1
+!i10b 1
+!s85 0
+vvideo_timing_data
+IU:KDkJG@ATaG_7]jJi^L>0
+VfOn26ao<RNQmb<MfQOdXQ3
+R2
+R59
+8E:/fpga/src/modules/video/video_timing_data.v
+FE:/fpga/src/modules/video/video_timing_data.v
+L0 1
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 ?b8CWB9]VYANAI[8J1<9T1
+!i10b 1
+!s85 0
+vviewport_coordinates
+I099bEHdI;E0`5QQ6T7EG00
+V50z[NI;67@9<bHHc3Y=L>1
+R2
+R56
+R57
+R58
+L0 22
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 71YaCZd7=QFNN@YO2ek?I2
+!i10b 1
+!s85 0
+vwfifo_32_32_512
+IXk=Y63D4XJ=P1[mAgio7a2
+V<@Ll1]IFEQaEkRJaZYo=c0
+R2
+R27
+R28
+R29
+L0 13
+R4
+r1
+31
+R5
+R6
+R7
+R8
+R9
+!s100 P0e6TXJHeBXiazo:4C9_=1
+!i10b 1
+!s85 0
+vzh_font_rom
+IMgdG9dLkhIKBlD]`ffcAh3
+V4gBS2a^KYzKdNed1h9Ofh3
+R38
+w1792714532
+8src/modules/osd/zh_font_rom.v
+Fsrc/modules/osd/zh_font_rom.v
+L0 3
+R4
+r1
+31
+R39
+R40
+R41
+R42
+!s100 <5>1:F?^jnkl:0=W;SQfh3
+!i10b 1
+!s85 0
+vzh_overlay
+I@J^5hZncMQOgdfgc4gdkQ0
+V6nU`z[3kGAYC<kB_2=4712
+R38
+w1792714528
+8src/modules/osd/zh_overlay.v
+Fsrc/modules/osd/zh_overlay.v
+L0 3
+R4
+r1
+31
+R42
+!s108 1792714622.159000
+!s107 src/modules/osd/zh_overlay.v|src/modules/osd/menu_overlay.v|src/modules/osd/zh_font_rom.v|src/modules/control/picture_controls.v|
+!s90 -work|reports/native640_20261022/video_work|src/modules/control/picture_controls.v|src/modules/osd/zh_font_rom.v|src/modules/osd/menu_overlay.v|src/modules/osd/zh_overlay.v|
+!s100 0g^ni_nNL5C0giWI3LQVl0
+!i10b 1
+!s85 0

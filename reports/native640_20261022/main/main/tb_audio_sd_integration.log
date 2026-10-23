@@ -1,0 +1,41 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\native640_20261022\main\main\tb_audio_sd_integration.log} -lib timing_opt_main_work_v2 -c tb_audio_sd_integration 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2685) [TFMPC] - Too few port connections for 'bmp'.  Expected 34, found 29.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_total'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'scan_found_sector'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'fs_bmp_count'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(18): (vopt-2718) [TFMPC] - Missing connection for port 'fs_mount_done'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(19): (vopt-2685) [TFMPC] - Too few port connections for 'wav'.  Expected 17, found 16.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(19): (vopt-2718) [TFMPC] - Missing connection for port 'error_code'.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(22): (vopt-2685) [TFMPC] - Too few port connections for 'player'.  Expected 15, found 14.
+# 
+# ** Warning: E:\fpga\sim\tb_audio_sd_integration.v(22): (vopt-2718) [TFMPC] - Missing connection for port 'pcm_valid'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_audio_sd_integration(fast)
+# run -all 
+# ALL PASS tb_audio_sd_integration
+# ** Note: $finish    : E:/fpga/sim/tb_audio_sd_integration.v(53)
+#    Time: 46548815 ns  Iteration: 2  Instance: /tb_audio_sd_integration

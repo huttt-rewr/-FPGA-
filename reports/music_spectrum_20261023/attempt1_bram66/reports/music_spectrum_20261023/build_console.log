@@ -1,0 +1,21 @@
+ALL PASS static_check: 98 sources, 40 IO bits, unique pins, matching TD entries/refresh headers
+Running synth.tcl
+Running implement.tcl
+Traceback (most recent call last):
+  File "E:\fpga\scripts\run_build.py", line 128, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\fpga\scripts\run_build.py", line 84, in main
+    record['implementation_warnings'] = run(args.td, 'implement.tcl', 'implementation.log', 'IMPLEMENTATION_COMPLETED',
+                                        ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ['video_improve_routed.db', 'physical_area.txt', 'timing_status.txt', 'timing_summary.txt', 'io.txt',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'video_improve_prior_opt.db', 'prior_opt_timing_status.txt',
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'prior_opt_timing_paths20.txt', 'routed_timing_paths20.txt',
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'rebound_placed_timing_status.txt', 'rebound_placed_timing_paths20.txt', 'video_improve_hold_input.db'])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\fpga\scripts\run_build.py", line 57, in run
+    raise RuntimeError(f'{script} failed; see {log}: {errors[:3]}')
+RuntimeError: implement.tcl failed; see implementation.log: ["PHY-9013 ERROR: Design's emb number = 66, exceeds the limit 64. There are more EMBs exceeding the limit of the device. You can try using 'report_area' in console to check the resource utilization of the device and results of Optimize Gate stage. And you can try modifying the design or changing the strategy of syn and rerunning it."]

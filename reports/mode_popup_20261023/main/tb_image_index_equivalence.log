@@ -1,0 +1,117 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_image_index_equivalence.log -lib msim_work -c tb_image_index_equivalence 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 71, found 22.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_ready'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_error'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_end'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_valid'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_data'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_sector'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_req'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_restart'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'movie_mode'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT3'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT2'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT1'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DAT0'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CMD'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_CLK'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'disp_buf_idx'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'display_valid'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_error'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_busy'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_count'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# ** Warning: tb_image_index_equivalence.v(14): (vopt-2718) [TFMPC] - Missing connection for port 'commit_req_toggle'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_image_index_equivalence(fast)
+# run -all 
+# ALL PASS tb_image_index_equivalence: 8192 exhaustive production-function cases, zero count, max index, carry and out-of-range counts
+# ** Note: $finish    : tb_image_index_equivalence.v(31)
+#    Time: 8192 ns  Iteration: 0  Instance: /tb_image_index_equivalence

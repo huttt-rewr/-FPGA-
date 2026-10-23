@@ -1,0 +1,17 @@
+$date
+	Fri Oct 23 20:48:08 2026
+$end
+$version
+	ModelSim Version 10.1c
+$end
+$timescale
+	1ps
+$end
+$scope module tb_av_sync $end
+$scope task blank $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

@@ -1,0 +1,25 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_frame_writer.log -lib msim_work -c tb_frame_writer 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 21, found 18.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'fifo_aclr'.
+# 
+# ** Warning: tb_frame_writer.v(11): (vopt-2718) [TFMPC] - Missing connection for port 'O_wr_busy'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_frame_writer(fast)
+# run -all 
+# ALL PASS tb_frame_writer: 307200 flipped addresses and writer abort/restart
+# ** Note: $finish    : tb_frame_writer.v(28)
+#    Time: 3120630 ns  Iteration: 1  Instance: /tb_frame_writer

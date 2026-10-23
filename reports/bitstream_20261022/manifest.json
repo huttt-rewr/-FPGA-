@@ -1,0 +1,38 @@
+{
+  "status": "candidate_generated",
+  "started_utc": "2026-10-22T14:51:13.628283+00:00",
+  "device": "EG4S20BG256",
+  "source_build_finished_utc": "2026-10-22T14:25:08.410193+00:00",
+  "source_build_manifest_sha256": "cf52e3b8532b4c47661d71c5cdefa4343437f53ddca036d6dc1d452de20e7217",
+  "routed_database_sha256": "c57ad8004f48cd3c8582a7104d6a428102028e08fc129d9720b34bab0cfb6caf",
+  "board_signoff": false,
+  "hardware_download_performed": false,
+  "bit_file": "E:\\fpga\\reports\\bitstream_20261022\\video_improve_20261022.bit",
+  "bit_bytes": 644756,
+  "bit_sha256": "ac2a2a28c22dd54aed36fafde90e2018716f46bb8c27ae9a1196c0f6ce84663b",
+  "before_timing_ns": {
+    "SWNS": 0.188,
+    "STNS": 0.0,
+    "HWNS": 0.022,
+    "HTNS": 0.0
+  },
+  "after_timing_ns": {
+    "SWNS": 0.188,
+    "STNS": 0.0,
+    "HWNS": 0.022,
+    "HTNS": 0.0
+  },
+  "hold_margin_0_5ns_met": false,
+  "artifacts_sha256": {
+    "after_bit_timing_status.txt": "133636ea722ff807c7e8f432a05fa42590aa1920f3da144bad90c96fccd84275",
+    "after_bit_timing_summary.txt": "9acbdf37469054df4b268009dd9aaf2f7856b0e8b50b193d0a3a1aa3b477c161",
+    "before_bit_timing_status.txt": "133636ea722ff807c7e8f432a05fa42590aa1920f3da144bad90c96fccd84275",
+    "before_bit_timing_summary.txt": "c523c13c214bb81483dfae71058b36715b0ff1407c1e2a64322cf93d40cfce20",
+    "bitgen.log": "bed3c5085346f24b605f4ed788d22d0f30b6947f55fee584a7edf2f87d40d49f",
+    "generate_candidate.py": "c4edac0db4ab2a39119314af436bddd61e175d02b83d82d7881fc8572c941563",
+    "generate_candidate.tcl": "fef357c722ef2613121252bdc141127b967f919a0fb66379334c01d9799f27ef",
+    "source_build_manifest.json": "cf52e3b8532b4c47661d71c5cdefa4343437f53ddca036d6dc1d452de20e7217",
+    "video_improve_20261022.bit": "ac2a2a28c22dd54aed36fafde90e2018716f46bb8c27ae9a1196c0f6ce84663b"
+  },
+  "finished_utc": "2026-10-22T14:51:38.648624+00:00"
+}

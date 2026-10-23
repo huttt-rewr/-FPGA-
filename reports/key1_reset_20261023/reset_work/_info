@@ -1,0 +1,156 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga
+T_opt
+VlT0P8ZYbTHBHLb7Tmf=?h3
+04 13 4 work tb_key1_reset fast 0
+=1-bcfce7e1723c-6adb390e-9e-c3b4
+o-quiet -auto_acc_if_foreign -work E:/fpga/reports/key1_reset_20261023/reset_work
+n@_opt
+OL;O;10.1c;51
+vboard_supervisor
+I3^;IHhJIB<A3;cie<]@z@3
+VoM:dmQNcIVe27<^4S>9Fz3
+Z1 dE:\fpga
+w1791964773
+8E:\fpga\src\modules\common\board_supervisor.v
+FE:\fpga\src\modules\common\board_supervisor.v
+L0 3
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792751883.839000
+Z4 !s107 E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v|E:\fpga\src\modules\control\boot_media_select.v|E:\fpga\src\modules\control\picture_controls.v|E:\fpga\src\modules\common\reset_sync.v|E:\fpga\src\modules\common\board_supervisor.v|
+Z5 !s90 -work|E:/fpga/reports/key1_reset_20261023/reset_work|E:\fpga\src\modules\common\board_supervisor.v|E:\fpga\src\modules\common\reset_sync.v|E:\fpga\src\modules\control\picture_controls.v|E:\fpga\src\modules\control\boot_media_select.v|E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v|
+Z6 o-work E:/fpga/reports/key1_reset_20261023/reset_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 >hePm7I0b@[8VkC88l5O71
+!s85 0
+vboot_media_select
+I55z9EVWm2h]Yca]OBbUS]3
+V7YoN5484_QKUlG6[:S5D51
+R1
+Z7 w1792746863
+Z8 8E:\fpga\src\modules\control\boot_media_select.v
+Z9 FE:\fpga\src\modules\control\boot_media_select.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 U:5P]Qok[`Nj1GEd7YXG]2
+!s85 0
+vmedia_button_request
+Id=QA_hPDU=LhWcV?^HODi3
+Vz>DK7RFhbhjMT4X=9D@Wf1
+R1
+R7
+R8
+R9
+L0 47
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 PR66m2APIHQ8`WIHGji>n0
+!s85 0
+vmedia_keyboard_request
+IlzVjgJDU2[1AhKGd__>Kl3
+V4KzYU8M3a^5_8UTn[Pkz_1
+R1
+R7
+R8
+R9
+L0 30
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 FFfFz]X>TibIEVC;b6>ZF2
+!s85 0
+vmenu_media_request
+I<5ah?=`YK4>MCEnj:kDL71
+VU:oU4UQo@Oifz_6_gMGPS1
+R1
+R7
+R8
+R9
+L0 82
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 mV8]31nh9]z=]RB1dF[j51
+!s85 0
+vpicture_controls
+I=bP]`MKkeoX]?j9CFeVzb2
+VZERea6ZKg1;kR<N9gl3cR0
+R1
+w1792746320
+8E:\fpga\src\modules\control\picture_controls.v
+FE:\fpga\src\modules\control\picture_controls.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 U@h?XVRhT>j3@5dJ^]Y561
+!s85 0
+vreset_sync
+I8OnYbM9`ZeeYR3Y_Dek7=3
+VW<T=fO6YHXUTgF0a;U3bc2
+R1
+w1792160148
+8E:\fpga\src\modules\common\reset_sync.v
+FE:\fpga\src\modules\common\reset_sync.v
+L0 1
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 7FdQ>5^P[zTLmB0ao1oAC1
+!s85 0
+vtb_key1_reset
+I9;^Vj<f1];_U_HRU3I4Pn2
+VmNgS<6beE5ELGFhgmJFOf2
+R1
+w1792751880
+8E:\fpga\reports\key1_reset_20261023\tb_key1_reset.v
+FE:\fpga\reports\key1_reset_20261023\tb_key1_reset.v
+L0 4
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 Zg54Vjb_@T=?SHj5n[ZPV3
+!s85 0

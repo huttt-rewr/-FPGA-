@@ -1,0 +1,68 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_upgrade.log} -lib timing_opt_main_work_v2 -c tb_upgrade 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(28): (vopt-2684) [TFMPC] - Too few port connections for 'axis'.  Expected 12, found 11.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(44): (vopt-2684) [TFMPC] - Too few port connections for 'status_panel'.  Expected 42, found 22.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2685) [TFMPC] - Too few port connections for 'swap'.  Expected 14, found 9.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'mode_800'.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'transition_busy'.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'slide_offset'.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'fade_level'.
+# 
+# ** Warning: E:\fpga\sim\tb_upgrade.v(13): (vopt-2718) [TFMPC] - Missing connection for port 'effect_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_upgrade(fast)
+# run -all 
+# PASS display blank after reset
+# PASS no commit outside vblank
+# PASS commit exactly at vblank
+# PASS second buffer retained until next blank
+# PASS second commit acknowledged
+# PASS safe control reset defaults
+# PASS IR transition action
+# PASS IR transition includes fourth mode
+# PASS IR transition wraps to cut
+# PASS IR next event
+# PASS IR command is one cycle
+# PASS IR previous event
+# PASS IR autoplay toggle event
+# PASS volume is an event, not owned state
+# PASS brightness up is an event
+# PASS contrast up is an event
+# PASS test pattern event
+# PASS OSD event
+# PASS 40-column OSD covers its first status row
+# PASS OSD bypass
+# PASS RGB positive saturation
+# PASS RGB negative saturation
+# PASS YCbCr black
+# PASS YCbCr white
+# PASS YCbCr red
+# PASS 1280 pixels with exact SOF and EOL
+# PASS SOF rearms on next frame
+# PASS EDID checksum accepted/rejected
+# PASS EDID checksum accepted/rejected
+# PASS 48kHz rational sample rate and mute
+# PASS stereo test tone enabled
+# ALL PASS tb_upgrade
+# ** Note: $finish    : E:/fpga/sim/tb_upgrade.v(114)
+#    Time: 380746 ns  Iteration: 0  Instance: /tb_upgrade

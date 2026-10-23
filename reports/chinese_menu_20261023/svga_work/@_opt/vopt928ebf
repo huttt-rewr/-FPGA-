@@ -1,0 +1,102 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga\sim
+T_opt
+VUz@_?OimDoNBzkmO?DD@h2
+04 20 4 work tb_menu_overlay_svga fast 0
+=1-bcfce7e1723c-6adab108-10d-60f0
+o-quiet -auto_acc_if_foreign -work ../reports/chinese_menu_20261023/svga_work
+n@_opt
+OL;O;10.1c;51
+vmenu_overlay
+I_bG3j2Q`gHVk8zoa=oGB^3
+VX;`e0_76R>XIElg@DeDV?2
+Z1 dE:\fpga\sim
+w1792716797
+8../src/modules/osd/menu_overlay.v
+F../src/modules/osd/menu_overlay.v
+L0 2
+Z2 OL;L;10.1c;51
+r1
+31
+Z3 !s108 1792717062.072000
+Z4 !s107 ../reports/chinese_menu_20261023/tb_menu_overlay_svga.v|../src/modules/osd/menu_overlay.v|../src/modules/osd/zh_font_rom.v|../src/modules/video/video_coordinates.v|
+Z5 !s90 -work|../reports/chinese_menu_20261023/svga_work|../src/modules/video/video_coordinates.v|../src/modules/osd/zh_font_rom.v|../src/modules/osd/menu_overlay.v|../reports/chinese_menu_20261023/tb_menu_overlay_svga.v|
+Z6 o-work ../reports/chinese_menu_20261023/svga_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 F@MWg9@jcVB]L6Ij<l1P80
+!s85 0
+vtb_menu_overlay_svga
+IO8N=maMNF^Tm8glU<7H=Y2
+VR72T]CjgHi883k2iB[kK:3
+R1
+w1792715520
+8../reports/chinese_menu_20261023/tb_menu_overlay_svga.v
+F../reports/chinese_menu_20261023/tb_menu_overlay_svga.v
+L0 2
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 AKe1BI8e:7mNUZH28PcGa1
+!s85 0
+vvideo_coordinates
+IjjFO_ST=0ooMfg=h;^PHX1
+Vd30A[z2mOgG5AJ76zA;ZC3
+R1
+Z7 w1791648393
+Z8 8../src/modules/video/video_coordinates.v
+Z9 F../src/modules/video/video_coordinates.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 K6`U;_O43iK?K=CkoaHzW1
+!s85 0
+vviewport_coordinates
+Imie@7M`9CS8DG86ieb`Gj3
+V50z[NI;67@9<bHHc3Y=L>1
+R1
+R7
+R8
+R9
+L0 22
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 L_^1Sdfi_;jH^l?TaBG>I2
+!s85 0
+vzh_font_rom
+Ick4EG28D59N8fLlOliL<<2
+VLa0[lEiFEX[?X1k0]18K83
+R1
+w1792716798
+8../src/modules/osd/zh_font_rom.v
+F../src/modules/osd/zh_font_rom.v
+L0 3
+R2
+r1
+31
+R3
+R4
+R5
+R6
+!i10b 1
+!s100 A;<`D:c57DfUQcVkIYFU^0
+!s85 0

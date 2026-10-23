@@ -1,0 +1,99 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l E:/fpga/reports/native640_20261022/tb_fat32_movie_SCENARIO1.log -lib E:/fpga/reports/native640_20261022/video_work -c -gSCENARIO=1 tb_fat32_movie 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2685) [TFMPC] - Too few port connections for 'media'.  Expected 71, found 39.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'rate_limited'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'media_truncated'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_count'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'media_audio_index'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_count'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'media_image_index'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error_code'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_stream_reset'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_ready'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_error'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'audio_sample_valid'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'debug_sd_status'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'image_height'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'image_width'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'SD_MOSI'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'SD_DCLK'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'SD_nCS'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'write_data'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'write_en'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'write_req'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'disp_buf_idx'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'write_buf_idx'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'state_code'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'display_valid'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'status_error'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'status_busy'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'status_count'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'status_index'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'status_auto'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'commit_buffer'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(26): (vopt-2718) [TFMPC] - Missing connection for port 'commit_req_toggle'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(35): (vopt-2685) [TFMPC] - Too few port connections for 'card'.  Expected 11, found 8.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(35): (vopt-2718) [TFMPC] - Missing connection for port 'reads'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(35): (vopt-2718) [TFMPC] - Missing connection for port 'commands'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(35): (vopt-2718) [TFMPC] - Missing connection for port 'last_read_argument'.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(44): (vopt-2685) [TFMPC] - Too few port connections for 'reader'.  Expected 30, found 29.
+# 
+# ** Warning: E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(44): (vopt-2718) [TFMPC] - Missing connection for port 'video_format'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_fat32_movie(fast)
+# run -all 
+# ALL PASS tb_fat32_movie HQ=          0 rejected scenario=          1 without publishing audio/video
+# ** Note: $finish    : E:/fpga/reports/native640_20261022/adapted_contracts/tb_fat32_movie.v(89)
+#    Time: 7090330 ns  Iteration: 1  Instance: /tb_fat32_movie

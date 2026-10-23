@@ -1,0 +1,143 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module board_debug
+-- Compiling module board_supervisor
+-- Compiling module cdc_snapshot
+-- Compiling module reset_sync
+-- Compiling module startup_pulse
+-- Compiling module boot_media_select
+-- Compiling module media_keyboard_request
+-- Compiling module media_button_request
+-- Compiling module fps_control
+-- Compiling module ir_nec_rx
+-- Compiling module picture_controls
+-- Compiling module player_control
+-- Compiling module remote_controls
+-- Compiling module slideshow_timer
+-- Compiling module switch_controls
+-- Compiling module time_cmd
+-- Compiling module uart_rx
+-- Compiling module uart_tx
+-- Compiling module uart_tx_queue
+-- Compiling module caption_overlay
+-- Compiling module osd_char_rom
+-- Compiling module status_osd
+-- Compiling module zh_font_rom
+-- Compiling module zh_overlay
+-- Compiling module adaptive_raster
+-- Compiling module adaptive_video_clock
+-- Compiling module audio_visualizer
+-- Compiling module auto_enhance
+-- Compiling module auto_enhance_scale
+-- Compiling module av_fast_scaler
+-- Compiling module av_sync_player
+-- Compiling module bmp_scale_loader
+-- Compiling module rgb_lerp_pipeline
+-- Compiling module color_bar
+-- Compiling module edid_base_check
+-- Compiling module edid_display_mode
+-- Compiling module frame_swap
+-- Compiling module glass_osd
+-- Compiling module glass_title_row
+-- Compiling module picture_adjust
+-- Compiling module picture_gamma
+-- Compiling module pixel_effects
+-- Compiling module video_luma_window
+-- Compiling module transition_pixels
+-- Compiling module video_coordinates
+-- Compiling module viewport_coordinates
+-- Compiling module video_delay
+-- Compiling module video_enhance
+-- Compiling module video_luma_window_bram
+-- Compiling module video_mode_control
+-- Compiling module video_rgb_to_axis_640x480
+-- Compiling module video_timing_data
+-- Compiling module audio_async_fifo
+-- Compiling module audio_effects
+-- Compiling module audio_effects_stream
+-- Compiling module audio_fifo_room
+-- Compiling module audio_playback
+-- Compiling module audio_error_history
+-- Compiling module audio_test_source
+-- Compiling module audio_wav
+-- Compiling module av_audio_gain
+-- Compiling module bmp_read
+-- Compiling module sd_card_bmp
+-- Compiling module key_press_debounce
+-- Compiling module sd_av_reader
+-- Compiling module sd_card_cmd
+-- Compiling module sd_card_sec_read_write
+-- Compiling module sd_card_top
+-- Compiling module sd_fat32
+-- Compiling module sd_read_arbiter
+-- Compiling module spi_master
+-- Compiling module sd_bus_phy
+-- Compiling module sd_card_top_native
+-- Compiling module sd_native_controller
+-- Compiling module frame_fifo_read
+-- Compiling module frame_fifo_write
+-- Compiling module frame_read_write
+-- Compiling module sdram
+-- Compiling module wfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_wfifo_32_32_512
+-- Compiling module ram_infer_wfifo_32_32_512
+-- Compiling module rfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_rfifo_32_32_512
+-- Compiling module ram_infer_rfifo_32_32_512
+-- Compiling module ps2_controls
+-- Compiling module ps2_keyboard
+-- Compiling module sd_native_card_model
+-- Compiling module tb_av_sync
+-- Compiling module tb_av_controls
+-- Compiling module tb_av_phase
+-- Compiling module tb_av_fast_scaler
+-- Compiling module tb_av_faults
+-- Compiling module tb_sd_av
+-- Compiling module tb_av_memory
+-- Compiling module tb_boot_media_select
+-- Compiling module tb_media_mode_switch
+-- Compiling module tb_fat32_movie
+
+Top level modules:
+	board_debug
+	startup_pulse
+	picture_controls
+	remote_controls
+	slideshow_timer
+	switch_controls
+	caption_overlay
+	status_osd
+	zh_overlay
+	adaptive_video_clock
+	audio_visualizer
+	auto_enhance
+	edid_base_check
+	edid_display_mode
+	frame_swap
+	glass_osd
+	picture_adjust
+	picture_gamma
+	pixel_effects
+	transition_pixels
+	video_coordinates
+	video_enhance
+	video_mode_control
+	video_rgb_to_axis_640x480
+	audio_async_fifo
+	audio_effects_stream
+	audio_fifo_room
+	audio_playback
+	audio_error_history
+	audio_test_source
+	av_audio_gain
+	sdram
+	ps2_controls
+	tb_av_sync
+	tb_av_controls
+	tb_av_phase
+	tb_av_fast_scaler
+	tb_av_faults
+	tb_sd_av
+	tb_av_memory
+	tb_boot_media_select
+	tb_media_mode_switch
+	tb_fat32_movie

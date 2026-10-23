@@ -1,0 +1,15 @@
+# vsim -do {run -all; quit -f} -l ../reports/chinese_menu_20261023/tb_chinese_menu.bank.log -lib msim_work -c tb_chinese_menu 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_chinese_menu(fast)
+# run -all 
+# ALL PASS tb_chinese_menu: eight-item LIST/EDIT, debounce, long/short, saturation, shared controls
+# ** Note: $finish    : tb_chinese_menu.v(47)
+#    Time: 42590 ns  Iteration: 1  Instance: /tb_chinese_menu

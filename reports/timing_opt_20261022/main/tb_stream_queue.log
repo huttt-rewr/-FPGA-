@@ -1,0 +1,23 @@
+Reading J:/tcl/vsim/pref.tcl 
+
+# 10.1c
+
+# vsim -do {run -all; quit -f} -l {E:\fpga\reports\timing_opt_20261022\main\tb_stream_queue.log} -lib timing_opt_main_work_v2 -c tb_stream_queue 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: E:\fpga\sim\tb_stream_queue.v(6): (vopt-2684) [TFMPC] - Too few port connections for 'dut'.  Expected 12, found 11.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_stream_queue(fast)
+# run -all 
+# ALL PASS tb_stream_queue: stalls, order, SOF/EOL, overflow recovery
+# ** Note: $finish    : E:/fpga/sim/tb_stream_queue.v(36)
+#    Time: 16370 ns  Iteration: 1  Instance: /tb_stream_queue

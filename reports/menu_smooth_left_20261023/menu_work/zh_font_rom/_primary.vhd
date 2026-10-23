@@ -1,0 +1,15 @@
+library verilog;
+use verilog.vl_types.all;
+entity zh_font_rom is
+    generic(
+        BANK            : integer := 0
+    );
+    port(
+        clk             : in     vl_logic;
+        char_idx        : in     vl_logic_vector(6 downto 0);
+        row             : in     vl_logic_vector(3 downto 0);
+        bits            : out    vl_logic_vector(15 downto 0)
+    );
+    attribute mti_svvh_generic_type : integer;
+    attribute mti_svvh_generic_type of BANK : constant is 1;
+end zh_font_rom;

@@ -1,0 +1,23 @@
+# vsim -do {run -all; quit -f} -l ../reports/tb_chinese_menu.log -lib msim_work -c tb_chinese_menu 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# ** Warning: tb_chinese_menu.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 28, found 26.
+# 
+# ** Warning: tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'debug_page'.
+# 
+# ** Warning: tb_chinese_menu.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'edit_mode'.
+# 
+# //  ModelSim SE-64 10.1c Jul 28 2012 
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.tb_chinese_menu(fast)
+# run -all 
+# ALL PASS tb_chinese_menu: eight-item LIST/SUBMENU, no action on entry, debounce, long/short, saturation, shared controls
+# ** Note: $finish    : tb_chinese_menu.v(51)
+#    Time: 44510 ns  Iteration: 1  Instance: /tb_chinese_menu

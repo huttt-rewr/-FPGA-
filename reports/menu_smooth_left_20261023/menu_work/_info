@@ -1,0 +1,128 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\fpga\sim
+T_opt
+V=YRO5iR?id8bRQhGXFgc01
+04 15 4 work tb_menu_overlay fast 0
+=1-bcfce7e1723c-6adafe67-7e-81ac
+Z1 o-quiet -auto_acc_if_foreign -work E:/fpga/reports/menu_smooth_left_20261023/menu_work
+n@_opt
+Z2 OL;O;10.1c;51
+Z3 dE:\fpga\sim
+T_opt1
+VPJ2H7JWL<RBXf^cg2]2@^2
+04 20 4 work tb_menu_overlay_svga fast 0
+=1-bcfce7e1723c-6adafe76-15f-bd6c
+R1
+n@_opt1
+R2
+vmenu_overlay
+IFWc3k37`e0la<>=0VDiSN0
+VX;`e0_76R>XIElg@DeDV?2
+R3
+w1792736867
+8E:/fpga/src/modules/osd/menu_overlay.v
+FE:/fpga/src/modules/osd/menu_overlay.v
+L0 2
+Z4 OL;L;10.1c;51
+r1
+31
+Z5 !s108 1792736868.403000
+Z6 !s107 E:/fpga/reports/menu_smooth_left_20261023/tb_menu_overlay_svga.v|E:/fpga/sim/tb_menu_overlay.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/src/modules/osd/menu_overlay.v|E:/fpga/src/modules/osd/zh_font_rom.v|
+Z7 !s90 -work|E:/fpga/reports/menu_smooth_left_20261023/menu_work|E:/fpga/src/modules/osd/zh_font_rom.v|E:/fpga/src/modules/osd/menu_overlay.v|E:/fpga/src/modules/video/video_coordinates.v|E:/fpga/sim/tb_menu_overlay.v|E:/fpga/reports/menu_smooth_left_20261023/tb_menu_overlay_svga.v|
+Z8 o-work E:/fpga/reports/menu_smooth_left_20261023/menu_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!i10b 1
+!s100 HU6DSEY`^LndGUci9T=3L1
+!s85 0
+vtb_menu_overlay
+IZZbWL?z4K3;5IWGLoZRK]0
+V;k6:SOhj01lC0W4W[UU>F3
+R3
+w1792736830
+8E:/fpga/sim/tb_menu_overlay.v
+FE:/fpga/sim/tb_menu_overlay.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 GmjdfB41OG?nozNZhOUKM1
+!s85 0
+vtb_menu_overlay_svga
+ImD]=YFa>Y4<]En:[QKWjl1
+VR72T]CjgHi883k2iB[kK:3
+R3
+w1792736868
+8E:/fpga/reports/menu_smooth_left_20261023/tb_menu_overlay_svga.v
+FE:/fpga/reports/menu_smooth_left_20261023/tb_menu_overlay_svga.v
+L0 2
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 _0B5C[_HP1_?=@kSbzW0T2
+!s85 0
+vvideo_coordinates
+I3T@=kjl5aF9JPTAiD=Bo52
+Vd30A[z2mOgG5AJ76zA;ZC3
+R3
+Z9 w1791648393
+Z10 8E:/fpga/src/modules/video/video_coordinates.v
+Z11 FE:/fpga/src/modules/video/video_coordinates.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 GmNk3>D`f67Wm8U?A6ONi3
+!s85 0
+vviewport_coordinates
+ITJhP?Ia;B`;;dU<_jOd;P2
+V50z[NI;67@9<bHHc3Y=L>1
+R3
+R9
+R10
+R11
+L0 22
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 71YaCZd7=QFNN@YO2ek?I2
+!s85 0
+vzh_font_rom
+I;alEkV9BkN@7WJFGDiIjZ3
+VLa0[lEiFEX[?X1k0]18K83
+R3
+w1792716798
+8E:/fpga/src/modules/osd/zh_font_rom.v
+FE:/fpga/src/modules/osd/zh_font_rom.v
+L0 3
+R4
+r1
+31
+R5
+R6
+R7
+R8
+!i10b 1
+!s100 hIi5z@zdVPK@fOVjLG55z1
+!s85 0

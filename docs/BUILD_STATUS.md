@@ -1,5 +1,7 @@
 # 构建状态
 
+> **2026-10-23 当前：彩虹频谱与稳定波形已接入，新候选 bit 已生成。** 用真实 256 点定点 FFT、32 频段柱条、缓降峰值和过零触发波形替换顶层原波形显示；原 SD/媒体读取、音频播放、HDMI、菜单、KEY/SW、游戏和官方 IP 保持原通路。98 源/40 IO 静态检查、121 项 RTL 主回归、10 项原 Python 测试、29 场景 AVF 专项通过；综合/P&R/最终 STA 通过，SWNS +0.036ns、HWNS +0.020ns，STNS/HTNS 均为 0；LUT 17965/19600、BRAM 63/64、DSP 24/29。尚未上板、board_signoff=false，未达到整体 +0.5ns；全局 HWNS 不代表 HDMI 管脚 hold。 [新候选 bit](../reports/music_spectrum_20261023/bitstream/video_improve_music_spectrum_20261023.bit)，[操作](MUSIC_SPECTRUM_20261023.md)，[验收证据](../reports/music_spectrum_20261023/RESULT.md)。下文为历史记录。
+
 > **2026-10-23 最新：媒体菜单版bit已生成。** 116项RTL、10项Python、94源/40 IO静态检查及综合/P&R/最终STA通过；SWNS +0.160ns、HWNS +0.022ns，STNS/HTNS均0；LUT 16618/19600、BRAM 57/64、DSP 23/29。[新bit](../reports/menu_media_20261023/bitstream/video_improve_menu_media_20261023.bit)为648248字节，前后STA与源码/数据库匹配。操作见[媒体菜单](MENU_MEDIA_20261023.md)，证据见[结果](../reports/menu_media_20261023/RESULT.md)。board_signoff=false，未上板、未达整体+0.5ns；全局HWNS不是HDMI管脚hold签核。下文为历史记录。
 
 > **2026-10-23 最新：纯色128像素单列菜单、子菜单及两秒提示，候选bit已生成。** 取消渐变，主菜单贴左、宽128个逻辑像素、只显示功能名称；KEY3进入子菜单，KEY1/KEY2调节，KEY3返回，长按关闭。菜单外调节亮度/对比度后，左上角显示最新值，最后一次实际变化后两秒消失，连续调节重新计时。94源/40 IO静态检查、114项RTL主回归、10项Python及VGA/SVGA共14169600像素专项通过；SWNS **+0.110ns**、HWNS **+0.021ns**，STNS/HTNS均0，LUT **16480/19600**、BRAM **57/64**、DSP **23/29**。 [本轮新bit](../reports/menu_submenu_20261023/bitstream/video_improve_menu_submenu_20261023.bit)为648248字节，生成前后STA及源码/数据库哈希一致；见[结果](../reports/menu_submenu_20261023/RESULT.md)和[操作](MENU_SUBMENU_20261023.md)。board_signoff=false，未上板、未达到整体+0.5ns；全局HWNS不代表HDMI管脚hold。以下数据与bit为历史版本。

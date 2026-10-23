@@ -121,3 +121,16 @@ sd_native_controller在25MHz查询/切换High Speed，锁存64字节状态中的
 | [zh_overlay.v](../src/modules/osd/zh_overlay.v) | 两级中文取字/叠加，半透明背景和RGB/VS/DE/XY同步寄存。 |
 
 auto_enhance_scale.mem、zh_font.mem用于审计和激励参考；生产RTL内嵌同值常量，不依赖启动目录readmemh。主机脚本scripts/album_remote.py不能加入TD综合。状态与冻结证据见[本轮手册](UART_IR_ALBUM_20261020.md)。
+
+## 2026-10-23 音频频谱旁路
+
+顶层原 audio_visualizer 实例已替换为 music_spectrum_overlay，旧模块仍保留作兼容测试。
+
+| 文件 | 功能 |
+|---|---|
+| src/modules/audio/spectrum_fft256.v | 共享乘法器的 256 点定点 Hann FFT |
+| src/modules/audio/spectrum_coefficients.v | 可复现生成的小型同步逻辑系数表 |
+| src/modules/audio/spectrum_analyzer.v | 32 频段归并、双快照、帧边界发布、缓降/峰值包络 |
+| src/modules/video/music_spectrum.v | 彩虹柱条、稳定触发波形、两拍光栅叠加 |
+
+操作与完整文件清单见[频谱手册](MUSIC_SPECTRUM_20261023.md)。

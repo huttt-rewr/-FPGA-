@@ -1,0 +1,412 @@
+--- before/scripts/prepare_video.py
++++ after/scripts/prepare_video.py
+@@ -1,7 +1,8 @@
+ """Convert a video to an AV16K20 .avf file for the FAT32 card root.
+ 
+ Requires ffmpeg and ffprobe; this script never writes a physical card.
+-Video: 320x240 RGB565LE (recommended) or legacy 160x120 BGR24, bottom-up,
++Video: 320x240 RGB565LE (quality), native 640x480 RGB565LE, or legacy
++160x120 BGR24, bottom-up,
+ 20 fps. Audio: 16 kHz signed LE16 mono. CLI defaults to the quality profile.
+ """
+ import argparse
+@@ -36,12 +37,19 @@
+     raise ValueError(f'Cannot find {value}; install FFmpeg or supply its full path')
+ 
+ 
+-def profile(high_quality=False):
+-    return (320, 240, 2, 304, 1) if high_quality else (160, 120, 3, 117, 0)
++PROFILES = {
++    'legacy': (160, 120, 3, 117, 0),
++    'quality': (320, 240, 2, 304, 1),
++    'native': (640, 480, 2, 1204, 2),
++}
+ 
+ 
+-def header(frame_count, high_quality=False):
+-    width, height, _, sectors, encoding = profile(high_quality)
++def profile(fmt='legacy'):
++    return PROFILES[fmt]
++
++
++def header(frame_count, fmt='legacy'):
++    width, height, _, sectors, encoding = profile(fmt)
+     maximum = (0xffffffff - SECTOR) // (sectors * SECTOR)
+     if not 1 <= frame_count <= maximum:
+         raise ValueError(f'Frame count must be in 1..{maximum}')
+@@ -49,15 +57,15 @@
+                        FPS, AUDIO_HZ, sectors, encoding).ljust(SECTOR, b'\0')
+ 
+ 
+-def pack(video, audio, output, high_quality=False):
++def pack(video, audio, output, fmt='legacy'):
+     """Pack already-converted streams, bounding RAM usage to one frame."""
+-    width, height, bpp, sectors, _ = profile(high_quality)
++    width, height, bpp, sectors, _ = profile(fmt)
+     frame_bytes = width * height * bpp
+     size = video.stat().st_size
+     if size % frame_bytes:
+         raise ValueError('Incomplete raw video frame')
+     count = size // frame_bytes
+-    prefix = header(count, high_quality)
++    prefix = header(count, fmt)
+     if audio.stat().st_size % 2:
+         raise ValueError('Incomplete PCM sample')
+     # Exclusive output avoids overwriting an existing image or a source video.
+@@ -75,7 +83,7 @@
+     return count
+ 
+ 
+-def convert(source, output, ffmpeg='ffmpeg', ffprobe='ffprobe', high_quality=False):
++def convert(source, output, ffmpeg='ffmpeg', ffprobe='ffprobe', fmt='legacy'):
+     source, output = regular_path(source), regular_path(output)
+     if not source.is_file():
+         raise ValueError('Input video does not exist')
+@@ -89,8 +97,8 @@
+     if not any(s.get('codec_type') == 'video' for s in streams):
+         raise ValueError('Input has no video stream')
+     has_audio = any(s.get('codec_type') == 'audio' for s in streams)
+-    width, height, _, _, _ = profile(high_quality)
+-    pixel_format = 'rgb565le' if high_quality else 'bgr24'
++    width, height, _, _, _ = profile(fmt)
++    pixel_format = 'rgb565le' if fmt in ('quality', 'native') else 'bgr24'
+     output.parent.mkdir(parents=True, exist_ok=True)
+     with tempfile.TemporaryDirectory(prefix='fpga_video_', dir=output.parent) as temporary:
+         temporary = Path(temporary)
+@@ -111,7 +119,7 @@
+         subprocess.run(command, check=True)
+         if not has_audio:
+             raw_audio.touch()
+-        count = pack(raw_video, raw_audio, output, high_quality)
++        count = pack(raw_video, raw_audio, output, fmt)
+     return dict(output=str(output.resolve()), frames=count, duration_seconds=count / FPS,
+                 width=width, height=height, pixel_format=pixel_format, fps=FPS, audio_hz=AUDIO_HZ,
+                 audio_channels=1, has_source_audio=has_audio,
+@@ -124,11 +132,11 @@
+     parser.add_argument('output', help='New .avf file; copy to the FAT32 card root')
+     parser.add_argument('--ffmpeg', default='ffmpeg')
+     parser.add_argument('--ffprobe', default='ffprobe')
+-    parser.add_argument('--profile', choices=['quality', 'legacy'], default='quality',
+-                        help='quality: 320x240 RGB565, needs the quality bit; legacy: 160x120 BGR24')
++    parser.add_argument('--profile', choices=['quality', 'legacy', 'native'], default='quality',
++                        help='quality: 320x240 RGB565; legacy: 160x120 BGR24; native: 640x480 RGB565')
+     args = parser.parse_args()
+     try:
+-        result = convert(args.source, args.output, args.ffmpeg, args.ffprobe, args.profile == 'quality')
++        result = convert(args.source, args.output, args.ffmpeg, args.ffprobe, args.profile)
+     except (ValueError, OSError, subprocess.CalledProcessError) as exc:
+         parser.exit(1, f'Conversion failed: {exc}\n')
+     print(json.dumps(result, ensure_ascii=False, indent=2))
+--- before/scripts/test_prepare_video.py
++++ after/scripts/test_prepare_video.py
+@@ -76,7 +76,7 @@
+         # Raw input is already LE565: red, green, blue and white color bars.
+         frame = struct.pack('<4H', 0xf800, 0x07e0, 0x001f, 0xffff) * (320*240//4)
+         self.frames.write_bytes(frame * 2)
+-        self.assertEqual(video.pack(self.frames, self.audio, self.output, True), 2)
++        self.assertEqual(video.pack(self.frames, self.audio, self.output, 'quality'), 2)
+         data = self.output.read_bytes()
+         self.assertEqual(struct.unpack_from('<8sIHHHHII', data),
+                          (b'AV16K20\0', 2, 320, 240, 20, 16000, 304, 1))
+@@ -87,9 +87,28 @@
+             self.assertEqual(data[start+1600:start+2048], bytes(448))
+             self.assertEqual(data[start+2048:start+304*512], frame)
+         maximum = (0xffffffff-512)//(304*512)
+-        self.assertEqual(len(video.header(maximum, True)), 512)
++        self.assertEqual(len(video.header(maximum, 'quality')), 512)
+         with self.assertRaises(ValueError):
+-            video.header(maximum+1, True)
++            video.header(maximum+1, 'quality')
++
++    def test_native_header_payload_and_limit(self):
++        self.assertEqual(video.profile('native'), (640, 480, 2, 1204, 2))
++        frame = struct.pack('<2H', 0xf800, 0x07e0) * (640 * 480 // 2)
++        self.frames.write_bytes(frame * 2)
++        self.assertEqual(video.pack(self.frames, self.audio, self.output, 'native'), 2)
++        data = self.output.read_bytes()
++        self.assertEqual(struct.unpack_from('<8sIHHHHII', data),
++                         (b'AV16K20\0', 2, 640, 480, 20, 16000, 1204, 2))
++        self.assertEqual(len(data), 512 + 2 * 1204 * 512)
++        for n in range(2):
++            start = 512 + n * 1204 * 512
++            self.assertEqual(data[start:start+1600], self.audio.read_bytes()[n*1600:(n+1)*1600])
++            self.assertEqual(data[start+1600:start+2048], bytes(448))
++            self.assertEqual(data[start+2048:start+1204*512], frame)
++        maximum = (0xffffffff - 512) // (1204 * 512)
++        self.assertEqual(len(video.header(maximum, 'native')), 512)
++        with self.assertRaises(ValueError):
++            video.header(maximum + 1, 'native')
+ 
+     def test_conversion_stream_selection_and_shared_timestamps(self):
+         source = self.root / 'source.mp4'
+@@ -102,15 +121,18 @@
+             if 's16le' in command:
+                 Path(command[-1]).write_bytes(struct.pack('<800h', *range(800)))
+ 
+-        for has_audio, hq in ((False,False), (True,False), (False,True), (True,True)):
+-            with self.subTest(has_audio=has_audio, high_quality=hq):
++        for has_audio, fmt in ((False,'legacy'), (True,'legacy'),
++                               (False,'quality'), (True,'quality'),
++                               (False,'native'), (True,'native')):
++            with self.subTest(has_audio=has_audio, fmt=fmt):
+                 streams = [{'codec_type': 'video'}] + ([{'codec_type': 'audio'}] if has_audio else [])
+-                target = self.root / f'{has_audio}_{hq}.avf'
+-                self.frame = bytes(320*240*2) if hq else bytes((11,22,33))*(160*120)
++                target = self.root / f'{has_audio}_{fmt}.avf'
++                width, height, bpp, _, _ = video.profile(fmt)
++                self.frame = bytes(width*height*bpp) if fmt != 'legacy' else bytes((11,22,33))*(160*120)
+                 with patch.object(video, 'executable', side_effect=lambda v: v), \
+                      patch.object(video.subprocess, 'check_output', return_value=json.dumps({'streams': streams})), \
+                      patch.object(video.subprocess, 'run', side_effect=encode):
+-                    result = video.convert(source, target, high_quality=hq)
++                    result = video.convert(source, target, fmt=fmt)
+                 self.assertEqual((result['fps'], result['duration_seconds'], result['has_source_audio']),
+                                  (20, 0.05, has_audio))
+                 command = commands[-1]
+@@ -119,7 +141,8 @@
+                 self.assertIn('0:v:0', command)
+                 self.assertIn('fps=20:start_time=0', command[command.index('-vf')+1])
+                 self.assertIn('vflip', command[command.index('-vf')+1])
+-                self.assertEqual(command[command.index('-pix_fmt')+1], 'rgb565le' if hq else 'bgr24')
++                self.assertEqual(command[command.index('-pix_fmt')+1], 'rgb565le' if fmt != 'legacy' else 'bgr24')
++                self.assertIn(f'scale={width}:{height}:', command[command.index('-vf')+1])
+                 self.assertIn('flags=lanczos', command[command.index('-vf')+1])
+                 if has_audio:
+                     self.assertIn('aresample=16000:async=1:first_pts=0', command)
+--- before/src/modules/video/av_fast_scaler.v
++++ after/src/modules/video/av_fast_scaler.v
+@@ -1,8 +1,8 @@
+-// Bottom-up 160x120 BGR24 (4x) or 320x240 RGB565LE (2x) -> VGA RGB24.
++// Bottom-up BGR24 160x120 (4x), RGB565LE 320x240 (2x) or 640x480 (1x).
+ // Two sector banks let SD prefetch overlap row expansion and SDRAM stalls.
+ // A sector is fetched once. The SDRAM writer performs the vertical flip.
+-module av_fast_scaler #(parameter FORMAT_SELECT=1)(
+- input clk,input rst,input start,input [31:0] base_sector,input high_quality,
++module av_fast_scaler(
++ input clk,input rst,input start,input [31:0] base_sector,input [1:0] video_format,
+  output reg sector_read,output reg [31:0] sector_address,
+  input [7:0] sector_data,input sector_valid,input sector_end,
+  output [23:0] pixel,output pixel_valid,input pixel_ready,
+@@ -11,20 +11,21 @@
+  localparam IDLE=0,WAIT_SECTOR=1,BYTE_REQ=2,BYTE_USE=3,OUT_REQ=4,OUT_SEND=5;
+  reg [2:0] state;
+  reg [7:0] sector_ram[0:1023];
+- reg [23:0] line_ram[0:319];
++ reg [23:0] line_ram[0:639];
+  reg [7:0] byte_q,blue,green;
+  reg [23:0] line_q;
+  reg [9:0] fetched,position;
+- reg [7:0] row_y;
+- reg [8:0] loaded_sectors,row_x,out_x;
++ reg [8:0] row_y;
++ reg [10:0] loaded_sectors;
++ reg [9:0] row_x,out_x;
+  reg [1:0] channel,rep_x,rep_y,filled;
+  reg fetch_bank,read_bank;
+- reg hq;
+- wire [8:0] last_x=hq?9'd319:9'd159;
+- wire [7:0] last_y=hq?8'd239:8'd119;
+- wire [8:0] sector_count=hq?9'd300:9'd113;
+- wire [1:0] last_repeat=hq?2'd1:2'd3;
+- wire last_channel=hq?(channel==1):(channel==2);
++ reg [1:0] fmt;
++ wire [9:0] last_x=fmt==2'd2 ? 10'd639:(fmt==2'd1 ? 10'd319:10'd159);
++ wire [8:0] last_y=fmt==2'd2 ? 9'd479:(fmt==2'd1 ? 9'd239:9'd119);
++ wire [10:0] sector_count=fmt==2'd2 ? 11'd1200:(fmt==2'd1 ? 11'd300:11'd113);
++ wire [1:0] last_repeat=fmt==2'd2 ? 2'd0:(fmt==2'd1 ? 2'd1:2'd3);
++ wire last_channel=(fmt!=2'd0)?(channel==1):(channel==2);
+  // LE565: high byte RRRRRGGG, low byte GGGBBBBB; replicate top bits.
+  wire [23:0] expanded565={byte_q[7:3],byte_q[7:5],byte_q[2:0],blue[7:5],byte_q[2:1],blue[4:0],blue[4:2]};
+  assign pixel=line_q;
+@@ -38,13 +39,13 @@
+   if(state==BYTE_REQ && position<512)
+    byte_q<=sector_ram[{read_bank,position[8:0]}];
+   if(state==BYTE_USE && last_channel)
+-   line_ram[row_x]<=hq?expanded565:{byte_q,green,blue};
++   line_ram[row_x]<=(fmt!=2'd0)?expanded565:{byte_q,green,blue};
+   if(state==OUT_REQ)line_q<=line_ram[out_x];
+  end
+ 
+  always @(posedge clk or posedge rst)begin
+   if(rst)begin
+-   state<=IDLE;sector_read<=0;sector_address<=0;hq<=0;
++   state<=IDLE;sector_read<=0;sector_address<=0;fmt<=0;
+    fetched<=0;position<=0;row_y<=0;row_x<=0;out_x<=0;
+    rep_x<=0;rep_y<=0;channel<=0;blue<=0;green<=0;
+    loaded_sectors<=0;fetch_bank<=0;read_bank<=0;filled<=0;
+@@ -53,7 +54,7 @@
+    done<=0;error<=0;
+    if(state==IDLE)begin
+     if(start)begin
+-     hq<=FORMAT_SELECT && high_quality;
++     fmt<=video_format;
+      sector_address<=base_sector;sector_read<=1;
+      fetched<=0;position<=0;row_y<=0;row_x<=0;out_x<=0;
+      rep_x<=0;rep_y<=0;channel<=0;state<=WAIT_SECTOR;
+--- before/src/modules/sd/sd_av_reader.v
++++ after/src/modules/sd/sd_av_reader.v
+@@ -12,7 +12,7 @@
+  output reg request_toggle,output requested_bank,input ack_toggle,
+  output reg audio_we,output reg [10:0] audio_address,output reg [15:0] audio_data,
+  output reg playing,output reg error,output reg ended,output busy,
+- output [3:0] state_code,output reg high_quality
++ output [3:0] state_code,output reg [1:0] video_format
+ );
+  localparam INIT=0,HEADER=1,CHECK=2,AUDIO_START=3,AUDIO=4,GAP=5,
+   WRITE_REQ=6,SCALE_START=7,SCALE=8,DRAIN=9,PUBLISH=10,ACK=11,END=12,FAIL=15;
+@@ -29,7 +29,7 @@
+  reg [63:0] magic;
+  reg [31:0] geometry,format,record_size,reserved;
+  reg write_seen,write_baseline;
+- reg header_bad,header_legacy,header_hq;
++ reg header_bad,header_legacy,header_hq,header_native;
+  (* async_reg="true" *) reg [2:0] finish_ff,ack_ff;
+  (* async_reg="true" *) reg [1:0] write_ack_ff;
+  wire scaler_read,scaler_done,scaler_error;
+@@ -43,16 +43,16 @@
+  assign sector_address=(state==SCALE)?scaler_address:address;
+  assign write_en=(state==SCALE) && pixel_valid && pixel_ready;
+  assign write_data={pixel,8'd0};
+- av_fast_scaler #(.FORMAT_SELECT(1)) scaler(
++ av_fast_scaler scaler(
+   .clk(clk),.rst(rst || error),.start(scale_start),
+-  .high_quality(high_quality),
++  .video_format(video_format),
+   .base_sector(record_sector+32'd4),.sector_read(scaler_read),.sector_address(scaler_address),
+   .sector_data(sector_data),.sector_valid(sector_valid && state==SCALE),
+   .sector_end(sector_end && state==SCALE),.pixel(pixel),.pixel_valid(pixel_valid),
+   .pixel_ready(pixel_ready),.done(scaler_done),.error(scaler_error),.busy());
+  always @(posedge clk or posedge rst)begin
+   if(rst)begin
+-   header_bad<=1;header_legacy<=0;header_hq<=0;high_quality<=0;
++   header_bad<=1;header_legacy<=0;header_hq<=0;header_native<=0;video_format<=0;
+    watchdog_expired<=0;sd_error_q<=0;last_index<=0;last_frame<=0;state<=INIT;read_req<=0;address<=0;frame_count<=0;frame_index<=0;record_sector<=1;
+    byte_count<=0;audio_sector<=0;audio_byte<=0;low_byte<=0;magic<=0;
+    geometry<=0;format<=0;record_size<=0;reserved<=0;
+@@ -62,8 +62,9 @@
+   end else begin
+    header_legacy<=geometry==32'h007800a0 && record_size==117 && reserved==0;
+    header_hq<=geometry==32'h00f00140 && record_size==304 && reserved==1;
++   header_native<=geometry==32'h01e00280 && record_size==1204 && reserved==2;
+    header_bad<=mode_800 || magic!=64'h0030324b36315641 || frame_count==0 || frame_count>1000000 ||
+-       format!=32'h3e800014 || !(header_legacy || header_hq);
++       format!=32'h3e800014 || !(header_legacy || header_hq || header_native);
+    last_frame<=frame_index==last_index;
+    sd_error_q<=sd_error;
+    watchdog_expired<=(state!=INIT && state!=ACK && state!=END && state!=FAIL && watchdog==WATCHDOG-2);
+@@ -94,7 +95,7 @@
+      end
+     end
+     CHECK:begin
+-     high_quality<=header_hq;
++     video_format<=header_native?2'd2:(header_hq?2'd1:2'd0);
+      last_index<=frame_count[19:0]-20'd1;
+      if(header_bad)begin error<=1;state<=FAIL;playing<=0;end
+      else begin audio_sector<=0;audio_byte<=0;state<=AUDIO_START;end
+@@ -130,7 +131,7 @@
+     ACK:if(ack_ff[2]==request_toggle)begin
+      if(last_frame)begin ended<=1;state<=END;end
+      else begin
+-      frame_index<=frame_index+1'b1;record_sector<=record_sector+(high_quality?32'd304:32'd117);
++      frame_index<=frame_index+1'b1;record_sector<=record_sector+(video_format==2'd2 ? 32'd1204:(video_format==2'd1 ? 32'd304:32'd117));
+       write_bank<={1'b0,!write_bank[0]};audio_sector<=0;audio_byte<=0;state<=AUDIO_START;
+      end
+     end
+--- before/src/top.v
++++ after/src/top.v
+@@ -394,7 +394,7 @@
+ wire av_publish,av_bank,av_we,av_write_req,av_write_en,av_valid;
+ wire [10:0] av_address;wire [15:0] av_data;
+ wire [31:0] av_write_data;wire [1:0] av_write_bank,av_active;
+-wire [3:0] av_state;wire [23:0] av_left,av_right;wire av_high_quality;
++wire [3:0] av_state;wire [23:0] av_left,av_right;wire [1:0] av_video_format;
+ wire rst_movie_sd,rst_movie_video,rst_photo_video;
+ reg [6:0] movie_index;
+ wire [6:0] movie_count;
+@@ -430,7 +430,7 @@
+  .write_en(av_write_en),.write_data(av_write_data),.pixel_ready(pixel_write_ready),.write_bank(av_write_bank),
+  .request_toggle(av_publish),.requested_bank(av_bank),.ack_toggle(av_ack),
+  .audio_we(av_we),.audio_address(av_address),.audio_data(av_data),
+- .playing(av_playing),.error(av_error),.ended(av_ended),.busy(av_busy),.state_code(av_state),.high_quality(av_high_quality));
++ .playing(av_playing),.error(av_error),.ended(av_ended),.busy(av_busy),.state_code(av_state),.video_format(av_video_format));
+ av_sync_player movie_player(.clk(video_clk),.rst(rst_movie_video),.mode_800(1'b0),.vblank(vblank),
+  .request_toggle(av_publish),.requested_bank(av_bank),.play(av_playing),.failed(av_error),.ended(av_ended),
+  .ack_toggle(av_ack),.active_buffer(av_active),.visible(av_visible),.buffering(av_buffering),
+@@ -441,7 +441,7 @@
+  assign av_ended=0;assign av_busy=0;assign av_ack=0;assign av_visible=0;assign av_buffering=0;
+  assign av_publish=0;assign av_bank=0;assign av_we=0;assign av_write_req=0;assign av_write_en=0;
+  assign av_valid=0;assign av_address=0;assign av_data=0;assign av_write_data=0;
+- assign av_write_bank=0;assign av_active=0;assign av_state=0;assign av_left=0;assign av_right=0;assign av_high_quality=0;
++ assign av_write_bank=0;assign av_active=0;assign av_state=0;assign av_left=0;assign av_right=0;assign av_video_format=0;
+ end endgenerate
+ wire bmp_commit_req,bmp_status_auto,bmp_status_busy,bmp_status_error,bmp_display_valid;
+ wire bmp_write_req,bmp_write_en,bmp_wav_error,bmp_wav_ready;
+@@ -462,8 +462,8 @@
+ assign sd_card_write_req=movie_sd?av_write_req:bmp_write_req;
+ assign sd_card_write_en=movie_sd?av_write_en:bmp_write_en;
+ assign sd_card_write_data=movie_sd?av_write_data:bmp_write_data;
+-assign image_width=movie_sd?(av_high_quality?12'd320:12'd160):bmp_width;
+-assign image_height=movie_sd?(av_high_quality?12'd240:12'd120):bmp_height;
++assign image_width=movie_sd?(av_video_format==2'd2 ? 12'd640:(av_video_format==2'd1 ? 12'd320:12'd160)):bmp_width;
++assign image_height=movie_sd?(av_video_format==2'd2 ? 12'd480:(av_video_format==2'd1 ? 12'd240:12'd120)):bmp_height;
+ assign wav_error=movie_sd?av_error:bmp_wav_error;
+ assign wav_ready=movie_sd?movie_ready:bmp_wav_ready;
+ assign wav_error_code=movie_sd?(av_error?4'd1:4'd0):bmp_wav_code;
+--- before/scripts/run_video_tests.sh
++++ after/scripts/run_video_tests.sh
+@@ -1,50 +1,10 @@
+ #!/usr/bin/env bash
+-# Run the unmodified F-drive contracts from their fixture-relative directory.
++# The Python runner preserves frozen contracts and stages interface adapters.
+ set -euo pipefail
+ root=$(cd "$(dirname "$0")/.." && pwd)
+-cd "$root/legacy/f_drive_video_reference/sim"
+-modelsim=${MODELSIM_BIN:-/mnt/j/win64}
+-mkdir -p ../reports/av_test
+-if [[ ! -f video_work/_info ]]; then "$modelsim/vlib.exe" video_work; fi
+-"$modelsim/vlog.exe" -work video_work +incdir+../../../src/modules/video+../../.. \
+-  ../../../src/modules/common/*.v ../../../src/modules/control/*.v \
+-  ../../../src/modules/osd/*.v ../../../src/modules/video/*.v \
+-  ../../../src/modules/audio/*.v ../../../src/modules/bmp/*.v \
+-  ../../../src/modules/sd/*.v ../../../src/modules/sd/native/*.v \
+-  ../../../src/modules/memory/*.v ../../../src/ip/fifo/*.v \
+-  ../../../src/modules/input/*.v ../../../sim/sd_native_card_model.v \
+-  tb_av_sync.v tb_av_controls.v tb_av_phase.v tb_av_fast_scaler.v \
+-  tb_av_faults.v tb_sd_av.v tb_av_memory.v tb_boot_media_select.v \
+-  tb_media_mode_switch.v tb_fat32_movie.v
+-run_case() {
+-  local tb=$1 tag=$2
+-  shift 2
+-  local log="../reports/av_test/$tag.log" code=0
+-  "$modelsim/vsim.exe" -c -lib video_work "$tb" "$@" \
+-    -do 'run -all; quit -f' -l "$log" || code=$?
+-  if [[ $code -ne 0 ]] || grep -Eq 'FAILED|\*\* Fatal' "$log" || \
+-     ! grep -q "ALL PASS $tb" "$log"; then
+-    echo "FAILED $tag (exit=$code): $log"
+-    return 1
+-  fi
+-  grep "ALL PASS $tb" "$log"
+-}
+-if [[ $# -gt 0 ]]; then
+-  for tb in "$@"; do run_case "$tb" "$tb"; done
++if command -v python >/dev/null 2>&1; then
++  python=python
+ else
+-  for tb in tb_av_sync tb_av_controls tb_av_phase tb_av_fast_scaler \
+-    tb_av_faults tb_sd_av tb_av_memory tb_boot_media_select \
+-    tb_media_mode_switch tb_fat32_movie; do
+-    run_case "$tb" "$tb"
+-  done
+-  run_case tb_av_fast_scaler tb_av_fast_scaler_hq -gHQ=1
+-  run_case tb_av_memory tb_av_memory_hq -gHQ=1
+-  run_case tb_fat32_movie tb_fat32_movie_hq -gHQ=1
+-  for scenario in 1 2; do
+-    run_case tb_fat32_movie "tb_fat32_movie_reject_$scenario" -gSCENARIO="$scenario"
+-  done
+-  for scenario in 2 3; do
+-    run_case tb_fat32_movie "tb_fat32_movie_hq_reject_$scenario" -gHQ=1 -gSCENARIO="$scenario"
+-  done
++  python=python3
+ fi
+-echo 'ALL PASS AVF video regression'
++exec "$python" "$root/scripts/run_video_tests.py" "$@"

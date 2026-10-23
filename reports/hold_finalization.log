@@ -4,7 +4,7 @@
    Executable = J:/Anlogic/td.6.2.1/bin/td_commands_prompt.exe
    Built at =   16:32:07 Jun 12 2025
    Run by =     xiewe
-   Run Date =   Fri Oct 23 19:11:43 2026
+   Run Date =   Fri Oct 23 21:20:43 2026
 
    Run on =     ROLIENT
 ============================================================
@@ -28,14 +28,13 @@ RUN-1002 : start command "set_param place pack_prioritize_shared_lut 2"
 RUN-1001 : Import flow parameters
 RUN-1001 : Import netlist
 PHY-1001 : Generate detailed routing grids ...
-PHY-1001 : End build routing graph; 6.031832s wall, 5.421875s user + 0.093750s system = 5.515625s CPU (91.4%)
+PHY-1001 : End build routing graph; 1.736496s wall, 1.671875s user + 0.046875s system = 1.718750s CPU (99.0%)
 
-PHY-1001 : Build lut bridge;  0.156893s wall, 0.140625s user + 0.015625s system = 0.156250s CPU (99.6%)
+PHY-1001 : Build lut bridge;  0.032140s wall, 0.031250s user + 0.000000s system = 0.031250s CPU (97.2%)
 
 PHY-1001 : Generate nets ...
 PHY-1001 : clock net boot_clk will be merged with clock video_pll_m0/c25
 PHY-1001 : net clk_dup_1 will be routed on clock mesh
-PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : clock net sd_card_clk will be merged with clock sys_pll_m0/clk0_buf
 PHY-1001 : net video_clk will be routed on clock mesh
 PHY-1001 : net U3/u2_ram/SDRAM_CLK will be routed on clock mesh
@@ -43,18 +42,19 @@ PHY-1001 : net U3/u2_ram/u1_init_ref/Sdr_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c40 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c200 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c125 will be routed on clock mesh
+PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c25 will be routed on clock mesh
 PHY-1001 : eco open net = 0
-PHY-1001 : 853 feed throughs used by 650 nets
+PHY-1001 : 663 feed throughs used by 566 nets
 RUN-1001 : Import phy database
 RUN-1001 : Import timing constraints
 RUN-1001 : Import IO constraints
 RUN-1001 : Import Inst constraints
 RUN-1001 : Import ChipWatcher
 RUN-1001 : Import design success TD_VERSION=6.2.168116 , DB_VERSION=46207
-RUN-1003 : finish command "import_db reports/video_improve_hold_input.db" in  21.378441s wall, 19.593750s user + 0.375000s system = 19.968750s CPU (93.4%)
+RUN-1003 : finish command "import_db reports/video_improve_hold_input.db" in  6.578242s wall, 6.000000s user + 0.109375s system = 6.109375s CPU (92.9%)
 
-RUN-1004 : used memory is 814 MB, reserved memory is 809 MB, peak memory is 814 MB
+RUN-1004 : used memory is 845 MB, reserved memory is 838 MB, peak memory is 845 MB
 RUN-1002 : start command "update_timing -mode final"
 RUN-1002 : start command "start_timer"
 USR-1002 : Derived clock:  create_generated_clock -name {sys_pll_m0/pll_inst.clkc[0]} -source [get_ports {clk}] -master_clock {clk} -multiply_by 2.0000 -duty_cycle 50.0000 [get_pins {sys_pll_m0/pll_inst.clkc[0]}]
@@ -64,30 +64,27 @@ USR-1002 : Derived clock:  create_generated_clock -name {video_pll_m0/pll_inst.c
 USR-1002 : Derived clock:  create_generated_clock -name {video_pll_m0/pll_inst.clkc[1]} -source [get_ports {clk}] -master_clock {clk} -multiply_by 2.5000 -duty_cycle 50.0000 [get_pins {video_pll_m0/pll_inst.clkc[1]}]
 USR-1002 : Derived clock:  create_generated_clock -name {video_pll_m0/pll_inst.clkc[2]} -source [get_ports {clk}] -master_clock {clk} -divide_by 1.2500 -duty_cycle 50.0000 [get_pins {video_pll_m0/pll_inst.clkc[2]}]
 USR-1002 : Derived clock:  create_generated_clock -name {video_pll_m0/pll_inst.clkc[3]} -source [get_ports {clk}] -master_clock {clk} -multiply_by 4.0000 -duty_cycle 50.0000 [get_pins {video_pll_m0/pll_inst.clkc[3]}]
-RUN-1003 : finish command "start_timer" in  10.536407s wall, 9.718750s user + 0.078125s system = 9.796875s CPU (93.0%)
+RUN-1003 : finish command "start_timer" in  2.191860s wall, 2.125000s user + 0.000000s system = 2.125000s CPU (96.9%)
 
-RUN-1004 : used memory is 851 MB, reserved memory is 851 MB, peak memory is 851 MB
+RUN-1004 : used memory is 885 MB, reserved memory is 886 MB, peak memory is 885 MB
 TMR-2502 : Net delay update with mode: Routed
-RUN-1003 : finish command "update_timing -mode final" in  16.420310s wall, 15.218750s user + 0.187500s system = 15.406250s CPU (93.8%)
+RUN-1003 : finish command "update_timing -mode final" in  3.597939s wall, 3.531250s user + 0.000000s system = 3.531250s CPU (98.1%)
 
-RUN-1004 : used memory is 964 MB, reserved memory is 963 MB, peak memory is 964 MB
+RUN-1004 : used memory is 1007 MB, reserved memory is 1006 MB, peak memory is 1007 MB
 RUN-1002 : start command "route -incremental"
 RUN-1001 : Open license file J:/Anlogic/td.6.2.1/license/Anlogic.lic
 PHY-1001 : Route runs in 24 thread(s)
-RUN-1001 : There are total 8871 instances
-RUN-1001 : 4330 mslices, 4339 lslices, 99 pads, 57 brams, 23 dsps
-RUN-1001 : There are total 24596 nets
-RUN-1001 : 14826 nets have 2 pins
-RUN-1001 : 7177 nets have [3 - 5] pins
-RUN-1001 : 1626 nets have [6 - 10] pins
-RUN-1001 : 485 nets have [11 - 20] pins
-RUN-1001 : 461 nets have [21 - 99] pins
-RUN-1001 : 21 nets have 100+ pins
+RUN-1001 : There are total 9549 instances
+RUN-1001 : 4670 mslices, 4670 lslices, 99 pads, 63 brams, 24 dsps
+RUN-1001 : There are total 26426 nets
+RUN-1001 : 16094 nets have 2 pins
+RUN-1001 : 7589 nets have [3 - 5] pins
+RUN-1001 : 1707 nets have [6 - 10] pins
+RUN-1001 : 504 nets have [11 - 20] pins
+RUN-1001 : 508 nets have [21 - 99] pins
+RUN-1001 : 24 nets have 100+ pins
 RUN-1002 : start command "start_timer"
-RUN-1003 : finish command "start_timer" in  2.971682s wall, 2.906250s user + 0.000000s system = 2.906250s CPU (97.8%)
-
-RUN-1004 : used memory is 986 MB, reserved memory is 988 MB, peak memory is 986 MB
-PHY-1001 : 4330 mslices, 4339 lslices, 99 pads, 57 brams, 23 dsps
+PHY-1001 : 4670 mslices, 4670 lslices, 99 pads, 63 brams, 24 dsps
 
 PHY-1001 : Stage 1 | Global Routing
 PHY-1001 : Start global routing, caller is route ...
@@ -99,26 +96,26 @@ RUN-1001 : Generate nets statistics:
 RUN-1001 : ----------------------------
 RUN-1001 :        Type       |  Nets   
 RUN-1001 : ----------------------------
-RUN-1001 :   TotalRouteNets  |  22718  
-RUN-1001 :   DontRouteNets   |  1251   
-RUN-1001 :     RouteNets     |  21467  
-RUN-1001 :     RouteSinks    |  48082  
+RUN-1001 :   TotalRouteNets  |  24440  
+RUN-1001 :   DontRouteNets   |  1191   
+RUN-1001 :     RouteNets     |  23249  
+RUN-1001 :     RouteSinks    |  52350  
 RUN-1001 : ----------------------------
 PHY-1001 : Global iterations in 24 thread ...
-PHY-1002 : len = 1.13027e+06, over cnt = 4993(14%), over = 9930, worst = 9
-PHY-1002 : len = 1.13027e+06, over cnt = 4993(14%), over = 9930, worst = 9
-PHY-1002 : len = 1.13027e+06, over cnt = 4993(14%), over = 9930, worst = 9
-PHY-1002 : len = 1.13027e+06, over cnt = 4993(14%), over = 9930, worst = 9
-PHY-1001 : End global iterations;  7.645744s wall, 7.328125s user + 0.109375s system = 7.437500s CPU (97.3%)
+PHY-1002 : len = 1.29886e+06, over cnt = 5818(16%), over = 12080, worst = 9
+PHY-1002 : len = 1.29886e+06, over cnt = 5818(16%), over = 12080, worst = 9
+PHY-1002 : len = 1.29886e+06, over cnt = 5818(16%), over = 12080, worst = 9
+PHY-1002 : len = 1.29886e+06, over cnt = 5818(16%), over = 12080, worst = 9
+PHY-1001 : End global iterations;  1.355159s wall, 1.343750s user + 0.015625s system = 1.359375s CPU (100.3%)
 
 PHY-1001 : Congestion index:
-PHY-1001 : top1  = 71.85(S 90.47, N 99.05, E 88.84, W 79.16, I 0.00, O 0.00)
-PHY-1001 : top5  = 63.47(S 78.19, N 84.49, E 75.68, W 68.12, I 0.00, O 0.00)
-PHY-1001 : top10 = 59.46(S 71.03, N 77.12, E 69.12, W 62.82, I 0.00, O 0.00)
-PHY-1001 : top15 = 56.95(S 66.69, N 72.17, E 64.90, W 59.16, I 0.00, O 0.00)
-PHY-1001 : End global routing;  9.017990s wall, 8.500000s user + 0.109375s system = 8.609375s CPU (95.5%)
+PHY-1001 : top1  = 72.59(S 90.43, N 95.00, E 95.02, W 90.28, I 0.00, O 0.00)
+PHY-1001 : top5  = 66.84(S 78.01, N 81.25, E 82.83, W 77.90, I 0.00, O 0.00)
+PHY-1001 : top10 = 63.41(S 72.08, N 74.48, E 76.72, W 71.82, I 0.00, O 0.00)
+PHY-1001 : top15 = 61.12(S 68.25, N 70.28, E 73.07, W 68.01, I 0.00, O 0.00)
+PHY-1001 : End global routing;  1.635354s wall, 1.593750s user + 0.031250s system = 1.625000s CPU (99.4%)
 
-PHY-1001 : End Stage 1 | Global Routing; Time: 9.018741s wall, 8.515625s user + 0.109375s system = 8.625000s CPU (95.6%); Memory(MB): used = 1032, reserved = 1030, peak = 1032;
+PHY-1001 : End Stage 1 | Global Routing; Time: 1.635401s wall, 1.593750s user + 0.031250s system = 1.625000s CPU (99.4%); Memory(MB): used = 1077, reserved = 1077, peak = 1077;
 
 PHY-1001 : Stage 2 | Detail Routing
 PHY-1001 : Stage 2.1 | Build Routing Design
@@ -128,7 +125,6 @@ PHY-1034 : Refresh detailed routing grids ...
 PHY-1001 : Generate nets ...
 PHY-1001 : clock net boot_clk will be merged with clock video_pll_m0/c25
 PHY-1001 : net clk_dup_1 will be routed on clock mesh
-PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : clock net sd_card_clk will be merged with clock sys_pll_m0/clk0_buf
 PHY-1001 : net video_clk will be routed on clock mesh
 PHY-1001 : net U3/u2_ram/SDRAM_CLK will be routed on clock mesh
@@ -136,14 +132,15 @@ PHY-1001 : net U3/u2_ram/u1_init_ref/Sdr_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c40 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c200 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c125 will be routed on clock mesh
+PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c25 will be routed on clock mesh
 PHY-1001 : eco open net = 0
 RUN-1001 : Generate nets statistics:
 RUN-1001 : ------------------------------
 RUN-1001 :         Type        |  Nets   
 RUN-1001 : ------------------------------
-RUN-1001 :        Route        |  22718  
-RUN-1001 :      DontRoute      |  1878   
+RUN-1001 :        Route        |  24440  
+RUN-1001 :      DontRoute      |  1986   
 RUN-1001 :      RouteSinks     |    0    
 RUN-1001 :   RouteEntitySinks  |    0    
 RUN-1001 :       Lut2Dff       |    0    
@@ -171,76 +168,73 @@ RUN-1001 : ----------------
 RUN-1001 :   Idx  |  Name  
 RUN-1001 : ----------------
 RUN-1001 : ----------------
-PHY-1001 : End Stage 2.1 | Build Routing Design; Time: 5.083498s wall, 4.796875s user + 0.093750s system = 4.890625s CPU (96.2%); Memory(MB): used = 1117, reserved = 1116, peak = 1117;
+PHY-1001 : End Stage 2.1 | Build Routing Design; Time: 1.250708s wall, 1.171875s user + 0.078125s system = 1.250000s CPU (99.9%); Memory(MB): used = 1169, reserved = 1168, peak = 1169;
 
 RUN-1001 : Top Percentage Crit. Net Stat.
 RUN-1001 : -------------------------------------------------------
 RUN-1001 :   Top %  |  Net Count  |  Avg. Fanout  |  Avg. Slack   
 RUN-1001 : -------------------------------------------------------
-RUN-1001 :     1    |     245     |   11.738776   |  3296.069388  
-RUN-1001 :     2    |     491     |   7.720978    |  3634.374745  
-RUN-1001 :     3    |     737     |   5.800543    |  3833.309362  
-RUN-1001 :     4    |     983     |   5.113937    |  3983.699898  
-RUN-1001 :     5    |    1229     |   5.159479    |  4126.535395  
-RUN-1001 :     6    |    1475     |   4.914576    |  4266.753898  
-RUN-1001 :     7    |    1721     |   4.679837    |  4392.720511  
-RUN-1001 :     8    |    1967     |   4.521607    |  4504.230808  
-RUN-1001 :     9    |    2213     |   4.547221    |  4608.806146  
-RUN-1001 :    10    |    2459     |   4.420496    |  4707.364782  
+RUN-1001 :     1    |     264     |   11.886364   |  2947.003788  
+RUN-1001 :     2    |     528     |   7.456439    |  3436.488636  
+RUN-1001 :     3    |     792     |   5.808081    |  3697.083333  
+RUN-1001 :     4    |    1057     |   5.182592    |  3882.989593  
+RUN-1001 :     5    |    1321     |   4.981075    |  4043.955337  
+RUN-1001 :     6    |    1585     |   4.721136    |  4191.788644  
+RUN-1001 :     7    |    1849     |   4.673878    |  4322.636019  
+RUN-1001 :     8    |    2114     |   4.590350    |  4442.929991  
+RUN-1001 :     9    |    2378     |   4.484441    |  4554.673255  
+RUN-1001 :    10    |    2642     |   4.648751    |  4661.507949  
 RUN-1001 : -------------------------------------------------------
 PHY-1001 : Stage 2.2 | Clock Nets Routing
 PHY-1001 : Routed 92% nets.
-PHY-1001 : len = 2.19637e+06, over cnt = 0(0%), over = 0, worst = 0, crit = 0
-PHY-1001 : End Stage 2.2 | Clock Nets Routing; Time: 0.044379s wall, 0.093750s user + 0.078125s system = 0.171875s CPU (387.3%); Memory(MB): used = 1119, reserved = 1118, peak = 1119;
+PHY-1001 : len = 2.56055e+06, over cnt = 0(0%), over = 0, worst = 0, crit = 0
+PHY-1001 : End Stage 2.2 | Clock Nets Routing; Time: 0.014007s wall, 0.015625s user + 0.000000s system = 0.015625s CPU (111.6%); Memory(MB): used = 1172, reserved = 1170, peak = 1172;
 
 PHY-1001 : Stage 2.3 | Routing Initialization
-PHY-1001 : Mark 1% net(place mode slack < 3762ps) as critical nets.
+PHY-1001 : Mark 1% net(place mode slack < 3667ps) as critical nets.
 PHY-1001 : Stage 2.3.1 | Normal Nets Routing
 
 PHY-1001 : Routed 0% nets.
-PHY-1001 : len = 2.19637e+06, over cnt = 0(0%), over = 0, worst = 0, crit = 0
-PHY-1001 : End Stage 2.3.1 | Normal Nets Routing; Time: 0.108430s wall, 0.250000s user + 0.078125s system = 0.328125s CPU (302.6%); Memory(MB): used = 1119, reserved = 1118, peak = 1119;
+PHY-1001 : len = 2.56055e+06, over cnt = 0(0%), over = 0, worst = 0, crit = 0
+PHY-1001 : End Stage 2.3.1 | Normal Nets Routing; Time: 0.026380s wall, 0.203125s user + 0.078125s system = 0.281250s CPU (1066.1%); Memory(MB): used = 1172, reserved = 1170, peak = 1172;
 
 PHY-1001 : Stage 2.3.2 | Update Timing
 RUN-1002 : start command "start_timer"
-RUN-1003 : finish command "start_timer" in  9.279961s wall, 8.453125s user + 0.156250s system = 8.609375s CPU (92.8%)
+RUN-1003 : finish command "start_timer" in  1.971097s wall, 1.968750s user + 0.000000s system = 1.968750s CPU (99.9%)
 
-RUN-1004 : used memory is 1119 MB, reserved memory is 1118 MB, peak memory is 1119 MB
-PHY-1001 : 0/22718(0%) critical/total net(s).
-PHY-1001 : Setup: WNS(ns) = 0.126, TNS(ns) = 0.000, FEP = 0 | Hold: WNS(ns) = 0.021, TNS(ns) = 0.000, FEP = 0.
-PHY-1001 : End Stage 2.3.2 | Update Timing; Time: 17.164828s wall, 15.593750s user + 0.187500s system = 15.781250s CPU (91.9%); Memory(MB): used = 1125, reserved = 1123, peak = 1125;
+RUN-1004 : used memory is 1172 MB, reserved memory is 1170 MB, peak memory is 1172 MB
+PHY-1001 : 0/24440(0%) critical/total net(s).
+PHY-1001 : Setup: WNS(ns) = 0.036, TNS(ns) = 0.000, FEP = 0 | Hold: WNS(ns) = 0.020, TNS(ns) = 0.000, FEP = 0.
+PHY-1001 : End Stage 2.3.2 | Update Timing; Time: 3.756260s wall, 3.718750s user + 0.015625s system = 3.734375s CPU (99.4%); Memory(MB): used = 1176, reserved = 1174, peak = 1176;
 
-PHY-1001 : End Stage 2.3 | Routing Initialization; Time: 17.294605s wall, 15.875000s user + 0.328125s system = 16.203125s CPU (93.7%); Memory(MB): used = 1125, reserved = 1123, peak = 1125;
+PHY-1001 : End Stage 2.3 | Routing Initialization; Time: 3.789230s wall, 3.921875s user + 0.093750s system = 4.015625s CPU (106.0%); Memory(MB): used = 1176, reserved = 1174, peak = 1176;
 
 PHY-1001 : Stage 2.4 | Routing Optimization
 PHY-1001 : Stage 2.4.1 | Phase 1
 PHY-1001 : Stage 2.4.1.1 | Rip-up And ReRoute
-PHY-1001 : End Stage 2.4.1.1 | Rip-up And ReRoute; Time: 0.040361s wall, 0.062500s user + 0.015625s system = 0.078125s CPU (193.6%); Memory(MB): used = 1128, reserved = 1126, peak = 1128;
+PHY-1001 : End Stage 2.4.1.1 | Rip-up And ReRoute; Time: 0.010210s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
 PHY-1001 : Stage 2.4.1.2 | Update Timing
 RUN-1002 : start command "start_timer"
-RUN-1003 : finish command "start_timer" in  3.414097s wall, 3.250000s user + 0.031250s system = 3.281250s CPU (96.1%)
-
-RUN-1004 : used memory is 1128 MB, reserved memory is 1126 MB, peak memory is 1128 MB
-PHY-1001 : 0/22718(0%) critical/total net(s).
-PHY-1001 : Setup: WNS(ns) = 0.126, TNS(ns) = 0.000, FEP = 0 | Hold: WNS(ns) = 0.021, TNS(ns) = 0.000, FEP = 0.
-PHY-1001 : End Stage 2.4.1.2 | Update Timing; Time: 10.715319s wall, 10.171875s user + 0.078125s system = 10.250000s CPU (95.7%); Memory(MB): used = 1128, reserved = 1126, peak = 1128;
+PHY-1001 : 0/24440(0%) critical/total net(s).
+PHY-1001 : Setup: WNS(ns) = 0.036, TNS(ns) = 0.000, FEP = 0 | Hold: WNS(ns) = 0.020, TNS(ns) = 0.000, FEP = 0.
+PHY-1001 : End Stage 2.4.1.2 | Update Timing; Time: 2.510018s wall, 2.484375s user + 0.000000s system = 2.484375s CPU (99.0%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
 PHY-1001 : Stage 2.4.1.3 | Commit Data
 PHY-1001 : Commit better result to database ...
-PHY-1001 : 853 feed throughs used by 650 nets
-PHY-1001 : End Stage 2.4.1.3 | Commit Data; Time: 7.624419s wall, 7.234375s user + 0.078125s system = 7.312500s CPU (95.9%); Memory(MB): used = 1126, reserved = 1125, peak = 1128;
+PHY-1001 : 663 feed throughs used by 566 nets
+PHY-1001 : End Stage 2.4.1.3 | Commit Data; Time: 1.560415s wall, 1.531250s user + 0.000000s system = 1.531250s CPU (98.1%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-PHY-1001 : End Stage 2.4.1 | Phase 1; Time: 18.615669s wall, 17.687500s user + 0.171875s system = 17.859375s CPU (95.9%); Memory(MB): used = 1126, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 2.4.1 | Phase 1; Time: 4.141182s wall, 4.093750s user + 0.000000s system = 4.093750s CPU (98.9%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-PHY-1001 : End Stage 2.4 | Routing Optimization; Time: 26.620102s wall, 25.234375s user + 0.187500s system = 25.421875s CPU (95.5%); Memory(MB): used = 1126, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 2.4 | Routing Optimization; Time: 5.904391s wall, 5.843750s user + 0.000000s system = 5.843750s CPU (99.0%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-PHY-1001 : Current memory(MB): used = 1127, reserved = 1125, peak = 1128.
-PHY-1001 : End export database. 0.158103s wall, 0.156250s user + 0.000000s system = 0.156250s CPU (98.8%)
+PHY-1001 : Current memory(MB): used = 1179, reserved = 1177, peak = 1179.
+PHY-1001 : End export database. 0.034663s wall, 0.046875s user + 0.000000s system = 0.046875s CPU (135.2%)
 
-PHY-1001 : End detail incremental routing;  54.651789s wall, 51.343750s user + 0.687500s system = 52.031250s CPU (95.2%)
+PHY-1001 : End detail incremental routing;  12.313063s wall, 12.296875s user + 0.187500s system = 12.484375s CPU (101.4%)
 
-PHY-1001 : End Stage 2 | Detail Routing; Time: 54.652844s wall, 51.343750s user + 0.687500s system = 52.031250s CPU (95.2%); Memory(MB): used = 1127, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 2 | Detail Routing; Time: 12.313176s wall, 12.296875s user + 0.187500s system = 12.484375s CPU (101.4%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
 PHY-1001 : Stage 3 | Routing DRC
 PHY-1001 : Start multi-drive drc check......
@@ -254,26 +248,23 @@ RUN-1001 :            ClockName            |  DriverType  |  Clock/Fanout  |  Lo
 RUN-1001 : --------------------------------------------------------------------------------------------------------------------
 RUN-1001 :   sys_pll_m0/pll_inst.clkc[2]   |  AL_PHY_PLL  |      0/1       |       1        |  U3/u2_ram/SDRAM_CLK  |   true   
 RUN-1001 : --------------------------------------------------------------------------------------------------------------------
-PHY-1001 : End Stage 3.1 | Clock Net Status Check; Time: 0.012126s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 1127, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 3.1 | Clock Net Status Check; Time: 0.001994s wall, 0.000000s user + 0.000000s system = 0.000000s CPU (n/a%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
 PHY-1001 : Stage 3.2 | Abnormal Timing Path check
 RUN-1002 : start command "start_timer -keep_rs"
-RUN-1003 : finish command "start_timer -keep_rs" in  2.801011s wall, 2.671875s user + 0.046875s system = 2.718750s CPU (97.1%)
-
-RUN-1004 : used memory is 1127 MB, reserved memory is 1125 MB, peak memory is 1128 MB
 PHY-1001 : No abnormal timing path.
-PHY-1001 : End Stage 3.2 | Abnormal Timing Path check; Time: 8.032005s wall, 7.546875s user + 0.062500s system = 7.609375s CPU (94.7%); Memory(MB): used = 1127, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 3.2 | Abnormal Timing Path check; Time: 2.603404s wall, 2.546875s user + 0.031250s system = 2.578125s CPU (99.0%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-PHY-1001 : End Stage 3 | Routing DRC; Time: 8.476191s wall, 7.968750s user + 0.062500s system = 8.031250s CPU (94.8%); Memory(MB): used = 1127, reserved = 1125, peak = 1128;
+PHY-1001 : End Stage 3 | Routing DRC; Time: 2.692114s wall, 2.640625s user + 0.046875s system = 2.687500s CPU (99.8%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-RUN-1003 : finish command "route -incremental" in  79.594559s wall, 74.796875s user + 0.906250s system = 75.703125s CPU (95.1%)
+RUN-1003 : finish command "route -incremental" in  18.486408s wall, 18.296875s user + 0.281250s system = 18.578125s CPU (100.5%)
 
-RUN-1004 : used memory is 1127 MB, reserved memory is 1125 MB, peak memory is 1128 MB
+RUN-1004 : used memory is 1179 MB, reserved memory is 1177 MB, peak memory is 1179 MB
 RUN-1002 : start command "update_timing -mode final"
 RUN-1002 : start command "start_timer"
-RUN-1003 : finish command "update_timing -mode final" in  2.403160s wall, 2.406250s user + 0.000000s system = 2.406250s CPU (100.1%)
+RUN-1003 : finish command "update_timing -mode final" in  2.428006s wall, 2.312500s user + 0.046875s system = 2.359375s CPU (97.2%)
 
-RUN-1004 : used memory is 1127 MB, reserved memory is 1125 MB, peak memory is 1128 MB
+RUN-1004 : used memory is 1179 MB, reserved memory is 1177 MB, peak memory is 1179 MB
 RUN-1002 : start command "fix_hold"
 
 PHY-1001 : Stage 4 | Hold Fix
@@ -282,7 +273,6 @@ PHY-1034 : Refresh detailed routing grids ...
 PHY-1001 : Generate nets ...
 PHY-1001 : clock net boot_clk will be merged with clock video_pll_m0/c25
 PHY-1001 : net clk_dup_1 will be routed on clock mesh
-PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : clock net sd_card_clk will be merged with clock sys_pll_m0/clk0_buf
 PHY-1001 : net video_clk will be routed on clock mesh
 PHY-1001 : net U3/u2_ram/SDRAM_CLK will be routed on clock mesh
@@ -290,28 +280,29 @@ PHY-1001 : net U3/u2_ram/u1_init_ref/Sdr_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c40 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c200 will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c125 will be routed on clock mesh
+PHY-1001 : net u_hdmi2phy_wrapper/u0_lane_lvds_8_1/I_serial_clk will be routed on clock mesh
 PHY-1001 : net video_pll_m0/c25 will be routed on clock mesh
 PHY-1001 : eco open net = 0
-PHY-1001 : End Stage 4.1 | Load Design Data; Time: 1.163029s wall, 1.109375s user + 0.000000s system = 1.109375s CPU (95.4%); Memory(MB): used = 1128, reserved = 1126, peak = 1128;
+PHY-1001 : End Stage 4.1 | Load Design Data; Time: 1.201735s wall, 1.109375s user + 0.062500s system = 1.171875s CPU (97.5%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
 PHY-1001 : Stage 4.2 | Hold Fix Optimization
 RUN-1002 : start command "start_timer"
-PHY-1001 : Timing info: SWNS 0.126ns | STNS 0.000ns | HWNS 0.021ns | HTNS 0.000ns.
-PHY-1001 : End timing refresh.  2.287759s wall, 2.281250s user + 0.015625s system = 2.296875s CPU (100.4%)
+PHY-1001 : Timing info: SWNS 0.036ns | STNS 0.000ns | HWNS 0.020ns | HTNS 0.000ns.
+PHY-1001 : End timing refresh.  2.484884s wall, 2.390625s user + 0.062500s system = 2.453125s CPU (98.7%)
 
-PHY-1001 : End Stage 4.2 | Hold Fix Optimization; Time: 2.288104s wall, 2.281250s user + 0.015625s system = 2.296875s CPU (100.4%); Memory(MB): used = 1128, reserved = 1126, peak = 1128;
+PHY-1001 : End Stage 4.2 | Hold Fix Optimization; Time: 2.484936s wall, 2.390625s user + 0.062500s system = 2.453125s CPU (98.7%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-PHY-1001 : 853 feed throughs used by 650 nets
-PHY-1001 : End Stage 4 | Hold Fix; Time: 4.849310s wall, 4.734375s user + 0.062500s system = 4.796875s CPU (98.9%); Memory(MB): used = 1128, reserved = 1126, peak = 1128;
+PHY-1001 : 663 feed throughs used by 566 nets
+PHY-1001 : End Stage 4 | Hold Fix; Time: 5.225465s wall, 4.890625s user + 0.156250s system = 5.046875s CPU (96.6%); Memory(MB): used = 1179, reserved = 1177, peak = 1179;
 
-RUN-1003 : finish command "fix_hold" in  4.877361s wall, 4.734375s user + 0.062500s system = 4.796875s CPU (98.3%)
+RUN-1003 : finish command "fix_hold" in  5.232283s wall, 4.906250s user + 0.156250s system = 5.062500s CPU (96.8%)
 
-RUN-1004 : used memory is 1128 MB, reserved memory is 1126 MB, peak memory is 1128 MB
+RUN-1004 : used memory is 1179 MB, reserved memory is 1177 MB, peak memory is 1179 MB
 RUN-1002 : start command "update_timing -mode final"
 RUN-1002 : start command "start_timer"
-RUN-1003 : finish command "update_timing -mode final" in  2.349960s wall, 2.281250s user + 0.046875s system = 2.328125s CPU (99.1%)
+RUN-1003 : finish command "update_timing -mode final" in  2.391301s wall, 2.328125s user + 0.031250s system = 2.359375s CPU (98.7%)
 
-RUN-1004 : used memory is 1128 MB, reserved memory is 1126 MB, peak memory is 1128 MB
+RUN-1004 : used memory is 1179 MB, reserved memory is 1177 MB, peak memory is 1179 MB
 RUN-1002 : start command "report_area -io_info -file reports/physical_area.txt"
 RUN-1001 : standard
 ***Report Model: top Device: EG4S20BG256***
@@ -323,17 +314,17 @@ IO Statistics
   #inout                    6
 
 Utilization Statistics
-#lut                    16673   out of  19600   85.07%
-#reg                    11163   out of  19600   56.95%
-#le                     16683
-  #lut only              5520   out of  16683   33.09%
-  #reg only                10   out of  16683    0.06%
-  #lut&reg              11153   out of  16683   66.85%
-#bram                      57   out of     64   89.06%
-  #bram9k                  57
+#lut                    17965   out of  19600   91.66%
+#reg                    11711   out of  19600   59.75%
+#le                     17965
+  #lut only              6254   out of  17965   34.81%
+  #reg only                 0   out of  17965    0.00%
+  #lut&reg              11711   out of  17965   65.19%
+#bram                      63   out of     64   98.44%
+  #bram9k                  63
   #fifo9k                   0
 #bram32k                    0   out of     16    0.00%
-#dsp                       23   out of     29   79.31%
+#dsp                       24   out of     29   82.76%
 #pad                       44   out of    188   23.40%
   #ireg                    12
   #oreg                    21
@@ -345,16 +336,16 @@ Utilization Statistics
 DataNet Average Fanout:
 
    Index     Fanout     Nets   
-    #1          1       14715  
-    #2          2       4413   
-    #3          3       1737   
-    #4          4       1025   
-    #5        5-10      1721   
-    #6        11-50      778   
-    #7       51-100      73    
-    #8       101-500     13    
+    #1          1       15983  
+    #2          2       4694   
+    #3          3       1811   
+    #4          4       1082   
+    #5        5-10      1796   
+    #6        11-50      835   
+    #7       51-100      87    
+    #8       101-500     17    
     #9        >500        1    
-  Average     2.86             
+  Average     2.87             
 
 RUN-1002 : start command "report_timing_status -file reports/timing_status.txt"
 RUN-1002 : start command "report_timing_summary -file reports/timing_summary.txt"
@@ -367,7 +358,7 @@ Report file top_route.check_timing generated in E:\fpga
 Table of Contents
 -----------------
 1. checking no clock(0) (HIGH)
-2. checking clock definition(2451) (HIGH)
+2. checking clock definition(2689) (HIGH)
 3. checking dummy node(4) (HIGH)
 4. checking invalid constraint(0) (HIGH)
 5. checking pll/clock buffer clock constraints(0) (HIGH)
@@ -386,7 +377,7 @@ Table of Contents
 ---------------------------------------------
 2. checking clock definition problems. (HIGH)
 ---------------------------------------------
-2.1 There are 2451 leaf clock pins driven by multiple clocks. (HIGH)
+2.1 There are 2689 leaf clock pins driven by multiple clocks. (HIGH)
 
 2.2 There are 0 clocks created on internal clock network. (HIGH)
 

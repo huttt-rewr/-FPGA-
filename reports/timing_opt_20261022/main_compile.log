@@ -1,0 +1,341 @@
+Model Technology ModelSim SE-64 vlog 10.1c Compiler 2012.07 Jul 27 2012
+-- Compiling module board_debug
+-- Compiling module board_supervisor
+-- Compiling module cdc_snapshot
+-- Compiling module reset_sync
+-- Compiling module startup_pulse
+-- Compiling module boot_media_select
+-- Compiling module media_keyboard_request
+-- Compiling module media_button_request
+-- Compiling module fps_control
+-- Compiling module ir_nec_rx
+-- Compiling module picture_controls
+-- Compiling module player_control
+-- Compiling module remote_controls
+-- Compiling module slideshow_timer
+-- Compiling module switch_controls
+-- Compiling module time_cmd
+-- Compiling module uart_rx
+-- Compiling module uart_tx
+-- Compiling module uart_tx_queue
+-- Compiling module caption_overlay
+-- Compiling module osd_char_rom
+-- Compiling module status_osd
+-- Compiling module zh_font_rom
+-- Compiling module zh_overlay
+-- Compiling module adaptive_raster
+-- Compiling module adaptive_video_clock
+-- Compiling module audio_visualizer
+-- Compiling module auto_enhance
+-- Compiling module auto_enhance_scale
+-- Compiling module av_fast_scaler
+-- Compiling module av_sync_player
+-- Compiling module bmp_scale_loader
+-- Compiling module rgb_lerp_pipeline
+-- Compiling module color_bar
+-- Compiling module edid_base_check
+-- Compiling module edid_display_mode
+-- Compiling module frame_swap
+-- Compiling module glass_osd
+-- Compiling module glass_title_row
+-- Compiling module picture_adjust
+-- Compiling module picture_gamma
+-- Compiling module pixel_effects
+-- Compiling module video_luma_window
+-- Compiling module transition_pixels
+-- Compiling module video_coordinates
+-- Compiling module viewport_coordinates
+-- Compiling module video_delay
+-- Compiling module video_enhance
+-- Compiling module video_luma_window_bram
+-- Compiling module video_mode_control
+-- Compiling module video_rgb_to_axis_640x480
+-- Compiling module video_timing_data
+-- Compiling module audio_async_fifo
+-- Compiling module audio_effects
+-- Compiling module audio_effects_stream
+-- Compiling module audio_fifo_room
+-- Compiling module audio_playback
+-- Compiling module audio_error_history
+-- Compiling module audio_test_source
+-- Compiling module audio_wav
+-- Compiling module av_audio_gain
+-- Compiling module video_mode_table
+-- Compiling module video_scaler
+-- Compiling module ycbcr_to_rgb
+-- Compiling module bmp_read
+-- Compiling module sd_card_bmp
+-- Compiling module key_press_debounce
+-- Compiling module sd_card_top
+-- Compiling module sd_card_sec_read_write
+-- Compiling module sd_card_cmd
+-- Compiling module spi_master
+-- Compiling module tb_uart_rx
+-- Compiling module tb_ir_nec_rx
+-- Compiling module ir_nec_rx_reference
+-- Compiling module tb_video_scaler
+-- Compiling module tb_upgrade
+-- Compiling module tb_cdc
+-- Compiling module tb_stream_queue
+-- Compiling module tb_uart_queue
+-- Compiling module tb_sd_address
+-- Compiling module tb_load_recovery
+-- Compiling module tb_bmp_stream
+-- Compiling module frame_fifo_write
+-- Compiling module wfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_wfifo_32_32_512
+-- Compiling module ram_infer_wfifo_32_32_512
+-- Compiling module tb_fifo_boundary
+-- Compiling module tb_frame_writer
+-- Compiling module frame_fifo_read
+-- Compiling module frame_read_write
+-- Compiling module rfifo_32_32_512
+-- Compiling module fifo_cross_domain_addr_process_al_rfifo_32_32_512
+-- Compiling module ram_infer_rfifo_32_32_512
+-- Compiling module tb_frame_tail
+-- Compiling module tb_osd_text
+-- Compiling module tb_bmp_headers
+-- Compiling module tb_hdmi_line_contract
+-- Compiling module tb_sd_watchdog
+-- Compiling module tb_sd_crc
+-- Compiling module tb_read_drain
+-- Compiling module tb_memory_refresh
+-- Compiling module sd_read_arbiter
+-- Compiling module sd_fat32
+-- Compiling module sd_bus_phy
+-- Compiling module sd_card_top_native
+-- Compiling module sd_native_controller
+-- Compiling module sd_native_card_model
+-- Compiling module ps2_controls
+-- Compiling module ps2_keyboard
+-- Compiling module snake_game
+-- Compiling module snake_frame_control
+-- Compiling module snake_lut_ram
+-- Compiling module snake_game_bram
+-- Compiling module snake_block_ram
+-- Compiling module tmds_encoder
+-- Compiling module hdmi_tmds_vga
+-- Compiling module hdmi_video_stage
+-- Compiling module edid_i2c
+-- Compiling module seg_scan
+-- Compiling module tb_sd_waits
+-- Compiling module tb_edid_timeout
+-- Compiling module tb_bmp_stall
+-- Compiling module tb_commit_timeout
+-- Compiling module tb_write_backpressure
+-- Compiling module tb_svga_writer
+-- Compiling module tb_svga_pipeline
+-- Compiling module tb_svga_memory
+-- Compiling module tb_edid_display_mode
+-- Compiling module tb_adaptive_raster
+-- Compiling module tb_scaled_svga
+-- Compiling module tb_svga_osd
+-- Compiling module tb_scaled_bmp
+-- Compiling module tb_picture_controls
+-- Compiling module tb_picture_adjust
+-- Compiling module tb_picture_osd
+-- Compiling module tb_switch_controls
+-- Compiling module tb_transition
+-- Compiling module tb_transition_pixels
+-- Compiling module tb_caption_overlay
+-- Compiling module tb_effects_pipeline
+-- Compiling module tb_board_menu
+-- Compiling module tb_board_supervisor
+-- Compiling module tb_picture_gamma
+-- Compiling module tb_board_debug
+-- Compiling module tb_board_osd
+-- Compiling module tb_board_pipeline
+-- Compiling module tb_audio_wav
+-- Compiling module tb_audio_fifo
+-- Compiling module audio_playback_case
+-- Compiling module tb_audio_playback
+-- Compiling module tb_sd_audio_arbiter
+-- Compiling module tb_audio_menu
+-- Compiling module tb_audio_sd_integration
+-- Compiling module tb_audio_osd
+-- Compiling module tb_audio_retry
+-- Compiling module tb_audio_retry_edges
+-- Compiling module tb_audio_diagnostics
+-- Compiling module audio_effects_case
+-- Compiling module tb_audio_effects
+-- Compiling module tb_audio_stream_flush
+-- Compiling module tb_audio_fifo_room
+-- Compiling module fat32_fixture
+-- Compiling module tb_fat32_mount
+-- Compiling module tb_fat32_stream
+-- Compiling module tb_fat32_player
+-- Compiling module tb_sd_native
+-- Compiling module tb_sd_native_clock
+-- Compiling module native_fat32_fixture
+-- Compiling module tb_sd_native_fat32
+-- Compiling module tb_sd_native_player
+-- Compiling module tb_ps2_keyboard
+-- Compiling module tb_ps2_controls
+-- Compiling module tb_fat32_indexed
+-- Compiling module tb_indexed_player
+-- Compiling module tb_file_osd
+-- Compiling module tb_video_mode_control
+-- Compiling module tb_mode_reload
+-- Compiling module tb_mode_request_cdc
+-- Compiling module tb_fps_control
+-- Compiling module tb_rate_player
+-- Compiling module tb_sd_native_integrated
+-- Compiling module tb_sd_highspeed
+-- Compiling module tb_sd_highspeed_player
+-- Compiling module tb_caption_pipeline
+-- Compiling module tb_pixel_effects
+-- Compiling module tb_glass_osd
+-- Compiling module tb_audio_visualizer
+-- Compiling module tb_visual_pipeline
+-- Compiling module tb_shared_luma
+-- Compiling module tb_snake_game
+-- Compiling module tb_snake_controls
+-- Compiling module tb_snake_pipeline
+-- Compiling module tb_snake_bram
+-- Compiling module tb_bram_window
+-- Compiling module tb_osd_bcd
+-- Compiling module tb_bram_waveform
+-- Compiling module tb_scaler_row_address
+-- Compiling module tb_fat32_compare
+-- Compiling module tb_fps_equivalence
+-- Compiling module fps_equivalence_case
+-- Compiling module fps_control_reference
+-- Compiling module tb_fat32_schedule
+-- Compiling module sd_fat32_reference
+-- Compiling module tb_image_index_equivalence
+-- Compiling module tb_audio_rx_boundary
+-- Compiling module tb_tmds_encoder
+-- Compiling module tb_hdmi_tmds_vga
+-- Compiling module tb_edid_i2c
+-- Compiling module tb_transition_effects
+-- Compiling module tb_remote_uart
+-- Compiling module tb_remote_ir
+-- Compiling module tb_auto_enhance
+-- Compiling module tb_album_timer
+-- Compiling module tb_zh_overlay
+-- Compiling module tb_album_clock
+-- Compiling module seg_scan_timing_case
+-- Compiling module tb_seg_scan_timing
+-- Compiling module tb_hdmi_video_stage
+
+Top level modules:
+	startup_pulse
+	boot_media_select
+	media_keyboard_request
+	media_button_request
+	adaptive_video_clock
+	av_fast_scaler
+	av_sync_player
+	av_audio_gain
+	video_mode_table
+	tb_uart_rx
+	tb_ir_nec_rx
+	tb_video_scaler
+	tb_upgrade
+	tb_cdc
+	tb_stream_queue
+	tb_uart_queue
+	tb_sd_address
+	tb_load_recovery
+	tb_bmp_stream
+	tb_fifo_boundary
+	tb_frame_writer
+	tb_frame_tail
+	tb_osd_text
+	tb_bmp_headers
+	tb_hdmi_line_contract
+	tb_sd_watchdog
+	tb_sd_crc
+	tb_read_drain
+	tb_memory_refresh
+	tb_sd_waits
+	tb_edid_timeout
+	tb_bmp_stall
+	tb_commit_timeout
+	tb_write_backpressure
+	tb_svga_writer
+	tb_svga_pipeline
+	tb_svga_memory
+	tb_edid_display_mode
+	tb_adaptive_raster
+	tb_scaled_svga
+	tb_svga_osd
+	tb_scaled_bmp
+	tb_picture_controls
+	tb_picture_adjust
+	tb_picture_osd
+	tb_switch_controls
+	tb_transition
+	tb_transition_pixels
+	tb_caption_overlay
+	tb_effects_pipeline
+	tb_board_menu
+	tb_board_supervisor
+	tb_picture_gamma
+	tb_board_debug
+	tb_board_osd
+	tb_board_pipeline
+	tb_audio_wav
+	tb_audio_fifo
+	tb_audio_playback
+	tb_sd_audio_arbiter
+	tb_audio_menu
+	tb_audio_sd_integration
+	tb_audio_osd
+	tb_audio_retry
+	tb_audio_retry_edges
+	tb_audio_diagnostics
+	tb_audio_effects
+	tb_audio_stream_flush
+	tb_audio_fifo_room
+	tb_fat32_mount
+	tb_fat32_stream
+	tb_fat32_player
+	tb_sd_native
+	tb_sd_native_clock
+	tb_sd_native_fat32
+	tb_sd_native_player
+	tb_ps2_keyboard
+	tb_ps2_controls
+	tb_fat32_indexed
+	tb_indexed_player
+	tb_file_osd
+	tb_video_mode_control
+	tb_mode_reload
+	tb_mode_request_cdc
+	tb_fps_control
+	tb_rate_player
+	tb_sd_native_integrated
+	tb_sd_highspeed
+	tb_sd_highspeed_player
+	tb_caption_pipeline
+	tb_pixel_effects
+	tb_glass_osd
+	tb_audio_visualizer
+	tb_visual_pipeline
+	tb_shared_luma
+	tb_snake_game
+	tb_snake_controls
+	tb_snake_pipeline
+	tb_snake_bram
+	tb_bram_window
+	tb_osd_bcd
+	tb_bram_waveform
+	tb_scaler_row_address
+	tb_fat32_compare
+	tb_fps_equivalence
+	tb_fat32_schedule
+	tb_image_index_equivalence
+	tb_audio_rx_boundary
+	tb_tmds_encoder
+	tb_hdmi_tmds_vga
+	tb_edid_i2c
+	tb_transition_effects
+	tb_remote_uart
+	tb_remote_ir
+	tb_auto_enhance
+	tb_album_timer
+	tb_zh_overlay
+	tb_album_clock
+	tb_seg_scan_timing
+	tb_hdmi_video_stage

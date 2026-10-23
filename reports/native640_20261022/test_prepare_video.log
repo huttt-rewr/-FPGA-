@@ -1,0 +1,14 @@
+test_conversion_stream_selection_and_shared_timestamps (__main__.VideoTests.test_conversion_stream_selection_and_shared_timestamps) ... ok
+test_existing_output_preserved (__main__.VideoTests.test_existing_output_preserved) ... ok
+test_frame_limits (__main__.VideoTests.test_frame_limits) ... ok
+test_header_and_two_records (__main__.VideoTests.test_header_and_two_records) ... ok
+test_long_audio_is_trimmed (__main__.VideoTests.test_long_audio_is_trimmed) ... ok
+test_malformed_streams_do_not_create_image (__main__.VideoTests.test_malformed_streams_do_not_create_image) ... ok
+test_native_header_payload_and_limit (__main__.VideoTests.test_native_header_payload_and_limit) ... ok
+test_quality_header_payload_and_limit (__main__.VideoTests.test_quality_header_payload_and_limit) ... ok
+test_short_audio_pads_silence (__main__.VideoTests.test_short_audio_pads_silence) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.116s
+
+OK
